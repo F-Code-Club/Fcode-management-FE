@@ -54,7 +54,13 @@ const Home = () => {
                     </Button>
                 </Text>
                 <Text>
-                    <Switch defaultChecked onChange={toggleDarkMode} />
+                    <Switch
+                        checkedChildren="🔅"
+                        unCheckedChildren="🌙"
+                        checked={isDarkMode}
+                        defaultChecked
+                        onChange={toggleDarkMode}
+                    />
                 </Text>
             </Header>
         </Wrapper>

@@ -9,6 +9,7 @@
         "@testing-library/user-event": "^13.2.1",
         "antd": "^4.23.1",
         "axios": "^0.27.2",
+        "dotenv": "^16.0.2",
         "eslint-config-node": "^4.1.0",
         "eslint-plugin-node": "^11.1.0",
         "react": "^18.2.0",

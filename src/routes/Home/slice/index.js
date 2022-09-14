@@ -1,5 +1,4 @@
-import { injectReducer } from 'store';
-
+import { injectReducer } from '@/store';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {

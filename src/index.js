@@ -3,12 +3,13 @@ import React from 'react';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { themes } from 'theme/theme';
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import RouterComponent from './routes';
 import store from './store';
+
+import { themes } from '@/theme/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

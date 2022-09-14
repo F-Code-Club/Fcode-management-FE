@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import * as theme from 'theme/theme';
 
+import * as theme from '@/theme/theme';
 import { configureStore } from '@reduxjs/toolkit';
 
 // Define the Reducers that will always be present in the application

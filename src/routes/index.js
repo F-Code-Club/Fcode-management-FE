@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-import Home from 'routes/Home';
+import Home from '@/routes/Home';
 
 const publicRoute = [
     {

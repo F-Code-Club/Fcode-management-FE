@@ -124,7 +124,7 @@ const EditAccount = () => {
                                 <Title
                                     level={4}
                                     style={{
-                                        marginTop: 0,
+                                        marginTop: 10,
                                     }}
                                 >
                                     Thông tin nâng cao

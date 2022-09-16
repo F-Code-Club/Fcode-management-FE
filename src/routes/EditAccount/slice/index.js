@@ -19,6 +19,49 @@ export const initialState = {
     personalEmail: faker.internet.email(fullName[0], fullName[1], 'gmail.com'),
     facebook: 'facebook.com/' + faker.internet.userName(fullName[0], fullName[1]),
     bio: '',
+    tags: {
+        organizer: 'geekblue',
+        participant: 'green',
+        developer: 'volcano',
+    },
+    activities: [
+        {
+            key: '1',
+            semester: 'FA23',
+            activity: 'Techaway',
+            roles: ['participant', 'developer'],
+        },
+        {
+            key: '2',
+            semester: 'SU22',
+            activity: 'Battle R.ODE',
+            roles: ['organizer', 'participant'],
+        },
+        {
+            key: '3',
+            semester: 'SP21',
+            activity: 'Recruitment',
+            roles: ['organizer'],
+        },
+        {
+            key: '4',
+            semester: 'FA23',
+            activity: 'Techaway',
+            roles: ['participant', 'developer'],
+        },
+        {
+            key: '5',
+            semester: 'SU22',
+            activity: 'Battle R.ODE',
+            roles: ['organizer', 'participant'],
+        },
+        {
+            key: '6',
+            semester: 'SP21',
+            activity: 'Recruitment',
+            roles: ['organizer'],
+        },
+    ],
 };
 
 export const name = 'editAccount';

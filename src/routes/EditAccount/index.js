@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+
 import { Avatar, Col, Row, Space, Card, Image, Typography, Button } from 'antd';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import {
+    ActivityTable,
     InputBio,
     InputFacebook,
     InputFullName,
@@ -16,17 +19,26 @@ import selector from './slice/selectors';
 import { Container } from './style';
 
 import getGutter from '@/utils/getGutter';
+import useTheme from '@/utils/useTheme';
 
 // import { EditOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
 const EditAccount = () => {
+    const setTheme = useTheme();
+
     const avatar = useSelector(selector.avatar);
     const heroImage = useSelector(selector.heroImage);
     const joinDate = useSelector(selector.joinDate);
     const role = useSelector(selector.role);
     const position = useSelector(selector.position);
+
+    useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+            setTheme(true);
+        }
+    });
 
     return (
         <Container>
@@ -40,7 +52,12 @@ const EditAccount = () => {
                 />
                 <Row gutter={getGutter(1)}>
                     <Col span={7} className="left-side">
-                        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                        <Space
+                            direction="vertical"
+                            size="middle"
+                            style={{ display: 'flex' }}
+                            className="pos-sticky"
+                        >
                             <Card style={{ width: '100%', height: '100%' }} loading={false}>
                                 <Avatar size={160} src={avatar} />
                                 <FullName />
@@ -112,6 +129,7 @@ const EditAccount = () => {
                                 >
                                     Thông tin nâng cao
                                 </Title>
+                                <ActivityTable />
                             </Space>
                         </Card>
                     </Col>

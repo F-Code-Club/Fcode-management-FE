@@ -25,6 +25,11 @@ export const Container = styled.div`
                 width: 100%;
             }
         }
+
+        .pos-sticky {
+            position: sticky;
+            top: 24px;
+        }
     }
 
     .right-side {

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
+import Event from '@/routes/EventManagement';
 import Home from '@/routes/Home';
 
 const publicRoute = [
@@ -15,6 +16,12 @@ const publicRoute = [
     {
         path: 'home2',
         component: <Home />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'event',
+        component: <Event />,
         exact: true,
         restrict: true,
     },

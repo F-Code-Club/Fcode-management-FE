@@ -4,11 +4,10 @@ import { Button } from 'antd';
 
 import { ContainerPopup, ContentPopup, LayerPopup, Popup } from './style';
 
-import { ExclamationCircleTwoTone } from '@ant-design/icons';
+import { ExclamationCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
-export const ConfirmDelete = (props) => {
+export const ConfirmAction = (props) => {
     const action = props.action;
-    const [active, setActive] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const styleOnload = {
@@ -17,44 +16,35 @@ export const ConfirmDelete = (props) => {
         border: '1px solid rgba(69, 206, 124, 1)',
     };
 
-    const handleDelete = async (todo) => {
+    const handleClick = async (status) => {
         await setLoading(true);
-        todo == 1 && (await action());
-        await setActive(false);
+        await action(status);
         await setLoading(false);
     };
 
     return (
-        <div>
-            <Button
-                onClick={() => setActive(true)}
-                type="primary"
-                style={{ padding: '0 30px', borderRadius: '5px' }}
-                danger
-            >
-                Xóa
-            </Button>
-            {active && (
-                <ContainerPopup>
-                    <LayerPopup onClick={() => !loading && handleDelete(0)} />
-                    <Popup>
-                        <ExclamationCircleTwoTone twoToneColor="#FFC53D" className="icon-popup" />
-                        <ContentPopup>
-                            <h3>{props.title}</h3>
-                            <p>{props.content}</p>
-                            <div>
-                                <Button
-                                    onClick={() => handleDelete(1)}
-                                    loading={loading}
-                                    style={loading ? styleOnload : {}}
-                                >
-                                    {props.buttonValue}
-                                </Button>
-                            </div>
-                        </ContentPopup>
-                    </Popup>
-                </ContainerPopup>
-            )}
-        </div>
+        <ContainerPopup>
+            <LayerPopup onClick={() => !loading && handleClick(false)} />
+            <Popup>
+                {props.icon == 'delete' ? (
+                    <ExclamationCircleTwoTone twoToneColor="#FFC53D" className="icon-popup" />
+                ) : (
+                    <CloseCircleTwoTone twoToneColor="#FF4D4F" className="icon-popup" />
+                )}
+                <ContentPopup>
+                    <h3>{props.title}</h3>
+                    <p>{props.content}</p>
+                    <div>
+                        <Button
+                            onClick={() => handleClick(true)}
+                            loading={loading}
+                            style={loading ? styleOnload : {}}
+                        >
+                            {props.buttonValue}
+                        </Button>
+                    </div>
+                </ContentPopup>
+            </Popup>
+        </ContainerPopup>
     );
 };

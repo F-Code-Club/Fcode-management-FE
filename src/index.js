@@ -4,7 +4,8 @@ import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { ConfirmDelete } from './components/Announcement/PopupConfirm';
+// import { PopupSuccess } from './components/Announcement/PopupSuccess';
+import { ConfirmAction } from './components/Announcement/PopupConfirm';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import RouterComponent from './routes';
@@ -12,13 +13,14 @@ import store from './store';
 
 import { themes } from '@/theme/theme';
 
-const doSomething = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-            console.log('do something successfully');
-        }, 2000);
-    });
+const doSomething = (status) => {
+    if (status)
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+                console.log('do something successfully');
+            }, 2000);
+        });
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,12 +29,18 @@ root.render(
         <Provider store={store}>
             <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
                 <RouterComponent />
-                <ConfirmDelete
-                    title={'Bạn có chắc muốn xóa thông báo này?'}
-                    content={'Thông báo này sẽ được xóa vĩnh viễn.'}
-                    buttonValue={'Xóa'}
+                <ConfirmAction
+                    title="Bạn có chắc muốn xóa thông báo này?"
+                    content="Thông báo này sẽ được xóa vĩnh viễn."
+                    buttonValue="Xóa"
+                    icon="delete" //op1: 'delete', op2: 'retry'
                     action={doSomething}
                 />
+                {/* <PopupSuccess
+                    title="Thông báo đã được xóa thành công"
+                    buttonValue="Đóng"
+                    action={doSomething}
+                /> */}
             </ThemeSwitcherProvider>
         </Provider>
     </React.StrictMode>

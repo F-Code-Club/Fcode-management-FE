@@ -6,7 +6,7 @@ import AppSidebar from 'components/Sidebar/Sidebar.component';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-import Home from 'routes/Home';
+import Home from '@/routes/Home';
 
 const publicRoute = [
     {

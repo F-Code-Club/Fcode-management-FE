@@ -4,12 +4,13 @@ import { useEffect } from 'react';
 import { Button, Typography, Switch } from 'antd';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions as setTheme, selectIsDarkMode } from 'theme/theme';
 
 import logo from '../../assets/logo.svg';
 import { actions } from './slice';
 import { selectCounter, selectHello } from './slice/selectors';
 import { Wrapper, Logo, Header, Link } from './style';
+
+import { actions as setTheme, selectIsDarkMode } from '@/theme/theme';
 
 const { Text } = Typography;
 

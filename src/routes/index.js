@@ -1,5 +1,8 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+// eslint-disable-next-line import/no-unresolved
+import AppSidebar from 'components/Sidebar/Sidebar.component';
+
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -8,7 +11,7 @@ import Home from 'routes/Home';
 const publicRoute = [
     {
         path: 'home',
-        component: <Home />,
+        component: <AppSidebar />,
         exact: true,
         restrict: true,
     },

@@ -1,0 +1,61 @@
+.ant-menu-submenu-acitve {
+    color: #45ce7c;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 24px;
+    color: #45ce7c;
+    margin: 38px 0px;
+    height: 32px;
+    margin: 16px;
+}
+.ant-page-header {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12),
+        0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.signOut {
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto';
+    color: rgba(255, 255, 255, 0.85);
+    position: absolute;
+    bottom: 20px;
+    padding-left: 24px;
+}
+
+.ant-menu-light .ant-menu-submenu-title:hover,
+.ant-menu-light .ant-menu-item-title:hover {
+    color: #45ce7b !important;
+}
+
+.ant-menu-item-selected {
+    color: #45ce7c !important;
+    background-color: #e6f8ec !important;
+}
+.ant-menu-inline .ant-menu-item::after {
+    border-right: 3px solid #45ce7c !important;
+}
+
+/* hover arrow */
+.ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+    color: #45ce7b !important;
+}
+
+.ant-menu-submenu-selected {
+    color: #45ce7b !important;
+}
+
+.ant-menu-submenu-arrow {
+    color: #45ce7b !important;
+}
+
+.ant-menu-light .ant-menu-item:hover,
+.ant-menu-light .ant-menu-submenu-active {
+    color: #45ce7b !important;
+}

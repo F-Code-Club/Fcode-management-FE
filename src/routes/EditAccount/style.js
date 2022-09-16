@@ -5,6 +5,12 @@ export const Container = styled.div`
     margin: 0 auto;
 `;
 
+export const Flex = styled.div`
+    display: flex;
+    gap: 20px;
+    width: 100%;
+`;
+
 export const HeroImage = styled.img`
     width: 100%;
     height: 200px;

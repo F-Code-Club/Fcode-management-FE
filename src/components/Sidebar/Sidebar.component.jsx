@@ -1,12 +1,12 @@
+/* eslint-disable import/no-cycle */
+// eslint-disable-next-line import/no-unresolved
 import { Layout, PageHeader, Menu } from 'antd';
 import styled from 'styled-components';
 
-// import { SideBar, MenuBar } from './SideBar/Sidebar.styles';
 import './style.css';
 
-import { HomeOutlined, LogoutOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-// eslint-disable-next-line no-unused-vars
-import { ReactComponent as FcodeLogo } from 'assets/logo/no text.svg';
+import { ReactComponent as FcodeLogo } from '@/assets/logo/logo.svg';
+import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const { Header, Content, Sider } = Layout;
 
@@ -42,10 +42,6 @@ const items = [
         getItem('Quản lý tài nguyên', 'manageResource'),
         getItem('Quản lý bài viết', 'manageBlog'),
     ]),
-    // getItem('Thống kê', '2', <DesktopOutlined />),
-    // getItem('Quản lý', 'sub1', <UserOutlined />),
-    // getItem('Báo cáo', 'sub2', <TeamOutlined />),
-    // getItem('Cài đặt', '9', <FileOutlined />),
 ];
 
 const AppSidebar = () => {

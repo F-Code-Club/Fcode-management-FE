@@ -1,22 +1,37 @@
 import { injectReducer } from '@/store';
+import generateActions from '@/utils/generateActions';
+import { faker } from '@faker-js/faker';
 import { createSlice } from '@reduxjs/toolkit';
 
+const fullName = faker.name.fullName().split(' ');
+
 export const initialState = {
-    counter: performance.now().toFixed(0),
-    hello: 'Hello World',
+    fullName: fullName.join(' '),
+    avatar: faker.image.cats(160, 160),
+    heroImage: faker.image.city(920, 200),
+    joinDate: faker.date.past(2).getTime(),
+    role: 'Admin',
+    position: 'Chủ nhiệm',
+    genders: ['Nam', 'Nữ'],
+    currentGender: 0,
+    birthdate: faker.date.birthdate({ min: 18, max: 25, mode: 'age' }).getTime(),
+    emailFPT: faker.internet.email(fullName[0], fullName[1], 'fpt.edu.vn'),
+    personalEmail: faker.internet.email(fullName[0], fullName[1], 'gmail.com'),
+    facebook: 'facebook.com/' + faker.internet.userName(fullName[0], fullName[1]),
+    bio: '',
 };
 
 export const name = 'editAccount';
 
+console.log(generateActions(initialState));
+
 export const slice = createSlice({
     name,
     initialState,
-    reducers: {
-        changeCounter: (state, action) => {
-            state.counter = action.payload;
-        },
-    },
+    reducers: generateActions(initialState),
 });
+
+console.log(slice.actions);
 
 injectReducer(name, slice.reducer);
 

@@ -1,8 +1,14 @@
 import { initialState, name } from '.';
 
-import { createSelector } from '@reduxjs/toolkit';
+import generateSelectors from '@/utils/generateSelectors';
 
 const selectDomain = (state) => state[name] || initialState;
 
-export const selectCounter = createSelector([selectDomain], (state) => state.counter);
-export const selectHello = createSelector([selectDomain], (state) => state.hello);
+const selector = generateSelectors(initialState, selectDomain);
+
+// export const selectSelectedGenderIndex = () =>
+//     createSelector([selectDomain], (state) =>
+//         state.genders.filter((gender) => gender.isSelected)
+//     )[0] || 0;
+
+export default selector;

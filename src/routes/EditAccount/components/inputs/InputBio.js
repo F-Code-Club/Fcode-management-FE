@@ -1,0 +1,21 @@
+import { Input } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { actions } from '../../slice';
+import selector from '../../slice/selectors';
+
+const { TextArea } = Input;
+
+const InputBio = () => {
+    const dispatch = useDispatch();
+
+    const bio = useSelector(selector.bio);
+
+    const handleBioChange = (e) => {
+        dispatch(actions.setBio(e.target.value));
+    };
+
+    return <TextArea placeholder="Bio" value={bio} onChange={handleBioChange} />;
+};
+
+export default InputBio;

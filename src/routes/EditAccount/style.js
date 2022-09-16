@@ -3,18 +3,34 @@ import styled from 'styled-components';
 export const Container = styled.div`
     max-width: 920px;
     margin: 0 auto;
-`;
 
-export const Flex = styled.div`
-    display: flex;
-    gap: 20px;
-    width: 100%;
-`;
+    .left-side {
+        .ant-avatar {
+            margin: 0 auto 1em auto;
+            display: block;
+        }
 
-export const HeroImage = styled.img`
-    width: 100%;
-    height: 200px;
-    background: red;
-    border: none;
-    border-radius: 10px;
+        .ant-typography {
+            text-align: center;
+        }
+
+        span.ant-typography {
+            display: block;
+        }
+
+        .full-fill {
+            display: flex;
+            .ant-space-item {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+
+    .right-side {
+        .ant-picker,
+        .ant-select {
+            width: 100%;
+        }
+    }
 `;

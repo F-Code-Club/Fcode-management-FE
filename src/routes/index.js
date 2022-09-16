@@ -4,13 +4,13 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 // eslint-disable-next-line import/no-unresolved
-import AppSidebar from '@/components/Sidebar/Sidebar.component';
+import LayoutComponent from '@/components/Layout/Layout.component';
 import Home from '@/routes/Home';
 
 const publicRoute = [
     {
         path: 'home',
-        component: <AppSidebar />,
+        component: <LayoutComponent />,
         exact: true,
         restrict: true,
     },

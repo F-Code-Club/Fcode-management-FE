@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-import Blog from '@/routes/Blog';
 import Home from '@/routes/Home';
 
 const publicRoute = [
@@ -25,12 +24,6 @@ const privateRoute = [
     {
         path: 'private',
         component: <Home />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: '/blog',
-        component: <Blog />,
         exact: true,
         restrict: true,
     },

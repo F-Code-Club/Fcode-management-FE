@@ -38,7 +38,7 @@ const PageHeaderComponent = () => {
         >
             <PageHeader
                 backIcon={<ArrowLeftOutlined />}
-                className="site-page-header"
+                className="site-page-header-responsive"
                 title="Trang Chủ"
                 style={{ background: '#FFFFFF' }}
                 breadcrumb={{ routes }}

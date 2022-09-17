@@ -70,11 +70,12 @@ export const MenuBar = styled(Menu)`
 `;
 
 export const SideBar = styled(Sider)`
+    width: 300px !important;
     background-color: #4d4d4d !important;
-    overflow: auto;
+    /* overflow: auto; */
+    position: fixed !important;
     height: 100vh;
-    position: fixed;
-    left: 0;
     top: 0;
     bottom: 0;
+    left: 0;
 `;

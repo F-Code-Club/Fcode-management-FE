@@ -1,16 +1,30 @@
 import { Layout } from 'antd';
 
-import ContentComponent from '@/components/Content/Content.component';
 import PageHeaderComponent from '@/components/PageHeader/PageHeader.component';
 import SidebarComponent from '@/components/Sidebar/Sidebar.component';
 
-const LayoutComponent = () => {
+const { Content } = Layout;
+const LayoutComponent = ({ children }) => {
     return (
         <Layout>
             <SidebarComponent />
-            <Layout>
+            <Layout className="site-layout" style={{ marginLeft: '200px' }}>
                 <PageHeaderComponent />
-                <ContentComponent />
+                <Content
+                    style={{
+                        margin: '20px 16px ',
+                    }}
+                >
+                    <div
+                        className="site-layout-background"
+                        style={{
+                            background: '#FFFFFF',
+                            padding: 24,
+                        }}
+                    >
+                        {children}
+                    </div>
+                </Content>
             </Layout>
         </Layout>
     );

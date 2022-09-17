@@ -35,10 +35,14 @@ export const ConfirmAction = (props) => {
                     <h3>{props.title}</h3>
                     <p>{props.content}</p>
                     <div>
+                        <Button onClick={() => handleClick(false)} className="cancel-btn">
+                            Hủy
+                        </Button>
                         <Button
                             onClick={() => handleClick(true)}
                             loading={loading}
                             style={loading ? styleOnload : {}}
+                            className="accept-btn"
                         >
                             {props.buttonValue}
                         </Button>

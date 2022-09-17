@@ -37,10 +37,21 @@ export const Popup = styled.div`
 export const ContentPopup = styled.div`
     width: 100%;
     margin-left: 1rem;
+    transition: linear 0.25s;
     div {
         text-align: right;
     }
-    button {
+    .cancel-btn {
+        margin-top: 0.5rem;
+        color: black;
+        border: 1px solid #d9d9d9;
+        margin-right: 10px;
+        :hover {
+            color: #ff4d4f;
+            border: 1px solid #ff4d4f;
+        }
+    }
+    .accept-btn {
         margin-top: 0.5rem;
         background: rgba(69, 206, 124, 1);
         color: white;

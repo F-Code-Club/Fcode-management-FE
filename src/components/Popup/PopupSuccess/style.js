@@ -37,6 +37,7 @@ export const Popup = styled.div`
 export const ContentPopup = styled.div`
     width: 100%;
     margin-left: 1rem;
+    transition: linear 0.25s;
     div {
         text-align: right;
     }

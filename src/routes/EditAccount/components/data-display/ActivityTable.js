@@ -1,11 +1,23 @@
+/* eslint-disable no-unused-vars */
 import { Table, Tag } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { actions } from '../../slice';
 import selector from '../../slice/selectors';
 
 const ActivityTable = () => {
     const tags = useSelector(selector.tags);
     const activities = useSelector(selector.activities);
+
+    const dispatch = useDispatch();
+
+    const handleClose = (row, removedTag) => {
+        let _activities = activities;
+        let _roles = new Set(_activities[row.key].roles);
+        _roles.delete(removedTag);
+        _activities[row.key].roles = _roles;
+        dispatch(actions.setActivities(_activities));
+    };
 
     const columns = [
         {
@@ -22,13 +34,17 @@ const ActivityTable = () => {
             title: 'Vai trò',
             key: 'roles',
             dataIndex: 'roles',
-            render: (_, { roles }) => (
+            render: (_, row) => (
                 <>
-                    {roles.map((tag) => {
+                    {row.roles.map((tag) => {
                         const color = tags[tag];
-
                         return (
-                            <Tag closable color={color} key={tag}>
+                            <Tag
+                                closable
+                                onClose={() => handleClose(row, tag)}
+                                color={color}
+                                key={tag}
+                            >
                                 {tag.toUpperCase()}
                             </Tag>
                         );

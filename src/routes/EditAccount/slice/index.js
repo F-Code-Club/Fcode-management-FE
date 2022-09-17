@@ -26,37 +26,19 @@ export const initialState = {
     },
     activities: [
         {
-            key: '1',
+            key: '0',
             semester: 'FA23',
             activity: 'Techaway',
             roles: ['participant', 'developer'],
+        },
+        {
+            key: '1',
+            semester: 'SU22',
+            activity: 'Battle R.ODE',
+            roles: ['organizer', 'participant'],
         },
         {
             key: '2',
-            semester: 'SU22',
-            activity: 'Battle R.ODE',
-            roles: ['organizer', 'participant'],
-        },
-        {
-            key: '3',
-            semester: 'SP21',
-            activity: 'Recruitment',
-            roles: ['organizer'],
-        },
-        {
-            key: '4',
-            semester: 'FA23',
-            activity: 'Techaway',
-            roles: ['participant', 'developer'],
-        },
-        {
-            key: '5',
-            semester: 'SU22',
-            activity: 'Battle R.ODE',
-            roles: ['organizer', 'participant'],
-        },
-        {
-            key: '6',
             semester: 'SP21',
             activity: 'Recruitment',
             roles: ['organizer'],

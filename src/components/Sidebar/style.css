@@ -52,13 +52,32 @@
 }
 
 .ant-menu-submenu-arrow {
-    color: #45ce7b !important;
+    color: #ffffff !important;
 }
 
 .ant-menu-light .ant-menu-item:hover,
 .ant-menu-light .ant-menu-submenu-active {
     color: #45ce7b !important;
 }
-.ant-menu-item {
+.ant-menu-item,
+.ant-menu-submenu {
     color: #ffffff;
+}
+
+.ant-menu-item a {
+    color: #ffffff !important;
+}
+.ant-menu-item a:hover {
+    color: #45ce7b !important;
+}
+.ant-menu-submenu a {
+    color: #ffffff !important;
+}
+
+.ant-menu-submenu a:hover {
+    color: #45ce7b !important;
+}
+
+.ant-menu-sub.ant-menu-inline {
+    background: #818181;
 }

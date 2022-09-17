@@ -23,17 +23,18 @@ export const ContainerEditor = styled.div`
         border-radius: 10px;
         padding: 25px;
         .demo-editor {
-            height: 20rem;
+            height: 15rem;
             overflow-y: scroll;
             border: 1px solid #d9d9d9;
         }
         .checkbox {
-            margin: 1rem 0;
+            margin: 0.5rem 0;
+            display: flex;
         }
         .container-btn {
             text-align: center;
         }
-        button {
+        .save-btn {
             margin-top: 0.5rem;
             background: rgba(69, 206, 124, 1);
             color: white;

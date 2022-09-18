@@ -33,15 +33,21 @@ export const initialState = {
         },
         {
             key: '1',
-            semester: 'SU22',
+            semester: 'SU20',
             activity: 'Battle R.ODE',
             roles: ['organizer', 'participant'],
         },
         {
             key: '2',
-            semester: 'SP21',
+            semester: 'SP22',
             activity: 'Recruitment',
             roles: ['organizer'],
+        },
+        {
+            key: '4',
+            semester: 'SP21',
+            activity: 'Team building',
+            roles: ['organizer', 'participant'],
         },
     ],
     modal: {

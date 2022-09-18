@@ -37,7 +37,7 @@ const EditAccount = () => {
 
     useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
-            setTheme(true);
+            setTheme(false);
         }
     });
 

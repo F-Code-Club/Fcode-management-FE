@@ -13,6 +13,7 @@ import {
     InputEmailFPT,
     SelectBirthdate,
     SelectGender,
+    ConfirmModal,
     FullName,
 } from './components';
 import selector from './slice/selectors';
@@ -74,9 +75,7 @@ const EditAccount = () => {
                             </Card>
                             <Space size="middle" className="full-fill">
                                 <Button block>Huỷ thay đổi</Button>
-                                <Button type="primary" block>
-                                    Xác nhận
-                                </Button>
+                                <ConfirmModal />
                             </Space>
                         </Space>
                     </Col>
@@ -89,7 +88,7 @@ const EditAccount = () => {
                                         marginTop: 0,
                                     }}
                                 >
-                                    Thông tin cơ bản {performance.now()}
+                                    Thông tin cơ bản
                                 </Title>
                                 <Row gutter={[getGutter(1), getGutter(1)]}>
                                     <Col span={24}>

@@ -15,7 +15,16 @@ const InputBio = () => {
         dispatch(actions.setBio(e.target.value));
     };
 
-    return <TextArea placeholder="Bio" value={bio} onChange={handleBioChange} />;
+    return (
+        <TextArea
+            showCount
+            maxLength={200}
+            style={{ height: 120 }}
+            placeholder="Bio"
+            value={bio}
+            onChange={handleBioChange}
+        />
+    );
 };
 
 export default InputBio;

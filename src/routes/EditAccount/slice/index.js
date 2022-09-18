@@ -13,7 +13,7 @@ export const initialState = {
     role: 'Admin',
     position: 'Chủ nhiệm',
     genders: ['Nam', 'Nữ'],
-    currentGender: 0,
+    currentGender: (Math.random() <= 0.5) / 1,
     birthdate: faker.date.birthdate({ min: 18, max: 25, mode: 'age' }).getTime(),
     emailFPT: faker.internet.email(fullName[0], fullName[1], 'fpt.edu.vn'),
     personalEmail: faker.internet.email(fullName[0], fullName[1], 'gmail.com'),
@@ -29,7 +29,7 @@ export const initialState = {
             key: '0',
             semester: 'FA23',
             activity: 'Techaway',
-            roles: ['participant', 'developer'],
+            roles: ['participant', 'developer', 'organizer'],
         },
         {
             key: '1',
@@ -44,19 +44,29 @@ export const initialState = {
             roles: ['organizer'],
         },
     ],
+    modal: {
+        confirm: false,
+    },
 };
 
 export const name = 'editAccount';
 
-console.log(generateActions(initialState));
-
 export const slice = createSlice({
     name,
     initialState,
-    reducers: generateActions(initialState),
+    reducers: {
+        ...generateActions(initialState),
+        removeRole: (state, action) => {
+            const { key, role } = action.payload;
+            const activityIndex = state.activities.findIndex((activity) => activity.key == key);
+            const roles = state.activities[activityIndex].roles;
+            state.activities[activityIndex].roles = roles.filter((_role) => _role != role);
+        },
+        modal_confirm: (state, action) => {
+            state.modal.confirm = action.payload;
+        },
+    },
 });
-
-console.log(slice.actions);
 
 injectReducer(name, slice.reducer);
 

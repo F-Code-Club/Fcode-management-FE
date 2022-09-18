@@ -6,6 +6,7 @@ import InputFullName from './data-entry/InputFullName';
 import InputPersonalEmail from './data-entry/InputPersonalEmail';
 import SelectBirthdate from './data-entry/SelectBirthdate';
 import SelectGender from './data-entry/SelectGender';
+import ConfirmModal from './feedback/ConfirmModal';
 import FullName from './general/FullName';
 
 export {
@@ -17,5 +18,6 @@ export {
     InputEmailFPT,
     SelectBirthdate,
     SelectGender,
+    ConfirmModal,
     FullName,
 };

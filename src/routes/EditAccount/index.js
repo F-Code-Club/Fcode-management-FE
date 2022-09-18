@@ -120,14 +120,7 @@ const EditAccount = () => {
                                         <InputBio />
                                     </Col>
                                 </Row>
-                                <Title
-                                    level={4}
-                                    style={{
-                                        marginTop: 10,
-                                    }}
-                                >
-                                    Thông tin nâng cao
-                                </Title>
+                                <Title level={4}>Thông tin nâng cao</Title>
                                 <ActivityTable />
                             </Space>
                         </Card>

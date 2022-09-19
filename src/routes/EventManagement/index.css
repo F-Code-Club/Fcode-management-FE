@@ -78,3 +78,26 @@ border-color: #45ce7c !important;
   border-color: #45ce7c !important;
     background: #45ce7c !important;
 }
+.anticon-close-circle{
+  font: 18px !important;
+  margin: 10px;
+  color:#45ce7c !important;
+}
+hr.solid {
+  border-top: 1.5px solid #45ce7c;
+}
+.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-today{
+  border-color:  #45ce7c!important;
+}
+.ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single):before, .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single):before{
+  background:#e6f8ec !important;
+}
+.ant-picker-cell-in-view.ant-picker-cell-in-range:before {
+  background:#e6f8ec !important;
+}
+.ant-picker-time-panel-column>li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  background:#e6f8ec !important;
+}
+.ant-input-focused, .ant-input:focus {
+  border-color:#45ce7c!important;
+}

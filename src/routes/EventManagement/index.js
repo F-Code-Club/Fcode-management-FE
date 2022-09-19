@@ -8,10 +8,15 @@ import MyCalender from './components/MyCalender';
 import './index.css';
 
 import px2vw from '@/utils/px2vw';
-import { SearchOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import { PlusSquareOutlined } from '@ant-design/icons';
 
 function Event() {
+    // const { notification } = useSelector((state) => state.notification);
     const [isOpen, setOpen] = useState(false);
+    // useEffect(() => {
+    //     openNotification('bottomRight', notification.message, notification.description);
+    // }, notification);
+
     return (
         <>
             <BigContainer>
@@ -31,9 +36,6 @@ function Event() {
                         />
                     </Header>
                     <ButtonContainer>
-                        <CustomButton type="primary">
-                            <SearchOutlined />
-                        </CustomButton>
                         <CustomButton type="primary" onClick={() => setOpen(true)}>
                             <PlusSquareOutlined />
                         </CustomButton>

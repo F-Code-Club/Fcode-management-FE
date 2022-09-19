@@ -1,21 +1,71 @@
-import { Input, DatePicker, Space, Button, Form } from 'antd';
+import { useState } from 'react';
+
+import { Input, DatePicker, Space, Button, Form, notification } from 'antd';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+import { addEvent } from '../slice';
+
+import { dateFormat } from '@/utils/dateFormat';
 import px2vw from '@/utils/px2vw';
+
+const openNotification = (type, placement, value, description) => {
+    notification.success({
+        message: `${value}`,
+        description: `${description}`,
+        placement,
+        duration: 3,
+    });
+};
 
 const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
 function AddEventBox({ handle }) {
+    const dispatch = useDispatch();
+    const [dateString, setDateString] = useState([]);
+    const handleNotification = (type, message, description) => {
+        openNotification(type, 'bottomRight', message, description);
+    };
     const onFinish = (values) => {
         console.log('Success:', values);
+        try {
+            let startDate, endDate, time, arrayOftime;
+            startDate = dateString[0].split(' ');
+            endDate = dateString[1].split(' ');
+            arrayOftime = startDate[1].split(':');
+            time = `${arrayOftime[0]}:${arrayOftime[1]}`;
+            const event = {
+                date: `${dateFormat(startDate[0])} - ${dateFormat(endDate[0])}`,
+                day: `${dateFormat(startDate[0])}`,
+                start: dateString[0],
+                end: dateString[1],
+                name: values.eventName,
+                point: values.eventPoint,
+                place: values.eventPlace,
+                note: values.extraNotice,
+                time: time,
+                dateString: dateString,
+            };
+            dispatch(addEvent(event));
+        } catch {
+            handleNotification('error', 'Failled!!', 'Something has gone Wrong,Please Try again');
+        } finally {
+            handleNotification(
+                'Success',
+                'Success!!!',
+                'Event has been added successfully to Your Calender,Code The Dream!!'
+            );
+            handle();
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        handleNotification('Failed');
     };
     const onDateSelection = (value, dateString) => {
-        console.log(dateString);
+        setDateString(dateString);
     };
     return (
         <Container>
@@ -63,23 +113,25 @@ function AddEventBox({ handle }) {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        className="date-element"
-                        label="Ngày Giờ "
-                        name="date-time"
+                        className="input-element"
+                        label="Địa điểm tổ chức sự kiện"
+                        name="eventPlace"
                         rules={[
                             {
-                                type: 'object',
-                                required: false,
-                                message: 'Hãy nhập thời gian sự kiện',
+                                required: true,
+                                message: 'Hãy nhập  địa điểm của  sự kiện',
                             },
                         ]}
                     >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item className="date-element" label="Ngày Giờ " name="date-time">
                         <Space direction="vertical" size={12}>
                             <RangePicker showTime onChange={onDateSelection} />
                         </Space>
                     </Form.Item>
                     <Form.Item className="input-element" label="Ghi chú" name="extraNotice">
-                        <TextArea rows={4} placeholder="Ghi chú" maxLength={6} />
+                        <TextArea rows={4} placeholder="Ghi chú" maxLength={1000} />
                     </Form.Item>
                     <ButtonContainer>
                         <CustomButton onClick={handle}>Hủy</CustomButton>

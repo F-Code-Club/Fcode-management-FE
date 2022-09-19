@@ -1,51 +1,35 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 
-import { Badge, Calendar } from 'antd';
+import { Calendar } from 'antd';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import '../index.css';
+import Detail from './Detail';
 
-const getListData = (value) => {
-    let listData;
+const getListData = (value, listOfEvents) => {
+    let listData = [];
     let dateValue = value.format('DD/MM/yyyy');
-    switch (dateValue) {
-        case '16/09/2022':
-            listData = [
-                {
-                    type: 'success',
-                    content: 'Họp câu lạc bộ ',
-                },
-            ];
-            break;
 
-        case '14/09/2022':
-            listData = [
-                {
-                    type: 'warning',
-                    content: 'This is warning event.',
-                },
-                {
+    for (let i = 0; i < listOfEvents.length; i++) {
+        if (listOfEvents[i].day === dateValue) {
+            if (listData.length < 0) {
+                listData = [
+                    {
+                        type: 'success',
+                        content: listOfEvents[i].name,
+                        id: listOfEvents[i].id,
+                    },
+                ];
+            } else {
+                listData.push({
                     type: 'success',
-                    content: 'This is usual event.',
-                },
-                {
-                    type: 'error',
-                    content: 'This is error event.',
-                },
-            ];
-            break;
-
-        case '23/09/2022':
-            listData = [
-                {
-                    type: 'success',
-                    content: 'Company Tour',
-                },
-            ];
-            break;
-
-        default:
+                    content: listOfEvents[i].name,
+                    id: listOfEvents[i].id,
+                });
+            }
+        }
     }
-
     return listData || [];
 };
 
@@ -55,9 +39,17 @@ const getMonthData = (value) => {
     }
 };
 function MyCalender() {
-    useEffect(() => {
-        console.log(dateCellRender);
-    });
+    const { listOfEvents } = useSelector((state) => state.listOfEvents);
+    const [isClicked, setIsClicked] = useState(false);
+    const [event, setEvent] = useState({});
+    const HandleClick = (e) => {
+        for (let i = 0; i < listOfEvents.length; i++) {
+            if (listOfEvents[i].id == e.target.id) {
+                setEvent(listOfEvents[i]);
+            }
+        }
+        setIsClicked(true);
+    };
     const monthCellRender = (value) => {
         const num = getMonthData(value);
         return num ? (
@@ -69,12 +61,14 @@ function MyCalender() {
     };
 
     const dateCellRender = (value) => {
-        const listData = getListData(value);
+        const listData = getListData(value, listOfEvents);
         return (
             <ul className="events">
-                {listData.map((item) => (
-                    <li key={item.content}>
-                        <Badge status={item.type} text={item.content} />
+                {listData.map((event) => (
+                    <li key={event.id}>
+                        <EventBox id={event.id} onClick={HandleClick}>
+                            {event.content}
+                        </EventBox>
                     </li>
                 ))}
             </ul>
@@ -82,12 +76,18 @@ function MyCalender() {
     };
 
     return (
-        <Calendar
-            dateCellRender={dateCellRender}
-            monthCellRender={monthCellRender}
-            onSelect={(e) => console.log(e)}
-        />
+        <>
+            {isClicked && <Detail event={event} handle={() => setIsClicked(false)} />}
+            <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
+        </>
     );
 }
 
 export default MyCalender;
+const EventBox = styled.div`
+    background: #45ce7c;
+    border-radius: 5px;
+    margin: 4px 8px;
+    padding: 4px;
+    color: White;
+`;

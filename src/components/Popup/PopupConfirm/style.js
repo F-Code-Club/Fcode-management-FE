@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const move = keyframes`
+    0%{
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+`;
 
 export const ContainerPopup = styled.div`
     width: 100vw;
@@ -6,6 +18,7 @@ export const ContainerPopup = styled.div`
     position: fixed;
     top: 0;
     left: 0;
+    animation: ${move} 0.15s linear forwards;
 `;
 
 export const LayerPopup = styled.div`

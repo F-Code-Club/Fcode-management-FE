@@ -1,4 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const move = keyframes`
+    0%{
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+`;
 
 export const ContainerEditor = styled.div`
     width: 100vw;
@@ -6,12 +18,7 @@ export const ContainerEditor = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    .first-layer {
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.38);
-        position: absolute;
-    }
+    animation: ${move} 0.3s linear forwards;
     .editor {
         width: 70%;
         position: absolute;
@@ -46,4 +53,11 @@ export const ContainerEditor = styled.div`
             }
         }
     }
+`;
+
+export const FirstLayer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.38);
+    position: absolute;
 `;

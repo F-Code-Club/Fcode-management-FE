@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import { ManageAnnouncement } from './Announcement';
+import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -15,6 +17,18 @@ const publicRoute = [
     {
         path: 'home2',
         component: <Home />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-announcement',
+        component: <ManageAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-announcement/view-announcement/:id',
+        component: <ViewAnnouncement />,
         exact: true,
         restrict: true,
     },

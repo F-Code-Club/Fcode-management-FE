@@ -66,12 +66,12 @@ export const ContentPopup = styled.div`
     }
     .accept-btn {
         margin-top: 0.5rem;
-        background: rgba(69, 206, 124, 1);
+        background: #45ce7c;
         color: white;
-        border: 1px solid rgba(69, 206, 124, 1);
+        border: 1px solid #45ce7c;
         :hover {
-            color: rgba(69, 206, 124, 1);
-            border: 1px solid rgba(69, 206, 124, 1);
+            color: #45ce7c;
+            border: 1px solid #45ce7c;
         }
     }
 `;

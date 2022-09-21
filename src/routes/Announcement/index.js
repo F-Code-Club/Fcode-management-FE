@@ -102,15 +102,27 @@ export const ManageAnnouncement = () => {
     const ImageAnnouncement = (DataImg) => {
         switch (DataImg.length) {
             case 0:
-                return <Image src={NoPhoto} alt="no-image-announcement" />;
+                return (
+                    <Image src={NoPhoto} alt="no-image-announcement" style={{ width: '100%' }} />
+                );
             case 1:
-                return <Image src={DataImg[0].url} alt="image-item-announcement" />;
+                return (
+                    <Image
+                        src={DataImg[0]}
+                        alt="image-item-announcement"
+                        style={{ width: '100%' }}
+                    />
+                );
             default:
                 return (
                     <Carousel {...DataSlick}>
-                        {DataImg.map((todo) => (
-                            <div key={todo.id}>
-                                <Image src={todo.url} alt="image-item-announcement" />
+                        {DataImg.map((todo, key) => (
+                            <div key={key}>
+                                <Image
+                                    src={todo}
+                                    alt="image-item-announcement"
+                                    style={{ width: '100%' }}
+                                />
                             </div>
                         ))}
                     </Carousel>
@@ -148,7 +160,7 @@ export const ManageAnnouncement = () => {
                 size="large"
                 className="list-announcement"
                 pagination={{ pageSize: 3 }}
-                dataSource={listAnnounce}
+                dataSource={[...listAnnounce].reverse()}
                 renderItem={(item) => (
                     <List.Item key={item.id} extra={ImageAnnouncement(item.imgs)}>
                         <List.Item.Meta

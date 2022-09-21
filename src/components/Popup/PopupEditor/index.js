@@ -100,7 +100,16 @@ export const CreateAnnouncement = (props) => {
                         })
                     }
                 />
-                <UploadImage />
+                <UploadImage
+                    type={props.type}
+                    imgs={props.imgs}
+                    onChange={(e) =>
+                        setNewAnnouncement({
+                            ...newAnnouncement,
+                            imgs: e,
+                        })
+                    }
+                />
                 <div className="checkbox">
                     <input
                         type="checkbox"

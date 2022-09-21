@@ -18,7 +18,7 @@ export const ContainerEditor = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    animation: ${move} 0.3s linear forwards;
+    animation: ${move} 0.15s linear forwards;
     .editor {
         width: 70%;
         position: absolute;

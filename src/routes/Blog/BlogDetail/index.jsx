@@ -5,17 +5,15 @@ import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 
 import { Wrapper } from '@/routes/Blog/BlogDetail/style';
-import dummy from '@/utils/dummy.json';
+import { DUMMY_CONTENT } from '@/utils/dummy.js';
 
 const BlogDetailComponent = () => {
-    const content = htmlToDraft(dummy.content);
+    const content = htmlToDraft(DUMMY_CONTENT.content);
     const contentState = ContentState.createFromBlockArray(content.contentBlocks);
 
     const [editorState, setEditorState] = useState(() =>
         EditorState.createWithContent(contentState)
     );
-
-    console.log(content.contentBlocks);
 
     return (
         <Wrapper>

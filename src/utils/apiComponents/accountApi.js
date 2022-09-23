@@ -1,4 +1,4 @@
-import { get } from 'utils/ApiCaller';
+import { get } from '@/utils/ApiCaller';
 
 // Create a components api for your calling here
 // Make an object with the method you want, passing params then create endpoint and return the method you call as the example below

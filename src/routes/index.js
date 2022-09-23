@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import BlogDetailComponent from './Blog/BlogDetail/index';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
-import Home from '@/routes/Home';
 import Blog from '@/routes/Blog';
+import Home from '@/routes/Home';
 
 // children: [
 //     {
@@ -38,6 +39,12 @@ const privateRoute = [
     {
         path: '/blog',
         component: <Blog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/blog/detail',
+        component: <BlogDetailComponent />,
         exact: true,
         restrict: true,
     },

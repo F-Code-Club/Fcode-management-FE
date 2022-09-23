@@ -1,32 +1,46 @@
-import { Layout, PageHeader } from 'antd';
+import { Layout, PageHeader, Breadcrumb } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 
+import { selectActionButtons } from '../Button/slice/selector';
+import { selectTitleHeader } from '../PageHeader/slice/selector';
+import StyledButton from './../Button/index';
+import { testHandleButton } from './dummy';
+
+import { actions as buttonActions } from '@/components/Button/slice/index';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
-const routes = [
-    {
-        path: 'home',
-        breadcrumbName: 'Trang Chủ',
-    },
-    {
-        path: 'event',
-        breadcrumbName: 'Sự Kiện',
-    },
-    {
-        path: 'source',
-        breadcrumbName: 'Tài Nguyên',
-    },
-    {
-        path: 'blog',
-        breadcrumbName: 'Bài Viết',
-    },
-    {
-        path: 'member',
-        breadcrumbName: 'Thành Viên',
-    },
-];
+
+const breadcrumbNameMap = {
+    '/home': 'Trang chu',
+    '/event': 'event',
+    '/source': 'source',
+    '/member': 'member',
+    '/blog': 'blog',
+    '/announcement': 'announcement',
+    '/information': 'information',
+};
 
 const PageHeaderComponent = () => {
+    const TitleHeader = useSelector(selectTitleHeader);
+    const ActionButtons = useSelector(selectActionButtons);
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const pathSnippets = location.pathname.split('/').filter((i) => i);
+    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+        return (
+            <Breadcrumb.Item key={url}>
+                <Link to={url}>{breadcrumbNameMap[url]}</Link>
+            </Breadcrumb.Item>
+        );
+    });
+    const breadcrumbItems = [
+        <Breadcrumb.Item key="home">
+            <Link to="/">Home</Link>
+        </Breadcrumb.Item>,
+    ].concat(extraBreadcrumbItems);
     return (
         <Header
             className="site-layout-sub-header-background"
@@ -36,13 +50,25 @@ const PageHeaderComponent = () => {
                 background: 'rgb(255, 255, 255)',
             }}
         >
+            <Breadcrumb>{breadcrumbItems}</Breadcrumb>
             <PageHeader
                 backIcon={<ArrowLeftOutlined />}
                 className="site-page-header-responsive"
-                title="Trang Chủ"
+                title={TitleHeader}
                 style={{ background: '#FFFFFF' }}
-                breadcrumb={{ routes }}
                 onBack={() => window.history.back()}
+                extra={
+                    ActionButtons.isShow &&
+                    ActionButtons.buttons.map((button, index) => (
+                        <StyledButton
+                            key={button.action + index}
+                            type={button.type}
+                            onClick={() => dispatch(buttonActions.handleHidden(testHandleButton))}
+                        >
+                            {button.name}
+                        </StyledButton>
+                    ))
+                }
             />
         </Header>
     );

@@ -1,9 +1,12 @@
+import { Row } from 'antd';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-    padding: 2rem;
-`;
+import { themes } from '@/theme/theme';
 
-export const Container = styled.div`
-    background-color: #e9f7ed;
+export const Wrapper = styled(Row)`
+    padding: 2rem 5.5rem;
+    margin-right: 1rem;
+`;
+export const ActionBar = styled.div`
+    background-color: ${themes.colors.light};
 `;

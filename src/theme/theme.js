@@ -20,6 +20,7 @@ export const themes = {
     dark: `${process.env.PUBLIC_URL}/antd/antd.dark.min.css`,
     light: `${process.env.PUBLIC_URL}/antd/antd.min.css`,
     colors: {
+        light: '#FFFFFF',
         primary: '#45CE7C',
         neutro5: '#D9D9D9',
     },

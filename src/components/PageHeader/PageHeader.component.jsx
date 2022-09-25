@@ -6,8 +6,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
+import { openNotificationWithIcon } from '../ToastDemo/style';
 import StyledButton from './../Button/index';
-import { openNotificationWithIcon } from './../Toast/style';
 import { ButtonModalConfig } from './ModalConfig';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';

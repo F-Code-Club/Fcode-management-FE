@@ -61,7 +61,7 @@ const PageHeaderComponent = () => {
                     ActionButtons.isShow &&
                     ActionButtons.buttons.map((button, index) => (
                         <StyledButton
-                            key={button.action + index}
+                            key={button.name + index}
                             type={button.type}
                             onClick={() => dispatch(buttonActions.handleHidden(testHandleButton))}
                         >

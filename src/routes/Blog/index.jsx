@@ -13,7 +13,7 @@ const columns = [
         dataIndex: 'post_title',
         key: 'post_title',
         render: (text, record) => (
-            <Link to={`/blog/${record.key}`} relative="path">
+            <Link to={`/blog/${record.key}?action=approve`} relative="path">
                 {text}
             </Link>
         ),
@@ -67,7 +67,11 @@ const columns2 = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        render: (text, record) => (
+            <Link to={`/blog/${record.key}?action=hidden`} relative="path">
+                {text}
+            </Link>
+        ),
     },
     {
         title: 'Tác giả',

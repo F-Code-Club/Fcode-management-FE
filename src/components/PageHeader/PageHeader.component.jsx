@@ -5,7 +5,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 import StyledButton from './../Button/index';
-import { testHandleButton } from './dummy';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -21,7 +20,7 @@ const breadcrumbNameMap = {
     '/announcement': 'announcement',
     '/information': 'information',
 };
-
+console.log(breadcrumbNameMap);
 const PageHeaderComponent = () => {
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);
@@ -63,7 +62,14 @@ const PageHeaderComponent = () => {
                         <StyledButton
                             key={button.name + index}
                             type={button.type}
-                            onClick={() => dispatch(buttonActions.handleHidden(testHandleButton))}
+                            onClick={() =>
+                                dispatch(
+                                    buttonActions.handleHidden({
+                                        endpoint: button.endpoint,
+                                        token: button.token,
+                                    })
+                                )
+                            }
                         >
                             {button.name}
                         </StyledButton>

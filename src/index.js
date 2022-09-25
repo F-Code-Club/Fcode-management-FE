@@ -11,6 +11,7 @@ import RouterComponent from './routes';
 import store from './store';
 
 import { themes } from '@/theme/theme';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

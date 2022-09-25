@@ -7,6 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 import StyledButton from './../Button/index';
+import { openNotificationWithIcon } from './../Toast/style';
 import { ButtonModalConfig } from './ModalConfig';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
@@ -50,11 +51,11 @@ const PageHeaderComponent = () => {
     useEffect(() => {
         dispatch(buttonActions.changeButtons({ isShow: false }));
     }, [location]);
-
     const handleButton = (button) => {
         return modal.confirm(
-            ButtonModalConfig(button.configs.title, button.configs.content, () => {
+            ButtonModalConfig(button.configs.title, button.configs.content, async () => {
                 testApi.get(button.params);
+                openNotificationWithIcon(button.successContent);
             })
         );
     };

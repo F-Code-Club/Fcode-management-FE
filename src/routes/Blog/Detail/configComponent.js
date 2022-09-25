@@ -33,6 +33,7 @@ export const hiddenButton = {
                 content:
                     'Bài viết sau khi ẩn, người đọc sẽ không tìm thấy bài viết trên trang của CLB nữa.',
             },
+            successContent: 'Ẩn bài thành công',
             params: {
                 endpoint: 'hide',
                 token: 'nghia',
@@ -46,6 +47,7 @@ export const hiddenButton = {
                 title: 'Bạn có muốn xoá bài viết này không?',
                 content: 'Bài viết sau khi xóa sẽ không còn dữ liệu trên hệ thống trang của CLB.',
             },
+            successContent: 'Xóa bài viết thành công',
             params: {
                 endpoint: 'delete',
                 token: 'nghia',
@@ -69,6 +71,7 @@ export const approveButton = {
                 content:
                     'Bài viết sau khi không được duyệt, tác giả vẫn có quyền chỉnh sửa và được duyệt lại.',
             },
+            successContent: 'Từ chối duyệt bài viết thành công',
             params: {
                 endpoint: 'disapprove',
                 token: 'nghia',
@@ -82,6 +85,7 @@ export const approveButton = {
                 title: 'Bạn có muốn duyệt bài viết này không?',
                 content: 'Bài viết sau khi được duyệt sẽ được đăng công khai trên trang của CLB.',
             },
+            successContent: 'Duyệt bài viết thành công',
             params: {
                 endpoint: 'Approve',
                 token: 'nghia',

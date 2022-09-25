@@ -85,7 +85,7 @@ const BlogDetailComponent = () => {
     const params = useParams();
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
-    const currentAction = searchParams.get('action');
+    const currentAction = searchParams.get('action') || '';
     const data = DUMMY_CONTENT[params.key - 1] ? DUMMY_CONTENT[params.key - 1].content : '';
     // Global state
     const dispatch = useDispatch();
@@ -109,9 +109,9 @@ const BlogDetailComponent = () => {
             default:
                 dispatch(disableButton);
         }
-    }, [params]);
+    }, [location]);
     // If out of data
-    if (data === '' || !currentAction.match(/[(approve),(hidden)]/g)) {
+    if (currentAction === '' || data === '' || !currentAction.match(/[(approve),(hidden)]/g)) {
         dispatch(reducerButton.changeButtons(disableButton));
         return <Navigate to="/" />;
     }

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
-    min-width: 100vw;
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +16,26 @@ export const Wrapper = styled.div`
     border-radius: 10px;
     padding: 22px 30px;
     position: relative;
-    /* overflow-y: auto; */
+
+    /* Override Ant Design */
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+    a,
+    .ant-pagination-item-active a {
+        color: #45ce7c;
+    }
+
+    .ant-pagination-item-active {
+        border-color: #45ce7c;
+    }
+
+    .ant-btn-primary {
+        border-color: #45ce7c;
+        background: #45ce7c;
+    }
+
+    .ant-tabs-ink-bar {
+        background: #45ce7c;
+    }
 `;
 
 export const Search = styled.div`

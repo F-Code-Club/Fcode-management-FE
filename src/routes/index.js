@@ -4,8 +4,8 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
-import Home from '@/routes/Home';
 import Blog from '@/routes/Blog';
+import Home from '@/routes/Home';
 
 // children: [
 //     {

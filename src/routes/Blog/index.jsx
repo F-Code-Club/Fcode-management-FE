@@ -1,4 +1,5 @@
 import { Space, Table, Tag, Tabs, Input } from 'antd';
+import { Link } from 'react-router-dom';
 
 import * as Styled from './Blog.styled';
 
@@ -11,7 +12,11 @@ const columns = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        render: (text, record) => (
+            <Link to={`/blog/${record.key}`} relative="path">
+                {text}
+            </Link>
+        ),
     },
     {
         title: 'Tác giả',
@@ -158,6 +163,8 @@ const data = Array.from({ length: 100 }, (_, i) => ({
 }));
 
 const Blog = () => {
+    // Using redux to store data when received
+
     return (
         <Styled.Background>
             <Styled.Wrapper>

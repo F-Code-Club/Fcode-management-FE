@@ -5,11 +5,12 @@ import { ContentState, EditorState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useParams } from 'react-router-dom';
 
-import { selectActionButtons } from './../../../components/Button/slice/selector';
+import { selectActionButtons } from '../../../components/Button/slice/selector';
 
 import StyledContainer from '@/components/Container';
-import { Wrapper } from '@/routes/Blog/BlogDetail/style';
+import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 import { DUMMY_CONTENT } from '@/utils/dummy.js';
 import { CommentOutlined, EyeOutlined, LikeOutlined, ShareAltOutlined } from '@ant-design/icons';
@@ -36,17 +37,25 @@ const ActionElements = [
 ];
 
 const BlogDetailComponent = () => {
+    //router variable
+    const params = useParams();
+    console.log(params);
+    const data = DUMMY_CONTENT[params.key - 1] ? DUMMY_CONTENT[params.key - 1].content : '';
     // Global state
     const dispatch = useDispatch();
     const actionButton = useSelector(selectActionButtons);
-
     console.log(dispatch, actionButton);
     // Local variable
-    const content = htmlToDraft(DUMMY_CONTENT.content);
+
+    const content = htmlToDraft(data);
     const contentState = ContentState.createFromBlockArray(content.contentBlocks);
     const [editorState, setEditorState] = useState(() =>
         EditorState.createWithContent(contentState)
     );
+    if (data === '') {
+        return <Navigate to="/" />;
+    }
+    // If out of data
     return (
         <Wrapper>
             <Row gutter={17}>

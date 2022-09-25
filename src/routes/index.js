@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import BlogDetailComponent from './Blog/BlogDetail/index';
+import BlogDetailComponent from './Blog/Detail/index';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -43,9 +43,9 @@ const privateRoute = [
         restrict: true,
     },
     {
-        path: '/blog/detail',
+        path: '/blog/:key',
         component: <BlogDetailComponent />,
-        exact: true,
+        exact: false,
         restrict: true,
     },
 ];

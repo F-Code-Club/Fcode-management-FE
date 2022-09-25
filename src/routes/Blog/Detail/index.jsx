@@ -7,79 +7,17 @@ import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 
+import { approveButton, disableButton, hiddenButton, ActionElements } from './configComponent';
+
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import { selectActionButtons } from '@/components/Button/slice/selector';
 import StyledContainer from '@/components/Container';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 import { DUMMY_CONTENT } from '@/utils/dummy.js';
-import { CommentOutlined, EyeOutlined, LikeOutlined, ShareAltOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
-const ActionElements = [
-    {
-        name: 'view',
-        Element: ({ ...rest }) => <EyeOutlined {...rest} />,
-    },
-    {
-        name: 'like',
-        Element: ({ ...rest }) => <LikeOutlined {...rest} />,
-    },
-    {
-        name: 'share',
-        Element: ({ ...rest }) => <ShareAltOutlined {...rest} />,
-    },
-    {
-        name: 'comment',
-        Element: ({ ...rest }) => <CommentOutlined {...rest} />,
-    },
-];
-const hiddenButton = {
-    type: 'hidden',
-    // TODO: change this when finish testing
-    isShow: true, // show or not.
-    buttons: [
-        // list of action for all button
-        {
-            name: 'Ẩn',
-            type: '',
-            endpoint: 'hide',
-            token: 'nghia',
-        },
-        {
-            name: 'Xoá',
-            type: 'primary',
-            endpoint: 'delete',
-            token: 'nghia',
-        },
-    ],
-};
-const approveButton = {
-    type: 'approve',
-    // TODO: change this when finish testing
-    isShow: true, // show or not.
-    buttons: [
-        // list of action for all button
-        {
-            name: 'Từ Chối',
-            type: '',
-            endpoint: 'disapprove',
-            token: 'nghia',
-        },
-        {
-            name: 'Duyệt',
-            type: 'primary',
-            endpoint: 'approve',
-            token: 'nghia',
-        },
-    ],
-};
-const disableButton = {
-    type: 'none',
-    isShow: false,
-    buttons: [],
-};
 const BlogDetailComponent = () => {
     //router variable
     const params = useParams();

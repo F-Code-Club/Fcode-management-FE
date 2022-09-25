@@ -1,12 +1,16 @@
-import { Layout, PageHeader, Breadcrumb } from 'antd';
+import { useEffect } from 'react';
+
+import { Layout, PageHeader, Breadcrumb, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 import StyledButton from './../Button/index';
+import { ButtonModalConfig } from './ModalConfig';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
+import testApi from '@/utils/apiComponents/testApi';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -22,6 +26,7 @@ const breadcrumbNameMap = {
 };
 console.log(breadcrumbNameMap);
 const PageHeaderComponent = () => {
+    const [modal, contextHolder] = Modal.useModal();
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);
     const dispatch = useDispatch();
@@ -40,6 +45,19 @@ const PageHeaderComponent = () => {
             <Link to="/">Home</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
+
+    // Button state
+    useEffect(() => {
+        dispatch(buttonActions.changeButtons({ isShow: false }));
+    }, [location]);
+
+    const handleButton = (button) => {
+        return modal.confirm(
+            ButtonModalConfig(button.configs.title, button.configs.content, () => {
+                testApi.get(button.params);
+            })
+        );
+    };
     return (
         <Header
             className="site-layout-sub-header-background"
@@ -62,20 +80,14 @@ const PageHeaderComponent = () => {
                         <StyledButton
                             key={button.name + index}
                             type={button.type}
-                            onClick={() =>
-                                dispatch(
-                                    buttonActions.handleHidden({
-                                        endpoint: button.endpoint,
-                                        token: button.token,
-                                    })
-                                )
-                            }
+                            onClick={() => handleButton(button)}
                         >
                             {button.name}
                         </StyledButton>
                     ))
                 }
             />
+            {contextHolder}
         </Header>
     );
 };

@@ -22,6 +22,8 @@ export const themes = {
     colors: {
         light: '#FFFFFF',
         primary: '#45CE7C',
+        Primary1: '#C3EDD1',
+        primary5: '#00C464',
         neutro5: '#D9D9D9',
     },
 };

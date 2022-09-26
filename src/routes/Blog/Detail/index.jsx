@@ -48,6 +48,7 @@ const BlogDetailComponent = () => {
                 dispatch(disableButton);
         }
     }, [location]);
+    //TODO: routing to blog when finish
     // If out of data
     if (currentAction === '' || data === '' || !currentAction.match(/[(approve),(hidden)]/g)) {
         dispatch(reducerButton.changeButtons(disableButton));

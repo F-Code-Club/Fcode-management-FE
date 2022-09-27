@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-// eslint-disable-next-line import/no-unresolved
 import LayoutComponent from '@/components/Layout/Layout.component';
+import EditAccount from '@/routes/EditAccount';
 import Home from '@/routes/Home';
 
 // children: [
@@ -21,8 +21,8 @@ const publicRoute = [
         restrict: true,
     },
     {
-        path: 'home2',
-        component: <Home />,
+        path: 'edit-account',
+        component: <EditAccount />,
         exact: true,
         restrict: true,
     },

@@ -18,7 +18,6 @@ const LayoutComponent = ({ children }) => {
                     <div
                         className="site-layout-background"
                         style={{
-                            background: '#FFFFFF',
                             padding: 24,
                         }}
                     >

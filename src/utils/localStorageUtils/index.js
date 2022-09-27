@@ -1,5 +1,6 @@
-import { LOCAL_STORAGE_TOKEN } from 'config';
 import { decodeToken, isTokenExpired } from 'react-jwt';
+
+import { LOCAL_STORAGE_TOKEN } from '@/config';
 
 class LocalStorageUtils {
     getItem(key, defaultValue = '') {

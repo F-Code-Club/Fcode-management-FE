@@ -25,7 +25,7 @@ const breadcrumbNameMap = {
     '/announcement': 'announcement',
     '/information': 'information',
 };
-console.log(breadcrumbNameMap);
+
 const PageHeaderComponent = () => {
     const [modal, contextHolder] = Modal.useModal();
     const TitleHeader = useSelector(selectTitleHeader);

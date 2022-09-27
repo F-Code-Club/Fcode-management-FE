@@ -4,13 +4,12 @@ import { Row, Col, Typography } from 'antd';
 import { ContentState, EditorState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 
 import { approveButton, disableButton, hiddenButton, ActionElements } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
-import { selectActionButtons } from '@/components/Button/slice/selector';
 import StyledContainer from '@/components/Container';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
@@ -27,8 +26,6 @@ const BlogDetailComponent = () => {
     const data = DUMMY_CONTENT[params.key - 1] ? DUMMY_CONTENT[params.key - 1].content : '';
     // Global state
     const dispatch = useDispatch();
-    const actionButton = useSelector(selectActionButtons);
-    console.log(actionButton);
     // Local variable
     const content = htmlToDraft(data);
     const contentState = ContentState.createFromBlockArray(content.contentBlocks);

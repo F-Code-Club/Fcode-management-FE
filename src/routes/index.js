@@ -6,6 +6,7 @@ import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
+import EditAccount from '@/routes/EditAccount';
 import Home from '@/routes/Home';
 
 // children: [
@@ -22,8 +23,8 @@ const publicRoute = [
         restrict: true,
     },
     {
-        path: 'home2',
-        component: <Home />,
+        path: 'edit-account',
+        component: <EditAccount />,
         exact: true,
         restrict: true,
     },

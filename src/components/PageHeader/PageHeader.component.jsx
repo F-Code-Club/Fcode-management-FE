@@ -13,13 +13,16 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 const { Header } = Layout;
 
 const breadcrumbNameMap = {
-    '/home': 'Trang chu',
     '/event': 'event',
     '/source': 'source',
     '/member': 'member',
     '/blog': 'blog',
     '/announcement': 'announcement',
     '/information': 'information',
+    '/account': 'account',
+    '/account/edit-account': 'edit-account',
+    '/announcement/notification': 'notification',
+    '/blog/1': 'bai viet',
 };
 
 const PageHeaderComponent = () => {

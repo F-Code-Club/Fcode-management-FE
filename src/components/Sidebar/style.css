@@ -51,7 +51,6 @@
 }
 .ant-menu-item-selected .ant-menu-title-content a {
     color: #45ce7c !important;
-    background-color: #e6f8ec !important;
 }
 .ant-menu-inline .ant-menu-item::after {
     border-right: 3px solid #45ce7c !important;

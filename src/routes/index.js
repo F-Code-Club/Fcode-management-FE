@@ -21,7 +21,7 @@ const publicRoute = [
         restrict: true,
     },
     {
-        path: 'edit-account',
+        path: 'account/edit-account',
         component: <EditAccount />,
         exact: true,
         restrict: true,

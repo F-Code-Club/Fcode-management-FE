@@ -17,8 +17,8 @@ export const slice = createSlice({
 });
 
 export const themes = {
-    dark: `${process.env.PUBLIC_URL}/antd/antd.dark.min.css`,
-    light: `${process.env.PUBLIC_URL}/antd/antd.min.css`,
+    dark: `${process.env.PUBLIC_URL}/antd/dark-theme.css`,
+    light: `${process.env.PUBLIC_URL}/antd/light-theme.css`,
     colors: {
         primary: '#45CE7C',
         neutro5: '#D9D9D9',

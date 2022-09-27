@@ -29,7 +29,9 @@
         "start": "craco start",
         "build": "craco build",
         "test": "craco test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "gulp": "gulp less",
+        "dev": "gulp less && craco start"
     },
     "eslintConfig": {
         "extends": [
@@ -52,6 +54,7 @@
     "devDependencies": {
         "@faker-js/faker": "^7.5.0",
         "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+        "autoprefixer": "^10.4.12",
         "babel-plugin-module-resolver": "^4.1.0",
         "eslint": "8.2.0",
         "eslint-config-airbnb": "19.0.4",
@@ -62,6 +65,12 @@
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-react": "^7.31.8",
         "eslint-plugin-react-hooks": "^4.6.0",
+        "gulp": "^4.0.2",
+        "gulp-csso": "^4.0.1",
+        "gulp-debug": "^4.0.0",
+        "gulp-less": "^5.0.0",
+        "gulp-postcss": "^9.0.1",
+        "less-plugin-npm-import": "^2.1.0",
         "prettier": "^2.7.1"
     }
 }

@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
 export const ContainerAnnounce = styled.div`
+    min-height: calc(100vh - 190px);
     background: #e6f8ec;
-    padding: 4rem 10rem;
+    padding: 0 10rem;
+    .rdw-editor-toolbar {
+        display: none;
+    }
 `;
 export const ContentAnnounce = styled.div`
     background: white;

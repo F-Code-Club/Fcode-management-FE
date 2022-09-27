@@ -29,6 +29,10 @@ export const ContainerEditor = styled.div`
         transform: translate(-50%, -50%);
         border-radius: 10px;
         padding: 25px;
+        .rdw-link-modal,
+        .rdw-embedded-modal {
+            height: auto;
+        }
         .demo-editor {
             height: 15rem;
             overflow-y: scroll;

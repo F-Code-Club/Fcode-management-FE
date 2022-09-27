@@ -174,7 +174,7 @@ export const ManageAnnouncement = () => {
                             )}
                             wrapperClassName="demo-wrapper"
                             editorClassName="demo-editor"
-                            readOnly="false"
+                            readOnly
                         />
                         <div className="btn-manage-announcement">
                             <Button

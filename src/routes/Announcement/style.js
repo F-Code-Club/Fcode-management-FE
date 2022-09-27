@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContainerAnnouncement = styled.div`
     width: 100%;
-    padding: 3rem 10%;
+    min-height: calc(100vh - 190px);
     background: #e6f8ec;
     transition: 0.25 linear;
     .list-announcement {

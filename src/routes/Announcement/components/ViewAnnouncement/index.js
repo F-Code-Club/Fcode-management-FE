@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import { convertFromRaw, EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { selectAnnounce } from '../../slice/selectors';
 import { ContainerAnnounce, ContentAnnounce } from './style';
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const ViewAnnouncement = () => {
     const [state, setState] = useState();
@@ -39,8 +42,11 @@ export const ViewAnnouncement = () => {
                         )}
                         wrapperClassName="demo-wrapper"
                         editorClassName="demo-editor"
-                        readOnly="false"
+                        readOnly
                         style={{ 'text-align': 'justify' }}
+                        toolbar={{
+                            options: [],
+                        }}
                     />
                 </ContentAnnounce>
             )}

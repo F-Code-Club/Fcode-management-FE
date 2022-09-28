@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 import StyledButton from './../Button/index';
+import { PageHeaderContainer } from './PageHeader.style';
 import { testHandleButton } from './dummy';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
@@ -23,6 +24,8 @@ const breadcrumbNameMap = {
     '/account/edit-account': 'edit-account',
     '/announcement/notification': 'notification',
     '/blog/1': 'bai viet',
+    '/comment': 'comment',
+    '/recruitmembers': 'recruitmembers',
 };
 
 const PageHeaderComponent = () => {
@@ -45,35 +48,39 @@ const PageHeaderComponent = () => {
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
     return (
-        <Header
-            className="site-layout-sub-header-background"
-            style={{
-                height: 100,
-                padding: 0,
-                background: 'rgb(255, 255, 255)',
-            }}
-        >
-            <Breadcrumb>{breadcrumbItems}</Breadcrumb>
-            <PageHeader
-                backIcon={<ArrowLeftOutlined />}
-                className="site-page-header-responsive"
-                title={TitleHeader}
-                style={{ background: '#FFFFFF' }}
-                onBack={() => window.history.back()}
-                extra={
-                    ActionButtons.isShow &&
-                    ActionButtons.buttons.map((button, index) => (
-                        <StyledButton
-                            key={button.name + index}
-                            type={button.type}
-                            onClick={() => dispatch(buttonActions.handleHidden(testHandleButton))}
-                        >
-                            {button.name}
-                        </StyledButton>
-                    ))
-                }
-            />
-        </Header>
+        <PageHeaderContainer>
+            <Header
+                className="site-layout-sub-header-background"
+                style={{
+                    height: 100,
+                    padding: 0,
+                    background: 'rgb(255, 255, 255)',
+                }}
+            >
+                <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+                <PageHeader
+                    backIcon={<ArrowLeftOutlined />}
+                    className="site-page-header-responsive"
+                    title={TitleHeader}
+                    style={{ background: '#FFFFFF' }}
+                    onBack={() => window.history.back()}
+                    extra={
+                        ActionButtons.isShow &&
+                        ActionButtons.buttons.map((button, index) => (
+                            <StyledButton
+                                key={button.name + index}
+                                type={button.type}
+                                onClick={() =>
+                                    dispatch(buttonActions.handleHidden(testHandleButton))
+                                }
+                            >
+                                {button.name}
+                            </StyledButton>
+                        ))
+                    }
+                />
+            </Header>
+        </PageHeaderContainer>
     );
 };
 

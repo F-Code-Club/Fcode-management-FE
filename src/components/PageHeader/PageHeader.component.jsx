@@ -13,7 +13,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
-const breadcrumbNameMap = {
+let breadcrumbNameMap = {
     '/event': 'event',
     '/source': 'source',
     '/member': 'member',
@@ -27,7 +27,9 @@ const breadcrumbNameMap = {
     '/comment': 'comment',
     '/recruitmembers': 'recruitmembers',
 };
-
+for (let i = 1; i <= 100; i++) {
+    breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
+}
 const PageHeaderComponent = () => {
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);

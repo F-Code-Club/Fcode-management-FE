@@ -26,6 +26,9 @@ export const themes = {
         primary1: '#C3EDD1',
         primary5: '#00C464',
         neutro5: '#D9D9D9',
+        gray: '#4D4D4D',
+        submenu: '#818181',
+        primary050: '#E6F8EC',
     },
 };
 

@@ -1,8 +1,7 @@
-import { Layout, Menu } from 'antd';
-// import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Menu } from 'antd';
 
 import SidebarLink from '../SidebarLink';
+import { Logo, SideBar, Wrapper, SignOut } from './sdiebar.style';
 import './style.css';
 
 import { ReactComponent as FcodeLogo } from '@/assets/logo/logo.svg';
@@ -17,8 +16,6 @@ import {
     UsergroupAddOutlined,
     CommentOutlined, // UserOutlined,c
 } from '@ant-design/icons';
-
-const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
     return {
@@ -66,32 +63,19 @@ const itemsAdmin = [
 
 const SidebarComponent = () => {
     return (
-        <SideBar>
-            <div className="logo">
-                <FcodeLogo width={50} height={50} />F - CODE
-            </div>
-            <MenuBar mode="inline" items={itemsAdmin} />
-            <div className="signOut">
-                <LogoutOutlined style={{ paddingRight: 10 }} />
-                Đăng Xuất
-            </div>
-        </SideBar>
+        <Wrapper>
+            <SideBar>
+                <Logo>
+                    <FcodeLogo width={50} height={50} />F - CODE
+                </Logo>
+                <Menu mode="inline" items={itemsAdmin} />
+                <SignOut>
+                    <LogoutOutlined style={{ paddingRight: 10 }} />
+                    Đăng Xuất
+                </SignOut>
+            </SideBar>
+        </Wrapper>
     );
 };
 
 export default SidebarComponent;
-
-export const MenuBar = styled(Menu)`
-    background-color: #4d4d4d !important;
-`;
-
-export const SideBar = styled(Sider)`
-    width: 300px !important;
-    background-color: #4d4d4d !important;
-    /* overflow: auto; */
-    position: fixed !important;
-    height: 100vh;
-    top: 0;
-    bottom: 0;
-    left: 0;
-`;

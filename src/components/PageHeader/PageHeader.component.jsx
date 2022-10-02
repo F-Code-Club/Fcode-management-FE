@@ -9,6 +9,7 @@ import { selectTitleHeader } from '../PageHeader/slice/selector';
 import { openNotificationWithIcon } from '../ToastDemo/style';
 import StyledButton from './../Button/index';
 import { ButtonModalConfig } from './ModalConfig';
+import { PageHeaderContainer } from './PageHeader.style';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
 import testApi from '@/utils/apiComponents/testApi';
@@ -16,7 +17,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
-const breadcrumbNameMap = {
+let breadcrumbNameMap = {
     '/event': 'event',
     '/source': 'source',
     '/member': 'member',
@@ -27,8 +28,12 @@ const breadcrumbNameMap = {
     '/account/edit-account': 'edit-account',
     '/announcement/notification': 'notification',
     '/blog/1': 'bai viet',
+    '/comment': 'comment',
+    '/recruitmembers': 'recruitmembers',
 };
-
+for (let i = 1; i <= 100; i++) {
+    breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
+}
 const PageHeaderComponent = () => {
     const [modal, contextHolder] = Modal.useModal();
     const TitleHeader = useSelector(selectTitleHeader);
@@ -63,36 +68,38 @@ const PageHeaderComponent = () => {
         );
     };
     return (
-        <Header
-            className="site-layout-sub-header-background"
-            style={{
-                height: 100,
-                padding: 0,
-                background: 'rgb(255, 255, 255)',
-            }}
-        >
-            <Breadcrumb>{breadcrumbItems}</Breadcrumb>
-            <PageHeader
-                backIcon={<ArrowLeftOutlined />}
-                className="site-page-header-responsive"
-                title={TitleHeader}
-                style={{ background: '#FFFFFF' }}
-                onBack={() => window.history.back()}
-                extra={
-                    ActionButtons.isShow &&
-                    ActionButtons.buttons.map((button, index) => (
-                        <StyledButton
-                            key={button.name + index}
-                            type={button.type}
-                            onClick={() => handleButton(button)}
-                        >
-                            {button.name}
-                        </StyledButton>
-                    ))
-                }
-            />
+        <PageHeaderContainer>
+            <Header
+                className="site-layout-sub-header-background"
+                style={{
+                    height: 100,
+                    padding: 0,
+                    background: 'rgb(255, 255, 255)',
+                }}
+            >
+                <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+                <PageHeader
+                    backIcon={<ArrowLeftOutlined />}
+                    className="site-page-header-responsive"
+                    title={TitleHeader}
+                    style={{ background: '#FFFFFF' }}
+                    onBack={() => window.history.back()}
+                    extra={
+                        ActionButtons.isShow &&
+                        ActionButtons.buttons.map((button, index) => (
+                            <StyledButton
+                                key={button.name + index}
+                                type={button.type}
+                                onClick={() => handleButton(button)}
+                            >
+                                {button.name}
+                            </StyledButton>
+                        ))
+                    }
+                />
+            </Header>
             {contextHolder}
-        </Header>
+        </PageHeaderContainer>
     );
 };
 

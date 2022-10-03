@@ -57,8 +57,12 @@ const itemsAdmin = [
 //     getItem(<SidebarLink to="/source" child="Tài Nguyên" />, '3', <InboxOutlined />),
 //     getItem(<SidebarLink to="/blog" child="Bài Viết" />, '4', <SendOutlined />),
 //     getItem(<SidebarLink to="/member" child="Tất cả thành viên" />, '5', <TeamOutlined />),
-//     getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />),
-//     getItem(<SidebarLink to="/information" child="Thông tin cá nhân" />, '7', <UserOutlined />),
+//     getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />, [
+// getItem(<SidebarLink to="/announcement/view-announcement" child="xem thông báo" />, '9'),
+// ]),
+//     getItem(<SidebarLink to="/information" child="Thông tin cá nhân" />, '7', <UserOutlined />,  [
+// getItem(<SidebarLink to="/information/view-information" child="xem thông tin" />, '10'),
+// ]),
 // ];
 
 const SidebarComponent = () => {

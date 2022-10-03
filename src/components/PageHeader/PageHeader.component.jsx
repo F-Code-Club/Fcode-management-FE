@@ -23,9 +23,10 @@ let breadcrumbNameMap = {
     '/account': 'account',
     '/account/edit-account': 'edit-account',
     '/announcement/notification': 'notification',
-    '/blog/1': 'bai viet',
     '/comment': 'comment',
     '/recruitmembers': 'recruitmembers',
+    '/information/view-information': 'View Information',
+    '/announcement/view-announcement': 'View Announcement',
 };
 for (let i = 1; i <= 100; i++) {
     breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;

@@ -6,7 +6,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
-import { openNotificationWithIcon } from '../ToastDemo/style';
+// import { openNotificationWithIcon } from '../ToastDemo/style';
+import { toastSuccess } from '../ToastNorification';
 import StyledButton from './../Button/index';
 import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
@@ -63,7 +64,7 @@ const PageHeaderComponent = () => {
         return modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
                 testApi.get(button.params);
-                openNotificationWithIcon(button.successContent);
+                toastSuccess(button.successContent);
             })
         );
     };

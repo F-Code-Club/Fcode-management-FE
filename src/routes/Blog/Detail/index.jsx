@@ -15,6 +15,8 @@ import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 import { DUMMY_CONTENT } from '@/utils/dummy.js';
 
+// import { getGutter } from '@/utils/getGutter';
+
 const { Text } = Typography;
 
 const BlogDetailComponent = () => {

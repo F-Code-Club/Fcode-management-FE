@@ -1,10 +1,3 @@
-/* .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
-a,
-.ant-tag-geekblue {
-    color: #45ce7b !important;
+.Toastify__toast-body > div:last-child {
+    flex: 0, im !important;
 }
-
-.ant-btn-primary {
-    border-color: #45ce7b !important;
-    background: #45ce7b !important;
-} */

@@ -1,4 +1,5 @@
 import ActivityTable from './data-display/ActivityTable';
+import Avatar from './data-display/Avatar';
 import InputBio from './data-entry/InputBio';
 import InputEmailFPT from './data-entry/InputEmailFPT';
 import InputFacebook from './data-entry/InputFacebook';
@@ -11,6 +12,7 @@ import FullName from './general/FullName';
 
 export {
     ActivityTable,
+    Avatar,
     InputBio,
     InputFacebook,
     InputFullName,

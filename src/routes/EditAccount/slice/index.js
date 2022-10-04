@@ -52,7 +52,10 @@ export const initialState = {
     ],
     modal: {
         confirm: false,
+        avatar: false,
     },
+    zoom: 1,
+    rotate: 0,
 };
 
 export const name = 'editAccount';
@@ -70,6 +73,9 @@ export const slice = createSlice({
         },
         modal_confirm: (state, action) => {
             state.modal.confirm = action.payload;
+        },
+        modal_avatar: (state, action) => {
+            state.modal.avatar = action.payload;
         },
     },
 });

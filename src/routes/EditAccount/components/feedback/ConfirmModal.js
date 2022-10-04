@@ -12,11 +12,11 @@ const openNotification = () => {
 const confirm = () => {
     Modal.confirm({
         maskClosable: true,
-        title: 'Bạn có muốn thay đổi thông tin tài khoản?',
         icon: <ExclamationCircleOutlined />,
-        content: 'Tài khoản sau khi đổi sẽ không còn còn lưu trữ thông tin trước đó được nữa.',
-        okText: 'Xác nhận',
-        cancelText: 'Huỷ',
+        title: 'Xác nhận thay đổi',
+        content: 'Bạn có muốn thay đổi thông tin cá nhân của mình?',
+        okText: 'Thay đổi',
+        cancelText: 'Quay lại',
         onOk: () => {
             openNotification();
         },

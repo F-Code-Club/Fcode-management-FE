@@ -9,6 +9,7 @@ const selector = {
     ...generateSelectors(initialState, selectDomain),
     modal: {
         confirm: createSelector([selectDomain], (state) => state.modal.confirm),
+        avatar: createSelector([selectDomain], (state) => state.modal.avatar),
     },
 };
 

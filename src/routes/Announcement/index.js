@@ -13,7 +13,7 @@ import { ContainerAnnouncement } from './style';
 
 import { ConfirmAction } from '@/components/Popup/PopupConfirm';
 import { CreateAnnouncement } from '@/components/Popup/PopupEditor';
-import { PopupSuccess } from '@/components/Popup/PopupSuccess';
+import { toastError, toastSuccess } from '@/components/ToastNorification';
 
 export const ManageAnnouncement = () => {
     const [state, setState] = useState({
@@ -25,11 +25,6 @@ export const ManageAnnouncement = () => {
             imgs: [],
             id: '',
             sendAll: false,
-        },
-        popupSuccess: {
-            status: false,
-            title: '',
-            buttonValue: '',
         },
         popupConfirm: {
             status: false,
@@ -58,42 +53,27 @@ export const ManageAnnouncement = () => {
             }
 
             await dispatch(actions.addAnnounce({ ...newAnnouncement, id: addId }));
-        }
+            toastSuccess(
+                `Thông báo đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
+            );
+        } else
+            toastError(`${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} thông báo không thành công`);
         await setState({
             ...state,
             popupEditor: {
                 status: false,
             },
-            popupSuccess: {
-                status: status,
-                title: `Thông báo đã được ${
-                    typeWork === 'create' ? 'tạo' : 'chỉnh sửa'
-                } thành công`,
-                buttonValue: 'Đóng',
-            },
         });
     };
 
     const handleDelete = async (status) => {
-        if (status) await dispatch(actions.deleteAnnounce(state.popupConfirm.id));
-
+        if (status) {
+            await dispatch(actions.deleteAnnounce(state.popupConfirm.id));
+            toastSuccess('Thông báo đã được xóa thành công');
+        } else toastError('Xóa thông báo không thành công');
         await setState({
             ...state,
             popupConfirm: {
-                status: false,
-            },
-            popupSuccess: {
-                status: status,
-                title: 'Thông báo đã được xóa thành công',
-                buttonValue: 'Đóng',
-            },
-        });
-    };
-
-    const handleSuccess = async () => {
-        await setState({
-            ...state,
-            popupSuccess: {
                 status: false,
             },
         });
@@ -241,13 +221,6 @@ export const ManageAnnouncement = () => {
                     buttonValue={state.popupConfirm.buttonValue}
                     icon={state.popupConfirm.icon} //op1: 'delete', op2: 'retry'
                     action={handleDelete}
-                />
-            )}
-            {state.popupSuccess.status && (
-                <PopupSuccess
-                    title={state.popupSuccess.title}
-                    buttonValue={state.popupSuccess.buttonValue}
-                    action={handleSuccess}
                 />
             )}
         </ContainerAnnouncement>

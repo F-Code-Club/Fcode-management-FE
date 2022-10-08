@@ -6,7 +6,6 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
-import Toast from '@/components/ToastNorification';
 import EditAccount from '@/routes/EditAccount';
 import Home from '@/routes/Home';
 
@@ -83,7 +82,6 @@ const RouterComponent = () => {
                     <Route path="*" element={<p>404</p>} />
                 </Routes>
             </LayoutComponent>
-            <Toast />
         </BrowserRouter>
     );
 };

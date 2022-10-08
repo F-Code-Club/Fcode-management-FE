@@ -13,7 +13,7 @@ import { ContainerAnnouncement } from './style';
 
 import { ConfirmAction } from '@/components/Popup/PopupConfirm';
 import { CreateAnnouncement } from '@/components/Popup/PopupEditor';
-import { toastError, toastSuccess } from '@/components/ToastNorification';
+import { toastError, toastSuccess } from '@/components/ToastNotification';
 
 export const ManageAnnouncement = () => {
     const [state, setState] = useState({

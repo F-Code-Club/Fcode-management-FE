@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import RouterComponent from './routes';
 import store from './store';
 
+import Toast from '@/components/ToastNotification/index';
 import { themes } from '@/theme/theme';
 import 'antd/dist/antd.css';
 
@@ -15,6 +16,7 @@ root.render(
     <Provider store={store}>
         <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
             <RouterComponent />
+            <Toast />
         </ThemeSwitcherProvider>
     </Provider>
 );

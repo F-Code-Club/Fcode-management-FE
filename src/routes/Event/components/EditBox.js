@@ -7,7 +7,6 @@ import styled from 'styled-components';
 
 import { editEvent } from '../slice';
 
-import { dateFormat } from '@/utils/dateFormat';
 import px2vw from '@/utils/px2vw';
 
 const { TextArea } = Input;
@@ -25,11 +24,12 @@ function EditBox({ event, handle, closeOtherBox }) {
     const handleNotification = (type, message, description) => {
         openNotification(type, 'bottomRight', message, description);
     };
-    console.log(event);
-    const [dateString, setDateString] = useState(event.dateString);
+    const [dateString, setDateString] = useState([]);
+    const [startDay, setStart] = useState(event.start);
+    const [endDay, setEnd] = useState(event.end);
+    let id = event.id;
     const dispatch = useDispatch();
     const onFinish = (values) => {
-        console.log('Success:', values);
         let SdayAndTime, EdayAndTime;
         SdayAndTime = dateString[0].split(' ');
         EdayAndTime = dateString[1].split(' ');
@@ -40,8 +40,8 @@ function EditBox({ event, handle, closeOtherBox }) {
         let end = new Date(Edate[0], Edate[1], Edate[2], Etime[0], Etime[1]);
         let start = new Date(Sdate[0], Sdate[1], Sdate[2], Stime[0], Stime[1]);
         const event = {
-            date: `${dateFormat(SdayAndTime[0])} - ${dateFormat(EdayAndTime[0])}`,
-            day: `${dateFormat(SdayAndTime[0])}`,
+            date: `${SdayAndTime[0]} - ${EdayAndTime[0]}`,
+            day: `${SdayAndTime[0]}`,
             start: dateString[0],
             end: dateString[1],
             title: values.eventName,
@@ -50,6 +50,7 @@ function EditBox({ event, handle, closeOtherBox }) {
             note: values.extraNotice,
             EndDate: end.toString(),
             StartDate: start.toString(),
+            id: id,
         };
         dispatch(editEvent(event));
         handle();
@@ -59,12 +60,15 @@ function EditBox({ event, handle, closeOtherBox }) {
             'Event has been editted successfully to Your Calender,Code The Dream!!'
         );
         closeOtherBox();
+        console.log('Success:', values);
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
     const onDateSelection = (value, dateString) => {
+        setStart(dateString[0]);
+        setEnd(dateString[1]);
         setDateString(dateString);
     };
     return (
@@ -153,7 +157,7 @@ function EditBox({ event, handle, closeOtherBox }) {
                                 <RangePicker
                                     showTime
                                     onChange={onDateSelection}
-                                    value={[moment(`${event.start}`), moment(`${event.end}`)]}
+                                    value={[moment(`${startDay}`), moment(`${endDay}`)]}
                                 />
                             </Space>
                         </Form.Item>

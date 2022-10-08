@@ -1,10 +1,11 @@
 import MyCalendar from './components/Calendar';
+import { Container } from './styled';
 
 function Event() {
     return (
-        <div>
+        <Container>
             <MyCalendar />
-        </div>
+        </Container>
     );
 }
 

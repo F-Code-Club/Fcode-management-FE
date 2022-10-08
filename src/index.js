@@ -4,6 +4,7 @@ import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
+import Toast from './components/ToastNotification';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import RouterComponent from './routes';
@@ -18,6 +19,7 @@ root.render(
         <Provider store={store}>
             <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
                 <RouterComponent />
+                <Toast />
             </ThemeSwitcherProvider>
         </Provider>
     </React.StrictMode>

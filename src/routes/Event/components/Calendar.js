@@ -37,8 +37,8 @@ const MyCalendar = () => {
 
             array.push(newEvent);
         }
-        console.log(array);
         setEvents(array);
+        console.log(listOfEvents);
     }, [listOfEvents]);
 
     const handleSelect = () => {};

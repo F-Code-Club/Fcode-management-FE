@@ -31,7 +31,6 @@ function Detail({ event, handle }) {
     const handleDeleteEvent = () => {
         let answer = window.confirm('Are you sure you want to  Delete?');
         if (answer) {
-            console.log('delete');
             dispatch(removeEvent(event));
             handleNotification(
                 'Success',
@@ -54,7 +53,7 @@ function Detail({ event, handle }) {
                 <hr className="solid"></hr>
                 <Body>
                     <h2>{dateFormat(event.start.toString())}</h2>
-                    <h2>{event.end.toString()}</h2>
+                    <h2>{dateFormat(event.end.toString())}</h2>
                     <h2>{event.time}</h2>
                     <h2>{event.place}</h2>
                     <br></br>

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { addEvent } from '../slice';
 import { BoxContainer } from '../styled';
 
-import { dateFormat } from '@/utils/dateFormat';
+import { toastError, toastSuccess } from '@/components/ToastNotification';
 import px2vw from '@/utils/px2vw';
 
 const openNotification = (type, placement, value, description) => {
@@ -41,8 +41,8 @@ function AddEventBox({ handle }) {
             let end = new Date(Edate[0], Edate[1], Edate[2], Etime[0], Etime[1]);
             let start = new Date(Sdate[0], Sdate[1], Sdate[2], Stime[0], Stime[1]);
             const event = {
-                date: `${dateFormat(SdayAndTime[0])} - ${dateFormat(EdayAndTime[0])}`,
-                day: `${dateFormat(SdayAndTime[0])}`,
+                date: `${SdayAndTime[0]} - ${EdayAndTime[0]}`,
+                day: `${SdayAndTime[0]}`,
                 start: dateString[0],
                 end: dateString[1],
                 title: values.eventName,
@@ -55,13 +55,9 @@ function AddEventBox({ handle }) {
             console.log(event);
             dispatch(addEvent(event));
         } catch {
-            handleNotification('error', 'Failled!!', 'Something has gone Wrong,Please Try again');
+            toastError('Something has gone Wrong,Please Try again');
         } finally {
-            handleNotification(
-                'Success',
-                'Success!!!',
-                'Event has been added successfully to Your Calender,Code The Dream!!'
-            );
+            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
             handle();
         }
     };

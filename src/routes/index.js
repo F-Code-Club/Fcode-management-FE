@@ -5,6 +5,7 @@ import PublicRoute from './PublicRoute';
 
 // eslint-disable-next-line import/no-unresolved
 import LayoutComponent from '@/components/Layout/Layout.component';
+import Event from '@/routes/Event/Index';
 import Home from '@/routes/Home';
 
 // children: [
@@ -23,6 +24,12 @@ const publicRoute = [
     {
         path: 'home2',
         component: <Home />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'event',
+        component: <Event />,
         exact: true,
         restrict: true,
     },

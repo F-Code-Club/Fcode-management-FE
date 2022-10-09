@@ -1,38 +1,10 @@
 import { Avatar, List } from 'antd';
 
+import { DATA } from './components/fakeData/data';
 import { Col1, Col2, ContainerHomepage } from './style';
 
 export const Homepage = () => {
-    const data = [
-        {
-            title: 'Homepage',
-            name: 'Trương Lê Tuấn Kiệt',
-            content:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-            avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
-        },
-        {
-            title: 'Homepage',
-            name: 'Trương Lê Tuấn Kiệt',
-            content:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-            avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
-        },
-        {
-            title: 'Homepage',
-            name: 'Trương Lê Tuấn Kiệt',
-            content:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-            avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
-        },
-        {
-            title: 'Homepage',
-            name: 'Trương Lê Tuấn Kiệt',
-            content:
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-            avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
-        },
-    ];
+    const data = DATA;
 
     return (
         <ContainerHomepage>
@@ -52,6 +24,7 @@ export const Homepage = () => {
                         alt="f-code"
                     />
                 </div>
+
                 <div className="row2">
                     <h3 className="title">BÀI VIẾT CHỜ DUYỆT</h3>
                     <List
@@ -72,7 +45,7 @@ export const Homepage = () => {
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar size="large" src={item.avatar} />}
-                                    title={<h4>{item.title}</h4>}
+                                    title={<h4 title={item.title}>{item.title}</h4>}
                                     description={item.name}
                                 />
                                 <p className="content">{item.content}</p>
@@ -81,8 +54,51 @@ export const Homepage = () => {
                     />
                 </div>
             </Col1>
+
             <Col2>
-                <div className="row1">Xin chào Phạm Văn ABC</div>
+                <div className="row1">
+                    <h3>xin chào phạm văn abc</h3>
+                </div>
+
+                <div className="row2">
+                    <h3>yêu cầu duyệt thành viên</h3>
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        pagination={{ pageSize: 3 }}
+                        dataSource={data}
+                        renderItem={(item) => (
+                            <List.Item
+                                key={item.title}
+                                extra={<a href="https://ant.design/components/list/">Chi tiết</a>}
+                            >
+                                <List.Item.Meta
+                                    avatar={<Avatar size="large" src={item.avatar} />}
+                                    title={<h4 title={item.title}>{item.title}</h4>}
+                                    description={<p className="content">{item.content}</p>}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                </div>
+
+                <div className="row3">
+                    <h3>yêu cầu duyệt thành viên</h3>
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        pagination={{ pageSize: 3 }}
+                        dataSource={data}
+                        renderItem={(item) => (
+                            <List.Item
+                                key={item.title}
+                                extra={<a href="https://ant.design/components/list/">Chi tiết</a>}
+                            >
+                                <List.Item.Meta title={<h4 title={item.title}>{item.title}</h4>} />
+                            </List.Item>
+                        )}
+                    />
+                </div>
             </Col2>
         </ContainerHomepage>
     );

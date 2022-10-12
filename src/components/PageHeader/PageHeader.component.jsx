@@ -14,19 +14,19 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 const { Header } = Layout;
 
 let breadcrumbNameMap = {
-    '/event': 'event',
-    '/source': 'source',
+    '/event': 'Quản lý sự kiện',
+    '/source': 'Quản lý tài nguyên',
     '/member': 'member',
-    '/blog': 'blog',
-    '/announcement': 'announcement',
-    '/information': 'information',
-    '/account': 'account',
-    '/account/edit-account': 'edit-account',
-    '/announcement/notification': 'notification',
-    '/comment': 'comment',
-    '/recruitmembers': 'recruitmembers',
-    '/information/view-information': 'View Information',
-    '/announcement/view-announcement': 'View Announcement',
+    '/blog': 'Quản lý bài viết',
+    '/announcement': 'Quản lý thông báo',
+    '/information': 'Thông tin cá nhân',
+    '/account': 'Quản lý tài khoản',
+    '/account/edit-account': 'Chỉnh sửa thông tin',
+    '/announcement/notification': 'Xem thông báo',
+    '/comment': 'Quản lý bình luận, câu hỏi',
+    '/recruitmembers': 'Tuyển thành viên',
+    '/information/view-information': 'xem thông tin',
+    '/announcement/view-announcement': 'xem thông báo',
 };
 for (let i = 1; i <= 100; i++) {
     breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
@@ -47,7 +47,7 @@ const PageHeaderComponent = () => {
     });
     const breadcrumbItems = [
         <Breadcrumb.Item key="home">
-            <Link to="/">Home</Link>
+            <Link to="/">Trang chủ</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
     return (

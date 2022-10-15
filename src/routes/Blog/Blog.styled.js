@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
 export const Background = styled.div`
     display: flex;
     justify-content: center;
@@ -21,20 +23,20 @@ export const Wrapper = styled.div`
     .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
     a,
     .ant-pagination-item-active a {
-        color: #45ce7c;
+        color: ${themes.colors.primary};
     }
 
     .ant-pagination-item-active {
-        border-color: #45ce7c;
+        border-color: ${themes.colors.primary};
     }
 
     .ant-btn-primary {
-        border-color: #45ce7c;
-        background: #45ce7c;
+        border-color: ${themes.colors.primary};
+        background: ${themes.colors.primary};
     }
 
     .ant-tabs-ink-bar {
-        background: #45ce7c;
+        background: ${themes.colors.primary};
     }
 `;
 

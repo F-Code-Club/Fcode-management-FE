@@ -1,161 +1,9 @@
-import { Space, Table, Tag, Tabs, Input } from 'antd';
+import { Table, Tabs, Input } from 'antd';
 
+import { columns, columns2, columns3, data } from './Blog.data';
 import * as Styled from './Blog.styled';
 
 const { Search } = Input;
-
-const onSearch = (value) => console.log(value);
-
-const columns = [
-    {
-        title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
-    },
-    {
-        title: 'Tác giả',
-        dataIndex: 'author',
-        key: 'author',
-    },
-    {
-        title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: () => (
-            <Space size="middle">
-                <a href="/blog">Duyệt</a>
-                <a href="/blog">Từ chối</a>
-            </Space>
-        ),
-    },
-];
-
-const columns2 = [
-    {
-        title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
-    },
-    {
-        title: 'Tác giả',
-        dataIndex: 'author',
-        key: 'author',
-    },
-    {
-        title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: '',
-        key: 'action',
-        render: () => (
-            <Space size="middle">
-                <a href="/blog">Ẩn</a>
-                <a href="/blog">Xóa</a>
-            </Space>
-        ),
-    },
-];
-
-const columns3 = [
-    {
-        title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
-    },
-    {
-        title: 'Tác giả',
-        dataIndex: 'author',
-        key: 'author',
-    },
-    {
-        title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-];
-
-const data = Array.from({ length: 100 }, (_, i) => ({
-    key: i + 1,
-    post_title: 'Tên bài viết ABC',
-    author: 'Nguyễn Văn A',
-    created_at: '01/01/2022',
-    tags: ['Design', 'UI/UX'],
-}));
 
 const Blog = () => {
     return (
@@ -173,11 +21,7 @@ const Blog = () => {
                     </Tabs.TabPane>
                 </Tabs>
                 <Styled.Search>
-                    <Search
-                        placeholder="Nhập tên bài viết cần tìm"
-                        onSearch={onSearch}
-                        enterButton
-                    />
+                    <Search placeholder="Nhập tên bài viết cần tìm" enterButton />
                 </Styled.Search>
             </Styled.Wrapper>
         </Styled.Background>

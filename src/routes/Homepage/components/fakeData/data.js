@@ -1,5 +1,6 @@
 export const DATA = [
     {
+        id: 1,
         title: 'Thông báo họp câu lạc bộ tháng 10 mời tất cả mọi người cùng tham dự.',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -7,6 +8,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 2,
         title: 'Doan-text-nay-kiem-tra-xem-title-co-word-wrap-hay-hidden-khong.',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -14,6 +16,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 3,
         title: 'Homepage 3',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -21,6 +24,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 4,
         title: 'Homepage 4',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -28,6 +32,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 5,
         title: 'Homepage 5',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -35,6 +40,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 6,
         title: 'Homepage 6',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -42,6 +48,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 7,
         title: 'Homepage',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -49,6 +56,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 8,
         title: 'Homepage',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -56,6 +64,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 9,
         title: 'Homepage',
         name: 'Trương Lê Tuấn Kiệt',
         content:
@@ -63,6 +72,7 @@ export const DATA = [
         avatar: 'https://loanthehongnhan.vn/anh-avatar-dang-yeu/imager_9_27298_700.jpg',
     },
     {
+        id: 10,
         title: 'Homepage',
         name: 'Trương Lê Tuấn Kiệt',
         content:

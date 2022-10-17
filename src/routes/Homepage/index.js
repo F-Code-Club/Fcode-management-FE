@@ -1,10 +1,12 @@
 import { Avatar, List } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import { DATA } from './components/fakeData/data';
 import { Col1, Col2, ContainerHomepage } from './style';
 
 export const Homepage = () => {
     const data = DATA;
+    const navigate = useNavigate();
 
     return (
         <ContainerHomepage>
@@ -17,7 +19,9 @@ export const Homepage = () => {
                             Đấu trường lập trình R.ODE toàn trường (Viết dài để biết giới hạn khung
                             text 300px)
                         </p>
-                        <button className="btn-view-more">Xem thêm</button>
+                        <button className="btn-view-more" onClick={() => navigate('manage-event')}>
+                            Xem thêm
+                        </button>
                     </div>
                     <img
                         src="https://fcodehcm.files.wordpress.com/2021/09/logo.png?w=400"
@@ -92,7 +96,7 @@ export const Homepage = () => {
                         renderItem={(item) => (
                             <List.Item
                                 key={item.title}
-                                extra={<a href="https://ant.design/components/list/">Chi tiết</a>}
+                                extra={<a href={`view-announcement/${item.id}`}>Chi tiết</a>}
                             >
                                 <List.Item.Meta title={<h4 title={item.title}>{item.title}</h4>} />
                             </List.Item>

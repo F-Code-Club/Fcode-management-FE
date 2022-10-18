@@ -1,5 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
 const move = keyframes`
     0%{
         transform: scale(0.5);
@@ -57,21 +59,21 @@ export const ContentPopup = styled.div`
     .cancel-btn {
         margin-top: 0.5rem;
         color: black;
-        border: 1px solid #d9d9d9;
+        border: 1px solid ${themes.colors.neutral5};
         margin-right: 10px;
         :hover {
-            color: #ff4d4f;
-            border: 1px solid #ff4d4f;
+            color: ${themes.colors.danger};
+            border: 1px solid ${themes.colors.danger};
         }
     }
     .accept-btn {
         margin-top: 0.5rem;
-        background: #45ce7c;
+        background: ${themes.colors.primary400};
         color: white;
-        border: 1px solid #45ce7c;
+        border: 1px solid ${themes.colors.primary400};
         :hover {
-            color: #45ce7c;
-            border: 1px solid #45ce7c;
+            color: ${themes.colors.primary400};
+            border: 1px solid ${themes.colors.primary400};
         }
     }
 `;

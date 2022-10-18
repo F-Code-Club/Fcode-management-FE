@@ -1,12 +1,9 @@
 import { useState } from 'react';
 
-import { Avatar, Button, Carousel, Image, List } from 'antd';
-import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import { Button, List } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
-import NoPhoto from '../../assets/no-photo.jpg';
-import { DataSlick } from './components/Slick/slick';
+import { RenderList } from './components/RenderList';
 import { actions } from './slice';
 import { selectAnnounce } from './slice/selectors';
 import { ContainerAnnouncement } from './style';
@@ -38,7 +35,6 @@ export const ManageAnnouncement = () => {
 
     const dispatch = useDispatch();
     const listAnnounce = useSelector(selectAnnounce);
-    const navigate = useNavigate();
 
     const handleCreate = async (status, newAnnouncement) => {
         const typeWork = state.popupEditor.type;
@@ -79,34 +75,45 @@ export const ManageAnnouncement = () => {
         });
     };
 
-    const ImageAnnouncement = (DataImg) => {
-        switch (DataImg.length) {
-            case 0:
-                return (
-                    <Image src={NoPhoto} alt="no-image-announcement" style={{ width: '100%' }} />
-                );
-            case 1:
-                return (
-                    <Image
-                        src={DataImg[0]}
-                        alt="image-item-announcement"
-                        style={{ width: '100%' }}
-                    />
-                );
-            default:
-                return (
-                    <Carousel {...DataSlick}>
-                        {DataImg.map((todo, key) => (
-                            <div key={key}>
-                                <Image
-                                    src={todo}
-                                    alt="image-item-announcement"
-                                    style={{ width: '100%' }}
-                                />
-                            </div>
-                        ))}
-                    </Carousel>
-                );
+    const handleClick = (action, item) => {
+        switch (action) {
+            case 'create':
+                setState({
+                    ...state,
+                    popupEditor: {
+                        status: true,
+                        type: 'create',
+                        content: '',
+                    },
+                });
+                break;
+            case 'edit':
+                setState({
+                    ...state,
+                    popupEditor: {
+                        status: true,
+                        type: 'edit',
+                        content: item.content,
+                        title: item.title,
+                        imgs: item.imgs,
+                        id: item.id,
+                        sendAll: item.sendAll,
+                    },
+                });
+                break;
+            case 'delete':
+                setState({
+                    ...state,
+                    popupConfirm: {
+                        status: true,
+                        id: item.id,
+                        title: 'Bạn có chắc muốn xóa thông báo này?',
+                        content: 'Thông báo này sẽ được xóa vĩnh viễn.',
+                        icon: 'delete',
+                        buttonValue: 'Xóa',
+                    },
+                });
+                break;
         }
     };
 
@@ -115,19 +122,7 @@ export const ManageAnnouncement = () => {
             <div>
                 <h3 style={{ marginBottom: '2rem' }}>
                     Tạo thông báo mới:&emsp;
-                    <Button
-                        className="btn-edit"
-                        onClick={() =>
-                            setState({
-                                ...state,
-                                popupEditor: {
-                                    status: true,
-                                    type: 'create',
-                                    content: '',
-                                },
-                            })
-                        }
-                    >
+                    <Button className="btn-edit" onClick={() => handleClick('create', null)}>
                         Nhấn vào đây để tạo
                     </Button>
                 </h3>
@@ -141,68 +136,7 @@ export const ManageAnnouncement = () => {
                 className="list-announcement"
                 pagination={{ pageSize: 3 }}
                 dataSource={[...listAnnounce].reverse()}
-                renderItem={(item) => (
-                    <List.Item key={item.id} extra={ImageAnnouncement(item.imgs)}>
-                        <List.Item.Meta
-                            avatar={<Avatar size="large" src={item.avatarAdmin} />}
-                            title={<h4 style={{ marginBottom: 0 }}>{item.title}</h4>}
-                            description={item.nameAdmin}
-                        />
-                        <Editor
-                            editorState={EditorState.createWithContent(
-                                convertFromRaw(JSON.parse(item.content))
-                            )}
-                            wrapperClassName="demo-wrapper"
-                            editorClassName="demo-editor"
-                            readOnly
-                        />
-                        <div className="btn-manage-announcement">
-                            <Button
-                                className="btn-edit"
-                                onClick={() =>
-                                    setState({
-                                        ...state,
-                                        popupEditor: {
-                                            status: true,
-                                            type: 'edit',
-                                            content: item.content,
-                                            title: item.title,
-                                            imgs: item.imgs,
-                                            id: item.id,
-                                            sendAll: item.sendAll,
-                                        },
-                                    })
-                                }
-                            >
-                                Chỉnh sửa
-                            </Button>
-                            <Button
-                                className="btn-view"
-                                onClick={() => navigate(`view-announcement/${item.id}`)}
-                            >
-                                Xem chi tiết
-                            </Button>
-                            <Button
-                                className="btn-delete"
-                                onClick={() =>
-                                    setState({
-                                        ...state,
-                                        popupConfirm: {
-                                            status: true,
-                                            id: item.id,
-                                            title: 'Bạn có chắc muốn xóa thông báo này?',
-                                            content: 'Thông báo này sẽ được xóa vĩnh viễn.',
-                                            icon: 'delete',
-                                            buttonValue: 'Xóa',
-                                        },
-                                    })
-                                }
-                            >
-                                Xóa
-                            </Button>
-                        </div>
-                    </List.Item>
-                )}
+                renderItem={(item) => <RenderList item={item} handleClick={handleClick} />}
             />
             {state.popupEditor.status && (
                 <CreateAnnouncement

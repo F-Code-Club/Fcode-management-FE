@@ -1,5 +1,7 @@
+import { themes } from '@/theme/theme';
+
 export const styleOnload = {
-    background: 'rgba(69, 206, 124, 1)',
+    background: themes.colors.primary400,
     color: 'white',
-    border: '1px solid rgba(69, 206, 124, 1)',
+    border: themes.colors.primary400,
 };

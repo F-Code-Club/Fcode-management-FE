@@ -1,5 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
 const move = keyframes`
     0%{
         transform: scale(0.5);
@@ -19,6 +21,7 @@ export const ContainerEditor = styled.div`
     top: 0;
     left: 0;
     animation: ${move} 0.15s linear forwards;
+    /* wave-shadow-color: red; */
     .editor {
         width: 70%;
         position: absolute;
@@ -34,9 +37,9 @@ export const ContainerEditor = styled.div`
             height: auto;
         }
         .demo-editor {
-            height: 15rem;
+            height: 30vh;
             overflow-y: scroll;
-            border: 1px solid #d9d9d9;
+            border: 1px solid ${themes.colors.neutral5};
         }
         .checkbox {
             margin: 0.5rem 0;
@@ -47,15 +50,19 @@ export const ContainerEditor = styled.div`
         }
         .save-btn {
             margin-top: 0.5rem;
-            background: rgba(69, 206, 124, 1);
+            background: ${themes.colors.primary400};
             color: white;
-            border: 1px solid rgba(69, 206, 124, 1);
+            border: 1px solid ${themes.colors.primary400};
             :hover {
-                color: rgba(69, 206, 124, 1);
-                border: 1px solid rgba(69, 206, 124, 1);
+                color: ${themes.colors.primary400};
+                border: 1px solid ${themes.colors.primary400};
                 background: white;
             }
         }
+    }
+    .errorMsg {
+        color: red;
+        margin: 0;
     }
 `;
 

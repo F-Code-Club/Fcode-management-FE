@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { styleOnload } from './data-style';
 import { ContainerPopup, ContentPopup, LayerPopup, Popup } from './style';
 
+import { themes } from '@/theme/theme';
 import { ExclamationCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
 export const ConfirmAction = (props) => {
@@ -22,9 +23,15 @@ export const ConfirmAction = (props) => {
             <LayerPopup onClick={() => !loading && handleClick(false)} />
             <Popup>
                 {props.icon == 'delete' ? (
-                    <ExclamationCircleTwoTone twoToneColor="#FFC53D" className="icon-popup" />
+                    <ExclamationCircleTwoTone
+                        twoToneColor={themes.colors.calendulaGold}
+                        className="icon-popup"
+                    />
                 ) : (
-                    <CloseCircleTwoTone twoToneColor="#FF4D4F" className="icon-popup" />
+                    <CloseCircleTwoTone
+                        twoToneColor={themes.colors.danger}
+                        className="icon-popup"
+                    />
                 )}
                 <ContentPopup>
                     <h3>{props.title}</h3>

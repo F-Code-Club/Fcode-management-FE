@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
 export const ContainerAnnouncement = styled.div`
     width: 100%;
     min-height: calc(100vh - 190px);
-    background: #e6f8ec;
     transition: 0.25 linear;
     .list-announcement {
         width: 100%;
@@ -40,37 +41,37 @@ export const ContainerAnnouncement = styled.div`
     }
     .btn-edit {
         color: white;
-        background: #45ce7c;
+        background: ${themes.colors.primary400};
         border-radius: 5px;
-        border: 1px solid #45ce7c;
+        border: 1px solid ${themes.colors.primary400};
         margin-right: 20px;
         :hover {
-            color: #45ce7c;
+            color: ${themes.colors.primary400};
             background: white;
-            border: 1px solid #45ce7c;
+            border: 1px solid ${themes.colors.primary400};
         }
     }
     .btn-view {
-        color: #45ce7c;
+        color: ${themes.colors.primary400};
         background: white;
         border-radius: 5px;
-        border: 1px solid #45ce7c;
+        border: 1px solid ${themes.colors.primary400};
         margin-right: 20px;
         :hover {
             color: white;
-            background: #45ce7c;
-            border: 1px solid #45ce7c;
+            background: ${themes.colors.primary400};
+            border: 1px solid ${themes.colors.primary400};
         }
     }
     .btn-delete {
         color: white;
-        background: #ff4d4f;
+        background: ${themes.colors.danger};
         border-radius: 5px;
-        border: 1px solid #ff4d4f;
+        border: 1px solid ${themes.colors.danger};
         :hover {
             color: red;
             background: white;
-            border: 1px solid #ff4d4f;
+            border: 1px solid ${themes.colors.danger};
         }
     }
 `;

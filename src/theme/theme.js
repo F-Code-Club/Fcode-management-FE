@@ -21,7 +21,10 @@ export const themes = {
     light: `${process.env.PUBLIC_URL}/antd/antd.min.css`,
     colors: {
         primary: '#45CE7C',
-        neutro5: '#D9D9D9',
+        neutral5: '#D9D9D9',
+        primary400: '#45CE7C',
+        danger: '#FF4D4F',
+        calendulaGold: '#FFC53D',
     },
 };
 

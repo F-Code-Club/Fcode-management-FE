@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, Input } from 'antd';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
@@ -24,6 +24,12 @@ export const CreateAnnouncement = (props) => {
         sendAll: props.type === 'edit' ? props.sendAll : '',
         imgs: props.type === 'edit' ? props.imgs : [],
     });
+    const [errorMsg, setErrorMsg] = useState({
+        title: false,
+        content: false,
+        first: true,
+    });
+    const [statusButton, setStatusButton] = useState();
     const [processState, setProcessState] = useState({
         cancel: {
             status: false,
@@ -33,6 +39,40 @@ export const CreateAnnouncement = (props) => {
         },
     });
 
+    useEffect(() => {
+        setStatusButton(errorMsg.title || errorMsg.content || errorMsg.first);
+    }, [errorMsg]);
+
+    const onTitleChange = (e) => {
+        const checkValue = e.target.value.trim();
+        setNewAnnouncement({
+            ...newAnnouncement,
+            title: checkValue,
+        });
+        setErrorMsg({
+            ...errorMsg,
+            title: checkValue == null || checkValue == '',
+            first: false,
+        });
+    };
+    const onContentChange = (value) => {
+        const checkValue = convertToRaw(value.getCurrentContent()).blocks;
+        let status = true;
+        for (let i = 0; i < checkValue.length; i++) {
+            if (checkValue[0].text.trim() !== '') {
+                status = false;
+                break;
+            }
+        }
+        setNewAnnouncement({
+            ...newAnnouncement,
+            content: value,
+        });
+        setErrorMsg({
+            ...errorMsg,
+            content: status,
+        });
+    };
     const handleCancelProcess = async (status) => {
         await setProcessState({
             ...processState,
@@ -76,30 +116,30 @@ export const CreateAnnouncement = (props) => {
                 </h3>
                 <Input
                     placeholder="THÔNG BÁO HỌP CÂU LẠC BỘ"
-                    style={{ marginBottom: '0.5rem' }}
+                    style={errorMsg.title ? { border: '1px solid red' } : {}}
                     value={newAnnouncement.title}
-                    onChange={(e) =>
-                        setNewAnnouncement({
-                            ...newAnnouncement,
-                            title: e.target.value,
-                        })
-                    }
+                    onChange={(e) => onTitleChange(e)}
+                    onBlur={(e) => onTitleChange(e)}
+                    className="title-input"
                 />
-                <h3>
+                {errorMsg.title && <p className="errorMsg">Trường này không được bỏ trống!</p>}
+                <h3 style={{ marginTop: '0.5em' }}>
                     <span style={{ color: 'red' }}>* </span>
                     Nội dung thông báo
                 </h3>
-                <Editor
-                    editorState={newAnnouncement.content}
-                    wrapperClassName="demo-wrapper"
-                    editorClassName="demo-editor"
-                    onEditorStateChange={(value) =>
-                        setNewAnnouncement({
-                            ...newAnnouncement,
-                            content: value,
-                        })
-                    }
-                />
+                <div
+                    className="container-editor"
+                    style={errorMsg.content ? { border: '1px solid red' } : {}}
+                >
+                    <Editor
+                        editorState={newAnnouncement.content}
+                        wrapperClassName="demo-wrapper"
+                        editorClassName="demo-editor"
+                        onEditorStateChange={(value) => onContentChange(value)}
+                    />
+                </div>
+
+                {errorMsg.content && <p className="errorMsg">Trường này không được bỏ trống!</p>}
                 <UploadImage
                     type={props.type}
                     imgs={props.imgs}
@@ -137,6 +177,7 @@ export const CreateAnnouncement = (props) => {
                                 },
                             })
                         }
+                        disabled={statusButton}
                     >
                         {props.type === 'edit' ? 'Lưu chỉnh sửa' : 'Tạo thông báo'}
                     </Button>

@@ -1,9 +1,7 @@
-import { Layout, Menu } from 'antd';
-// import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Menu } from 'antd';
 
 import SidebarLink from '../SidebarLink';
-import './style.css';
+import { Logo, SideBar, Wrapper, SignOut } from './sdiebar.style';
 
 import { ReactComponent as FcodeLogo } from '@/assets/logo/logo.svg';
 import {
@@ -17,8 +15,6 @@ import {
     UsergroupAddOutlined,
     CommentOutlined, // UserOutlined,c
 } from '@ant-design/icons';
-
-const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
     return {
@@ -60,38 +56,29 @@ const itemsAdmin = [
 //     getItem(<SidebarLink to="/source" child="Tài Nguyên" />, '3', <InboxOutlined />),
 //     getItem(<SidebarLink to="/blog" child="Bài Viết" />, '4', <SendOutlined />),
 //     getItem(<SidebarLink to="/member" child="Tất cả thành viên" />, '5', <TeamOutlined />),
-//     getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />),
-//     getItem(<SidebarLink to="/information" child="Thông tin cá nhân" />, '7', <UserOutlined />),
+//     getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />, [
+// getItem(<SidebarLink to="/announcement/view-announcement" child="xem thông báo" />, '9'),
+// ]),
+//     getItem(<SidebarLink to="/information" child="Thông tin cá nhân" />, '7', <UserOutlined />,  [
+// getItem(<SidebarLink to="/information/view-information" child="xem thông tin" />, '10'),
+// ]),
 // ];
 
 const SidebarComponent = () => {
     return (
-        <SideBar>
-            <div className="logo">
-                <FcodeLogo width={50} height={50} />F - CODE
-            </div>
-            <MenuBar mode="inline" items={itemsAdmin} />
-            <div className="signOut">
-                <LogoutOutlined style={{ paddingRight: 10 }} />
-                Đăng Xuất
-            </div>
-        </SideBar>
+        <Wrapper>
+            <SideBar width="250px">
+                <Logo>
+                    <FcodeLogo width={50} height={50} />F - CODE
+                </Logo>
+                <Menu mode="inline" items={itemsAdmin} />
+                <SignOut>
+                    <LogoutOutlined style={{ paddingRight: 10 }} />
+                    Đăng Xuất
+                </SignOut>
+            </SideBar>
+        </Wrapper>
     );
 };
 
 export default SidebarComponent;
-
-export const MenuBar = styled(Menu)`
-    background-color: #4d4d4d !important;
-`;
-
-export const SideBar = styled(Sider)`
-    width: 300px !important;
-    background-color: #4d4d4d !important;
-    /* overflow: auto; */
-    position: fixed !important;
-    height: 100vh;
-    top: 0;
-    bottom: 0;
-    left: 0;
-`;

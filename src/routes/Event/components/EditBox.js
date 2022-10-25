@@ -1,13 +1,17 @@
 import { useState } from 'react';
 
-import { Input, DatePicker, Space, Button, Form, notification } from 'antd';
+import { Input, DatePicker, Space, Form, notification } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 
 import { editEvent } from '../slice';
-
-import px2vw from '@/utils/px2vw';
+import {
+    CustomButton,
+    BoxContainer,
+    EditContainer,
+    InputContainer,
+    ButtonContainer,
+} from '../styled';
 
 const { TextArea } = Input;
 
@@ -30,26 +34,13 @@ function EditBox({ event, handle, closeOtherBox }) {
     let id = event.id;
     const dispatch = useDispatch();
     const onFinish = (values) => {
-        let SdayAndTime, EdayAndTime;
-        SdayAndTime = dateString[0].split(' ');
-        EdayAndTime = dateString[1].split(' ');
-        let Sdate = SdayAndTime[0].split('-');
-        let Stime = SdayAndTime[1].split(':');
-        let Edate = EdayAndTime[0].split('-');
-        let Etime = EdayAndTime[1].split(':');
-        let end = new Date(Edate[0], Edate[1], Edate[2], Etime[0], Etime[1]);
-        let start = new Date(Sdate[0], Sdate[1], Sdate[2], Stime[0], Stime[1]);
         const event = {
-            date: `${SdayAndTime[0]} - ${EdayAndTime[0]}`,
-            day: `${SdayAndTime[0]}`,
             start: dateString[0],
             end: dateString[1],
             title: values.eventName,
             point: values.eventPoint,
             place: values.eventPlace,
             note: values.extraNotice,
-            EndDate: end.toString(),
-            StartDate: start.toString(),
             id: id,
         };
         dispatch(editEvent(event));
@@ -73,7 +64,7 @@ function EditBox({ event, handle, closeOtherBox }) {
     };
     return (
         <BoxContainer>
-            <Container>
+            <EditContainer>
                 <InputContainer>
                     <h1>Cập nhật Sự Kiện</h1>
                     <Form
@@ -172,48 +163,9 @@ function EditBox({ event, handle, closeOtherBox }) {
                         </ButtonContainer>
                     </Form>
                 </InputContainer>
-            </Container>
+            </EditContainer>
         </BoxContainer>
     );
 }
 
 export default EditBox;
-const Container = styled.div`
-    width: ${px2vw(460)};
-    min-height: ${px2vw(550)};
-    background: white;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-const InputContainer = styled.div`
-    width: 80%;
-`;
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: end;
-`;
-const CustomButton = styled(Button)`
-    margin: 8px 12px;
-    background: #45ce7c !important;
-    border-color: #45ce7c !important ;
-    transition: 0.3s ease all;
-    &:hover {
-        color: black !important;
-        background: #a5e7c0 !important;
-        border-color: #a5e7c0 !important ;
-    }
-`;
-const BoxContainer = styled.div`
-    height: 100vh;
-    z-index: 99;
-    width: 100vw;
-    background: rgba(0, 0, 0, 0.38);
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;

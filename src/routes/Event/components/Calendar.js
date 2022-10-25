@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { Button } from 'antd';
 import moment from 'moment';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
 
 import { editEvent } from '../slice';
+import { ButtonContainer, CustomButton } from '../styled';
 import AddEventBox from './AddEventBox';
 import Detail from './Detail';
 import PopUp from './PopUp';
@@ -103,17 +102,3 @@ const MyCalendar = () => {
 };
 
 export default MyCalendar;
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: end;
-`;
-const CustomButton = styled(Button)`
-    margin: 0 12px;
-    background: #45ce7c !important ;
-    border-color: #45ce7c !important ;
-    &:hover {
-        color: black !important;
-        background: #a5e7c0 !important;
-        border-color: #a5e7c0 !important ;
-    }
-`;

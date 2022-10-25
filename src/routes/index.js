@@ -5,6 +5,7 @@ import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import EditAccount from '@/routes/EditAccount';
+import Event from '@/routes/Event/Index';
 import Home from '@/routes/Home';
 
 // children: [
@@ -23,6 +24,12 @@ const publicRoute = [
     {
         path: 'account/edit-account',
         component: <EditAccount />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'event',
+        component: <Event />,
         exact: true,
         restrict: true,
     },

@@ -20,11 +20,16 @@ export const themes = {
     dark: `${process.env.PUBLIC_URL}/antd/antd.dark.min.css`,
     light: `${process.env.PUBLIC_URL}/antd/antd.min.css`,
     colors: {
+        light: '#FFFFFF',
         primary: '#45CE7C',
         neutral5: '#D9D9D9',
+        neutro5: '#D9D9D9',
         primary400: '#45CE7C',
         danger: '#FF4D4F',
         calendulaGold: '#FFC53D',
+        gray: '#4D4D4D',
+        submenu: '#818181',
+        primary050: '#E6F8EC',
     },
 };
 

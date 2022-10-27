@@ -4,6 +4,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
+import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
 import Home from '@/routes/Home';
 
@@ -32,6 +33,12 @@ const privateRoute = [
     {
         path: 'private',
         component: <Home />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/blog',
+        component: <Blog />,
         exact: true,
         restrict: true,
     },

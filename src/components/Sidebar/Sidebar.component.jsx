@@ -2,7 +2,6 @@ import { Menu } from 'antd';
 
 import SidebarLink from '../SidebarLink';
 import { Logo, SideBar, Wrapper, SignOut } from './sdiebar.style';
-import './style.css';
 
 import { ReactComponent as FcodeLogo } from '@/assets/logo/logo.svg';
 import {
@@ -68,7 +67,7 @@ const itemsAdmin = [
 const SidebarComponent = () => {
     return (
         <Wrapper>
-            <SideBar>
+            <SideBar width="250px">
                 <Logo>
                     <FcodeLogo width={50} height={50} />F - CODE
                 </Logo>

@@ -99,7 +99,7 @@ export const Wrapper = styled.div`
     }
 `;
 export const SideBar = styled(Sider)`
-    width: 300px !important;
+    /* min-width: 200px; */
     position: fixed !important;
     height: 100vh;
     top: 0;

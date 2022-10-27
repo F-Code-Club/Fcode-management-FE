@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { Row, Col, Typography } from 'antd';
 import { ContentState, EditorState } from 'draft-js';
@@ -25,33 +25,43 @@ const BlogDetailComponent = () => {
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
     const currentAction = searchParams.get('action') || '';
-    const data = DUMMY_CONTENT[params.key - 1] ? DUMMY_CONTENT[params.key - 1].content : '';
+    const data = DUMMY_CONTENT[params.key - 1]
+        ? DUMMY_CONTENT[params.key - 1]
+        : { content: '', isApprove: false };
     // Global state
     const dispatch = useDispatch();
     // Local variable
-    const content = htmlToDraft(data);
+    const content = htmlToDraft(data.content);
     const contentState = ContentState.createFromBlockArray(content.contentBlocks);
     const [editorState, setEditorState] = useState(() =>
         EditorState.createWithContent(contentState)
     );
-    useEffect(() => {
-        // check action type to change button
+    //TODO: routing to blog when finish
+    // If out of data
+    if (
+        currentAction === '' ||
+        data.content === '' ||
+        !currentAction.match(/[(approve),(hidden),(decline)]/g)
+    ) {
+        dispatch(reducerButton.changeButtons(disableButton));
+        return <Navigate to="/" />;
+    } else {
         switch (currentAction) {
             case 'approve':
+                if (!data.isApprove) {
+                    return <Navigate to="/blog" />;
+                }
                 dispatch(reducerButton.changeButtons(approveButton));
                 break;
             case 'hidden':
+                if (data.isApprove) {
+                    return <Navigate to="/blog" />;
+                }
                 dispatch(reducerButton.changeButtons(hiddenButton));
                 break;
             default:
                 dispatch(disableButton);
         }
-    }, [location]);
-    //TODO: routing to blog when finish
-    // If out of data
-    if (currentAction === '' || data === '' || !currentAction.match(/[(approve),(hidden)]/g)) {
-        dispatch(reducerButton.changeButtons(disableButton));
-        return <Navigate to="/" />;
     }
     return (
         <Wrapper>

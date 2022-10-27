@@ -6,6 +6,8 @@ import * as Styled from './Blog.styled';
 const { Search } = Input;
 
 const Blog = () => {
+    // Using redux to store data when received
+
     return (
         <Styled.Background>
             <Styled.Wrapper>

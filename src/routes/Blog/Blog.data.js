@@ -5,7 +5,7 @@ export const columns = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        render: (text, record) => <a href={`/blog/${record.key}?action=approve`}>{text}</a>,
     },
     {
         title: 'Tác giả',

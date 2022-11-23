@@ -10,6 +10,15 @@ export const Container = styled.div`
     align-items: center;
     padding: 40px 0px;
     isolation: isolate;
+    & .ant-list {
+        margin-top: 10px;
+    }
+    & .ant-list-lg .ant-list-item {
+        padding: 0;
+    }
+    & .ant-list-pagination {
+        margin-top: 10px;
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -21,6 +30,7 @@ export const Wrapper = styled.div`
         0px 1px 5px rgba(0, 0, 0, 0.2);
     padding: 22px 30px;
     position: relative;
+    overflow: hidden;
 `;
 export const Header = styled.div`
     display: flex;

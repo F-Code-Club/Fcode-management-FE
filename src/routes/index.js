@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import BlogDetailComponent from './Blog/Detail/index';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import ResoucresSection from './Resources';
+import ResourcesSection from './Resources';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
@@ -31,7 +31,7 @@ const publicRoute = [
     },
     {
         path: 'source',
-        component: <ResoucresSection />,
+        component: <ResourcesSection />,
         exact: true,
         restrict: true,
     },

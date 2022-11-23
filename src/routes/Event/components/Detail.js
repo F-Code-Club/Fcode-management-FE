@@ -12,6 +12,7 @@ import {
     DetailBody,
     Action,
     RightHeader,
+    DetailBox,
 } from '../styled';
 import EditBox from './EditBox';
 
@@ -49,24 +50,26 @@ function Detail({ event, handle }) {
     return (
         <BoxContainer>
             <DetailContainer>
-                <DetailHeader>
-                    <LeftHeader>
-                        <h1>{event.title}</h1>
-                        <div>{event.point}</div>
-                    </LeftHeader>
-                    <RightHeader>
-                        <CloseCircleOutlined onClick={handle} />
-                    </RightHeader>
-                </DetailHeader>
-                <hr className="solid"></hr>
-                <DetailBody>
-                    <h2>{`${event.startDate} - ${event.endDate}`}</h2>
-                    <h2>{event.time}</h2>
-                    <br></br>
-                    <h2>{`Địa Điểm : ${event.place}`}</h2>
-                    <br></br>
-                    <h2>{`Ghi Chú : ${event.note}`}</h2>
-                </DetailBody>
+                <DetailBox>
+                    <DetailHeader>
+                        <LeftHeader>
+                            <h1>{event.title}</h1>
+                            <div>{event.point}</div>
+                        </LeftHeader>
+                        <RightHeader>
+                            <CloseCircleOutlined onClick={handle} />
+                        </RightHeader>
+                    </DetailHeader>
+                    <hr className="solid"></hr>
+                    <DetailBody>
+                        <h2>{`${event.startDate} - ${event.endDate}`}</h2>
+                        <h2>{event.time}</h2>
+
+                        <h2>{`Địa Điểm : ${event.place}`}</h2>
+
+                        <h2>{`Ghi Chú : ${event.note}`}</h2>
+                    </DetailBody>
+                </DetailBox>
                 <Action>
                     <div>
                         <EditOutlined onClick={handleOpenEditBox} />

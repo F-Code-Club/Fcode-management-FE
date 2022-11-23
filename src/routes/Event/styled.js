@@ -21,6 +21,14 @@ export const DetailBody = styled.div`
     font-size: 16px;
     line-height: 24px;
     margin-left: 20px;
+    padding: 24px;
+    h2 {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 8px;
+    }
 `;
 export const BoxContainer = styled.div`
     height: 100vh;
@@ -160,6 +168,9 @@ export const DetailContainer = styled.div`
     top: translate(50%, 100%);
     min-height: ${px2vw(270)};
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
 export const Header = styled.div`
     display: flex;
@@ -202,7 +213,12 @@ export const LeftHeader = styled.div`
     h1 {
         margin-right: 8px;
         margin-bottom: 0;
+        margin: 20px 0;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
         font-size: 24px;
+        line-height: 133.4%;
     }
     div {
         text-align: center;
@@ -226,3 +242,4 @@ export const EditContainer = styled.div`
 export const RightHeader = styled.div`
     font-size: 26px;
 `;
+export const DetailBox = styled.div``;

@@ -1,0 +1,51 @@
+// import * as Styled from '../Blog/Blog.styled';
+import ResourceCard from './components/ResourceCard';
+import { Wrapper, Container, Header, HeaderText, HeaderButton } from './styles';
+
+import { PlusSquareOutlined } from '@ant-design/icons';
+
+const ResoucresSection = () => {
+    return (
+        <>
+            <Container>
+                <Wrapper>
+                    <Header>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                padding: '0px',
+
+                                width: '312px',
+                                height: '110px',
+                            }}
+                        >
+                            <HeaderText> Tài nguyên</HeaderText>
+                            <span
+                                style={{
+                                    fontWeight: 400,
+                                    fontSize: 16,
+                                    letterSpacing: 0.15,
+                                    color: '#767676',
+                                }}
+                            >
+                                Quản lý tài nguyên
+                            </span>
+                        </div>
+                        <HeaderButton>
+                            <PlusSquareOutlined />
+                        </HeaderButton>
+                    </Header>
+                    <div>
+                        {' '}
+                        this is body area
+                        <ResourceCard />
+                    </div>
+                </Wrapper>
+            </Container>
+        </>
+    );
+};
+
+export default ResoucresSection;

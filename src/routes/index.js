@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import BlogDetailComponent from './Blog/Detail/index';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import ResoucresSection from './Resources';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
@@ -25,6 +26,12 @@ const publicRoute = [
     {
         path: 'account/edit-account',
         component: <EditAccount />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'source',
+        component: <ResoucresSection />,
         exact: true,
         restrict: true,
     },

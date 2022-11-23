@@ -1,10 +1,14 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+
 import Recuritment from './MemberRecuritment';
+
+import BlogDetailComponent from './Blog/Detail/index'
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
+import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
 import Event from '@/routes/Event/Index';
 import Home from '@/routes/Home';
@@ -47,6 +51,18 @@ const privateRoute = [
         path: 'private',
         component: <Home />,
         exact: true,
+        restrict: true,
+    },
+    {
+        path: '/blog',
+        component: <Blog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/blog/:key',
+        component: <BlogDetailComponent />,
+        exact: false,
         restrict: true,
     },
 ];

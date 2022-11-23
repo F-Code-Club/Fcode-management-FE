@@ -11,10 +11,17 @@ export const Container = styled.div`
 export const DetailHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-left: 20px;
 `;
 
 export const Title = styled.div``;
-export const DetailBody = styled.div``;
+export const DetailBody = styled.div`
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 20px;
+`;
 export const BoxContainer = styled.div`
     height: 100vh;
     z-index: 99;
@@ -149,7 +156,7 @@ export const DetailContainer = styled.div`
     background: white;
     z-index: 100;
     position: absolute;
-    border: 1px solid #45ce7c;
+    border: 2px solid #45ce7c;
     top: translate(50%, 100%);
     min-height: ${px2vw(270)};
     border-radius: 10px;
@@ -195,12 +202,16 @@ export const LeftHeader = styled.div`
     h1 {
         margin-right: 8px;
         margin-bottom: 0;
+        font-size: 24px;
     }
     div {
         text-align: center;
-        width: ${px2vw(52)};
         background: #45ce7c;
-        border-radius: 10px;
+        width: 40px;
+        border-radius: 100px;
+        font-size: 18px;
+        color: white;
+        margin-left: 10px;
     }
 `;
 export const EditContainer = styled.div`
@@ -211,4 +222,7 @@ export const EditContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+export const RightHeader = styled.div`
+    font-size: 26px;
 `;

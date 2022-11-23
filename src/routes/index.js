@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import Recuritment from './MemberRecuritment';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -30,6 +31,12 @@ const publicRoute = [
     {
         path: 'event',
         component: <Event />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'recruitmembers',
+        component: <Recuritment />,
         exact: true,
         restrict: true,
     },

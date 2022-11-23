@@ -11,10 +11,10 @@ import {
     LeftHeader,
     DetailBody,
     Action,
+    RightHeader,
 } from '../styled';
 import EditBox from './EditBox';
 
-import { dateFormat } from '@/utils/dateFormat';
 import { CloseCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const openNotification = (type, placement, value, description) => {
@@ -54,16 +54,18 @@ function Detail({ event, handle }) {
                         <h1>{event.title}</h1>
                         <div>{event.point}</div>
                     </LeftHeader>
-                    <CloseCircleOutlined onClick={handle} />
+                    <RightHeader>
+                        <CloseCircleOutlined onClick={handle} />
+                    </RightHeader>
                 </DetailHeader>
                 <hr className="solid"></hr>
                 <DetailBody>
-                    <h2>{dateFormat(event.start.toString())}</h2>
-                    <h2>{dateFormat(event.end.toString())}</h2>
+                    <h2>{`${event.startDate} - ${event.endDate}`}</h2>
                     <h2>{event.time}</h2>
-                    <h2>{event.place}</h2>
                     <br></br>
-                    <h2>{event.note}</h2>
+                    <h2>{`Địa Điểm : ${event.place}`}</h2>
+                    <br></br>
+                    <h2>{`Ghi Chú : ${event.note}`}</h2>
                 </DetailBody>
                 <Action>
                     <div>

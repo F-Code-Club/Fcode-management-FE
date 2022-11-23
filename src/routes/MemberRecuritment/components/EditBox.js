@@ -1,24 +1,28 @@
 import { useState, useEffect } from 'react';
 
-import { Input, DatePicker, Form } from 'antd';
+import { Input, DatePicker, Form, Button, Upload } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
-import { editEvent } from '../slice';
+import { editMile } from '../slice';
 import {
-    CustomButton,
     BoxContainer,
-    EditContainer,
+    AddContainer,
     InputContainer,
     ButtonContainer,
-} from '../styled';
+    CustomButton,
+    UploadContainer,
+    CancelButon,
+    MySwitch,
+} from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { UploadOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
-function EditBox({ event, handle, closeOtherBox }) {
+function EditBox({ handle, event }) {
     const [form] = Form.useForm();
     const [text, SetText] = useState([]);
     const dispatch = useDispatch();
@@ -31,42 +35,64 @@ function EditBox({ event, handle, closeOtherBox }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        console.log('Success:', values);
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('DD/MM/YYYY');
-        const formatttedEndDate = endDate.format('DD/MM/YYYY');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
         try {
             const newEvent = {
                 start: startDate,
                 end: endDate,
                 title: values.eventName,
-                point: values.eventPoint,
-                place: values.eventPlace,
-                note: values.extraNotice,
-                startDate: formattedstartDate,
-                endDate: formatttedEndDate,
+                note: values.description,
+                form: values.eventForm,
                 id: event.id,
             };
-            console.log(newEvent);
             toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
-            dispatch(editEvent(newEvent));
+            console.log(newEvent);
+            dispatch(editMile(newEvent));
         } catch {
             toastError('Something has gone Wrong,Please Try again');
         } finally {
             handle();
-            closeOtherBox();
         }
     };
-
+    const onChange = (checked) => {
+        console.log(`switch to ${checked}`);
+    };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        toastError('Không thể thêm cột mốc , vui lòng thử lại !!');
+    };
+    const onDateSelection = (value, dateString) => {
+        console.log('hi');
+        console.log(value);
+        console.log(dateString);
+    };
+    const props = {
+        name: 'file',
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        headers: {
+            authorization: 'authorization-text',
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                toastSuccess(`${info.file.name} được thêm thành công !!`);
+            } else if (info.file.status === 'error') {
+                toastError(`${info.file.name} thêm không thành công , vui lòng thử lại.`);
+            }
+        },
+    };
+    const disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current < moment().endOf('day');
     };
     return (
         <BoxContainer>
-            <EditContainer>
+            <AddContainer>
                 <InputContainer>
-                    <h1>Cập nhật Sự Kiện</h1>
+                    <h1>CHỈNH SỬA CỘT MỐC </h1>
                     <Form
                         name="basic"
                         labelCol={{
@@ -80,26 +106,22 @@ function EditBox({ event, handle, closeOtherBox }) {
                         }}
                         fields={[
                             {
-                                name: ['eventPoint'],
-                                value: `${event.point}`,
-                            },
-                            {
                                 name: ['eventName'],
                                 value: `${event.title}`,
                             },
                             {
-                                name: ['eventPlace'],
-                                value: `${event.place}`,
+                                name: ['eventForm'],
+                                value: `${event.form}`,
                             },
                             {
                                 name: ['Picker'],
                                 value: [
-                                    moment(event.start, 'YYYY-MM-DD HH:mm:ss'),
-                                    moment(event.end, 'YYYY-MM-DD HH:mm:ss'),
+                                    moment(event.start, 'DD/MM/YYYY'),
+                                    moment(event.end, 'DD/MM/YYYY'),
                                 ],
                             },
                             {
-                                name: ['extraNotice'],
+                                name: ['description'],
                                 value: `${event.note}`,
                             },
                         ]}
@@ -109,12 +131,12 @@ function EditBox({ event, handle, closeOtherBox }) {
                     >
                         <Form.Item
                             className="input-element"
-                            label="Tên sự kiện"
+                            label="Tên cột mốc"
                             name="eventName"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Hãy nhập tên sự kiện',
+                                    message: 'Hãy nhập tên cột mốc',
                                 },
                             ]}
                         >
@@ -122,45 +144,58 @@ function EditBox({ event, handle, closeOtherBox }) {
                         </Form.Item>
                         <Form.Item
                             className="input-element"
-                            label="Điểm sự kiện"
-                            name="eventPoint"
+                            name="Picker"
+                            label="Thời gian diễn ra "
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Hãy nhập điểm sự kiện',
+                                    message: 'Hãy nhập tên cột mốc',
                                 },
                             ]}
                         >
-                            <Input />
+                            <RangePicker
+                                disabledDate={disabledDate}
+                                showTime={{ format: 'HH:mm' }}
+                                format="YYYY-MM-DD HH:mm"
+                                onChange={onDateSelection}
+                            />
                         </Form.Item>
                         <Form.Item
                             className="input-element"
-                            label="Địa điểm tổ chức sự kiện"
-                            name="eventPlace"
+                            label="Thông tin chi tiết"
+                            name="description"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Hãy nhập  địa điểm của  sự kiện',
+                                    message: 'Hãy nhập tên cột mốc',
                                 },
                             ]}
                         >
+                            <TextArea rows={4} placeholder="Thông tin chi tiết" maxLength={1000} />
+                        </Form.Item>
+                        <Form.Item
+                            className="input-element"
+                            label="Link form để đăng ký nếu có"
+                            name="eventForm"
+                        >
                             <Input />
                         </Form.Item>
-                        <Form.Item name="Picker" label="Ngày giờ ">
-                            <RangePicker showTime={{ format: 'HH:mm' }} format="YYYY-MM-DD HH:mm" />
-                        </Form.Item>
-                        <Form.Item className="input-element" label="Ghi chú" name="extraNotice">
-                            <TextArea rows={4} placeholder="Ghi chú" />
-                        </Form.Item>
+                        <UploadContainer>
+                            <Upload {...props}>
+                                <Button icon={<UploadOutlined />}>Bấm để tải ảnh lên</Button>
+                            </Upload>
+                            <MySwitch defaultChecked onChange={onChange} />
+                        </UploadContainer>
+
                         <ButtonContainer>
-                            <CustomButton onClick={handle}>Hủy</CustomButton>
+                            <CancelButon onClick={handle}>Hủy</CancelButon>
                             <CustomButton type="primary" htmlType="submit">
-                                Cập nhật sự kiện
+                                Thêm sự kiện
                             </CustomButton>
                         </ButtonContainer>
                     </Form>
                 </InputContainer>
-            </EditContainer>
+            </AddContainer>
         </BoxContainer>
     );
 }

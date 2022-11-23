@@ -1,24 +1,28 @@
 import { useState, useEffect } from 'react';
 
-import { Input, DatePicker, Form, InputNumber } from 'antd';
+import { Input, DatePicker, Form, Button, Upload } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
-import { addEvent } from '../slice';
+import { addMile } from '../slice';
 import {
     BoxContainer,
     AddContainer,
     InputContainer,
     ButtonContainer,
     CustomButton,
-} from '../styled';
+    UploadContainer,
+    CancelButon,
+    MySwitch,
+} from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { UploadOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
-
 const { RangePicker } = DatePicker;
-function AddEventBox({ handle }) {
+
+function CreateBox({ handle }) {
     const [text, SetText] = useState([]);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -31,42 +35,60 @@ function AddEventBox({ handle }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        console.log('Success:', values);
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('DD/MM/YYYY');
-        const formatttedEndDate = endDate.format('DD/MM/YYYY');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
         try {
             const event = {
                 start: startDate,
                 end: endDate,
                 title: values.eventName,
-                point: values.eventPoint,
-                place: values.eventPlace,
-                note: values.extraNotice,
-                startDate: formattedstartDate,
-                endDate: formatttedEndDate,
+                note: values.description,
+                form: values.eventForm,
             };
             console.log(event);
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
-            dispatch(addEvent(event));
+            dispatch(addMile(event));
         } catch {
             toastError('Something has gone Wrong,Please Try again');
         } finally {
+            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
             handle();
         }
+    };
+    const onChange = (checked) => {
+        console.log(`switch to ${checked}`);
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+        toastError('Không thể thêm cột mốc , vui lòng thử lại !!');
+    };
+    const onDateSelection = (value, dateString) => {
+        SetText({
+            Picker: [value[0], value[1]],
+        });
+        console.log(value);
+        console.log(dateString);
+    };
+    const props = {
+        name: 'file',
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        headers: {
+            authorization: 'authorization-text',
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                toastSuccess(`${info.file.name} được thêm thành công !!`);
+            } else if (info.file.status === 'error') {
+                toastError(`${info.file.name} thêm không thành công , vui lòng thử lại.`);
+            }
+        },
     };
     // eslint-disable-next-line arrow-body-style
     const disabledDate = (current) => {
         // Can not select days before today and today
         return current && current < moment().endOf('day');
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-    const onDateSelection = (value, dateString) => {
-        console.log(value);
-        console.log(dateString);
     };
     return (
         <BoxContainer>
@@ -91,44 +113,27 @@ function AddEventBox({ handle }) {
                     >
                         <Form.Item
                             className="input-element"
-                            label="Tên sự kiện"
+                            label="Tên cột mốc"
                             name="eventName"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Hãy nhập tên sự kiện',
+                                    message: 'Hãy nhập tên cột mốc',
                                 },
                             ]}
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            className="input-element"
-                            label="Điểm sự kiện"
-                            name="eventPoint"
+                            name="Picker"
+                            label="Ngày giờ "
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Hãy nhập điểm sự kiện',
+                                    message: 'Hãy nhập tên cột mốc',
                                 },
                             ]}
                         >
-                            <InputNumber min={0} max={100} />
-                        </Form.Item>
-                        <Form.Item
-                            className="input-element"
-                            label="Địa điểm tổ chức sự kiện"
-                            name="eventPlace"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Hãy nhập  địa điểm của  sự kiện',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item name="Picker" label="Ngày giờ ">
                             <RangePicker
                                 disabledDate={disabledDate}
                                 showTime={{ format: 'HH:mm' }}
@@ -136,11 +141,35 @@ function AddEventBox({ handle }) {
                                 onChange={onDateSelection}
                             />
                         </Form.Item>
-                        <Form.Item className="input-element" label="Ghi chú" name="extraNotice">
-                            <TextArea rows={4} placeholder="Ghi chú" maxLength={1000} />
+                        <Form.Item
+                            className="input-element"
+                            label="Thông tin chi tiết"
+                            name="description"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Hãy nhập tên cột mốc',
+                                },
+                            ]}
+                        >
+                            <TextArea rows={4} placeholder="Thông tin chi tiết" maxLength={1000} />
                         </Form.Item>
+                        <Form.Item
+                            className="input-element"
+                            label="Link form để đăng ký nếu có"
+                            name="eventForm"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <UploadContainer>
+                            <Upload {...props}>
+                                <Button icon={<UploadOutlined />}>Bấm để tải ảnh lên</Button>
+                            </Upload>
+                            <MySwitch defaultChecked onChange={onChange} />
+                        </UploadContainer>
+
                         <ButtonContainer>
-                            <CustomButton onClick={handle}>Hủy</CustomButton>
+                            <CancelButon onClick={handle}>Hủy</CancelButon>
                             <CustomButton type="primary" htmlType="submit">
                                 Thêm sự kiện
                             </CustomButton>
@@ -152,4 +181,4 @@ function AddEventBox({ handle }) {
     );
 }
 
-export default AddEventBox;
+export default CreateBox;

@@ -1,5 +1,3 @@
-import './index.css';
-
 import { injectReducer } from '@/store';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -17,7 +15,7 @@ export const slice = createSlice({
     reducers: {
         addEvent: (state, action) => {
             let newEvent = { ...action.payload, id: state.eventId };
-            state.eventId++;
+            state.id++;
             state.listOfEvents.push(newEvent);
         },
         editEvent: (state, action) => {
@@ -41,7 +39,7 @@ export const slice = createSlice({
         },
         addMile: (state, action) => {
             let newEvent = { ...action.payload, id: state.mileId };
-            state.mileId++;
+            state.id++;
             state.listOfMilestones.push(newEvent);
         },
         editMile: (state, action) => {
@@ -68,4 +66,4 @@ export const slice = createSlice({
 
 injectReducer(name, slice.reducer);
 
-export const { addEvent, editEvent, removeEvent } = slice.actions;
+export const { addEvent, editEvent, removeEvent, removeMile, editMile, addMile } = slice.actions;

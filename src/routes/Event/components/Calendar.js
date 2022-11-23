@@ -33,7 +33,7 @@ const MyCalendar = () => {
                 start: new Date(listOfEvents[i].start),
                 end: new Date(listOfEvents[i].end),
             };
-
+            console.log(newEvent);
             array.push(newEvent);
         }
         setEvents(array);

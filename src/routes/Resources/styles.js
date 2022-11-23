@@ -1,7 +1,9 @@
 // import { down } from 'styled-breakpoints';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import Resource_01 from '../../assets/Resource/Resource_01.jpg';
+
+import { themes } from '@/theme/theme';
 
 export const Container = styled.div`
     display: flex;
@@ -125,5 +127,207 @@ export const ReverseContentButton = styled(HeaderButton)`
     &:hover {
         color: #ffffff;
         background: #45ce7c;
+    }
+`;
+
+const move = keyframes`
+    0%{
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+`;
+
+export const ContainerPopup = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: ${move} 0.15s linear forwards;
+`;
+
+export const LayerPopup = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.38);
+`;
+
+export const Popup = styled.div`
+    width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 2px;
+    .icon-popup {
+        margin-top: 3px;
+        font-size: 20px;
+    }
+`;
+
+export const ContentPopup = styled.div`
+    width: 100%;
+    margin-left: 1rem;
+    transition: linear 0.25s;
+    div {
+        text-align: right;
+    }
+    .cancel-btn {
+        margin-top: 0.5rem;
+        color: black;
+        border: 1px solid ${themes.colors.neutral5};
+        margin-right: 10px;
+        :hover {
+            color: ${themes.colors.danger};
+            border: 1px solid ${themes.colors.danger};
+        }
+    }
+    .accept-btn {
+        margin-top: 0.5rem;
+        background: ${themes.colors.primary400};
+        color: white;
+        border: 1px solid ${themes.colors.primary400};
+        :hover {
+            color: ${themes.colors.primary400};
+            border: 1px solid ${themes.colors.primary400};
+        }
+    }
+`;
+const move02 = keyframes`
+    0%{
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+`;
+
+export const ContainerEditor = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: ${move02} 0.15s linear forwards;
+    /* wave-shadow-color: red; */
+    .editor {
+        width: 70%;
+        position: absolute;
+        margin-bottom: 3rem;
+        background: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+        padding: 25px;
+        .rdw-link-modal,
+        .rdw-embedded-modal {
+            height: auto;
+        }
+        .demo-editor {
+            height: 30vh;
+            overflow-y: scroll;
+            border: 1px solid ${themes.colors.neutral5};
+        }
+        .checkbox {
+            margin: 0.5rem 0;
+            display: flex;
+        }
+        .container-btn {
+            text-align: center;
+        }
+        .save-btn {
+            margin-top: 0.5rem;
+            background: ${themes.colors.primary400};
+            color: white;
+            border: 1px solid ${themes.colors.primary400};
+            :hover {
+                color: ${themes.colors.primary400};
+                border: 1px solid ${themes.colors.primary400};
+                background: white;
+            }
+        }
+    }
+    .errorMsg {
+        color: red;
+        margin: 0;
+    }
+`;
+
+export const FirstLayer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.38);
+    position: absolute;
+`;
+export const ContainerUploadImg = styled.div`
+    display: flex;
+    margin-top: 1rem;
+    .title {
+        min-width: 150px;
+    }
+    .ant-image {
+        margin-right: 0.5rem;
+    }
+`;
+
+export const ImageUpload = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #d9d9d9;
+    cursor: pointer;
+    p {
+        margin: 5px;
+    }
+    :hover {
+        border: 1px dashed #45ce7c;
+    }
+`;
+
+export const UploadTwoUrl = styled.div`
+    .ant-image {
+        margin: 1rem 0.5rem 0 0;
+        overflow: hidden;
+    }
+    .two-button {
+        margin-top: 1rem;
+        text-align: right;
+        .cancel-btn {
+            margin-top: 0.5rem;
+            color: black;
+            border: 1px solid #d9d9d9;
+            margin-right: 10px;
+            :hover {
+                color: #ff4d4f;
+                border: 1px solid #ff4d4f;
+            }
+        }
+        .ok-btn {
+            margin-top: 0.5rem;
+            background: #45ce7c;
+            color: white;
+            border: 1px solid #45ce7c;
+            :hover {
+                color: rgba(69, 206, 124, 1);
+                border: 1px solid #45ce7c;
+                background: white;
+            }
+        }
     }
 `;

@@ -9,16 +9,16 @@ import { UploadImage } from './UploadImg';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-export const CreateAnnouncement = (props) => {
+export const CreateResource = (props) => {
     const action = props.action;
     const [newResource, setNewResource] = useState({
         title: props.type === 'edit' ? props.title : '',
         description: props.type === 'edit' ? props.description : '',
-        resourceImg: props.type === 'edit' ? props.imgs : [],
+        // resourceImg: props.type === 'edit' ? props.imgs : [],
     });
     const [errorMsg, setErrorMsg] = useState({
         title: false,
-        content: false,
+        description: true,
         first: true,
     });
     const [statusButton, setStatusButton] = useState();
@@ -49,7 +49,7 @@ export const CreateAnnouncement = (props) => {
     };
     const onContentChange = (e) => {
         const checkValue = e.target.value.trim();
-        let status = true;
+
         // for (let i = 0; i < checkValue.length; i++) {
         //     if (checkValue[0].text.trim() !== '') {
         //         status = false;
@@ -62,7 +62,9 @@ export const CreateAnnouncement = (props) => {
         });
         setErrorMsg({
             ...errorMsg,
-            content: status,
+            description: checkValue == null || checkValue == '',
+
+            first: false,
         });
     };
     const handleCancelProcess = async (status) => {
@@ -124,14 +126,16 @@ export const CreateAnnouncement = (props) => {
                     <Input
                         placeholder="content of your resource"
                         style={errorMsg.title ? { border: '1px solid red' } : {}}
-                        value={newResource.title}
+                        value={newResource.description}
                         onChange={(e) => onContentChange(e)}
-                        onBlur={(e) => onContentChange(e)}
+                        // onBlur={(e) => onContentChange(e)}
                         className="title-input"
                     />
                 </div>
 
-                {errorMsg.content && <p className="errorMsg">Trường này không được bỏ trống!</p>}
+                {errorMsg.description && (
+                    <p className="errorMsg">Trường này không được bỏ trống!</p>
+                )}
                 <UploadImage
                     type={props.type}
                     imgs={props.imgs}

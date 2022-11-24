@@ -2,20 +2,22 @@ import { injectReducer } from '@/store';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
-    listAnnounce: [],
+    listResources: [],
 };
 
-export const name = 'announcement';
+export const name = 'resources';
 
 export const slice = createSlice({
     name,
     initialState,
     reducers: {
-        addAnnounce: (state, action) => {
-            state.listAnnounce.push(action.payload);
+        addResource: (state, action) => {
+            state.listResources.push(action.payload);
         },
-        deleteAnnounce: (state, action) => {
-            state.listAnnounce = state.listAnnounce.filter((todo) => todo.id !== action.payload);
+        deleteResource: (state, action) => {
+            state.listResources = state.listResources.filter(
+                (resource) => resource.id !== action.payload
+            );
         },
     },
 });

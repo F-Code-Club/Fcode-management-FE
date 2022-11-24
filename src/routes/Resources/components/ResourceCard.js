@@ -2,25 +2,27 @@ import {
     CardWrapper,
     BackgroundCard,
     TitleResource,
-    ContentResource,
-    Description,
+    ContentResource, // Description,
     ContentButton,
     ReverseContentButton,
 } from '../styles';
 
-const ResourceCard = () => {
+const ResourceCard = ({ clickEvent, item }) => {
+    // <Description>HTML, CSS, JavaScript, ...</Description>
+    console.log(item.imgs[0]);
     return (
         <CardWrapper>
-            <BackgroundCard>
-                <TitleResource>Title resource</TitleResource>
+            <BackgroundCard url={item.imgs[0]}>
+                <TitleResource>{item.title}</TitleResource>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <ContentResource>Content resource</ContentResource>
-                    <Description>HTML, CSS, JavaScript, ...</Description>
+                    <ContentResource>{item.description}</ContentResource>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '130px' }}>
-                    <ContentButton>Tạo</ContentButton>
-                    <ReverseContentButton>Sửa</ReverseContentButton>
+                    <ContentButton onClick={() => clickEvent('create', null)}>Tạo</ContentButton>
+                    <ReverseContentButton onClick={() => clickEvent('edit', item)}>
+                        Sửa
+                    </ReverseContentButton>
                 </div>
             </BackgroundCard>
         </CardWrapper>

@@ -14,6 +14,8 @@ export const Container = styled.div`
     isolation: isolate;
     & .ant-list {
         margin-top: 10px;
+        width: 1050px;
+        height: 800px;
     }
     & .ant-list-lg .ant-list-item {
         padding: 0;
@@ -26,6 +28,10 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
     width: 1110px;
     height: 840px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
@@ -38,6 +44,7 @@ export const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    width: 100%;
 `;
 export const HeaderText = styled.span`
     font-style: normal;
@@ -83,7 +90,11 @@ export const BackgroundCard = styled.div`
     padding: 30px;
     width: 100%;
     min-height: 100%;
-    background: url(${Resource_01});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    // background: url(${Resource_01});
+    background: ${({ url }) => (url ? `url(${url})` : null)};
 `;
 
 export const TitleResource = styled.span`
@@ -241,10 +252,6 @@ export const ContainerEditor = styled.div`
             height: 30vh;
             overflow-y: scroll;
             border: 1px solid ${themes.colors.neutral5};
-        }
-        .checkbox {
-            margin: 0.5rem 0;
-            display: flex;
         }
         .container-btn {
             text-align: center;

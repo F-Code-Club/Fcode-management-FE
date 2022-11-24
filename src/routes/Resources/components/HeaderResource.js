@@ -2,7 +2,7 @@ import { Header, HeaderText, HeaderButton } from '../styles';
 
 import { PlusSquareOutlined } from '@ant-design/icons';
 
-const HeaderResource = () => {
+const HeaderResource = ({ handleClick }) => {
     return (
         <Header>
             <div
@@ -27,7 +27,7 @@ const HeaderResource = () => {
                     Quản lý tài nguyên
                 </span>
             </div>
-            <HeaderButton>
+            <HeaderButton onClick={() => handleClick('create', null)}>
                 <PlusSquareOutlined />
             </HeaderButton>
         </Header>

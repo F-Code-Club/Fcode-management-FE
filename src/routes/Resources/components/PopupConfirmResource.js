@@ -39,7 +39,7 @@ export const ConfirmAction = (props) => {
                 )}
                 <ContentPopup>
                     <h3>{props.title}</h3>
-                    <p>{props.content}</p>
+                    <p>{props.description}</p>
                     <div>
                         <Button onClick={() => handleClick(false)} className="cancel-btn">
                             Hủy

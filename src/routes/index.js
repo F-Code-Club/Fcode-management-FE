@@ -1,9 +1,15 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 
+
 import Recuritment from './MemberRecuritment';
 
 import BlogDetailComponent from './Blog/Detail/index'
+
+import { ManageAnnouncement } from './Announcement';
+import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
+import BlogDetailComponent from './Blog/Detail/index';
+
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -39,8 +45,21 @@ const publicRoute = [
         restrict: true,
     },
     {
+        path: 'manage-announcement',
+        component: <ManageAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+
         path: 'recruitmembers',
         component: <Recuritment />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-announcement/view-announcement/:id',
+        component: <ViewAnnouncement />,
         exact: true,
         restrict: true,
     },

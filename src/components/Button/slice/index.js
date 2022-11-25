@@ -7,18 +7,8 @@ export const initialState = {
     actionButtons: {
         type: 'hidden',
         // TODO: change this when finish testing
-        isShow: true, // show or not.
-        buttons: [
-            // list of action for all button
-            {
-                name: 'Ẩn',
-                type: '',
-            },
-            {
-                name: 'Xoá',
-                type: 'primary',
-            },
-        ],
+        isShow: false, // show or not.
+        buttons: [],
     },
 };
 
@@ -29,7 +19,7 @@ export const slice = createSlice({
     initialState,
     reducers: {
         changeButtons: (state, action) => {
-            state.actionButton = action.payload;
+            state.actionButtons = action.payload;
         },
         // TODO: using this to call button onClick handler
         handleHidden: (state, action) => {

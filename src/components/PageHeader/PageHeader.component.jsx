@@ -1,31 +1,43 @@
-import { Layout, PageHeader, Breadcrumb } from 'antd';
+import { useEffect } from 'react';
+
+import { Layout, PageHeader, Breadcrumb, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
+// import { openNotificationWithIcon } from '../ToastDemo/style';
+import { toastSuccess } from '../ToastNotification';
 import StyledButton from './../Button/index';
-import { testHandleButton } from './dummy';
+import { ButtonModalConfig } from './ModalConfig';
+import { PageHeaderContainer } from './PageHeader.style';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
+import testApi from '@/utils/apiComponents/testApi';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
-const breadcrumbNameMap = {
-    '/event': 'event',
-    '/source': 'source',
+let breadcrumbNameMap = {
+    '/event': 'Quản lý sự kiện',
+    '/source': 'Quản lý tài nguyên',
     '/member': 'member',
-    '/blog': 'blog',
-    '/announcement': 'announcement',
-    '/information': 'information',
-    '/account': 'account',
-    '/account/edit-account': 'edit-account',
-    '/announcement/notification': 'notification',
-    '/blog/1': 'bai viet',
+    '/blog': 'Quản lý bài viết',
+    '/announcement': 'Quản lý thông báo',
+    '/information': 'Thông tin cá nhân',
+    '/account': 'Quản lý tài khoản',
+    '/account/edit-account': 'Chỉnh sửa thông tin',
+    '/announcement/notification': 'Xem thông báo',
+    '/comment': 'Quản lý bình luận, câu hỏi',
+    '/recruitmembers': 'Tuyển thành viên',
+    '/information/view-information': 'xem thông tin',
+    '/announcement/view-announcement': 'xem thông báo',
 };
-
+for (let i = 1; i <= 100; i++) {
+    breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
+}
 const PageHeaderComponent = () => {
+    const [modal, contextHolder] = Modal.useModal();
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);
     const dispatch = useDispatch();
@@ -41,39 +53,55 @@ const PageHeaderComponent = () => {
     });
     const breadcrumbItems = [
         <Breadcrumb.Item key="home">
-            <Link to="/">Home</Link>
+            <Link to="/">Trang chủ</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
+
+    // Button state
+    useEffect(() => {
+        dispatch(buttonActions.changeButtons({ isShow: false }));
+    }, [location]);
+    const handleButton = (button) => {
+        return modal.confirm(
+            ButtonModalConfig(button.configs.title, button.configs.content, async () => {
+                testApi.get(button.params);
+                toastSuccess(button.successContent);
+            })
+        );
+    };
     return (
-        <Header
-            className="site-layout-sub-header-background"
-            style={{
-                height: 100,
-                padding: 0,
-                background: 'rgb(255, 255, 255)',
-            }}
-        >
-            <Breadcrumb>{breadcrumbItems}</Breadcrumb>
-            <PageHeader
-                backIcon={<ArrowLeftOutlined />}
-                className="site-page-header-responsive"
-                title={TitleHeader}
-                style={{ background: '#FFFFFF' }}
-                onBack={() => window.history.back()}
-                extra={
-                    ActionButtons.isShow &&
-                    ActionButtons.buttons.map((button, index) => (
-                        <StyledButton
-                            key={button.name + index}
-                            type={button.type}
-                            onClick={() => dispatch(buttonActions.handleHidden(testHandleButton))}
-                        >
-                            {button.name}
-                        </StyledButton>
-                    ))
-                }
-            />
-        </Header>
+        <PageHeaderContainer>
+            <Header
+                className="site-layout-sub-header-background"
+                style={{
+                    height: 100,
+                    padding: 0,
+                    background: 'rgb(255, 255, 255)',
+                }}
+            >
+                <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+                <PageHeader
+                    backIcon={<ArrowLeftOutlined />}
+                    className="site-page-header-responsive"
+                    title={TitleHeader}
+                    style={{ background: '#FFFFFF' }}
+                    onBack={() => window.history.back()}
+                    extra={
+                        ActionButtons.isShow &&
+                        ActionButtons.buttons.map((button, index) => (
+                            <StyledButton
+                                key={button.name + index}
+                                type={button.type}
+                                onClick={() => handleButton(button)}
+                            >
+                                {button.name}
+                            </StyledButton>
+                        ))
+                    }
+                />
+            </Header>
+            {contextHolder}
+        </PageHeaderContainer>
     );
 };
 

@@ -90,11 +90,11 @@ export const BackgroundCard = styled.div`
     padding: 30px;
     width: 100%;
     min-height: 100%;
+    background: ${({ url }) => (url ? `url(${url})` : null)};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     // background: url(${Resource_01});
-    background: ${({ url }) => (url ? `url(${url})` : null)};
 `;
 
 export const TitleResource = styled.span`

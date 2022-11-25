@@ -8,8 +8,6 @@ import {
 } from '../styles';
 
 const ResourceCard = ({ clickEvent, item }) => {
-    // <Description>HTML, CSS, JavaScript, ...</Description>
-    console.log(item.imgs[0]);
     return (
         <CardWrapper>
             <BackgroundCard url={item.imgs[0]}>

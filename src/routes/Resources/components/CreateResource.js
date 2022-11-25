@@ -14,11 +14,11 @@ export const CreateResource = (props) => {
     const [newResource, setNewResource] = useState({
         title: props.type === 'edit' ? props.title : '',
         description: props.type === 'edit' ? props.description : '',
-        // resourceImg: props.type === 'edit' ? props.imgs : [],
+        imgs: props.type === 'edit' ? props.imgs : [],
     });
     const [errorMsg, setErrorMsg] = useState({
         title: false,
-        description: true,
+        description: false,
         first: true,
     });
     const [statusButton, setStatusButton] = useState();
@@ -36,7 +36,7 @@ export const CreateResource = (props) => {
     }, [errorMsg]);
 
     const onTitleChange = (e) => {
-        const checkValue = e.target.value.trim();
+        const checkValue = e.target.value;
         setNewResource({
             ...newResource,
             title: checkValue,
@@ -48,14 +48,7 @@ export const CreateResource = (props) => {
         });
     };
     const onContentChange = (e) => {
-        const checkValue = e.target.value.trim();
-
-        // for (let i = 0; i < checkValue.length; i++) {
-        //     if (checkValue[0].text.trim() !== '') {
-        //         status = false;
-        //         break;
-        //     }
-        // }
+        const checkValue = e.target.value;
         setNewResource({
             ...newResource,
             description: checkValue,
@@ -63,7 +56,6 @@ export const CreateResource = (props) => {
         setErrorMsg({
             ...errorMsg,
             description: checkValue == null || checkValue == '',
-
             first: false,
         });
     };
@@ -117,18 +109,18 @@ export const CreateResource = (props) => {
                 {errorMsg.title && <p className="errorMsg">Trường này không được bỏ trống!</p>}
                 <h3 style={{ marginTop: '0.5em' }}>
                     <span style={{ color: 'red' }}>* </span>
-                    some description
+                    Some description
                 </h3>
                 <div
                     className="container-editor"
-                    style={errorMsg.content ? { border: '1px solid red' } : {}}
+                    style={errorMsg.description ? { border: '1px solid red' } : {}}
                 >
                     <Input
-                        placeholder="content of your resource"
-                        style={errorMsg.title ? { border: '1px solid red' } : {}}
+                        placeholder="Description of your resource"
+                        style={errorMsg.description ? { border: '1px solid red' } : {}}
                         value={newResource.description}
                         onChange={(e) => onContentChange(e)}
-                        // onBlur={(e) => onContentChange(e)}
+                        onBlur={(e) => onContentChange(e)}
                         className="title-input"
                     />
                 </div>

@@ -34,7 +34,7 @@ const ResourcesSection = () => {
     });
     const dispatch = useDispatch();
     const listResources = useSelector(selectResources);
-
+    console.log(listResources);
     const handleCreate = async (status, newAnnouncement) => {
         const typeWork = modalOpen.popupEditor.type;
         if (status) {

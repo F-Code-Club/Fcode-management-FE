@@ -4,18 +4,6 @@ import { useSelector } from 'react-redux';
 import { selectResources } from '../slice/selectors';
 import ResourceCard from './ResourceCard';
 
-// const dataSource = [
-//     { title: 'Card title1', value: 'Card content1' },
-//     { title: 'Card title2', value: 'Card content2' },
-//     { title: 'Card title3', value: 'Card content3' },
-//     { title: 'Card title4', value: 'Card content4' },
-//     { title: 'Card title5', value: 'Card content5' },
-//     { title: 'Card title1', value: 'Card content1' },
-//     { title: 'Card title2', value: 'Card content2' },
-//     { title: 'Card title3', value: 'Card content3' },
-//     { title: 'Card title4', value: 'Card content4' },
-//     { title: 'Card title5', value: 'Card content5' },
-// ];
 const ListResource = ({ handleClick }) => {
     const listResources = useSelector(selectResources);
     return (
@@ -36,7 +24,7 @@ const ListResource = ({ handleClick }) => {
                 position: 'bottom',
                 pageSize: 4,
             }}
-            dataSource={[...listResources]}
+            dataSource={[...listResources].reverse()}
             renderItem={(item) => (
                 <List.Item>
                     <ResourceCard item={item} clickEvent={handleClick} />

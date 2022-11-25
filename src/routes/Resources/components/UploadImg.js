@@ -12,12 +12,11 @@ export const UploadImage = (props) => {
     const [loading, setLoading] = useState(false);
     const [newUrl, setNewUrl] = useState({
         url1: props.type === 'edit' ? props.imgs[0] : '',
-        url2: props.type === 'edit' ? props.imgs[1] : '',
     });
 
     const handleUpload = () => {
-        actions([newUrl.url1, newUrl.url2]);
-        setImgList([newUrl.url1, newUrl.url2]);
+        actions([newUrl.url1]);
+        setImgList([newUrl.url1]);
         setLoading(false);
     };
 
@@ -47,7 +46,7 @@ export const UploadImage = (props) => {
                 centered
             >
                 <UploadTwoUrl>
-                    <h3>Hình 1:</h3>
+                    <h3>Hình:</h3>
                     <Input
                         value={newUrl.url1}
                         onChange={(e) =>
@@ -58,20 +57,9 @@ export const UploadImage = (props) => {
                         }
                         placeholder="https://image"
                     />
-                    <h3>Hình 2:</h3>
-                    <Input
-                        value={newUrl.url2}
-                        onChange={(e) =>
-                            setNewUrl({
-                                ...newUrl,
-                                url2: e.target.value,
-                            })
-                        }
-                        placeholder="https://image"
-                    />
-                    <br />
+
                     {newUrl.url1 && <Image src={newUrl.url1} alt="Not found" height={100} />}
-                    {newUrl.url2 && <Image src={newUrl.url2} alt="Not found" height={100} />}
+
                     <div className="two-button">
                         <Button onClick={() => setLoading(false)} className="cancel-btn">
                             Hủy

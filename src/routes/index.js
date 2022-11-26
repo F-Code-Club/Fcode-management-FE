@@ -9,7 +9,7 @@ import PublicRoute from './PublicRoute';
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
-import Home from '@/routes/Home';
+import { Homepage } from '@/routes/Homepage';
 
 // children: [
 //     {
@@ -20,7 +20,7 @@ import Home from '@/routes/Home';
 const publicRoute = [
     {
         path: 'home',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },
@@ -47,7 +47,7 @@ const publicRoute = [
 const privateRoute = [
     {
         path: 'private',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },

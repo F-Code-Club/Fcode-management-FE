@@ -16,8 +16,11 @@ export const UploadImage = (props) => {
     });
 
     const handleUpload = () => {
-        actions([newUrl.url1, newUrl.url2]);
-        setImgList([newUrl.url1, newUrl.url2]);
+        let res = [];
+        if (newUrl.url1.trim() != '' || newUrl.url1) res.push(newUrl.url1);
+        if (newUrl.url2.trim() != '' || newUrl.url2) res.push(newUrl.url2);
+        actions(res);
+        setImgList(res);
         setLoading(false);
     };
 

@@ -56,7 +56,7 @@ export const columns2 = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        render: (text, record) => <a href={`/blog/${record.key}?action=hidden`}>{text}</a>,
     },
     {
         title: 'Tác giả',
@@ -107,7 +107,7 @@ export const columns3 = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        render: (text, record) => <a href={`/blog/${record.key}?action=decline`}>{text}</a>,
     },
     {
         title: 'Tác giả',

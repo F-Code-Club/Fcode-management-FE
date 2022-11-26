@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
 export const ContainerHomepage = styled.div`
     width: 100%;
     min-height: calc(100vh - 190px);
@@ -21,7 +23,7 @@ export const ContainerHomepage = styled.div`
 export const Col1 = styled.div`
     .row1 {
         display: grid;
-        grid-template-columns: 60% 35%;
+        grid-template-columns: 65% 30%;
         justify-content: space-between;
         background: white;
         padding: 20px;
@@ -48,25 +50,25 @@ export const Col1 = styled.div`
                 border-radius: 5px;
             }
             .child1 {
-                background: #e6f8ec;
+                background: ${themes.colors.primary050};
             }
             .child2 {
-                background: #e3f2fe;
+                background: ${themes.colors.secondary050};
             }
             .btn-view-more {
                 width: 100px;
                 margin-top: 10px;
                 padding: 5px 15px;
-                background: #ffffff;
-                border: 1px solid #45ce7c;
-                color: #45ce7c;
+                background: ${themes.colors.light};
+                border: 1px solid ${themes.colors.primary};
+                color: ${themes.colors.primary};
                 box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
                 border-radius: 5px;
                 cursor: pointer;
                 transition: 0.2s linear;
                 :hover {
-                    background: #45ce7c;
-                    color: #ffffff;
+                    background: ${themes.colors.primary};
+                    color: ${themes.colors.light};
                 }
             }
         }
@@ -129,7 +131,7 @@ export const Col2 = styled.div`
             font-weight: 600;
             font-size: 18px;
             line-height: 22px;
-            color: #000000;
+            color: ${themes.colors.dark};
             text-transform: uppercase;
             text-align: center;
         }
@@ -184,7 +186,7 @@ export const Col2 = styled.div`
             font-weight: 600;
             font-size: 18px;
             line-height: 22px;
-            color: #000000;
+            color: ${themes.colors.dark};
             text-transform: uppercase;
             text-align: center;
         }

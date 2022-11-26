@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Layout, PageHeader, Breadcrumb, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
@@ -42,6 +42,7 @@ const PageHeaderComponent = () => {
     const ActionButtons = useSelector(selectActionButtons);
     const dispatch = useDispatch();
     const location = useLocation();
+    const [searchParams] = useSearchParams(location);
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
@@ -59,7 +60,10 @@ const PageHeaderComponent = () => {
 
     // Button state
     useEffect(() => {
-        dispatch(buttonActions.changeButtons({ isShow: false }));
+        const currentAction = searchParams.get('action') || '';
+        if (currentAction === '') {
+            dispatch(buttonActions.changeButtons({ isShow: false }));
+        }
     }, [location]);
     const handleButton = (button) => {
         return modal.confirm(

@@ -59,6 +59,11 @@ const BlogDetailComponent = () => {
                 }
                 dispatch(reducerButton.changeButtons(hiddenButton));
                 break;
+            case 'decline':
+                if (!data.isDeclined) {
+                    return <Navigate to="/blog" />;
+                }
+                break;
             default:
                 dispatch(disableButton);
         }

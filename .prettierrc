@@ -8,16 +8,7 @@
     "arrowParens": "always",
     "semi": true,
     "endOfLine": "auto",
-    "importOrder": [
-        "^react$",
-        "^[a-z\\-/]*$",
-        "(^components)",
-        "(^[src/]*$|^[./]|^[../])",
-        ""
-    ],
+    "importOrder": ["^react$", "^[a-z\\-/]*$", "(^components)", "(^[src/]*$|^[./]|^[../])", ""],
     "importOrderSeparation": true,
-    "experimentalBabelParserPluginsList": [
-        "js",
-        "jsx"
-    ]
+    "experimentalBabelParserPluginsList": ["js", "jsx"]
 }

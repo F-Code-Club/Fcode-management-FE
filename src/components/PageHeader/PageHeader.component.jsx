@@ -23,18 +23,18 @@ let breadcrumbNameMap = {
     '/source': 'Quản lý tài nguyên',
     '/member': 'member',
     '/blog': 'Quản lý bài viết',
-    '/announcement': 'Quản lý thông báo',
+    '/manage-announcement': 'Quản lý thông báo',
+    '/manage-announcement/view-announcement': 'Xem thông báo',
     '/information': 'Thông tin cá nhân',
     '/account': 'Quản lý tài khoản',
     '/account/edit-account': 'Chỉnh sửa thông tin',
-    '/announcement/notification': 'Xem thông báo',
     '/comment': 'Quản lý bình luận, câu hỏi',
     '/recruitmembers': 'Tuyển thành viên',
-    '/information/view-information': 'xem thông tin',
-    '/announcement/view-announcement': 'xem thông báo',
+    '/information/view-information': 'Xem thông tin',
 };
 for (let i = 1; i <= 100; i++) {
     breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
+    breadcrumbNameMap[`/manage-announcement/view-announcement/${i}`] = `Thông báo số ${i}`;
 }
 const PageHeaderComponent = () => {
     const [modal, contextHolder] = Modal.useModal();
@@ -81,7 +81,7 @@ const PageHeaderComponent = () => {
             >
                 <Breadcrumb>{breadcrumbItems}</Breadcrumb>
                 <PageHeader
-                    backIcon={<ArrowLeftOutlined />}
+                    backIcon={location.pathname !== '/home' ? <ArrowLeftOutlined /> : false}
                     className="site-page-header-responsive"
                     title={TitleHeader}
                     style={{ background: '#FFFFFF' }}

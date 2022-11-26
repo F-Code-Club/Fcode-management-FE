@@ -4,7 +4,7 @@ export const DUMMY_CONTENT = [
     <div style="color: red;">hello</div>
     <p>Tuy nhiên, Tổng bí thư nhắc nhở thành phố còn chậm khắc phục những yếu kém, hạn chế mà Bộ Chính trị đã chỉ ra trong Nghị quyết 16/2012 về phương hướng, phát triển TP HCM đến năm 2020. Cụ thể, tăng trưởng kinh tế của thành phố chưa tương xứng với vị trí, vai trò và tiềm năng của đầu tàu, động lực phát triển của vùng Đông Nam Bộ, Đồng bằng sông Cửu Long và cả nước, có dấu hiệu suy giảm trong những năm gần đây.</p><p class="Normal">Lãnh đạo Đảng đề nghị thành phố nhận thức đầy đủ, đúng đắn và sâu sắc hơn tiềm năng, lợi thế vượt trội, vai trò đặc biệt quan trọng của thành phố trong phát triển đất nước nói chung và Đông Nam Bộ nói riêng. Ban Chấp hành Đảng bộ thành phố cùng hệ thống chính trị cần nghiên cứu, xác định rõ nguyên nhân, bài học kinh nghiệm và kịp thời có những chính sách, biện pháp khắc phục. Những gì vượt thẩm quyền thì báo cáo Trung ương tháo gỡ, trong đó có cơ chế, chính sách đặc biệt, vượt trội hơn so với <a href="https://vnexpress.net/chu-tich-tp-hcm-co-che-dac-thu-chua-hieu-qua-nhu-mong-muon-4484883.html" rel="dofollow">Nghị quyết 54</a> của Quốc hội.</p><p class="Normal">"Phải rất chú ý đi đôi với kiểm soát quyền lực, tăng cường kiểm tra, giám sát, tránh để lạm quyền, lộng quyền; phòng ngừa tình trạng cán bộ vấp ngã, sai lầm", Tổng bí thư quán triệt việc thực hiện thí điểm mô hình chính quyền đô thị và một số cơ chế, chính sách đặc thù.</p><p class="Normal">Để tháo gỡ ách tắc, điểm nghẽn về thể chế, kết cấu hạ tầng và nguồn nhân lực hiện nay, Tổng Bí thư yêu cầu thành phố cần đẩy mạnh việc cơ cấu lại nền kinh tế gắn với đổi mới mô hình tăng trưởng; nâng cao năng lực và chất lượng công tác thể chế hóa, cụ thể hóa các chủ trương, đường lối phù hợp với điều kiện cụ thể của thành phố...</p>
     `,
-        isApprove: true,
+        isApprove: false,
     },
     {
         content: `
@@ -80,6 +80,6 @@ export const DUMMY_CONTENT = [
       </div>
       
        `,
-        isApprove: true,
+        isApprove: false,
     },
 ];

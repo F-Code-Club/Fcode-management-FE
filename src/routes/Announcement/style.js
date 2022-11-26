@@ -4,7 +4,8 @@ import { themes } from '@/theme/theme';
 
 export const ContainerAnnouncement = styled.div`
     width: 100%;
-    min-height: calc(100vh - 190px);
+    min-height: calc(100vh - 140px);
+    box-sizing: border-box;
     transition: 0.25 linear;
     .list-announcement {
         width: 100%;

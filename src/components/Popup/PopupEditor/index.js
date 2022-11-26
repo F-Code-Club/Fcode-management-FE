@@ -27,7 +27,7 @@ export const CreateAnnouncement = (props) => {
     const [errorMsg, setErrorMsg] = useState({
         title: false,
         content: false,
-        first: true,
+        first: props.type === 'edit' ? false : true,
     });
     const [statusButton, setStatusButton] = useState();
     const [processState, setProcessState] = useState({
@@ -47,7 +47,7 @@ export const CreateAnnouncement = (props) => {
         const checkValue = e.target.value.trim();
         setNewAnnouncement({
             ...newAnnouncement,
-            title: checkValue,
+            title: e.target.value,
         });
         setErrorMsg({
             ...errorMsg,

@@ -158,7 +158,7 @@ export const Col2 = styled.div`
                 border: 1px solid white;
                 transition: 0.25s linear;
                 :hover {
-                    border: 1px solid black;
+                    text-decoration: underline;
                 }
             }
         }
@@ -205,7 +205,7 @@ export const Col2 = styled.div`
                 border: 1px solid white;
                 transition: 0.25s linear;
                 :hover {
-                    border: 1px solid black;
+                    text-decoration: underline;
                 }
             }
         }

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import AccountsManager from './Accounts/index';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import BlogDetailComponent from './Blog/Detail/index';
@@ -39,6 +40,12 @@ const publicRoute = [
     {
         path: 'manage-announcement/view-announcement/:id',
         component: <ViewAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'account',
+        component: <AccountsManager />,
         exact: true,
         restrict: true,
     },

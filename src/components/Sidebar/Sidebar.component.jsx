@@ -34,10 +34,15 @@ const itemsAdmin = [
         getItem(<SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />, '9'),
     ]),
     getItem(
-        <SidebarLink to="/announcement" child="Quản lý thông báo" />,
+        <SidebarLink to="/manage-announcement" child="Quản lý thông báo" />,
         '6',
         <NotificationOutlined />,
-        [getItem(<SidebarLink to="/announcement/notification" child="Xem thông báo" />, '10')]
+        [
+            getItem(
+                <SidebarLink to="/manage-announcement/view-announcement" child="Xem thông báo" />,
+                '10'
+            ),
+        ]
     ),
     getItem(
         <SidebarLink to="/recruitmembers" child="Tuyển thành viên" />,

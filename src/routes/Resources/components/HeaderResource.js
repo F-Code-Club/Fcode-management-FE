@@ -1,4 +1,4 @@
-import { Header, HeaderText, HeaderButton } from '../styles';
+import { Header, HeaderText, HeaderButton, Subtitle } from '../styles';
 
 import { PlusSquareOutlined } from '@ant-design/icons';
 
@@ -16,16 +16,7 @@ const HeaderResource = ({ handleClick }) => {
                 }}
             >
                 <HeaderText> Tài nguyên</HeaderText>
-                <span
-                    style={{
-                        fontWeight: 400,
-                        fontSize: 16,
-                        letterSpacing: 0.15,
-                        color: '#767676',
-                    }}
-                >
-                    Quản lý tài nguyên
-                </span>
+                <Subtitle>Quản lý tài nguyên</Subtitle>
             </div>
             <HeaderButton onClick={() => handleClick('create', null)}>
                 <PlusSquareOutlined />

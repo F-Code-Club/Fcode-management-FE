@@ -2,23 +2,26 @@ import { useEffect, useState } from 'react';
 
 import { Button, Input } from 'antd';
 
+import { ConfirmAction } from '../../components/PopupConfirmResource';
+import { UploadImage } from '../../components/UploadImg';
 // import { Editor } from 'react-draft-wysiwyg';
-import { ContainerEditor, FirstLayer } from '../styles';
-import { ConfirmAction } from './PopupConfirmResource';
-import { UploadImage } from './UploadImg';
+import { ContainerEditor, FirstLayer } from '../../styles';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-export const CreateResource = (props) => {
+export const CreateResourceChild = (props) => {
     const action = props.action;
-    const [newResource, setNewResource] = useState({
+
+    const [newResourceChild, setNewResourceChild] = useState({
         title: props.type === 'edit' ? props.title : '',
         description: props.type === 'edit' ? props.description : '',
+        link: props.type === 'edit' ? props.link : '',
         imgs: props.type === 'edit' ? props.imgs : [],
     });
     const [errorMsg, setErrorMsg] = useState({
         title: false,
         description: false,
+        link: false,
         first: true,
     });
     const [statusButton, setStatusButton] = useState();
@@ -32,13 +35,13 @@ export const CreateResource = (props) => {
     });
 
     useEffect(() => {
-        setStatusButton(errorMsg.title || errorMsg.content || errorMsg.first);
+        setStatusButton(errorMsg.title || errorMsg.description || errorMsg.first || errorMsg.link);
     }, [errorMsg]);
 
     const onTitleChange = (e) => {
         const checkValue = e.target.value;
-        setNewResource({
-            ...newResource,
+        setNewResourceChild({
+            ...newResourceChild,
             title: checkValue,
         });
         setErrorMsg({
@@ -49,13 +52,25 @@ export const CreateResource = (props) => {
     };
     const onContentChange = (e) => {
         const checkValue = e.target.value;
-        setNewResource({
-            ...newResource,
+        setNewResourceChild({
+            ...newResourceChild,
             description: checkValue,
         });
         setErrorMsg({
             ...errorMsg,
             description: checkValue == null || checkValue == '',
+            first: false,
+        });
+    };
+    const onLinkChange = (e) => {
+        const checkValue = e.target.value;
+        setNewResourceChild({
+            ...newResourceChild,
+            link: checkValue,
+        });
+        setErrorMsg({
+            ...errorMsg,
+            link: checkValue == null || checkValue == '',
             first: false,
         });
     };
@@ -76,8 +91,8 @@ export const CreateResource = (props) => {
             },
         });
         if (status) {
-            const { description } = newResource;
-            await action(true, { ...newResource, description: description });
+            const { description } = newResourceChild;
+            await action(true, { ...newResourceChild, description: description });
         }
     };
 
@@ -101,7 +116,7 @@ export const CreateResource = (props) => {
                 <Input
                     placeholder="example"
                     style={errorMsg.title ? { border: '1px solid red' } : {}}
-                    value={newResource.title}
+                    value={newResourceChild.title}
                     onChange={(e) => onTitleChange(e)}
                     onBlur={(e) => onTitleChange(e)}
                     className="title-input"
@@ -118,7 +133,7 @@ export const CreateResource = (props) => {
                     <Input
                         placeholder="example"
                         style={errorMsg.description ? { border: '1px solid red' } : {}}
-                        value={newResource.description}
+                        value={newResourceChild.description}
                         onChange={(e) => onContentChange(e)}
                         onBlur={(e) => onContentChange(e)}
                         className="title-input"
@@ -128,12 +143,30 @@ export const CreateResource = (props) => {
                 {errorMsg.description && (
                     <p className="errorMsg">Trường này không được bỏ trống!</p>
                 )}
+                <h3 style={{ marginTop: '0.5em' }}>
+                    <span style={{ color: 'red' }}>* </span>
+                    Link
+                </h3>
+                <div
+                    className="container-editor"
+                    // style={errorMsg.description ? { border: '1px solid red' } : {}}
+                >
+                    <Input
+                        placeholder="example"
+                        style={errorMsg.link ? { border: '1px solid red' } : {}}
+                        value={newResourceChild.link}
+                        onChange={(e) => onLinkChange(e)}
+                        onBlur={(e) => onLinkChange(e)}
+                        className="title-input"
+                    />
+                </div>
+                {errorMsg.link && <p className="errorMsg">Trường này không được bỏ trống!</p>}
                 <UploadImage
                     type={props.type}
                     imgs={props.imgs}
                     onChange={(e) =>
-                        setNewResource({
-                            ...newResource,
+                        setNewResourceChild({
+                            ...newResourceChild,
                             imgs: e,
                         })
                     }
@@ -151,7 +184,7 @@ export const CreateResource = (props) => {
                         }
                         disabled={statusButton}
                     >
-                        {props.type === 'edit' ? 'Lưu chỉnh sửa' : 'Tạo tài nguyên'}
+                        {props.type === 'edit' ? 'Lưu chỉnh sửa' : 'Thêm tài nguyên'}
                     </Button>
                 </div>
             </div>

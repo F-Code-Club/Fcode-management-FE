@@ -1,25 +1,47 @@
-// import * as Styled from '../Blog/Blog.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { CreateResource } from './components/CreateResource';
-import HeaderResource from './components/HeaderResource';
-import ListResource from './components/ListResource';
-import { ConfirmAction } from './components/PopupConfirmResource';
+import { ConfirmAction } from '../components/PopupConfirmResource';
+import { selectResources } from '../slice/selectors';
+import { CreateResourceChild } from './components/CreateResourceChild';
+import TabsCard from './components/Tabs_card';
+import ViewResourceHeader from './components/ViewResourceHeader';
 import { actions } from './slice';
-import { selectResources } from './slice/selectors';
-import { Wrapper, Container } from './styles';
+import { selectResourceChild } from './slice/selector';
+import { ViewResourceContainer, WrapperViewResource } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 
-const ResourcesSection = () => {
+const ViewResource = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [state, setState] = useState();
+    const listResources = useSelector(selectResources);
+    const listResourceChildren = useSelector(selectResourceChild);
+
+    useEffect(() => {
+        let item = null;
+        for (let i = 0; i < listResources.length; i++) {
+            if (listResources[i].id == id) {
+                item = listResources[i];
+                break;
+            }
+        }
+        if (item != null) {
+            setState(item);
+        } else {
+            navigate('/manage-resources');
+        }
+    }, [id]);
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {
             status: false,
             type: '',
             description: '',
             title: '',
+            link: '',
             imgs: [],
             id: '',
         },
@@ -28,28 +50,28 @@ const ResourcesSection = () => {
             id: '',
             title: '',
             description: '',
+            link: '',
             icon: '',
             buttonValue: '',
         },
     });
     const dispatch = useDispatch();
-    const listResources = useSelector(selectResources);
 
-    const handleCreate = async (status, newAnnouncement) => {
+    const handleCreate = async (status, newResourceChild) => {
         const typeWork = modalOpen.popupEditor.type;
+
         if (status) {
             let addId = 1;
             if (typeWork === 'create') {
-                if (listResources.length > 0)
-                    listResources.map(
+                if (listResourceChildren.length > 0)
+                    listResourceChildren.map(
                         (resource) => resource.id == addId && (addId = resource.id + 1)
                     );
             } else {
                 addId = modalOpen.popupEditor.id;
-                await dispatch(actions.deleteResource(modalOpen.popupEditor.id));
+                await dispatch(actions.deleteResourceChild(modalOpen.popupEditor.id));
             }
-
-            await dispatch(actions.addResource({ ...newAnnouncement, id: addId }));
+            await dispatch(actions.addResourceChild({ ...newResourceChild, id: addId }));
             toastSuccess(
                 `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
@@ -67,7 +89,7 @@ const ResourcesSection = () => {
 
     const handleDelete = async (status) => {
         if (status) {
-            await dispatch(actions.deleteResource(modalOpen.popupConfirm.id));
+            await dispatch(actions.deleteResourceChild(modalOpen.popupConfirm.id));
             toastSuccess('Tài nguyên đã được xóa thành công');
         } else toastError('Xóa tài nguyên không thành công');
         await setModalOpen({
@@ -86,6 +108,7 @@ const ResourcesSection = () => {
                         status: true,
                         type: 'create',
                         description: '',
+                        link: '',
                     },
                 });
                 break;
@@ -117,35 +140,38 @@ const ResourcesSection = () => {
                 break;
         }
     };
-
     return (
-        <>
-            <Container>
-                <Wrapper>
-                    <ListResource handleClick={handleResourceAction} />
-                    <HeaderResource handleClick={handleResourceAction} />
-                </Wrapper>
-                {modalOpen.popupEditor.status && (
-                    <CreateResource
-                        action={handleCreate}
-                        type={modalOpen.popupEditor.type}
-                        title={modalOpen.popupEditor.title}
-                        description={modalOpen.popupEditor.description}
-                        imgs={modalOpen.popupEditor.imgs}
+        <ViewResourceContainer>
+            {state && (
+                <WrapperViewResource>
+                    <TabsCard />
+                    <ViewResourceHeader
+                        title={state.title}
+                        DescriptionMore={state.description}
+                        handleClick={handleResourceAction}
                     />
-                )}
-                {modalOpen.popupConfirm.status && (
-                    <ConfirmAction
-                        title={modalOpen.popupConfirm.title}
-                        description={modalOpen.popupConfirm.description}
-                        buttonValue={modalOpen.popupConfirm.buttonValue}
-                        icon={modalOpen.popupConfirm.icon}
-                        action={handleDelete}
-                    />
-                )}
-            </Container>
-        </>
+                </WrapperViewResource>
+            )}
+
+            {modalOpen.popupEditor.status && (
+                <CreateResourceChild
+                    action={handleCreate}
+                    type={modalOpen.popupEditor.type}
+                    title={modalOpen.popupEditor.title}
+                    description={modalOpen.popupEditor.description}
+                    imgs={modalOpen.popupEditor.imgs}
+                />
+            )}
+            {modalOpen.popupConfirm.status && (
+                <ConfirmAction
+                    title={modalOpen.popupConfirm.title}
+                    description={modalOpen.popupConfirm.description}
+                    buttonValue={modalOpen.popupConfirm.buttonValue}
+                    icon={modalOpen.popupConfirm.icon}
+                    action={handleDelete}
+                />
+            )}
+        </ViewResourceContainer>
     );
 };
-
-export default ResourcesSection;
+export default ViewResource;

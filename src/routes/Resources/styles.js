@@ -24,7 +24,12 @@ export const Container = styled.div`
         margin-top: 10px;
     }
 `;
-
+export const Subtitle = styled.span`
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.15px;
+    color: ${themes.colors.subtitle};
+`;
 export const Wrapper = styled.div`
     width: 1110px;
     height: 840px;
@@ -32,7 +37,7 @@ export const Wrapper = styled.div`
     flex-direction: column-reverse;
     justify-content: space-between;
     align-items: center;
-    background: #ffffff;
+    background: ${themes.colors.light};
     border-radius: 10px;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
         0px 1px 5px rgba(0, 0, 0, 0.2);
@@ -60,9 +65,9 @@ export const HeaderButton = styled.button`
     padding: 8px 14px;
     width: 40px;
     height: 40px;
-    color: #ffffff;
-    border: 1px solid #45ce7c;
-    background: #45ce7c;
+    color: ${themes.colors.light};
+    border: 1px solid ${themes.colors.primary400};
+    background: ${themes.colors.primary400};
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
     border-radius: 5px;
     cursor: pointer;
@@ -87,6 +92,8 @@ export const BackgroundCard = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    align-items: flex-start;
+
     padding: 30px;
     width: 100%;
     min-height: 100%;
@@ -101,7 +108,7 @@ export const TitleResource = styled.span`
     font-weight: 400;
     font-size: 16px;
     letter-spacing: 0.15px;
-    color: #ffffff;
+    color: ${themes.colors.light};
     text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
         0px 1px 5px rgba(0, 0, 0, 0.2);
 `;
@@ -109,8 +116,14 @@ export const ContentResource = styled.span`
     font-style: normal;
     font-weight: 500;
     font-size: 34px;
+    display: inline-block;
+    max-width: 100%;
+    // height: '50px';
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     letter-spacing: 0.25px;
-    color: #ffffff;
+    color: ${themes.colors.light};
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 3px 4px rgba(0, 0, 0, 0.14),
         0px 3px 3px rgba(0, 0, 0, 0.12), 0px 1px 8px rgba(0, 0, 0, 0.2);
 `;
@@ -121,7 +134,7 @@ export const Description = styled.span`
     letter-spacing: 0.15px;
     text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
         0px 1px 5px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    color: ${themes.colors.light};
 `;
 
 export const ContentButton = styled(HeaderButton)`
@@ -131,13 +144,13 @@ export const ContentButton = styled(HeaderButton)`
 `;
 
 export const ReverseContentButton = styled(HeaderButton)`
-    background: #ffffff;
-    color: #000000;
+    background: ${themes.colors.light};
+    color: ${themes.colors.dark};
     width: 56px;
     height: 32px;
     &:hover {
-        color: #ffffff;
-        background: #45ce7c;
+        color: ${themes.colors.light};
+        background: ${themes.colors.primary400};
     }
 `;
 
@@ -284,7 +297,7 @@ export const ContainerUploadImg = styled.div`
     display: flex;
     margin-top: 1rem;
     .title {
-        min-width: 150px;
+        min-width: 100px;
     }
     .ant-image {
         margin-right: 0.5rem;
@@ -295,15 +308,18 @@ export const ImageUpload = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
-    height: 100px;
-    border: 1px dashed #d9d9d9;
+    width: 150px;
+    height: 32px;
+    border: 1px solid ${themes.colors.neutral5};
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+    border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s;
     p {
         margin: 5px;
     }
     :hover {
-        border: 1px dashed #45ce7c;
+        border: 1px solid ${themes.colors.primary400};
     }
 `;
 
@@ -318,23 +334,36 @@ export const UploadTwoUrl = styled.div`
         .cancel-btn {
             margin-top: 0.5rem;
             color: black;
-            border: 1px solid #d9d9d9;
+            border: 1px solid ${themes.colors.neutral5};
             margin-right: 10px;
             :hover {
-                color: #ff4d4f;
-                border: 1px solid #ff4d4f;
+                color: ${themes.colors.danger};
+                border: 1px solid ${themes.colors.danger};
             }
         }
         .ok-btn {
             margin-top: 0.5rem;
-            background: #45ce7c;
+            background: ${themes.colors.primary400};
             color: white;
-            border: 1px solid #45ce7c;
+            border: 1px solid ${themes.colors.primary400};
             :hover {
                 color: rgba(69, 206, 124, 1);
-                border: 1px solid #45ce7c;
+                border: 1px solid ${themes.colors.primary400};
                 background: white;
             }
         }
+    }
+`;
+
+export const ButtonResourceCard = styled.button`
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 10px;
+    transition: all 0.2s;
+    &:hover {
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+            0px 1px 5px rgba(0, 0, 0, 0.2);
     }
 `;

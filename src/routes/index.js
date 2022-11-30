@@ -6,6 +6,7 @@ import BlogDetailComponent from './Blog/Detail/index';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import ResourcesSection from './Resources';
+import ViewResource from './Resources/viewResources';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
@@ -32,7 +33,7 @@ const publicRoute = [
         restrict: true,
     },
     {
-        path: 'source',
+        path: 'manage-resource',
         component: <ResourcesSection />,
         exact: true,
         restrict: true,
@@ -46,6 +47,12 @@ const publicRoute = [
     {
         path: 'manage-announcement/view-announcement/:id',
         component: <ViewAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource/:id',
+        component: <ViewResource />,
         exact: true,
         restrict: true,
     },

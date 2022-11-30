@@ -33,6 +33,7 @@ export const themes = {
         gray: '#4D4D4D',
         submenu: '#818181',
         primary050: '#E6F8EC',
+        subtitle: '#767676',
     },
 };
 

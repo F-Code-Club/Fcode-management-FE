@@ -20,23 +20,19 @@ export const UploadImage = (props) => {
         setLoading(false);
     };
 
+    // <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>(Optional)</span> :
     return (
         <ContainerUploadImg>
-            <h3 className="title">
-                Upload <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>(Optional)</span> :
-            </h3>
-
+            <h3 className="title">Hình ảnh:</h3>
             {imgList.length > 0 &&
                 imgList.map(
                     (item, key) =>
                         item && <Image key={key} alt="Not found" height={100} src={item} />
                 )}
-
             <ImageUpload onClick={() => setLoading(true)}>
                 <PlusOutlined />
-                <p>Upload</p>
+                <p>Click to upload</p>
             </ImageUpload>
-
             <Modal
                 open={loading}
                 title="Nhập url của hình ảnh vào đây:"

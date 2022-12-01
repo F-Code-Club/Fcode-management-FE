@@ -15,7 +15,7 @@ export const Container = styled.div`
     & .ant-list {
         margin-top: 10px;
         width: 1050px;
-        height: 800px;
+        // height: 800px;
     }
     & .ant-list-lg .ant-list-item {
         padding: 0;
@@ -32,7 +32,7 @@ export const Subtitle = styled.span`
 `;
 export const Wrapper = styled.div`
     width: 1110px;
-    height: 840px;
+    // height: 840px;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;

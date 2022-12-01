@@ -50,14 +50,14 @@ const TabsCard = () => {
         {
             label: 'JavaScript',
             children: RenderListResourceChild,
-            key: 1,
+            key: 0,
             closable: false,
         },
     ]);
-    const itemss = items.map((item, i) => {
-        const id = String(i + 1);
+    const itemss = items.map((item) => {
+        const id = String(item.key + 1);
         return {
-            label: `new tab ${id}`,
+            label: `Tab ${id}`,
             key: id,
             children: RenderListResourceChild,
             closable: false,
@@ -65,7 +65,8 @@ const TabsCard = () => {
     });
 
     const add = () => {
-        const newActiveKey = `newTab ${newTabIndex.current++}`;
+        const newActiveKey = `${newTabIndex.current++}`;
+        console.log(newActiveKey);
         const newPanes = [...items];
         newPanes.push({
             label: 'New Tab',

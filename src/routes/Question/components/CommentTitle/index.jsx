@@ -16,7 +16,7 @@ const CommentTitle = (props) => {
                         {time}
                     </Title>
                 </Col>
-            </Row>{' '}
+            </Row>
             <Text>
                 We supply a series of design principles, practical patterns and high quality design
                 resources (Sketch and Axure), to help people create their product prototypes

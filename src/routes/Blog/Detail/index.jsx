@@ -7,6 +7,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch } from 'react-redux';
 import { Navigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 
+// import { getGutter } from '@/utils/getGutter';
 import { approveButton, disableButton, hiddenButton, ActionElements } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
@@ -14,8 +15,6 @@ import StyledContainer from '@/components/Container';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 import { DUMMY_CONTENT } from '@/utils/dummy.js';
-
-// import { getGutter } from '@/utils/getGutter';
 
 const { Text } = Typography;
 

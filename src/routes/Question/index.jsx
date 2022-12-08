@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 
-import { List, Avatar, Row, Col, Typography, Modal, Input } from 'antd';
+import { List, Row, Col, Typography, Modal, Input, Avatar } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import { Link } from 'react-router-dom';
 
 import StyledButton from './../../components/Button/index';
+import { toastError, toastSuccess, toastWarning } from './../../components/ToastNotification/index';
+import questionApi from './../../utils/apiComponents/questionApi';
 import CommentTitle from './components/CommentTitle';
 import IconText from './components/IconText';
 import ActionButton from './components/button/index';
 import * as questionConfig from './question.config';
 import { StyledContent, Wrapper } from './style';
 
-import { toastSuccess, toastWarning } from '@/components/ToastNotification';
+import { dummyAvatar } from '@/utils/import-helper';
 import { LikeOutlined, DislikeOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
@@ -25,18 +27,26 @@ const QuestionManagement = () => {
     const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
     const [answer, setAnswer] = useState('');
     const [selectedQuestion, setSelectedQuestion] = useState({});
+
     const fetchQuestions = async () => {
         if (loading) {
             return;
         }
         setLoading(true);
-        // fetch data from randomuser.me
-        await fetch('https://randomuser.me/api/?results=10')
-            .then((res) => res.json())
-            .then((data) => {
-                setQuestions(questions.concat(data.results));
+        await questionApi
+            .getAll()
+            .then((res) => {
                 setLoading(false);
+                setQuestions(res.data.data);
+                return res.data;
+            })
+            .catch((err) => {
+                setLoading(false);
+                // eslint-disable-next-line no-console
+                console.log(err);
+                toastError('Đã có lỗi xảy ra, vui lòng thử lại sau');
             });
+        //set latest comments
         setLatestComments(questions.slice(0, 4));
     };
     // handle for scroll
@@ -101,7 +111,7 @@ const QuestionManagement = () => {
                             >
                                 {(item) => (
                                     <List.Item
-                                        key={item.email}
+                                        key={item.id}
                                         actions={[
                                             <ActionButton
                                                 key="question-action-answer"
@@ -121,12 +131,12 @@ const QuestionManagement = () => {
                                         style={{ padding: '1.5rem' }}
                                     >
                                         <List.Item.Meta
-                                            avatar={<Avatar src={item.picture.large} />}
-                                            title={item.name.first}
-                                            description={item.email}
+                                            avatar={<Avatar src={dummyAvatar[0]} />}
+                                            title={item.title}
+                                            description={item.authorEmail}
                                         />
                                         {/* TODO: change to content when calling api */}
-                                        <Text>Hello mi fen, chao ca nha iu cua kem</Text>
+                                        <Text>{item.content}</Text>
                                     </List.Item>
                                 )}
                             </VirtualList>
@@ -161,10 +171,10 @@ const QuestionManagement = () => {
                                         style={{ padding: '1.5rem' }}
                                     >
                                         <List.Item.Meta
-                                            avatar={<Avatar src={item.picture.large} />}
+                                            avatar={<Avatar src={dummyAvatar[0]} />}
                                             title={
                                                 <CommentTitle
-                                                    title={item.name.first}
+                                                    title={item.authorEmail}
                                                     time="2 day ago"
                                                 />
                                             }

@@ -1,7 +1,10 @@
 import { Table, Tabs, Input } from 'antd';
+import { Link } from 'react-router-dom';
 
 import { columns, columns2, columns3, data } from './Blog.data';
 import * as Styled from './Blog.styled';
+
+import Button from '@/components/Button';
 
 const { Search } = Input;
 
@@ -24,6 +27,9 @@ const Blog = () => {
                 </Tabs>
                 <Styled.Search>
                     <Search placeholder="Nhập tên bài viết cần tìm" enterButton />
+                    <Button>
+                        <Link to="/blog/create">Tạo bài viết</Link>
+                    </Button>
                 </Styled.Search>
             </Styled.Wrapper>
         </Styled.Background>

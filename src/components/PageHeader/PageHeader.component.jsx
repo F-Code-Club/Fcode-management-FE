@@ -23,6 +23,7 @@ let breadcrumbNameMap = {
     '/source': 'Quản lý tài nguyên',
     '/member': 'member',
     '/blog': 'Quản lý bài viết',
+    '/blog/create': 'Tạo bài viết',
     '/manage-announcement': 'Quản lý thông báo',
     '/manage-announcement/view-announcement': 'Xem thông báo',
     '/information': 'Thông tin cá nhân',

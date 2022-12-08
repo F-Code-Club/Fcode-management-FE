@@ -2,7 +2,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
-import BlogDetailComponent from './Blog/Detail/index';
+import CreateBlog from './Blog/Create';
+import BlogDetailComponent from './Blog/Detail';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -61,6 +62,12 @@ const privateRoute = [
         path: '/blog/:key',
         component: <BlogDetailComponent />,
         exact: false,
+        restrict: true,
+    },
+    {
+        path: '/blog/create',
+        component: <CreateBlog />,
+        exact: true,
         restrict: true,
     },
 ];

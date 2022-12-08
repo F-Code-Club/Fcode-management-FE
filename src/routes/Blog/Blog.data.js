@@ -1,11 +1,12 @@
 import { Space, Tag } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const columns = [
     {
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text, record) => <a href={`/blog/${record.key}?action=approve`}>{text}</a>,
+        render: (text, record) => <Link to={`/blog/${record.key}?action=approve`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -56,7 +57,7 @@ export const columns2 = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text, record) => <a href={`/blog/${record.key}?action=hidden`}>{text}</a>,
+        render: (text, record) => <Link to={`/blog/${record.key}?action=hidden`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -107,7 +108,7 @@ export const columns3 = [
         title: 'Tên bài viết',
         dataIndex: 'post_title',
         key: 'post_title',
-        render: (text, record) => <a href={`/blog/${record.key}?action=decline`}>{text}</a>,
+        render: (text, record) => <Link to={`/blog/${record.key}?action=decline`}>{text}</Link>,
     },
     {
         title: 'Tác giả',

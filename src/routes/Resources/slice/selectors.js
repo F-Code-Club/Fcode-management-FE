@@ -5,3 +5,4 @@ import { createSelector } from '@reduxjs/toolkit';
 const selectDomain = (state) => state[name] || initialState;
 
 export const selectResources = createSelector([selectDomain], (state) => state.listResources);
+export const selectIsLoading = createSelector([selectDomain], (state) => state.isLoading);

@@ -13,6 +13,8 @@ import { Wrapper, Container } from './styles';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 
+// import productApi from '@/utils/productApi';
+
 const ResourcesSection = () => {
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {

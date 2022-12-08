@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ConfirmAction } from '../components/PopupConfirmResource';
-import { selectResources } from '../slice/selectors';
+import { selectResources, selectIsLoading } from '../slice/selectors';
 import { CreateResourceChild } from './components/CreateResourceChild';
 import TabsCard from './components/Tabs_card';
 import ViewResourceHeader from './components/ViewResourceHeader';
@@ -20,12 +20,13 @@ const ViewResource = () => {
     const [state, setState] = useState();
     const listResources = useSelector(selectResources);
     const listResourceChildren = useSelector(selectResourceChild);
+    const newResource = listResources[0];
 
     useEffect(() => {
         let item = null;
-        for (let i = 0; i < listResources.length; i++) {
-            if (listResources[i].id == id) {
-                item = listResources[i];
+        for (let i = 0; i < newResource.length; i++) {
+            if (newResource[i].id == id) {
+                item = newResource[i];
                 break;
             }
         }
@@ -140,14 +141,18 @@ const ViewResource = () => {
                 break;
         }
     };
+    const IsLoading = useSelector(selectIsLoading);
+    if (IsLoading) {
+        return <div>...Loading</div>;
+    }
     return (
         <ViewResourceContainer>
             {state && (
                 <WrapperViewResource>
                     <TabsCard />
                     <ViewResourceHeader
-                        title={state.title}
-                        DescriptionMore={state.description}
+                        title={state.semester}
+                        DescriptionMore={state.name}
                         handleClick={handleResourceAction}
                     />
                 </WrapperViewResource>

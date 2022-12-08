@@ -3,8 +3,8 @@ import { Title, Description, Wrap, HeaderStyled } from '../styled';
 const ViewResourceHeader = ({ title, DescriptionMore, handleClick }) => {
     return (
         <Wrap>
-            <Title> {title}</Title>
-            <Description>{DescriptionMore}</Description>
+            <Title> kỳ học: {title}</Title>
+            <Description>Môn học: {DescriptionMore}</Description>
             <HeaderStyled onClick={() => handleClick('create', null)}>
                 Upload Resources
             </HeaderStyled>

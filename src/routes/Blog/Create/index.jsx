@@ -8,6 +8,8 @@ import { PlusOutlined } from '@ant-design/icons';
 const Create = () => {
     const [form] = Form.useForm();
     const onFinish = (values) => {
+        // const newBlog = { ...values, author: 'Hai Dang', }
+        console.log(values);
         alert(JSON.stringify(values));
     };
 

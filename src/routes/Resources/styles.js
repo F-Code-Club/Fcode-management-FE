@@ -148,6 +148,7 @@ export const ReverseContentButton = styled(HeaderButton)`
     color: ${themes.colors.dark};
     width: 56px;
     height: 32px;
+
     &:hover {
         color: ${themes.colors.light};
         background: ${themes.colors.primary400};

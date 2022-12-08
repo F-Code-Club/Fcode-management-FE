@@ -1,7 +1,12 @@
+import axios from 'axios';
+
+import { API_URL } from '@/config';
 import { injectReducer } from '@/store';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const initialState = {
+    isLoading: false,
+    isError: false,
     listResourceChild: [
         {
             title: 'sources 1',
@@ -20,10 +25,17 @@ export const initialState = {
             link: 'http://github.com/123456',
         },
     ],
-    listPanes: [{}],
 };
+export const RESOURCE_SUBJECT_URL = API_URL + '/resource/subject';
 
 export const name = 'resourceChildren';
+export const fetchResourceBySubjectId = createAsyncThunk(
+    'resourceChildren/fetchResourceBySubjectId',
+    async (id) => {
+        const response = await axios.get(`${RESOURCE_SUBJECT_URL}/${id}`);
+        return response.data.data;
+    }
+);
 
 export const slice = createSlice({
     name,
@@ -37,6 +49,20 @@ export const slice = createSlice({
                 (resource) => resource.id !== action.payload
             );
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchResourceBySubjectId.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchResourceBySubjectId.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.listResourceChild.push(action.payload);
+            })
+            .addCase(fetchResourceBySubjectId.rejected, (state) => {
+                state.isLoading = false;
+                state.isError = true;
+            });
     },
 });
 

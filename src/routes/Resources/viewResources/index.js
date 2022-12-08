@@ -8,7 +8,7 @@ import { selectResources, selectIsLoading } from '../slice/selectors';
 import { CreateResourceChild } from './components/CreateResourceChild';
 import TabsCard from './components/Tabs_card';
 import ViewResourceHeader from './components/ViewResourceHeader';
-import { actions } from './slice';
+import { actions, fetchResourceBySubjectId } from './slice';
 import { selectResourceChild } from './slice/selector';
 import { ViewResourceContainer, WrapperViewResource } from './styled';
 
@@ -35,6 +35,7 @@ const ViewResource = () => {
         } else {
             navigate('/manage-resources');
         }
+        dispatch(fetchResourceBySubjectId(id));
     }, [id]);
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {

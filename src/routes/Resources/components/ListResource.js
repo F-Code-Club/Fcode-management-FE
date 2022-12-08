@@ -1,13 +1,10 @@
 import { List } from 'antd';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { selectResources, selectIsLoading } from '../slice/selectors';
-import { ButtonResourceCard } from '../styles';
 import ResourceCard from './ResourceCard';
 
 const ListResource = ({ handleClick }) => {
-    const navigate = useNavigate();
     const listResources = useSelector(selectResources);
     const IsLoading = useSelector(selectIsLoading);
 
@@ -36,9 +33,7 @@ const ListResource = ({ handleClick }) => {
             renderItem={(item) => {
                 return (
                     <List.Item>
-                        <ButtonResourceCard onClick={() => navigate(`${item.id}`)}>
-                            <ResourceCard item={item} clickEvent={handleClick} />
-                        </ButtonResourceCard>
+                        <ResourceCard item={item} clickEvent={handleClick} />
                     </List.Item>
                 );
             }}

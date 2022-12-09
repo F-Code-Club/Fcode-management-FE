@@ -71,21 +71,17 @@ const QuestionManagement = () => {
         const commentData = {
             authorEmail: 'nghiane@gmail.com',
             content: answer,
-            id: 5,
             questionId: selectedQuestion,
         };
         // todo: call api for answer question
         if (answer.length > 0) {
-            console.log(selectedQuestion);
             // create comment
             // approve question when comment successfully
             await questionApi
                 .approve(selectedQuestion)
                 .then(async (res) => {
-                    console.log(res);
                     if (res.data.code === 200) {
                         await commentApi.create(commentData).then(async (response) => {
-                            console.log(response);
                             if (response.data.code === 200) {
                                 toastSuccess('Trả lời thành công');
                                 fetchQuestions();
@@ -132,7 +128,6 @@ const QuestionManagement = () => {
         Modal.confirm({
             ...questionConfig.confirmModal,
             onOk: async () => {
-                console.log(id);
                 await questionApi
                     .report(id)
                     .then((res) => {
@@ -164,12 +159,12 @@ const QuestionManagement = () => {
                 <Col span={14}>
                     <Title level={3}>Câu hỏi chờ trả lời </Title>
                     <List itemLayout="vertical">
-                        <StyledContent>
+                        <StyledContent key="main-list">
                             <VirtualList
                                 data={questions}
                                 height={questions.length !== 0 ? questionContainerHeight : 0}
                                 itemHeight={300}
-                                itemKey="email"
+                                itemKey="id"
                                 onScroll={(e) => onScroll(e, questionContainerHeight)}
                             >
                                 {(item) => (
@@ -179,14 +174,14 @@ const QuestionManagement = () => {
                                             <ActionButton
                                                 key="question-action-answer"
                                                 type="primary"
-                                                id={item.email}
+                                                id={item.id}
                                                 text="Trả lời"
                                                 onClick={() => answersQuestion(item.id)}
                                             />,
                                             <ActionButton
-                                                key="question-action-answer"
+                                                key="question-action-report"
                                                 type="danger"
-                                                id={item.email}
+                                                id={item.id}
                                                 text="Báo cáo vi phạm"
                                                 onClick={() => reportQuestion(item.id)}
                                             />,
@@ -199,7 +194,7 @@ const QuestionManagement = () => {
                                             description={item.authorEmail}
                                         />
                                         {/* TODO: change to content when calling api */}
-                                        <Text>{item.content}</Text>
+                                        <Text key="item.email">{item.content}</Text>
                                     </List.Item>
                                 )}
                             </VirtualList>
@@ -252,7 +247,16 @@ const QuestionManagement = () => {
                                     </List.Item>
                                 </StyledContent>
                             )}
-                        ></List>
+                        >
+                            {/* todo: create a new loading for report list */}
+                            {loading && (
+                                <Skeleton
+                                    key="skeleton-list-report"
+                                    avatar
+                                    paragraph={{ rows: 4 }}
+                                />
+                            )}
+                        </List>
                     </StyledContent>
                 </Col>
             </Row>

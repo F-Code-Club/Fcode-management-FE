@@ -8,6 +8,7 @@ import { ConfirmAction } from '../PopupConfirm';
 import { UploadImage } from './UploadImg';
 import { ContainerEditor, FirstLayer } from './style';
 
+import { post } from '@/utils/ApiCaller';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const CreateAnnouncement = (props) => {
@@ -94,6 +95,27 @@ export const CreateAnnouncement = (props) => {
                 convertToRaw(newAnnouncement.content.getCurrentContent())
             );
             await action(true, { ...newAnnouncement, content: convertContent });
+            post(
+                '/article',
+                {
+                    author: 'binh@gmail.com',
+                    content: convertContent,
+                    description: 'this is content for testing',
+                    genreId: 1,
+                    imageUrl:
+                        'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w=',
+                    location: 'upcoming',
+                    memberId: 1212,
+                    title: 'Testing',
+                },
+                {},
+                {
+                    authorization:
+                        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiaW5oZHRzZTE2MTA5M0BmcHQuZWR1LnZuIiwiZXhwIjoxNjcwNTkzOTE2LCJpYXQiOjE2NzA1OTIxMTZ9.9b5n5HAm87S4iweTbPibaznjx1jb7BT9V9x-dLwqnp0aOPuw-53CooZRfKs9ogdpxo44YPazlPI58-JIJNPx-w',
+                }
+            )
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
         }
     };
 

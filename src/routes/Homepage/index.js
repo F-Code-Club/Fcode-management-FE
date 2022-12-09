@@ -1,101 +1,119 @@
+import { useEffect, useState } from 'react';
+
 import { Avatar, List } from 'antd';
+import { convertFromRaw, Editor, EditorState } from 'draft-js';
 import { Link } from 'react-router-dom';
 
-import { DATA } from './components/fakeData/data';
+import Logo from '../../assets/logo/F-Code logo.png';
+import { get } from '../../utils/ApiCaller';
 import { Col1, Col2, ContainerHomepage } from './style';
 
 export const Homepage = () => {
-    const data = DATA;
+    localStorage.setItem(
+        'token',
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiaW5oZHRzZTE2MTA5M0BmcHQuZWR1LnZuIiwiZXhwIjoxNjcwNjAzMTU0LCJpYXQiOjE2NzA2MDEzNTR9.46cSbOj-pvrCmlV9a0rY7Y06i7Yalhv4oV0efDGvQUILdM56c4QHZn6UsWmPDKeW2NNAxo8An8yTdfg3LkuKPA'
+    );
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    const [dataEvent, setDataEvent] = useState();
+    const [dataArticle, setDataArticle] = useState();
+    const [dataAnnounce, setDataAnnounce] = useState();
+    const [dataAvatar, setDataAvatar] = useState();
+
+    useEffect(() => {
+        get('/event/all', '', { authorization: token })
+            .then((res) => setDataEvent(res.data.data.reverse()))
+            .catch((error) => console.log(error));
+        get('/article/processing', '', { authorization: token })
+            .then((res) => setDataArticle(res.data.data.reverse()))
+            .catch((error) => console.log(error));
+        get('/announcement/all', '', { authorization: token })
+            .then((res) => setDataAnnounce(res.data.data.reverse()))
+            .catch((error) => console.log(error));
+        get('/member/all', '', { authorization: token })
+            .then((res) => setDataAvatar(res.data.data))
+            .catch((error) => console.log(error));
+    }, []);
+
+    const getAvatar = (id) => {
+        let url;
+        for (let i = 0; dataAvatar && i < dataAvatar.length; i++) {
+            if (dataAvatar[i].id === id) {
+                url = dataAvatar[i].avatarUrl;
+                break;
+            }
+        }
+        return url;
+    };
 
     return (
         <ContainerHomepage>
             <Col1>
-                <div className="row1">
-                    <div className="content">
-                        <h3 className="title">CLB ĐANG DIỄN RA</h3>
-                        <p className="child1">Hoạt động học thuật Techaway</p>
-                        <p className="child2">
-                            Đấu trường lập trình R.ODE toàn trường (Viết dài để biết giới hạn khung
-                            text 300px)
-                        </p>
-                        <Link to="/event" className="btn-view-more">
-                            Xem thêm
-                        </Link>
-                    </div>
-                    <img
-                        src="https://fcodehcm.files.wordpress.com/2021/09/logo.png?w=400"
-                        alt="f-code"
-                    />
-                </div>
-
-                <div className="row2">
-                    <h3 className="title">BÀI VIẾT CHỜ DUYỆT</h3>
-                    <List
-                        itemLayout="vertical"
-                        size="large"
-                        pagination={{ pageSize: 3 }}
-                        dataSource={data}
-                        renderItem={(item) => (
-                            <Link
-                                to={`/blog/${item.id}?action=${
-                                    item.isApprove ? 'approved' : 'hidden'
-                                }`}
-                                style={{ color: 'black' }}
-                            >
-                                <List.Item
-                                    key={item.title}
-                                    extra={
-                                        <img
-                                            width={272}
-                                            alt="logo"
-                                            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                                        />
-                                    }
-                                >
-                                    <List.Item.Meta
-                                        avatar={<Avatar size="large" src={item.avatar} />}
-                                        title={<h4 title={item.title}>{item.title}</h4>}
-                                        description={item.name}
-                                    />
-                                    <p className="content">{item.content}</p>
-                                </List.Item>
+                {dataEvent && (
+                    <div className="row1">
+                        <div className="content">
+                            <h3 className="title">CLB ĐANG DIỄN RA</h3>
+                            <p className="child1">{dataEvent[0].name}</p>
+                            <p className="child2">{dataEvent[1].name}</p>
+                            <Link to="/event" className="btn-view-more">
+                                Xem thêm
                             </Link>
-                        )}
-                    />
-                </div>
+                        </div>
+                        <img src={Logo} alt="f-code" />
+                    </div>
+                )}
+
+                {dataArticle && (
+                    <div className="row2">
+                        <h3 className="title">BÀI VIẾT CHỜ DUYỆT</h3>
+                        <List
+                            itemLayout="vertical"
+                            size="large"
+                            pagination={{ pageSize: 2 }}
+                            dataSource={dataArticle}
+                            renderItem={(item) => (
+                                <Link to={`/blog/${item.id}`} style={{ color: 'black' }}>
+                                    <List.Item
+                                        key={item.title}
+                                        extra={<img width={272} alt="blog" src={item.imageUrl} />}
+                                    >
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Avatar
+                                                    size="large"
+                                                    src={getAvatar(item.memberId)}
+                                                />
+                                            }
+                                            title={<h4 title={item.title}>{item.title}</h4>}
+                                            description={item.author}
+                                        />
+                                        <Editor
+                                            editorState={EditorState.createWithContent(
+                                                convertFromRaw(JSON.parse(item.content))
+                                            )}
+                                            toolbarHidden={true}
+                                            readOnly="true"
+                                        />
+                                    </List.Item>
+                                </Link>
+                            )}
+                        />
+                    </div>
+                )}
             </Col1>
 
             <Col2>
                 <div className="row1">
-                    <h3>xin chào phạm văn abc</h3>
+                    <h3>xin chào {user}</h3>
                 </div>
 
                 <div className="row2">
-                    <h3>yêu cầu duyệt thành viên</h3>
-                    <List
-                        itemLayout="vertical"
-                        size="large"
-                        pagination={{ pageSize: 3 }}
-                        dataSource={data}
-                        renderItem={(item) => (
-                            <List.Item key={item.title} extra={<a href="/account">Chi tiết</a>}>
-                                <List.Item.Meta
-                                    avatar={<Avatar size="large" src={item.avatar} />}
-                                    title={<h4 title={item.title}>{item.title}</h4>}
-                                    description={<p className="content">{item.content}</p>}
-                                />
-                            </List.Item>
-                        )}
-                    />
-                </div>
-
-                <div className="row3">
                     <h3>thông báo</h3>
                     <List
                         itemLayout="vertical"
                         size="large"
-                        pagination={{ pageSize: 3 }}
-                        dataSource={data}
+                        pagination={{ pageSize: 10 }}
+                        dataSource={dataAnnounce}
                         renderItem={(item) => (
                             <List.Item
                                 key={item.title}

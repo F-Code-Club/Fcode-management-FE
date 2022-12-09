@@ -118,8 +118,7 @@ export const Col1 = styled.div`
 `;
 
 export const Col2 = styled.div`
-    .row1,
-    .row2 {
+    .row1 {
         padding: 20px;
         background: white;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
@@ -138,43 +137,6 @@ export const Col2 = styled.div`
     }
 
     .row2 {
-        .content {
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-wrap: break-word;
-        }
-        .ant-list-item-meta-title {
-            margin: 0;
-        }
-        .ant-list-item-extra {
-            display: flex;
-            align-items: center;
-            margin-left: 5px;
-            a {
-                color: black;
-                padding: 5px;
-                border-radius: 5px;
-                border: 1px solid white;
-                transition: 0.25s linear;
-                :hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-        h4 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-wrap: break-word;
-        }
-    }
-
-    .row3 {
         padding: 20px;
         background: white;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),

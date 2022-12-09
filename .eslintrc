@@ -20,9 +20,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "settings": {
         "import/resolver": {
             "babel-module": {

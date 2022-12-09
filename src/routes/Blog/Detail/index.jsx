@@ -1,19 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Row, Col, Typography } from 'antd';
-import { ContentState, EditorState } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
+import { EditorState, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch } from 'react-redux';
-import { Navigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
+import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 
-import { approveButton, disableButton, hiddenButton, ActionElements } from './configComponent';
+import { disableButton, ActionElements } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
-import { Wrapper } from '@/routes/Blog/Detail/style';
+import { Wrapper, InfoList, InfoItem } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
-import { DUMMY_CONTENT } from '@/utils/dummy.js';
+import articleApi from '@/utils/apiComponents/articleApi';
 
 // import { getGutter } from '@/utils/getGutter';
 
@@ -25,53 +24,58 @@ const BlogDetailComponent = () => {
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
     const currentAction = searchParams.get('action') || '';
-    const data = DUMMY_CONTENT[params.key - 1]
-        ? DUMMY_CONTENT[params.key - 1]
-        : { content: '', isApprove: false };
-    // Global state
+    const articleId = parseInt(params.id) || 0;
+
     const dispatch = useDispatch();
-    // Local variable
-    const content = htmlToDraft(data.content);
-    const contentState = ContentState.createFromBlockArray(content.contentBlocks);
-    const [editorState, setEditorState] = useState(() =>
-        EditorState.createWithContent(contentState)
-    );
+
+    const [editorState, setEditorState] = useState();
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await articleApi.getArticleById(articleId);
+            console.log(data);
+            setEditorState(
+                EditorState.createWithContent(convertFromRaw(JSON.parse(data.data.content)))
+            );
+        })();
+    }, []);
+
     //TODO: routing to blog when finish
     // If out of data
     if (
         currentAction === '' ||
-        data.content === '' ||
-        !currentAction.match(/[(approve),(hidden),(decline)]/g)
+        // data.content === '' ||
+        !currentAction.match(/[(processing),(active),(inactive)]/g)
     ) {
         dispatch(reducerButton.changeButtons(disableButton));
-        return <Navigate to="/" />;
+        // return <Navigate to="/" />;
     } else {
-        switch (currentAction) {
-            case 'approve':
-                if (!data.isApprove) {
-                    return <Navigate to="/blog" />;
-                }
-                dispatch(reducerButton.changeButtons(approveButton));
-                break;
-            case 'hidden':
-                if (data.isApprove) {
-                    return <Navigate to="/blog" />;
-                }
-                dispatch(reducerButton.changeButtons(hiddenButton));
-                break;
-            case 'decline':
-                if (!data.isDeclined) {
-                    return <Navigate to="/blog" />;
-                }
-                break;
-            default:
-                dispatch(disableButton);
-        }
+        // switch (currentAction) {
+        //     case 'processing':
+        //         if (!data.isApprove) {
+        //             return <Navigate to="/blog" />;
+        //         }
+        //         dispatch(reducerButton.changeButtons(approveButton));
+        //         break;
+        //     case 'active':
+        //         if (data.isApprove) {
+        //             return <Navigate to="/blog" />;
+        //         }
+        //         dispatch(reducerButton.changeButtons(hiddenButton));
+        //         break;
+        //     case 'inactive':
+        //         if (!data.isDeclined) {
+        //             return <Navigate to="/blog" />;
+        //         }
+        //         break;
+        //     default:
+        //         dispatch(disableButton);
+        // }
     }
     return (
         <Wrapper>
             <Row align="top" justify="center" gutter={17}>
-                <Col span={currentAction === 'hidden' ? 20 : 24}>
+                <Col span={currentAction === 'hidden' ? 20 : 16}>
                     <StyledContainer>
                         <Editor
                             editorState={editorState}
@@ -80,6 +84,14 @@ const BlogDetailComponent = () => {
                             readOnly="false"
                         />
                     </StyledContainer>
+                </Col>
+                <Col>
+                    <InfoList>
+                        <InfoItem>Trạng thái: Đã được duyệt</InfoItem>
+                        <InfoItem>Ngày tạo: 24.05.2019</InfoItem>
+                        <InfoItem>Ngày đăng: 24.05.2019</InfoItem>
+                        <InfoItem>Thể loại: F-Code, Tách file, ngôn ngữ C</InfoItem>
+                    </InfoList>
                 </Col>
                 {currentAction === 'hidden' && (
                     <Col align="middle">

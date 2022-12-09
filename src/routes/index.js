@@ -59,7 +59,7 @@ const privateRoute = [
         restrict: true,
     },
     {
-        path: '/blog/:key',
+        path: '/blog/:id',
         component: <BlogDetailComponent />,
         exact: false,
         restrict: true,

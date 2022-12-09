@@ -1,16 +1,44 @@
-import { Button, Form, Input, Space, Upload, Col, Row, Select } from 'antd';
+import { useState } from 'react';
+
+import { Button, Form, Input, Space, Upload, Row } from 'antd';
+import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import * as Styled from './CreateBlog.styled';
 
+import articleApi from '@/utils/apiComponents/articleApi';
+// import convertToBase64 from '@/utils/convertToBase64';
 import { PlusOutlined } from '@ant-design/icons';
 
-const Create = () => {
+const CreateBlog = () => {
     const [form] = Form.useForm();
-    const onFinish = (values) => {
-        // const newBlog = { ...values, author: 'Hai Dang', }
-        console.log(values);
-        alert(JSON.stringify(values));
+    const [content, setContent] = useState();
+
+    const onFinish = async (values) => {
+        const newBlog = {
+            ...values,
+            content: JSON.stringify(convertToRaw(content.getCurrentContent())),
+            genreId: 1,
+            memberId: 1212,
+            location: 'Vietnam',
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png',
+            // imageUrl: convertToBase64(values.imageUrl.fileList[0].originFileObj),
+        };
+        const { data } = await articleApi.createArticle(JSON.stringify(newBlog));
+        console.log(data);
+    };
+
+    const onContentChange = (value) => {
+        // const checkValue = convertToRaw(value.getCurrentContent()).blocks;
+        // let status = true;
+        // for (let i = 0; i < checkValue.length; i++) {
+        //     if (checkValue[0].text.trim() !== '') {
+        //         status = false;
+        //         break;
+        //     }
+        // }
+        setContent(value);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -34,24 +62,24 @@ const Create = () => {
                     <Form.Item label="Đoạn giới thiệu sơ lược" required name="description">
                         <Input />
                     </Form.Item>
-                    <Form.Item label="Trạng thái" name="status" required>
-                        <Select>
-                            <Select.Option value="public">Công khai</Select.Option>
-                            <Select.Option value="private">Riêng tư</Select.Option>
-                        </Select>
-                    </Form.Item>
                     <Form.Item
                         label="Thể loại"
                         tooltip="Các tag phân cách với nhau bằng dấu “,”"
-                        name="category"
+                        // name="category"
                         required
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item label="Nội dung bài viết" required name="content">
-                        <Editor />
+                        <Editor
+                            editorState={content}
+                            onEditorStateChange={(value) => onContentChange(value)}
+                        />
                     </Form.Item>
-                    <Row gutter={32}>
+                    <Form.Item label="Tác giả bài viết" required name="author">
+                        <Input />
+                    </Form.Item>
+                    {/* <Row gutter={32}>
                         <Col span={12}>
                             <Form.Item label="Phông chữ cho tựa đề">
                                 <Input />
@@ -62,7 +90,7 @@ const Create = () => {
                                 <Input />
                             </Form.Item>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Form.Item label="Hình ảnh đại diện" name="imageUrl">
                         <Upload action="/upload.do" listType="picture-card">
                             <div>
@@ -88,4 +116,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default CreateBlog;

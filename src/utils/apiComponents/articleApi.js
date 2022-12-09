@@ -1,18 +1,27 @@
+import localStorageUtils from '../localStorageUtils';
+
 import { get, post, put, remove } from '@/utils/ApiCaller';
 
+let token = localStorageUtils.getToken();
 // Create a components api for your calling here
 // Make an object with the method you want, passing params then create endpoint and return the method you call as the example below
 // When call an api, make sure you have await/async for the result
 const articleApi = {
     createArticle: async (article) => {
         const endpoint = '/article';
-        return await post(endpoint, article).catch((err) => console.log(err));
+        return await post(endpoint, article, {}, { authorization: token }).catch((err) =>
+            console.log(err)
+        );
     },
     updateArticle: async (article) => {
         const endpoint = '/article';
         return await put(endpoint, article).catch((err) => console.log(err));
     },
-    getAllArticle: async () => {
+    getArticleById: async (id) => {
+        const endpoint = `/article/${id}`;
+        return await get(endpoint).catch((err) => console.log(err));
+    },
+    getActiveArticle: async () => {
         const endpoint = '/article/all';
         return await get(endpoint).catch((err) => console.log(err));
     },
@@ -27,6 +36,14 @@ const articleApi = {
     deleteArticle: async (id) => {
         const endpoint = `/article/${id}`;
         return await remove(endpoint).catch((err) => console.log(err));
+    },
+    getInactiveArticle: async () => {
+        const endpoint = '/article/inactive';
+        return await get(endpoint).catch((err) => console.log(err));
+    },
+    getProcessingArticle: async () => {
+        const endpoint = '/article/processing';
+        return await get(endpoint).catch((err) => console.log(err));
     },
 };
 

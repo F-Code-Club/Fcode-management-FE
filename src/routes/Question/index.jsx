@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { List, Row, Col, Typography, Modal, Input, Avatar } from 'antd';
+import { List, Row, Col, Typography, Modal, Input, Avatar, Empty } from 'antd';
 import VirtualList from 'rc-virtual-list';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import StyledButton from './../../components/Button/index';
 import { toastError, toastSuccess, toastWarning } from './../../components/ToastNotification/index';
@@ -21,12 +21,15 @@ const questionContainerHeight = 705;
 const { TextArea } = Input;
 
 const QuestionManagement = () => {
+    // hook
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [latestComments, setLatestComments] = useState([]);
     const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
     const [answer, setAnswer] = useState('');
     const [selectedQuestion, setSelectedQuestion] = useState({});
+    // Custom hook
+    const navigate = useNavigate();
 
     const fetchQuestions = async () => {
         if (loading) {
@@ -34,11 +37,17 @@ const QuestionManagement = () => {
         }
         setLoading(true);
         await questionApi
-            .getAll()
+            .getAllProcessing()
             .then((res) => {
                 setLoading(false);
-                setQuestions(res.data.data);
-                return res.data;
+                if (res.data.code === 200) {
+                    setQuestions(res.data.data);
+                } else {
+                    if (res.data.code === 400) {
+                        navigate('/home');
+                    }
+                    throw new Error(res.data.message);
+                }
             })
             .catch((err) => {
                 setLoading(false);
@@ -68,6 +77,7 @@ const QuestionManagement = () => {
             toastWarning('Vui lòng nhập câu trả lời');
         }
         setAnswer('');
+        setSelectedQuestion('');
     };
     const handleModalCancel = () => {
         setIsAnswerModalOpen(false);
@@ -81,13 +91,28 @@ const QuestionManagement = () => {
         });
     };
     const reportQuestion = (id) => {
-        setSelectedQuestion(id);
         Modal.confirm({
             ...questionConfig.confirmModal,
-            onOk: () => {
-                // todo: call api for report question
-                console.log('OK ' + id);
-                Modal.success(questionConfig.okModal);
+            onOk: async () => {
+                console.log(id);
+                await questionApi
+                    .reportQuestion(id)
+                    .then((res) => {
+                        if (res.data.code === 200) {
+                            Modal.success(questionConfig.okModal);
+                            fetchQuestions();
+                            return;
+                        }
+                        if (res.data.code === 400) {
+                            navigate('/home');
+                            throw new Error(res.data.message);
+                        }
+                    })
+                    .catch((err) => {
+                        // eslint-disable-next-line no-console
+                        console.log(err);
+                        Modal.error(questionConfig.errorModal);
+                    });
             },
         });
     };
@@ -104,7 +129,7 @@ const QuestionManagement = () => {
                         <StyledContent>
                             <VirtualList
                                 data={questions}
-                                height={questionContainerHeight}
+                                height={questions.length ? questionContainerHeight : 0}
                                 itemHeight={300}
                                 itemKey="email"
                                 onScroll={(e) => onScroll(e, questionContainerHeight)}
@@ -118,14 +143,14 @@ const QuestionManagement = () => {
                                                 type="primary"
                                                 id={item.email}
                                                 text="Trả lời"
-                                                onClick={() => answersQuestion(item.email)}
+                                                onClick={() => answersQuestion(item.id)}
                                             />,
                                             <ActionButton
                                                 key="question-action-answer"
                                                 type="danger"
                                                 id={item.email}
                                                 text="Báo cáo vi phạm"
-                                                onClick={() => reportQuestion(item.email)}
+                                                onClick={() => reportQuestion(item.id)}
                                             />,
                                         ]}
                                         style={{ padding: '1.5rem' }}
@@ -140,6 +165,9 @@ const QuestionManagement = () => {
                                     </List.Item>
                                 )}
                             </VirtualList>
+                            {questions.length === 0 && (
+                                <Empty key="empty-data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                            )}
                         </StyledContent>
                     </List>
                 </Col>

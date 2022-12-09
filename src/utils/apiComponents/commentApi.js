@@ -1,10 +1,21 @@
 import { TOKEN } from '@/config';
-import { get } from '@/utils/ApiCaller';
+import { get, post } from '@/utils/ApiCaller';
 
 const commentApi = {
-    getComments: async () => {
+    getLatest: async () => {
         const endpoint = '/comment/';
         return await get(endpoint, {}, { authorization: TOKEN });
+    },
+    create: async (commentData) => {
+        const endpoint = '/comment';
+        return await post(
+            endpoint,
+            {
+                ...commentData,
+            },
+            {},
+            { authorization: TOKEN }
+        );
     },
 };
 

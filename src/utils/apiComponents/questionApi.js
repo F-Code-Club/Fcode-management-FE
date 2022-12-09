@@ -15,8 +15,12 @@ const questionApi = {
         const endpoint = '/question/processing';
         return await get(endpoint, {}, { authorization: TOKEN });
     },
-    reportQuestion: async (id) => {
+    report: async (id) => {
         const endpoint = `/question/disapprove/${id}`;
+        return await put(endpoint, {}, {}, { authorization: TOKEN });
+    },
+    approve: async (id) => {
+        const endpoint = `/question/approve/${id}`;
         return await put(endpoint, {}, {}, { authorization: TOKEN });
     },
 };

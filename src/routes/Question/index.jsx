@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 
-import { List, Row, Col, Typography, Modal, Input, Avatar, Empty } from 'antd';
+import { List, Row, Col, Typography, Modal, Input, Avatar, Empty, Skeleton } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import { Link, useNavigate } from 'react-router-dom';
 
 import StyledButton from './../../components/Button/index';
 import { toastError, toastSuccess, toastWarning } from './../../components/ToastNotification/index';
+import commentApi from './../../utils/apiComponents/commentApi';
 import questionApi from './../../utils/apiComponents/questionApi';
 import CommentTitle from './components/CommentTitle';
 import IconText from './components/IconText';
@@ -66,12 +67,49 @@ const QuestionManagement = () => {
         }
     };
     // handle for modal
-    const handleAnswerModal = () => {
+    const handleAnswerModal = async () => {
+        const commentData = {
+            authorEmail: 'nghiane@gmail.com',
+            content: answer,
+            id: 5,
+            questionId: selectedQuestion,
+        };
         // todo: call api for answer question
         if (answer.length > 0) {
-            // Toast.success('Trả lời thành công');
-            console.log('selected answer: ' + selectedQuestion);
-            toastSuccess(answer);
+            console.log(selectedQuestion);
+            // create comment
+            // approve question when comment successfully
+            await questionApi
+                .approve(selectedQuestion)
+                .then(async (res) => {
+                    console.log(res);
+                    if (res.data.code === 200) {
+                        await commentApi.create(commentData).then(async (response) => {
+                            console.log(response);
+                            if (response.data.code === 200) {
+                                toastSuccess('Trả lời thành công');
+                                fetchQuestions();
+                                return;
+                            }
+                            if (response.data.code === 400) {
+                                navigate('/home');
+                            }
+                            throw new Error(response.data.message);
+                        });
+                        return;
+                    }
+                    if (res.data.code === 400) {
+                        navigate('/home');
+                    }
+                    throw new Error(res.data.message);
+                })
+
+                .catch((err) => {
+                    // eslint-disable-next-line no-console
+                    console.log(err);
+                    toastError('Đã có lỗi xảy ra, vui lòng thử lại sau');
+                });
+
             setIsAnswerModalOpen(false);
         } else {
             toastWarning('Vui lòng nhập câu trả lời');
@@ -96,7 +134,7 @@ const QuestionManagement = () => {
             onOk: async () => {
                 console.log(id);
                 await questionApi
-                    .reportQuestion(id)
+                    .report(id)
                     .then((res) => {
                         if (res.data.code === 200) {
                             Modal.success(questionConfig.okModal);
@@ -129,7 +167,7 @@ const QuestionManagement = () => {
                         <StyledContent>
                             <VirtualList
                                 data={questions}
-                                height={questions.length ? questionContainerHeight : 0}
+                                height={questions.length !== 0 ? questionContainerHeight : 0}
                                 itemHeight={300}
                                 itemKey="email"
                                 onScroll={(e) => onScroll(e, questionContainerHeight)}
@@ -165,8 +203,11 @@ const QuestionManagement = () => {
                                     </List.Item>
                                 )}
                             </VirtualList>
-                            {questions.length === 0 && (
+                            {!loading && questions.length === 0 && (
                                 <Empty key="empty-data" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                            )}
+                            {loading && (
+                                <Skeleton key="skeleton-list" avatar paragraph={{ rows: 4 }} />
                             )}
                         </StyledContent>
                     </List>
@@ -217,9 +258,10 @@ const QuestionManagement = () => {
             </Row>
             <Modal
                 title="Nhập câu trả lời"
-                open={isAnswerModalOpen.answerModal}
+                open={isAnswerModalOpen}
                 onOk={handleAnswerModal}
                 onCancel={handleModalCancel}
+                confirmLoading={loading}
                 footer={
                     <Row justify="center">
                         <StyledButton type="primary" onClick={handleAnswerModal}>

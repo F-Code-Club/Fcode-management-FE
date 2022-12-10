@@ -1,11 +1,12 @@
-import { Space, Tag } from 'antd';
+import { Space } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const columns = [
     {
         title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => <Link to={`/blog/${record.id}?action=processing`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -17,28 +18,28 @@ export const columns = [
         dataIndex: 'created_at',
         key: 'created_at',
     },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
+    // {
+    //     title: 'Tags',
+    //     key: 'tags',
+    //     dataIndex: 'tags',
+    //     render: (_, { tags }) => (
+    //         <>
+    //             {tags.map((tag) => {
+    //                 let color = tag.length > 5 ? 'geekblue' : 'green';
 
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
+    //                 if (tag === 'loser') {
+    //                     color = 'volcano';
+    //                 }
 
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
+    //                 return (
+    //                     <Tag color={color} key={tag}>
+    //                         {tag.toUpperCase()}
+    //                     </Tag>
+    //                 );
+    //             })}
+    //         </>
+    //     ),
+    // },
     {
         title: 'Actions',
         key: 'action',
@@ -54,9 +55,9 @@ export const columns = [
 export const columns2 = [
     {
         title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => <Link to={`/blog/${record.id}?action=active`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -68,28 +69,28 @@ export const columns2 = [
         dataIndex: 'created_at',
         key: 'created_at',
     },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
+    // {
+    //     title: 'Tags',
+    //     key: 'tags',
+    //     dataIndex: 'tags',
+    //     render: (_, { tags }) => (
+    //         <>
+    //             {tags.map((tag) => {
+    //                 let color = tag.length > 5 ? 'geekblue' : 'green';
 
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
+    //                 if (tag === 'loser') {
+    //                     color = 'volcano';
+    //                 }
 
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
+    //                 return (
+    //                     <Tag color={color} key={tag}>
+    //                         {tag.toUpperCase()}
+    //                     </Tag>
+    //                 );
+    //             })}
+    //         </>
+    //     ),
+    // },
     {
         title: 'Actions',
         key: 'action',
@@ -105,9 +106,9 @@ export const columns2 = [
 export const columns3 = [
     {
         title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text) => <a href="/blog">{text}</a>,
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => <Link to={`/blog/${record.id}?action=inactive`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -119,33 +120,33 @@ export const columns3 = [
         dataIndex: 'created_at',
         key: 'created_at',
     },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
+    // {
+    //     title: 'Tags',
+    //     key: 'tags',
+    //     dataIndex: 'tags',
+    //     render: (_, { tags }) => (
+    //         <>
+    //             {tags.map((tag) => {
+    //                 let color = tag.length > 5 ? 'geekblue' : 'green';
 
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
+    //                 if (tag === 'loser') {
+    //                     color = 'volcano';
+    //                 }
 
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
+    //                 return (
+    //                     <Tag color={color} key={tag}>
+    //                         {tag.toUpperCase()}
+    //                     </Tag>
+    //                 );
+    //             })}
+    //         </>
+    //     ),
+    // },
 ];
 
 export const data = Array.from({ length: 100 }, (_, i) => ({
-    key: i + 1,
-    post_title: 'Tên bài viết ABC',
+    id: i + 1,
+    title: 'Tên bài viết ABC',
     author: 'Nguyễn Văn A',
     created_at: '01/01/2022',
     tags: ['Design', 'UI/UX'],

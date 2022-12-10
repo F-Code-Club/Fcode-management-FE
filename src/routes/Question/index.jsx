@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { List, Row, Col, Typography, Modal, Input, Avatar, Empty, Skeleton } from 'antd';
 import VirtualList from 'rc-virtual-list';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import StyledButton from './../../components/Button/index';
 import { toastError, toastSuccess, toastWarning } from './../../components/ToastNotification/index';
@@ -32,6 +32,27 @@ const QuestionManagement = () => {
     // Custom hook
     const navigate = useNavigate();
 
+    const fetchComment = async (questionId = 5) => {
+        await commentApi
+            .getLatest(questionId)
+            .then((res) => {
+                if (res.data.code === 200) {
+                    setLatestComments(res.data.data);
+                    return;
+                }
+                if (res.data.code === 400) {
+                    navigate('/home');
+                    throw new Error('Phiên làm việc đã hết hạn, vui lòng đăng nhập lại');
+                }
+                console.log(res.data);
+                throw new Error('Đã có lỗi xảy ra, vui lòng thử lại sau');
+            })
+            .catch((err) => {
+                // eslint-disable-next-line no-console
+                console.log(err);
+                toastError(err.message);
+            });
+    };
     const fetchQuestions = async () => {
         if (loading) {
             return;
@@ -43,21 +64,21 @@ const QuestionManagement = () => {
                 setLoading(false);
                 if (res.data.code === 200) {
                     setQuestions(res.data.data);
-                } else {
-                    if (res.data.code === 400) {
-                        navigate('/home');
-                    }
-                    throw new Error(res.data.message);
+                    return;
                 }
+                if (res.data.code === 400) {
+                    navigate('/home');
+                    throw new Error('Phiên làm việc đã hết hạn, vui lòng đăng nhập lại');
+                }
+                console.log('question error: ' + res.data);
+                throw new Error('Đã có lỗi xảy ra, vui lòng thử lại sau');
             })
             .catch((err) => {
                 setLoading(false);
                 // eslint-disable-next-line no-console
                 console.log(err);
-                toastError('Đã có lỗi xảy ra, vui lòng thử lại sau');
+                toastError(err.message);
             });
-        //set latest comments
-        setLatestComments(questions.slice(0, 4));
     };
     // handle for scroll
     const onScroll = (e, height) => {
@@ -88,9 +109,13 @@ const QuestionManagement = () => {
                                 return;
                             }
                             if (response.data.code === 400) {
+                                //Todo: navigate to login;
                                 navigate('/home');
+                                throw new Error(
+                                    'Phiên làm việc đã hết hạn, vui lòng đăng nhập lại'
+                                );
                             }
-                            throw new Error(response.data.message);
+                            throw new Error('Đã có lỗi xảy ra, vui lòng thử lại sau');
                         });
                         return;
                     }
@@ -103,7 +128,7 @@ const QuestionManagement = () => {
                 .catch((err) => {
                     // eslint-disable-next-line no-console
                     console.log(err);
-                    toastError('Đã có lỗi xảy ra, vui lòng thử lại sau');
+                    toastError(err.message);
                 });
 
             setIsAnswerModalOpen(false);
@@ -137,6 +162,7 @@ const QuestionManagement = () => {
                             return;
                         }
                         if (res.data.code === 400) {
+                            //Todo: navigate to login
                             navigate('/home');
                             throw new Error(res.data.message);
                         }
@@ -150,14 +176,15 @@ const QuestionManagement = () => {
         });
     };
     useEffect(() => {
+        fetchComment();
         fetchQuestions();
     }, []);
 
     return (
         <Wrapper>
             <Row gutter={30}>
-                <Col span={14}>
-                    <Title level={3}>Câu hỏi chờ trả lời </Title>
+                <Col xs={24} xl={14}>
+                    <Title level={3}>CÂU HỎI CHỜ TRẢ LỜI </Title>
                     <List itemLayout="vertical">
                         <StyledContent key="main-list">
                             <VirtualList
@@ -207,8 +234,8 @@ const QuestionManagement = () => {
                         </StyledContent>
                     </List>
                 </Col>
-                <Col span={10}>
-                    <Title level={3}>Bình luận gần đây </Title>
+                <Col xs={24} xl={10}>
+                    <Title level={3}>BÌNH LUẬN GẦN ĐÂY</Title>
                     <StyledContent height={945}>
                         <List
                             itemLayout="vertical"
@@ -220,17 +247,18 @@ const QuestionManagement = () => {
                                         actions={[
                                             <IconText
                                                 Icon={LikeOutlined}
-                                                text="156"
+                                                text="0"
                                                 key="list-vertical-star-o"
                                             />,
                                             <IconText
                                                 Icon={DislikeOutlined}
-                                                text="156"
+                                                text="0"
                                                 key="list-vertical-like-o"
                                             />,
-                                            <Link to="/home" key="list-vertical-message">
-                                                Reply to
-                                            </Link>,
+                                            // todo: add reply to comment
+                                            // <Link to="/home" key="list-vertical-message">
+                                            //     Reply to
+                                            // </Link>,
                                         ]}
                                         style={{ padding: '1.5rem' }}
                                     >

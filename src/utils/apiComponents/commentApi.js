@@ -2,8 +2,8 @@ import { TOKEN } from '@/config';
 import { get, post } from '@/utils/ApiCaller';
 
 const commentApi = {
-    getLatest: async () => {
-        const endpoint = '/comment/';
+    getLatest: async (questionId) => {
+        const endpoint = `/comment/question/latest/${questionId}`;
         return await get(endpoint, {}, { authorization: TOKEN });
     },
     create: async (commentData) => {

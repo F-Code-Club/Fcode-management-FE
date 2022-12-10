@@ -21,14 +21,18 @@ const Blog = () => {
 
     useEffect(() => {
         (async () => {
-            const allBlogs = await articleApi.getActiveArticle();
-            setBlogs({ ...blogs, active: [...allBlogs.data.data] });
-
+            const activeBlogs = await articleApi.getActiveArticle();
             const inactiveBlogs = await articleApi.getInactiveArticle();
-            setBlogs({ ...blogs, inactive: [...inactiveBlogs.data.data] });
-
             const processingBlogs = await articleApi.getProcessingArticle();
-            setBlogs({ ...blogs, processing: [...processingBlogs.data.data] });
+
+            console.log(inactiveBlogs);
+
+            setBlogs({
+                ...blogs,
+                active: [...activeBlogs.data.data],
+                inactive: [...inactiveBlogs.data.data],
+                processing: [...processingBlogs.data.data],
+            });
         })();
     }, []);
 

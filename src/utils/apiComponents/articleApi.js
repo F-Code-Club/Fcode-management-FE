@@ -23,7 +23,7 @@ const articleApi = {
     },
     getActiveArticle: async () => {
         const endpoint = '/article/all';
-        return await get(endpoint).catch((err) => console.log(err));
+        return await get(endpoint, {}, { authorization: token }).catch((err) => console.log(err));
     },
     approveAllArticles: async () => {
         const endpoint = '/article/approve/all';
@@ -39,11 +39,11 @@ const articleApi = {
     },
     getInactiveArticle: async () => {
         const endpoint = '/article/inactive';
-        return await get(endpoint).catch((err) => console.log(err));
+        return await get(endpoint, {}, { authorization: token }).catch((err) => console.log(err));
     },
     getProcessingArticle: async () => {
         const endpoint = '/article/processing';
-        return await get(endpoint).catch((err) => console.log(err));
+        return await get(endpoint, {}, { authorization: token }).catch((err) => console.log(err));
     },
 };
 

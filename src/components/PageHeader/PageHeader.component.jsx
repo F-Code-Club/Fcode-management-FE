@@ -21,7 +21,7 @@ const { Header } = Layout;
 let breadcrumbNameMap = {
     '/event': 'Quản lý sự kiện',
     '/source': 'Quản lý tài nguyên',
-    '/member': 'member',
+    '/member': 'Quản lý thành viên',
     '/blog': 'Quản lý bài viết',
     '/blog/create': 'Tạo bài viết',
     '/manage-announcement': 'Quản lý thông báo',
@@ -34,7 +34,7 @@ let breadcrumbNameMap = {
     '/information/view-information': 'Xem thông tin',
 };
 for (let i = 1; i <= 100; i++) {
-    breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
+    breadcrumbNameMap[`/blog/${i}`] = `Bài viết số ${i}`;
     breadcrumbNameMap[`/manage-announcement/view-announcement/${i}`] = `Thông báo số ${i}`;
 }
 const PageHeaderComponent = () => {

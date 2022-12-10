@@ -4,9 +4,9 @@ import { Row, Col, Typography } from 'antd';
 import { EditorState, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch } from 'react-redux';
-import { useParams, useSearchParams, useLocation } from 'react-router-dom';
+import { useParams, useSearchParams, useLocation, Navigate } from 'react-router-dom';
 
-import { disableButton, ActionElements } from './configComponent';
+import { disableButton, ActionElements, processingButton, activeButton } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
@@ -19,21 +19,20 @@ import articleApi from '@/utils/apiComponents/articleApi';
 const { Text } = Typography;
 
 const BlogDetailComponent = () => {
-    //router variable
-    const params = useParams();
+    // Get current action (processing, active, inactive)
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
     const currentAction = searchParams.get('action') || '';
-    const articleId = parseInt(params.id) || 0;
 
-    const dispatch = useDispatch();
+    // Get id of blog
+    const params = useParams();
+    const articleId = parseInt(params.id) || 0;
 
     const [editorState, setEditorState] = useState();
 
     useEffect(() => {
         (async () => {
             const { data } = await articleApi.getArticleById(articleId);
-            console.log(data);
             setEditorState(
                 EditorState.createWithContent(convertFromRaw(JSON.parse(data.data.content)))
             );
@@ -41,36 +40,38 @@ const BlogDetailComponent = () => {
     }, []);
 
     //TODO: routing to blog when finish
-    // If out of data
+    // Handle change button in header
+    const dispatch = useDispatch();
     if (
         currentAction === '' ||
         // data.content === '' ||
         !currentAction.match(/[(processing),(active),(inactive)]/g)
     ) {
         dispatch(reducerButton.changeButtons(disableButton));
-        // return <Navigate to="/" />;
+        return <Navigate to="/" />;
     } else {
-        // switch (currentAction) {
-        //     case 'processing':
-        //         if (!data.isApprove) {
-        //             return <Navigate to="/blog" />;
-        //         }
-        //         dispatch(reducerButton.changeButtons(approveButton));
-        //         break;
-        //     case 'active':
-        //         if (data.isApprove) {
-        //             return <Navigate to="/blog" />;
-        //         }
-        //         dispatch(reducerButton.changeButtons(hiddenButton));
-        //         break;
-        //     case 'inactive':
-        //         if (!data.isDeclined) {
-        //             return <Navigate to="/blog" />;
-        //         }
-        //         break;
-        //     default:
-        //         dispatch(disableButton);
-        // }
+        switch (currentAction) {
+            case 'processing':
+                // if (!data.isApprove) {
+                //     return <Navigate to="/blog" />;
+                // }
+                dispatch(reducerButton.changeButtons(processingButton));
+                break;
+            case 'active':
+                // if (data.isApprove) {
+                //     return <Navigate to="/blog" />;
+                // }
+                dispatch(reducerButton.changeButtons(activeButton));
+                break;
+            case 'inactive':
+                // if (!data.isDeclined) {
+                //     return <Navigate to="/blog" />;
+                // }
+                dispatch(reducerButton.changeButtons(activeButton));
+                break;
+            default:
+            // dispatch(disableButton);
+        }
     }
     return (
         <Wrapper>

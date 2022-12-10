@@ -18,7 +18,7 @@ export const ActionElements = [
         Element: ({ ...rest }) => <CommentOutlined {...rest} />,
     },
 ];
-export const hiddenButton = {
+export const activeButton = {
     type: 'hidden',
     // TODO: change this when finish testing
     isShow: true, // show or not.
@@ -56,7 +56,7 @@ export const hiddenButton = {
     ],
 };
 
-export const approveButton = {
+export const processingButton = {
     type: 'approve',
     // TODO: change this when finish testing
     isShow: true, // show or not.

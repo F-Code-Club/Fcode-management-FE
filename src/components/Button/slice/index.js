@@ -1,5 +1,5 @@
 import { injectReducer } from '@/store';
-import testApi from '@/utils/apiComponents/testApi';
+import articleApi from '@/utils/apiComponents/articleApi';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
@@ -23,10 +23,10 @@ export const slice = createSlice({
         },
         // TODO: using this to call button onClick handler
         handleHidden: (state, action) => {
-            testApi.get(action.payload);
+            articleApi.approveArticle(action.payload);
         },
         handleApprove: (state, action) => {
-            testApi.get(action.payload);
+            articleApi.approveArticle(action.payload);
         },
     },
 });

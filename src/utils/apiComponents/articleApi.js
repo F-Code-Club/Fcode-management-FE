@@ -2,6 +2,7 @@ import localStorageUtils from '../localStorageUtils';
 
 import { get, post, put, remove } from '@/utils/ApiCaller';
 
+// todo delete token from config when deploy
 let token = localStorageUtils.getToken();
 // Create a components api for your calling here
 // Make an object with the method you want, passing params then create endpoint and return the method you call as the example below
@@ -27,15 +28,27 @@ const articleApi = {
     },
     approveAllArticles: async () => {
         const endpoint = '/article/approve/all';
-        return await put(endpoint).catch((err) => console.log(err));
+        return await put(endpoint, {}, {}, { authorization: token }).catch((err) =>
+            console.log(err)
+        );
     },
     approveArticle: async (id) => {
         const endpoint = `/article/approve/${id}`;
-        return await put(endpoint).catch((err) => console.log(err));
+        return await put(endpoint, {}, {}, { authorization: token }).catch((err) =>
+            console.log(err)
+        );
+    },
+    disapproveArticle: async (id) => {
+        const endpoint = `/article/disapprove/${id}`;
+        return await put(endpoint, {}, {}, { authorization: token }).catch((err) => {
+            throw new Error(err);
+        });
     },
     deleteArticle: async (id) => {
         const endpoint = `/article/${id}`;
-        return await remove(endpoint).catch((err) => console.log(err));
+        return await remove(endpoint, {}, {}, { authorization: token }).catch((err) =>
+            console.log(err)
+        );
     },
     getInactiveArticle: async () => {
         const endpoint = '/article/inactive';

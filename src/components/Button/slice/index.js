@@ -1,3 +1,5 @@
+import { toastSuccess, toastError } from './../../ToastNotification/index';
+
 import { injectReducer } from '@/store';
 import articleApi from '@/utils/apiComponents/articleApi';
 import { createSlice } from '@reduxjs/toolkit';
@@ -5,7 +7,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {
     // make action button to the right of header bar
     actionButtons: {
-        type: 'hidden',
+        type: 'inactive',
         // TODO: change this when finish testing
         isShow: false, // show or not.
         buttons: [],
@@ -21,12 +23,30 @@ export const slice = createSlice({
         changeButtons: (state, action) => {
             state.actionButtons = action.payload;
         },
-        // TODO: using this to call button onClick handler
-        handleHidden: (state, action) => {
-            articleApi.approveArticle(action.payload);
+        approve: (state, action) => {
+            articleApi
+                .approveArticle(action.payload)
+                .then(() => {
+                    toastSuccess(action.payload.successContent);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toastError('Duyệt bài viết thất bại');
+                });
         },
-        handleApprove: (state, action) => {
-            articleApi.approveArticle(action.payload);
+        delete: (state, action) => {
+            try {
+                articleApi.deleteArticle(action.payload.articleId);
+                toastSuccess(action.payload.successContent);
+            } catch (err) {
+                console.log(err);
+                toastError('Xoá bài viết thất bại');
+            }
+        },
+        disApprove: (state, action) => {
+            articleApi.disapproveArticle(action.payload).then(() => {
+                toastSuccess(action.payload.successContent);
+            });
         },
     },
 });

@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 
 import { Table, Tabs, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { columns, columns2, columns3 } from './Blog.data';
 import * as Styled from './Blog.styled';
 import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
 import { selectCurrentBlog } from './slice/selector';
 
+import { toastError } from '@/components/ToastNotification';
 import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Search } = Input;
@@ -16,20 +17,33 @@ const { Search } = Input;
 const Blog = () => {
     // Using redux to store data when received
     const blogs = useSelector(selectCurrentBlog);
+    const location = useLocation();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
-            const activeBlogs = await articleApi.getActiveArticle();
-            const inactiveBlogs = await articleApi.getInactiveArticle();
-            const processingBlogs = await articleApi.getProcessingArticle();
-
-            dispatch(changeActiveBlogs(activeBlogs.data.data));
-            dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
-            dispatch(changeProcessingBlogs(processingBlogs.data.data));
+            // call api to get active blogs
+            await articleApi
+                .getActiveArticle()
+                .then(async (activeBlogs) => {
+                    dispatch(changeActiveBlogs(activeBlogs.data.data));
+                    // call api to get processing blogs
+                    return await articleApi.getProcessingArticle();
+                })
+                .then(async (processingBlogs) => {
+                    // call api to get inactive blogs
+                    dispatch(changeProcessingBlogs(processingBlogs.data.data));
+                    return await articleApi.getInactiveArticle();
+                })
+                .then(async (inactiveBlogs) => {
+                    dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toastError('Lỗi khi lấy dữ liệu');
+                });
         };
         fetchData();
-    }, [navigate]);
+    }, [location]);
 
     return (
         <Styled.Background>

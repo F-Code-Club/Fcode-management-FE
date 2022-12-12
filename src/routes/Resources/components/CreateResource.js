@@ -7,13 +7,14 @@ import { ContainerEditor, FirstLayer } from '../styles';
 import { ConfirmAction } from './PopupConfirmResource';
 import { UploadImage } from './UploadImg';
 
+import productApi from '@/utils/apiComponents/productApi';
 import LocalStorageUtils from '@/utils/localStorageUtils';
-import productApi from '@/utils/productApi';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const CreateResource = (props) => {
     const token = LocalStorageUtils.getToken();
     console.log(token);
+    const fetchAllSubject = props.fetchAllSubject;
     const action = props.action;
     const [newResource, setNewResource] = useState({
         title: props.type === 'edit' ? props.title : '',
@@ -88,6 +89,7 @@ export const CreateResource = (props) => {
         );
 
         if (status && result.data.code === 200) {
+            await fetchAllSubject();
             await action(true);
         } else if (status && result.data.code === 400) {
             await action(false);

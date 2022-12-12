@@ -7,11 +7,12 @@ import { CreateResource } from './components/CreateResource';
 import HeaderResource from './components/HeaderResource';
 import ListResource from './components/ListResource';
 import { ConfirmAction } from './components/PopupConfirmResource';
-import { actions, fetchAllSubject } from './slice';
+import { actions } from './slice';
 // import { selectResources } from './slice/selectors';
 import { Wrapper, Container } from './styles';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import productApi from '@/utils/apiComponents/productApi';
 
 // import productApi from '@/utils/productApi';
 
@@ -35,6 +36,7 @@ const ResourcesSection = () => {
         },
     });
     const dispatch = useDispatch();
+    const [data, setData] = useState();
     // const listResources = useSelector(selectResources);
 
     const handleCreate = async (status) => {
@@ -107,18 +109,23 @@ const ResourcesSection = () => {
                 break;
         }
     };
+    const fetchAllSubject = async () => {
+        const result = await productApi.getAllSubject();
+        if (result.data.code === 200) setData(result.data.data);
+    };
     useEffect(() => {
-        dispatch(fetchAllSubject());
+        fetchAllSubject();
     }, []);
     return (
         <>
             <Container>
                 <Wrapper>
-                    <ListResource handleClick={handleResourceAction} />
+                    <ListResource resource={data} handleClick={handleResourceAction} />
                     <HeaderResource handleClick={handleResourceAction} />
                 </Wrapper>
                 {modalOpen.popupEditor.status && (
                     <CreateResource
+                        fetchAllSubject={fetchAllSubject}
                         action={handleCreate}
                         type={modalOpen.popupEditor.type}
                         title={modalOpen.popupEditor.title}

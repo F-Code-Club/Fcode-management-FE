@@ -1,17 +1,16 @@
 import { List } from 'antd';
 import { useSelector } from 'react-redux';
 
-import { selectResources, selectIsLoading } from '../slice/selectors';
+import { selectIsLoading } from '../slice/selectors';
 import ResourceCard from './ResourceCard';
 
-const ListResource = ({ handleClick }) => {
-    const listResources = useSelector(selectResources);
+const ListResource = ({ handleClick, resource }) => {
     const IsLoading = useSelector(selectIsLoading);
     let tmpListResources;
-    if (listResources === null || listResources === undefined)
+    if (resource === null || resource === undefined)
         tmpListResources = [{ semester: 'unknown', name: 'unknown' }];
-    tmpListResources = listResources[0];
-    console.log(tmpListResources);
+    tmpListResources = resource;
+
     if (IsLoading) {
         return <div>...Loading</div>;
     }

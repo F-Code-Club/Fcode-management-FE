@@ -18,7 +18,11 @@ const HeaderResource = ({ handleClick }) => {
                 <HeaderText> Tài nguyên</HeaderText>
                 <Subtitle>Quản lý tài nguyên</Subtitle>
             </div>
-            <HeaderButton onClick={() => handleClick('create', null)}>
+            <HeaderButton
+                onClick={() => {
+                    handleClick('create', null);
+                }}
+            >
                 <PlusSquareOutlined />
             </HeaderButton>
         </Header>

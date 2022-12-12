@@ -1,4 +1,4 @@
-import { get, post, put } from './ApiCaller';
+import { get, post, put } from '../ApiCaller';
 
 const productApi = {
     // subject api

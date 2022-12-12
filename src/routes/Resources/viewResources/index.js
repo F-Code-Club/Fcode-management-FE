@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { ConfirmAction } from '../components/PopupConfirmResource';
-import { selectResources, selectIsLoading } from '../slice/selectors';
+import { selectIsLoading } from '../slice/selectors';
 import { CreateResourceChild } from './components/CreateResourceChild';
 import TabsCard from './components/Tabs_card';
 import ViewResourceHeader from './components/ViewResourceHeader';
@@ -13,16 +13,16 @@ import { selectResourceChild } from './slice/selector';
 import { ViewResourceContainer, WrapperViewResource } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
-import productApi from '@/utils/productApi';
+import productApi from '@/utils/apiComponents/productApi';
 
 const ViewResource = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
-    const [state, setState] = useState();
+    // const navigate = useNavigate();
+    // const [state, setState] = useState();
     const [resourceChild, setResourceChild] = useState();
-    const listResources = useSelector(selectResources);
+    const [subject, setSubject] = useState();
     const listResourceChildren = useSelector(selectResourceChild);
-    const newResource = listResources[0];
+
     let tmpNewResource;
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {
@@ -131,40 +131,36 @@ const ViewResource = () => {
     };
     const fetchResourceBySubjectId = async () => {
         const result = await productApi.getResourceBySubjectId(id);
-        if (result.data.code === 400) await setResourceChild(result.data.message);
-        await setResourceChild(result.data.data);
+        if (result.data.code === 400) {
+            await setResourceChild(result.data.data);
+            console.log(result.data.message);
+        } else await setResourceChild(result.data.data);
+        const response = await productApi.getSubjectById(id);
+        if (response.data.code === 200) {
+            await setSubject(response.data.data);
+        }
     };
-    if (newResource === null || newResource === undefined) tmpNewResource = [];
-    tmpNewResource = newResource;
+
     useEffect(() => {
-        let item = null;
-        for (let i = 0; i < tmpNewResource.length; i++) {
-            if (newResource[i].id == id) {
-                item = newResource[i];
-                break;
-            }
-        }
-        if (item != null) {
-            setState(item);
-        } else {
-            navigate('/manage-resources');
-        }
         fetchResourceBySubjectId();
-        // dispatch(fetchResourceBySubjectId(id));
     }, [id]);
     const IsLoading = useSelector(selectIsLoading);
     if (IsLoading) {
         return <div>...Loading</div>;
     }
-    console.log('line 157: ', resourceChild);
+    if (resourceChild === null || resourceChild === undefined) {
+        tmpNewResource = [{ title: 'unknown', description: 'unknown', link: 'unknown' }];
+    } else tmpNewResource = resourceChild;
+
+    console.log('line 157: ', tmpNewResource);
     return (
         <ViewResourceContainer>
-            {state && (
+            {tmpNewResource && (
                 <WrapperViewResource>
-                    <TabsCard resourceChild={resourceChild} />
+                    <TabsCard resourceChild={tmpNewResource} />
                     <ViewResourceHeader
-                        title={state.semester}
-                        DescriptionMore={state.name}
+                        title={subject.semester}
+                        DescriptionMore={subject.name}
                         handleClick={handleResourceAction}
                     />
                 </WrapperViewResource>

@@ -74,7 +74,6 @@ const PageHeaderComponent = () => {
                 //         articleId,
                 //         successContent: button.successContent,
                 //     })
-                console.log('button click: ');
                 dispatch(
                     handleClick({
                         action: button.action,

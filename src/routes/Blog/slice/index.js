@@ -21,6 +21,7 @@ export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
         .getActiveArticle()
         .then((res) => res.data.data)
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.log(err);
             toastError('Lấy danh sách bài viết thất bại');
         });
@@ -28,6 +29,7 @@ export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
         .getProcessingArticle()
         .then((res) => res.data.data)
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.log(err);
             toastError('Lấy danh sách bài viết thất bại');
         });
@@ -35,6 +37,7 @@ export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
         .getInactiveArticle()
         .then((res) => res.data.data)
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.log(err);
             toastError('Lấy danh sách bài viết thất bại');
         });
@@ -50,7 +53,6 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getAllBlogs.fulfilled, (state, action) => {
-            console.log('Blog thunk: ', action.payload);
             state.active = action.payload.active.sort((a, b) => (a.id > b.id ? 1 : -1));
             state.processing = action.payload.processing.sort((a, b) => (a.id > b.id ? 1 : -1));
             state.inactive = action.payload.inactive.sort((a, b) => (a.id > b.id ? 1 : -1));

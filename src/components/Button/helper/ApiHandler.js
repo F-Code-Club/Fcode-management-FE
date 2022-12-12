@@ -11,7 +11,7 @@ export const handler = async (action, ...data) => {
                 return res.data;
             }
             if (res.data.code === 400) {
-                toastError('Phiên đắng nhập hết hạn');
+                toastError('Phiên đăng nhập hết hạn');
                 return null;
             }
             throw new Error(res.data.message);

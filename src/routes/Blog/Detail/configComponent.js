@@ -42,7 +42,7 @@ export const activeButton = {
         {
             name: 'Xoá',
             type: 'primary',
-            action: 'delete',
+            action: 'deleteArticle',
             configs: {
                 title: 'Bạn có muốn xoá bài viết này không?',
                 content: 'Bài viết sau khi xóa sẽ không còn dữ liệu trên hệ thống trang của CLB.',
@@ -62,7 +62,7 @@ export const processingButton = {
             name: 'Từ Chối',
             type: '',
             // Action name for button when using redux
-            action: 'disApprove',
+            action: 'disApproveArticle',
             configs: {
                 title: 'Bạn có muốn từ chối duyệt bài viết này không?',
                 content:
@@ -72,7 +72,7 @@ export const processingButton = {
         },
         {
             name: 'Duyệt',
-            action: 'approve',
+            action: 'approveArticle',
             type: 'primary',
             configs: {
                 title: 'Bạn có muốn duyệt bài viết này không?',

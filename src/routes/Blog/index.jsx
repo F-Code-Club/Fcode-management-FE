@@ -6,11 +6,13 @@ import { useLocation } from 'react-router-dom';
 
 import { columns, columns2, columns3 } from './Blog.data';
 import * as Styled from './Blog.styled';
-import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
+// import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
 import { selectCurrentBlog } from './slice/selector';
 
-import { toastError } from '@/components/ToastNotification';
-import articleApi from '@/utils/apiComponents/articleApi';
+// import { toastError } from '@/components/ToastNotification';
+import { getAllBlogs } from '@/routes/Blog/slice';
+
+// import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Search } = Input;
 
@@ -21,26 +23,7 @@ const Blog = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         const fetchData = async () => {
-            // call api to get active blogs
-            await articleApi
-                .getActiveArticle()
-                .then(async (activeBlogs) => {
-                    dispatch(changeActiveBlogs(activeBlogs.data.data));
-                    // call api to get processing blogs
-                    return await articleApi.getProcessingArticle();
-                })
-                .then(async (processingBlogs) => {
-                    // call api to get inactive blogs
-                    dispatch(changeProcessingBlogs(processingBlogs.data.data));
-                    return await articleApi.getInactiveArticle();
-                })
-                .then(async (inactiveBlogs) => {
-                    dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
-                })
-                .catch((err) => {
-                    console.log(err);
-                    toastError('Lỗi khi lấy dữ liệu');
-                });
+            dispatch(getAllBlogs());
         };
         fetchData();
     }, [location]);

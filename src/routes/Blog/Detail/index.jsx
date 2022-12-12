@@ -13,7 +13,7 @@ import { disableButton, ActionElements, processingButton, activeButton } from '.
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
-import { Wrapper } from '@/routes/Blog/Detail/style';
+import { Wrapper, InfoList, InfoItem } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 
 // import articleApi from '@/utils/apiComponents/articleApi';
@@ -32,6 +32,7 @@ const BlogDetailComponent = () => {
     const params = useParams();
     const currentAction = searchParams.get('action');
     const articleId = parseInt(params.id) || 0;
+
     const [editorState, setEditorState] = useState();
 
     useEffect(() => {
@@ -96,7 +97,7 @@ const BlogDetailComponent = () => {
     return (
         <Wrapper>
             <Row align="top" justify="center" gutter={17} style={{ width: '100%' }}>
-                <Col span={currentAction === 'active' ? 16 : 20}>
+                <Col span={currentAction === 'active' ? 20 : 16}>
                     <StyledContainer>
                         <Editor
                             editorState={editorState}
@@ -106,8 +107,16 @@ const BlogDetailComponent = () => {
                         />
                     </StyledContainer>
                 </Col>
-                {currentAction === 'active' && (
-                    <Col align="middle" span={1}>
+                <Col span={4}>
+                    <InfoList>
+                        <InfoItem>Trạng thái: Đã được duyệt</InfoItem>
+                        <InfoItem>Ngày tạo: {article.createAt} </InfoItem>;
+                        <InfoItem>Ngày đăng: 24.05.2019</InfoItem>
+                        <InfoItem>Thể loại: F-Code, Tách file, ngôn ngữ C</InfoItem>
+                    </InfoList>
+                </Col>
+                {currentAction === '' && (
+                    <Col align="middle" span={8}>
                         <StyledContainer padding="1.2rem 0">
                             <Row gutter={[0, 32]}>
                                 {ActionElements.map((item, index) => (
@@ -124,7 +133,7 @@ const BlogDetailComponent = () => {
                                                 fontSize: '1.4rem',
                                             }}
                                         />
-                                        <Text>0</Text>
+                                        <Text>12</Text>
                                     </Col>
                                 ))}
                             </Row>

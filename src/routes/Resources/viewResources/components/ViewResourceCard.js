@@ -9,10 +9,11 @@ import {
 
 import { EditOutlined } from '@ant-design/icons';
 
-const ViewResourcesCard = ({ title, des, link, img }) => {
+const ViewResourcesCard = ({ title, des, link }) => {
+    //img.length != 0 ? img[0] :
     return (
         <ResourceCardContainer>
-            <ResourceImage url={img.length != 0 ? img[0] : `${NoPhoto}`} />
+            <ResourceImage url={`${NoPhoto}`} />
             <WrapperContent>
                 <TextTitle>
                     {title}

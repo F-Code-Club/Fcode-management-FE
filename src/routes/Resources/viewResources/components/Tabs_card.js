@@ -1,22 +1,23 @@
-// import { useRef, useState } from 'react';
-// import { Tabs } from 'antd';
-import { useSelector } from 'react-redux';
-
-import { selectResourceChild } from '../slice/selector';
 import { WrapperTabs } from '../styled';
 import ViewResourcesCard from './ViewResourceCard';
 
-const TabsCard = () => {
-    const listResourcesChildren = useSelector(selectResourceChild);
+const TabsCard = ({ resourceChild }) => {
+    let tmpResources;
 
+    if (resourceChild === null || resourceChild === undefined) {
+        tmpResources = [{ title: 'unknown', description: 'unknown', link: 'unknown' }];
+    } else {
+        tmpResources = resourceChild;
+    }
+    console.log(tmpResources);
     return (
         <WrapperTabs>
-            {listResourcesChildren.map((item, i) => (
+            {tmpResources.map((item, i) => (
                 <ViewResourcesCard
                     key={i}
-                    des={item.description}
-                    title={item.title}
-                    link={item.link}
+                    des={item.contributor}
+                    title={item.description}
+                    link={item.url}
                     img={item.imgs}
                 />
             ))}

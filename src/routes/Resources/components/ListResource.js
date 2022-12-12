@@ -7,7 +7,11 @@ import ResourceCard from './ResourceCard';
 const ListResource = ({ handleClick }) => {
     const listResources = useSelector(selectResources);
     const IsLoading = useSelector(selectIsLoading);
-
+    let tmpListResources;
+    if (listResources === null || listResources === undefined)
+        tmpListResources = [{ semester: 'unknown', name: 'unknown' }];
+    tmpListResources = listResources[0];
+    console.log(tmpListResources);
     if (IsLoading) {
         return <div>...Loading</div>;
     }
@@ -29,7 +33,7 @@ const ListResource = ({ handleClick }) => {
                 position: 'bottom',
                 pageSize: 4,
             }}
-            dataSource={listResources ? [...listResources[0]].reverse() : []}
+            dataSource={tmpListResources ? [...tmpListResources].reverse() : []}
             renderItem={(item) => {
                 return (
                     <List.Item>

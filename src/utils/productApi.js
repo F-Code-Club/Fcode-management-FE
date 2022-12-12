@@ -1,62 +1,85 @@
-import { get, post, put, remove } from './ApiCaller';
+import { get, post, put } from './ApiCaller';
 
-class productApi {
-    //event apis
-    //subject apis
-    getAllSubjects() {
-        return get('/subject/all', {}, {}).catch((err) => console.error(err));
-    }
-    getAllEvent() {
-        return get('/api/events', {}, {}).catch((err) => console.error(err));
-    }
+const productApi = {
+    // subject api
+    getAllSubject: async () => {
+        const endpoint = '/subject/all';
+        return await get(endpoint, {}, {})
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    getSubjectByName: async (name) => {
+        const endpoint = `/subject/name/${name}`;
+        return await get(endpoint, {}, {})
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    getSubjectById: async (id) => {
+        const endpoint = `/subject/one/${id}`;
+        return await get(endpoint, {}, {})
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    createSubject: async (subject, token) => {
+        const endpoint = `/subject`;
+        return await post(endpoint, subject, {}, { authorization: token })
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    updateSubject: async (subject, token) => {
+        const endpoint = `/subject`;
+        return await put(endpoint, subject, {}, { authorization: token })
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
 
-    createEvent(body) {
-        return post('api/events', body, {}, {}).catch((err) => console.error(err));
-    }
+    //resource api
+    createResource: async (resource, token) => {
+        const endpoint = `/resource`;
+        return await post(endpoint, resource, {}, { authorization: token })
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    updateResource: async (resource, token) => {
+        const endpoint = `/resource`;
+        return await put(endpoint, resource, {}, { authorization: token })
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    getAllResources: async () => {
+        const endpoint = '/resource/all';
+        return await get(endpoint, {}, {})
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
+    getResourceBySubjectId: async (id) => {
+        const endpoint = `/resource/subject/${id}`;
+        return await get(endpoint, {}, {}).catch((err) => console.log(err.message));
+    },
+};
 
-    getEvent(id) {
-        return get('api/events/' + id, {}, {}).catch((err) => console.error(err));
-    }
-
-    updateEvent(id, body) {
-        return put('api/events/' + id, body, {}, {}).catch((err) => console.error(err));
-    }
-
-    deleteEvent(id) {
-        return remove('api/events/' + id, {}, {}, {}).catch((err) => console.error(err));
-    }
-
-    //member apis
-    getUser(userId, token) {
-        return get('/api/user/' + userId, {}, { token: token }).catch((err) => {
-            console.log(err);
-        });
-    }
-    updatePoint(userId, point, token) {
-        return post(
-            'api/user/' + userId + 'change-point',
-            { points: point },
-            {},
-            { token: token }
-        ).catch((err) => console.log(err));
-    }
-
-    //attendance apis
-    setAttendance(userId, eventId, token) {
-        return post(
-            '/api/check-attendance',
-            { memeber_id: userId, event_id: eventId },
-            {},
-            { token: token }
-        ).catch((err) => console.log(err));
-    }
-    getAttendance(userId, eventId, token) {
-        return get(
-            'api/check-attendance?member_id=' + userId + '&event_id=' + eventId,
-            {},
-            { token: token }
-        ).catch((err) => console.log(err));
-    }
-}
-
-export default new productApi();
+export default productApi;

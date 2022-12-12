@@ -1,7 +1,8 @@
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import ResourceImage from '../../../assets/Resource/resouces.jpg';
-// import NoPhoto from '../../../assets/no-photo.jpg';
 import {
     CardWrapper,
     BackgroundCard,
@@ -12,11 +13,23 @@ import {
     ButtonResourceCard,
 } from '../styles';
 
+// import NoPhoto from '../../../assets/no-photo.jpg';
+// import { fetchResourceBySubjectId } from '../viewResources/slice';
+
 const ResourceCard = ({ clickEvent, item }) => {
+    // const dispatch = useDispatch();
+
     const navigate = useNavigate();
+
     //item.imgs.length != 0 ? item.imgs[0] :
     return (
-        <ButtonResourceCard onClick={() => navigate(`${item.id}`)}>
+        <ButtonResourceCard
+            onClick={() => {
+                console.log('running');
+                // dispatch(fetchResourceBySubjectId(item.id));
+                navigate(`${item.id}`);
+            }}
+        >
             <CardWrapper>
                 <BackgroundCard url={`${ResourceImage}`}>
                     <TitleResource>kỳ Học: {item.semester}</TitleResource>

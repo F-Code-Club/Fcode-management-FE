@@ -7,9 +7,13 @@ import { ContainerEditor, FirstLayer } from '../styles';
 import { ConfirmAction } from './PopupConfirmResource';
 import { UploadImage } from './UploadImg';
 
+import LocalStorageUtils from '@/utils/localStorageUtils';
+import productApi from '@/utils/productApi';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const CreateResource = (props) => {
+    const token = LocalStorageUtils.getToken();
+    console.log(token);
     const action = props.action;
     const [newResource, setNewResource] = useState({
         title: props.type === 'edit' ? props.title : '',
@@ -75,9 +79,18 @@ export const CreateResource = (props) => {
                 status: false,
             },
         });
-        if (status) {
-            const { description } = newResource;
-            await action(true, { ...newResource, description: description });
+        const result = await productApi.createSubject(
+            {
+                name: newResource.description,
+                semester: newResource.title,
+            },
+            token
+        );
+
+        if (status && result.data.code === 200) {
+            await action(true);
+        } else if (status && result.data.code === 400) {
+            await action(false);
         }
     };
 

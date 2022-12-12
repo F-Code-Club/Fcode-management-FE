@@ -1,14 +1,14 @@
 // import * as Styled from '../Blog/Blog.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { CreateResource } from './components/CreateResource';
 import HeaderResource from './components/HeaderResource';
 import ListResource from './components/ListResource';
 import { ConfirmAction } from './components/PopupConfirmResource';
-import { actions } from './slice';
-import { selectResources } from './slice/selectors';
+import { actions, fetchAllSubject } from './slice';
+// import { selectResources } from './slice/selectors';
 import { Wrapper, Container } from './styles';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
@@ -35,23 +35,11 @@ const ResourcesSection = () => {
         },
     });
     const dispatch = useDispatch();
-    const listResources = useSelector(selectResources);
+    // const listResources = useSelector(selectResources);
 
-    const handleCreate = async (status, newAnnouncement) => {
+    const handleCreate = async (status) => {
         const typeWork = modalOpen.popupEditor.type;
         if (status) {
-            let addId = 1;
-            if (typeWork === 'create') {
-                if (listResources.length > 0)
-                    listResources.map(
-                        (resource) => resource.id == addId && (addId = resource.id + 1)
-                    );
-            } else {
-                addId = modalOpen.popupEditor.id;
-                await dispatch(actions.deleteResource(modalOpen.popupEditor.id));
-            }
-
-            await dispatch(actions.addResource({ ...newAnnouncement, id: addId }));
             toastSuccess(
                 `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
@@ -119,7 +107,9 @@ const ResourcesSection = () => {
                 break;
         }
     };
-
+    useEffect(() => {
+        dispatch(fetchAllSubject());
+    }, []);
     return (
         <>
             <Container>

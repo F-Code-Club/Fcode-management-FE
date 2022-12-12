@@ -8,22 +8,22 @@ export const initialState = {
     isLoading: false,
     isError: false,
     listResourceChild: [
-        {
-            title: 'sources 1',
-            description:
-                ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet facilisis',
-            id: 1,
-            imgs: ['https://th.bing.com/th/id/OIP.RljlkJZn2KZ32GryAnAP8AHaD4?pid=ImgDet&rs=1'],
-            link: 'http://github.com/123456',
-        },
-        {
-            title: 'sources 2',
-            description:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet facilisis',
-            id: 2,
-            imgs: ['https://th.bing.com/th/id/OIP.RljlkJZn2KZ32GryAnAP8AHaD4?pid=ImgDet&rs=1'],
-            link: 'http://github.com/123456',
-        },
+        // {
+        //     title: 'sources 1',
+        //     description:
+        //         ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet facilisis',
+        //     id: 1,
+        //     imgs: ['https://th.bing.com/th/id/OIP.RljlkJZn2KZ32GryAnAP8AHaD4?pid=ImgDet&rs=1'],
+        //     link: 'http://github.com/123456',
+        // },
+        // {
+        //     title: 'sources 2',
+        //     description:
+        //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet facilisis',
+        //     id: 2,
+        //     imgs: ['https://th.bing.com/th/id/OIP.RljlkJZn2KZ32GryAnAP8AHaD4?pid=ImgDet&rs=1'],
+        //     link: 'http://github.com/123456',
+        // },
     ],
 };
 export const RESOURCE_SUBJECT_URL = API_URL + '/resource/subject';
@@ -32,6 +32,7 @@ export const name = 'resourceChildren';
 export const fetchResourceBySubjectId = createAsyncThunk(
     'resourceChildren/fetchResourceBySubjectId',
     async (id) => {
+        console.log(id);
         const response = await axios.get(`${RESOURCE_SUBJECT_URL}/${id}`);
         return response.data.data;
     }

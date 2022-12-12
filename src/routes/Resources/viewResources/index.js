@@ -8,35 +8,22 @@ import { selectResources, selectIsLoading } from '../slice/selectors';
 import { CreateResourceChild } from './components/CreateResourceChild';
 import TabsCard from './components/Tabs_card';
 import ViewResourceHeader from './components/ViewResourceHeader';
-import { actions, fetchResourceBySubjectId } from './slice';
+import { actions } from './slice';
 import { selectResourceChild } from './slice/selector';
 import { ViewResourceContainer, WrapperViewResource } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import productApi from '@/utils/productApi';
 
 const ViewResource = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [state, setState] = useState();
+    const [resourceChild, setResourceChild] = useState();
     const listResources = useSelector(selectResources);
     const listResourceChildren = useSelector(selectResourceChild);
     const newResource = listResources[0];
-
-    useEffect(() => {
-        let item = null;
-        for (let i = 0; i < newResource.length; i++) {
-            if (newResource[i].id == id) {
-                item = newResource[i];
-                break;
-            }
-        }
-        if (item != null) {
-            setState(item);
-        } else {
-            navigate('/manage-resources');
-        }
-        dispatch(fetchResourceBySubjectId(id));
-    }, [id]);
+    let tmpNewResource;
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {
             status: false,
@@ -142,15 +129,39 @@ const ViewResource = () => {
                 break;
         }
     };
+    const fetchResourceBySubjectId = async () => {
+        const result = await productApi.getResourceBySubjectId(id);
+        if (result.data.code === 400) await setResourceChild(result.data.message);
+        await setResourceChild(result.data.data);
+    };
+    if (newResource === null || newResource === undefined) tmpNewResource = [];
+    tmpNewResource = newResource;
+    useEffect(() => {
+        let item = null;
+        for (let i = 0; i < tmpNewResource.length; i++) {
+            if (newResource[i].id == id) {
+                item = newResource[i];
+                break;
+            }
+        }
+        if (item != null) {
+            setState(item);
+        } else {
+            navigate('/manage-resources');
+        }
+        fetchResourceBySubjectId();
+        // dispatch(fetchResourceBySubjectId(id));
+    }, [id]);
     const IsLoading = useSelector(selectIsLoading);
     if (IsLoading) {
         return <div>...Loading</div>;
     }
+    console.log('line 157: ', resourceChild);
     return (
         <ViewResourceContainer>
             {state && (
                 <WrapperViewResource>
-                    <TabsCard />
+                    <TabsCard resourceChild={resourceChild} />
                     <ViewResourceHeader
                         title={state.semester}
                         DescriptionMore={state.name}

@@ -65,6 +65,7 @@ const BlogForm = () => {
                 ...blog,
                 ...values,
                 content: JSON.stringify(convertToRaw(blog.content.getCurrentContent())),
+                id: parseInt(blogID),
             };
             delete newBlog.genreId;
             delete newBlog.memberId;

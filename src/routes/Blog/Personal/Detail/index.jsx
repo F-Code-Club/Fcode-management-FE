@@ -7,16 +7,45 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { selectCurrentBlog } from '../../slice/selector';
 import { Wrapper, ContentBlog, InfoList, InfoItem } from './PersonalDetail.styled';
 
+import { toastSuccess } from '@/components/ToastNotification';
+import articleApi from '@/utils/apiComponents/articleApi';
+
 const PersonalDetailBlog = () => {
     const navigate = useNavigate();
 
-    const blog = useSelector(selectCurrentBlog);
+    const blog = useSelector(selectCurrentBlog).currentBlog;
     const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(blog.content)));
 
     const params = useParams();
-    const mode = params.id ? 'view' : 'preview';
-    const handleClick = () => {
-        if (mode === 'view') navigate(`/personal-blog/edit/${params.id}`);
+    const blogID = params.id;
+    const handleSubmit = async () => {
+        if (blogID) {
+            const newBlog = {
+                ...blog,
+                location: 'Vietnam',
+                createdTime: '2022-12-11',
+                updatedTime: '2022-12-20',
+                id: parseInt(blogID),
+            };
+            delete newBlog.category;
+            const { data } = await articleApi.updateArticle(newBlog);
+            if (data.code === 200) {
+                toastSuccess(data.message);
+                navigate('/personal-blog');
+            }
+        } else {
+            const newBlog = {
+                ...blog,
+                memberId: 1212,
+                genreId: 1,
+                location: 'Facebook',
+            };
+            const { data } = await articleApi.createArticle(newBlog);
+            if (data.code === 200) {
+                toastSuccess(data.message);
+                navigate('/personal-blog');
+            }
+        }
     };
 
     return (
@@ -27,8 +56,8 @@ const PersonalDetailBlog = () => {
                 <Editor editorState={editorState} toolbarHidden={true} readOnly="false" />
                 <Row justify="center">
                     <Space>
-                        <Button type="primary" htmlType="submit" onClick={handleClick}>
-                            {mode === 'view' ? 'Chỉnh sửa' : 'Hoàn thành'}
+                        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+                            {blogID ? 'Chỉnh sửa' : 'Hoàn thành'}
                         </Button>
                         <Button onClick={() => navigate(-1)}>Quay lại</Button>
                     </Space>

@@ -3,6 +3,7 @@ import localStorageUtils from '../localStorageUtils';
 import { toastError } from '@/components/ToastNotification';
 import { get, post, put, remove } from '@/utils/ApiCaller';
 
+// todo delete token from config when deploy
 let token = localStorageUtils.getToken();
 // Create a components api for your calling here
 // Make an object with the method you want, passing params then create endpoint and return the method you call as the example below
@@ -26,7 +27,6 @@ const articleApi = {
             })
             .catch((err) => {
                 toastError(err.message);
-                console.error(err);
             });
     },
     getArticleById: async (id) => {
@@ -70,7 +70,6 @@ const articleApi = {
         return await remove(endpoint, {}, {}, { authorization: token })
             .then((res) => {
                 if (res.data.code !== 200) toastError(res.data.message);
-                console.log(res);
                 return res;
             })
             .catch((err) => toastError(err.message));

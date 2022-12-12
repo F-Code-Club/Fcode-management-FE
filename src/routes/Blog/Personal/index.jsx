@@ -19,9 +19,8 @@ const PersonalBlog = () => {
     const dispatch = useDispatch();
 
     const deleteBlog = async (id) => {
-        const res = await articleApi.deleteArticle(id);
+        await articleApi.deleteArticle(id);
         navigate(0);
-        console.log(res);
     };
 
     const handleChangeBlog = (id) => {

@@ -1,40 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Table, Tabs, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { columns, columns2, columns3 } from './Blog.data';
 import * as Styled from './Blog.styled';
+import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
+import { selectCurrentBlog } from './slice/selector';
 
-import Button from '@/components/Button';
 import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Search } = Input;
 
 const Blog = () => {
     // Using redux to store data when received
-    const [blogs, setBlogs] = useState({
-        active: [],
-        inactive: [],
-        processing: [],
-    });
-
+    const blogs = useSelector(selectCurrentBlog);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
-        (async () => {
+        const fetchData = async () => {
             const activeBlogs = await articleApi.getActiveArticle();
             const inactiveBlogs = await articleApi.getInactiveArticle();
             const processingBlogs = await articleApi.getProcessingArticle();
 
-            console.log(inactiveBlogs);
-
-            setBlogs({
-                ...blogs,
-                active: [...activeBlogs.data.data],
-                inactive: [...inactiveBlogs.data.data],
-                processing: [...processingBlogs.data.data],
-            });
-        })();
-    }, []);
+            dispatch(changeActiveBlogs(activeBlogs.data.data));
+            dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
+            dispatch(changeProcessingBlogs(processingBlogs.data.data));
+        };
+        fetchData();
+    }, [navigate]);
 
     return (
         <Styled.Background>
@@ -52,15 +47,10 @@ const Blog = () => {
                 </Tabs>
                 <Styled.Search>
                     <Search placeholder="Nhập tên bài viết cần tìm" enterButton />
-                    <Button>
-                        <Link to="/blog/create">Tạo bài viết</Link>
-                    </Button>
                 </Styled.Search>
             </Styled.Wrapper>
         </Styled.Background>
     );
 };
-
-Blog.propTypes = {};
 
 export default Blog;

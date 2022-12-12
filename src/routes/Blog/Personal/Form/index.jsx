@@ -20,7 +20,7 @@ const BlogForm = () => {
 
     // Get blog in redux
     const dispatch = useDispatch();
-    const [blog, setBlog] = useState(useSelector(selectCurrentBlog));
+    const [blog, setBlog] = useState(useSelector(selectCurrentBlog).currentBlog);
     if (typeof blog.content === 'string') {
         setBlog({
             ...blog,
@@ -32,14 +32,12 @@ const BlogForm = () => {
     const params = useParams();
     const blogID = params.id;
 
-    // Call API to get blog
+    // This fileds to set initial value for form
     const [fields, setFields] = useState([]);
 
     useEffect(() => {
         (async () => {
-            let newArray = [];
             let newBlog;
-
             if (blog.content) {
                 newBlog = blog;
             } else if (blogID) {
@@ -47,6 +45,7 @@ const BlogForm = () => {
                 newBlog = res.data.data;
             }
 
+            let newArray = [];
             Object.keys(newBlog).forEach((item) => {
                 newArray.push({ name: [item], value: newBlog[item] });
             });
@@ -69,9 +68,7 @@ const BlogForm = () => {
             };
             delete newBlog.genreId;
             delete newBlog.memberId;
-            console.log(newBlog);
             res = await articleApi.updateArticle(newBlog);
-            console.log(res);
             if (res.data.code === 200) {
                 toastSuccess(res.data.message);
                 navigate('/personal-blog');
@@ -94,7 +91,6 @@ const BlogForm = () => {
     };
 
     const handlePreview = () => {
-        console.log(fields);
         let newBlog = {};
         fields.forEach((item) => {
             newBlog[item.name] = item.value;
@@ -106,17 +102,112 @@ const BlogForm = () => {
                 imageUrl: blog.imageUrl,
             })
         );
-        navigate('/personal-blog/preview');
+        if (blogID) navigate(`/personal-blog/preview/${blogID}`);
+        else navigate('/personal-blog/preview/');
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
+    const FORM_LIST = [
+        {
+            label: 'Tựa đề bài viết',
+            name: 'title',
+            rules: [
+                {
+                    required: true,
+                    message: 'Hãy vui lòng nhập tựa đề của bài viết',
+                },
+            ],
+            children: <Input />,
+        },
+        {
+            label: 'Đoạn giới thiệu sơ lược',
+            name: 'description',
+            rules: [
+                {
+                    required: true,
+                    message: 'Hãy vui lòng nhập đoạn giới thiệu sơ lược của bài viết',
+                },
+            ],
+            children: <Input />,
+        },
+        {
+            label: 'Thể loại',
+            name: 'category',
+            rules: [
+                {
+                    required: true,
+                    message: 'Hãy vui lòng nhập thể loại của bài viết',
+                },
+            ],
+            tooltip: 'Các tag phân cách với nhau bằng dấu “,”',
+            children: <Input />,
+        },
+        {
+            label: 'Nội dung bài viết',
+            name: 'content',
+            children: (
+                <Editor
+                    editorState={blog.content}
+                    onEditorStateChange={(value) => setBlog({ ...blog, content: value })}
+                />
+            ),
+        },
+        {
+            label: 'Tác giả bài viết',
+            name: 'author',
+            children: <Input placeholder="Nguyen Van A" />,
+        },
+        // {
+        //     children: (
+        //         <Row gutter={32}>
+        //             <Col span={12}>
+        //                 <Form.Item label="Phông chữ cho tựa đề">
+        //                     <Input />
+        //                 </Form.Item>
+        //             </Col>
+        //             <Col span={12}>
+        //                 <Form.Item label="Phông chữ cho nội dung">
+        //                     <Input />
+        //                 </Form.Item>
+        //             </Col>
+        //         </Row>
+        //     ),
+        // },
+        {
+            label: 'Hình ảnh đại diện',
+            name: 'imageUrl',
+            children: (
+                <Input
+                    onChange={(e) => setBlog({ ...blog, imageUrl: e.target.value })}
+                    placeholder="https://..."
+                />
+            ),
+            extra: <Image src={blog.imageUrl} width="200px" />,
+        },
+        {
+            children: (
+                <Row justify="center">
+                    <Space>
+                        <Button type="primary" onClick={handlePreview}>
+                            Xem trước
+                        </Button>
+                        <Button type="primary" htmlType="submit">
+                            Hoàn thành
+                        </Button>
+                        <Button onClick={() => navigate(-1)}>Hủy</Button>
+                    </Space>
+                </Row>
+            ),
+        },
+    ];
+
     return (
         <>
             <Styled.Box>
-                <Styled.Title>TẠO BÀI VIẾT</Styled.Title>
+                <Styled.TitleForm>{blogID ? 'CHỈNH SỬA' : 'TẠO'} BÀI VIẾT</Styled.TitleForm>
                 <Form
                     form={form}
                     layout="vertical"
@@ -129,105 +220,19 @@ const BlogForm = () => {
                     }}
                     scrollToFirstError
                 >
-                    <Form.Item
-                        label="Tựa đề bài viết"
-                        required
-                        name="title"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Hãy vui lòng nhập tựa đề của bài viết',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Đoạn giới thiệu sơ lược"
-                        required
-                        name="description"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Hãy vui lòng nhập đoạn giới thiệu sơ lược của bài viết',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Thể loại"
-                        tooltip="Các tag phân cách với nhau bằng dấu “,”"
-                        // name="category"
-                        required
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="Nội dung bài viết" required name="content">
-                        <Editor
-                            editorState={blog.content}
-                            onEditorStateChange={(value) => setBlog({ ...blog, content: value })}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        label="Tác giả bài viết"
-                        required
-                        name="author"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Hãy vui lòng nhập tác giả của bài viết',
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Nguyen Van A" />
-                    </Form.Item>
-                    {/* <Row gutter={32}>
-                        <Col span={12}>
-                            <Form.Item label="Phông chữ cho tựa đề">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item label="Phông chữ cho nội dung">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row> */}
-                    <Form.Item
-                        label="Hình ảnh đại diện"
-                        required
-                        name="imageUrl"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Hãy vui lòng điền URL hình ảnh đại diện',
-                            },
-                        ]}
-                    >
-                        <Input
-                            onChange={(e) => setBlog({ ...blog, imageUrl: e.target.value })}
-                            placeholder="https://..."
-                        />
-                    </Form.Item>
-                    <Image src={blog.imageUrl} width="200px" />
-                    <Form.Item>
-                        <Row justify="center">
-                            <Space>
-                                <Button type="primary" onClick={handlePreview}>
-                                    Xem trước
-                                </Button>
-                                <Button type="primary" htmlType="submit">
-                                    Hoàn thành
-                                </Button>
-                                <Button>Hủy</Button>
-                            </Space>
-                        </Row>
-                    </Form.Item>
+                    {FORM_LIST.map((item, idx) => (
+                        <Form.Item
+                            label={item.label}
+                            required
+                            name={item.name}
+                            hasFeedback
+                            rules={item.rules}
+                            extra={item.extra}
+                            key={idx}
+                        >
+                            {item.children}
+                        </Form.Item>
+                    ))}
                 </Form>
             </Styled.Box>
         </>

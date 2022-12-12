@@ -6,7 +6,9 @@ export const columns = [
         title: 'Tên bài viết',
         dataIndex: 'title',
         key: 'title',
-        render: (text, record) => <Link to={`/blog/${record.id}?action=processing`}>{text}</Link>,
+        render: (text, record) => {
+            return <Link to={`/blog/${record.id}?action=processing`}>{text}</Link>;
+        },
     },
     {
         title: 'Tác giả',

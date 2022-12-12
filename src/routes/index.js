@@ -88,11 +88,17 @@ const privateRoute = [
     {
         path: '/personal-blog/edit/:id',
         component: <BlogForm />,
-        exact: true,
+        exact: false,
         restrict: true,
     },
     {
         path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
         component: <PersonalDetailBlog />,
         exact: false,
         restrict: true,

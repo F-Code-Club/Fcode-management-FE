@@ -2,18 +2,18 @@ import { useEffect } from 'react';
 
 import { Layout, PageHeader, Breadcrumb, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 // import { openNotificationWithIcon } from '../ToastDemo/style';
-import { toastSuccess } from '../ToastNotification';
+// import { toastSuccess } from '../ToastNotification';
 import StyledButton from './../Button/index';
+// import { toastSuccess } from './../ToastNotification/index';
 import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
-import testApi from '@/utils/apiComponents/testApi';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -44,6 +44,7 @@ const PageHeaderComponent = () => {
     const [modal, contextHolder] = Modal.useModal();
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
@@ -69,11 +70,16 @@ const PageHeaderComponent = () => {
             dispatch(buttonActions.changeButtons({ isShow: false }));
         }
     }, [location]);
-    const handleButton = (button) => {
+    const handleButton = (button, articleId) => {
         return modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
-                testApi.get(button.params);
-                toastSuccess(button.successContent);
+                dispatch(
+                    buttonActions[button.action]({
+                        articleId,
+                        successContent: button.successContent,
+                    })
+                );
+                navigate('/blog');
             })
         );
     };
@@ -100,7 +106,7 @@ const PageHeaderComponent = () => {
                             <StyledButton
                                 key={button.name + index}
                                 type={button.type}
-                                onClick={() => handleButton(button)}
+                                onClick={() => handleButton(button, ActionButtons.articleId)}
                             >
                                 {button.name}
                             </StyledButton>

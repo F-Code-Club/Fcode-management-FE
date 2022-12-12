@@ -14,9 +14,6 @@ import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
 
 import { actions as buttonActions } from '@/components/Button/slice/index';
-import { toastError } from '@/components/ToastNotification';
-import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from '@/routes/Blog/slice';
-import articleApi from '@/utils/apiComponents/articleApi';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -62,29 +59,6 @@ const PageHeaderComponent = () => {
             <Link to="/">Trang chủ</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
-    // get blogs when bread active
-    const fetchData = async () => {
-        // call api to get active blogs
-        await articleApi
-            .getActiveArticle()
-            .then(async (activeBlogs) => {
-                dispatch(changeActiveBlogs(activeBlogs.data.data));
-                // call api to get processing blogs
-                return await articleApi.getProcessingArticle();
-            })
-            .then(async (processingBlogs) => {
-                // call api to get inactive blogs
-                dispatch(changeProcessingBlogs(processingBlogs.data.data));
-                return await articleApi.getInactiveArticle();
-            })
-            .then(async (inactiveBlogs) => {
-                dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
-            })
-            .catch((err) => {
-                console.log(err);
-                toastError('Lỗi khi lấy dữ liệu');
-            });
-    };
     // Button state
     useEffect(() => {
         const currentAction = searchParams.get('action') || '';
@@ -95,7 +69,7 @@ const PageHeaderComponent = () => {
     const handleButton = (button, articleId) => {
         return modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
-                dispatch(
+                await dispatch(
                     buttonActions[button.action]({
                         articleId,
                         successContent: button.successContent,

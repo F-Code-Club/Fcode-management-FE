@@ -31,8 +31,7 @@ export const Container = styled.div`
     justify-content: center;
 `;
 export const MilestoneContainer = styled.div`
-    width: 665px;
-    height: 180px;
+    max-width: 700px;
     background: white;
     display: flex;
     align-items: center;
@@ -46,6 +45,7 @@ export const MilestoneContainer = styled.div`
     margin-bottom: 25px;
 `;
 export const Hero = styled.div`
+    margin-top: 12px;
     display: flex;
     align-items: center;
     h5 {
@@ -54,7 +54,7 @@ export const Hero = styled.div`
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 20px;
         line-height: 22px;
         /* identical to box height, or 157% */
 

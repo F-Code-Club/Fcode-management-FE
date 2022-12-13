@@ -15,9 +15,15 @@ export const slice = createSlice({
     name,
     initialState,
     reducers: {
+        setEvent: (state, action) => {
+            state.listOfEvents = action.payload;
+        },
         addEvent: (state, action) => {
-            let newEvent = { ...action.payload, id: state.eventId };
-            state.eventId++;
+            let newEvent = {
+                ...action.payload,
+                id: state.listOfEvents[state.listOfEvents.length - 1].id + 1,
+            };
+            console.log(newEvent);
             state.listOfEvents.push(newEvent);
         },
         editEvent: (state, action) => {
@@ -68,4 +74,4 @@ export const slice = createSlice({
 
 injectReducer(name, slice.reducer);
 
-export const { addEvent, editEvent, removeEvent } = slice.actions;
+export const { setEvent, addEvent, editEvent, removeEvent } = slice.actions;

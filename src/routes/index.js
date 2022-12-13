@@ -5,7 +5,6 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
-// import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
 

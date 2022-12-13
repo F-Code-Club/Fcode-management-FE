@@ -13,7 +13,7 @@ export const Wrapper = styled(Row)`
 `;
 
 export const ContentBlog = styled(StyledContainer)`
-    min-width: 700px;
+    width: 700px;
 
     h1 {
         font-size: 30px;

@@ -1,5 +1,4 @@
 import { Button, Image, Row, Space } from 'antd';
-import { convertFromRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,16 +7,20 @@ import { selectCurrentBlog } from '../../slice/selector';
 import { Wrapper, ContentBlog, InfoList, InfoItem } from './PersonalDetail.styled';
 
 import { toastSuccess } from '@/components/ToastNotification';
+import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 
 const PersonalDetailBlog = () => {
     const navigate = useNavigate();
 
+    // Convert HTML JSON to Editor state
     const blog = useSelector(selectCurrentBlog).currentBlog;
-    const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(blog.content)));
+    const editorState = HTMLToEditorState(blog.content);
 
+    // Get ID of blog
     const params = useParams();
     const blogID = params.id;
+
     const handleSubmit = async () => {
         if (blogID) {
             // TODO: createdTime and updatedTime will be fixed later

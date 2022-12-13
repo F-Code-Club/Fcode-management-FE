@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { Button, Form, Input, Space, Row, Image } from 'antd';
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -11,6 +10,7 @@ import { selectCurrentBlog } from '../../slice/selector';
 import * as Styled from './BlogForm.styled';
 
 import { toastSuccess } from '@/components/ToastNotification';
+import { EditorStateToHTML, HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 
 // This form for both CREATE blog and UPDATE blog
@@ -24,7 +24,7 @@ const BlogForm = () => {
     if (typeof blog.content === 'string') {
         setBlog({
             ...blog,
-            content: EditorState.createWithContent(convertFromRaw(JSON.parse(blog.content))),
+            content: HTMLToEditorState(blog.content),
         });
     }
 
@@ -53,7 +53,7 @@ const BlogForm = () => {
 
             setBlog({
                 ...newBlog,
-                content: EditorState.createWithContent(convertFromRaw(JSON.parse(newBlog.content))),
+                content: HTMLToEditorState(newBlog.content),
             });
         })();
     }, [window.location]);
@@ -64,7 +64,7 @@ const BlogForm = () => {
             const newBlog = {
                 ...blog,
                 ...values,
-                content: JSON.stringify(convertToRaw(blog.content.getCurrentContent())),
+                content: EditorStateToHTML(blog.content),
                 id: parseInt(blogID),
             };
             delete newBlog.genreId;
@@ -78,7 +78,7 @@ const BlogForm = () => {
             // TODO: Update memberID and genreID when Login page is done
             const newBlog = {
                 ...values,
-                content: JSON.stringify(convertToRaw(blog.content.getCurrentContent())),
+                content: EditorStateToHTML(blog.content),
                 genreId: 1,
                 memberId: 1212,
                 location: 'Vietnam',
@@ -100,7 +100,7 @@ const BlogForm = () => {
         dispatch(
             changeBlog({
                 ...newBlog,
-                content: JSON.stringify(convertToRaw(blog.content.getCurrentContent())),
+                content: EditorStateToHTML(blog.content),
                 imageUrl: blog.imageUrl,
             })
         );

@@ -34,7 +34,7 @@ const PersonalBlog = () => {
     };
 
     const handleChangeBlog = (id) => {
-        dispatch(changeBlog(blogs.filter((blog) => blog.id === id)[0]));
+        dispatch(changeBlog(blogs.search.filter((blog) => blog.id === id)[0]));
     };
 
     const columns = [

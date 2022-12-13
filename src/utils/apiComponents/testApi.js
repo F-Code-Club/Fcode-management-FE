@@ -3,6 +3,7 @@
 // When call an api, make sure you have await/async for the result
 const testApi = {
     get: async (params) => {
+        // eslint-disable-next-line no-console
         console.log(params);
     },
 };

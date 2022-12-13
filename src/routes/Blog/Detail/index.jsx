@@ -18,7 +18,7 @@ import { themes } from '@/theme/theme';
 
 // import articleApi from '@/utils/apiComponents/articleApi';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const BlogDetailComponent = () => {
     // Get current action (processing, active, inactive)
@@ -98,6 +98,9 @@ const BlogDetailComponent = () => {
             <Row align="top" justify="center" gutter={17} style={{ width: '100%' }}>
                 <Col span={currentAction === 'active' ? 16 : 20}>
                     <StyledContainer>
+                        <Row align="center">
+                            <Title level={2}>{articleData.title}</Title>
+                        </Row>
                         <Editor
                             editorState={editorState}
                             toolbarHidden={true}

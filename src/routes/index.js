@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import Recruitment from './MemberRecuritment';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
+// import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
 
@@ -26,27 +28,27 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
-    {
-        path: 'manage-announcement',
-        component: <ManageAnnouncement />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: 'manage-announcement/view-announcement/:id',
-        component: <ViewAnnouncement />,
-        exact: true,
-        restrict: true,
-    },
 ];
 
 const privateRoute = [
     {
         path: 'private',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },
+    {
+        path: 'recruitmembers',
+        component: <Recruitment />,
+        exact: true,
+        restrict: true,
+    },
+    // {
+    //     path: '/blog/:key',
+    //     component: <BlogDetailComponent />,
+    //     exact: false,
+    //     restrict: true,
+    // },
 ];
 
 const RouterComponent = () => {

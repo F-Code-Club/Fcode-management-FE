@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import Recuritment from './MemberRecuritment';
+import Recruitment from './MemberRecuritment';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
+// import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
-import Event from '@/routes/Event/Index';
-import Home from '@/routes/Home';
+import { Homepage } from '@/routes/Homepage';
 
 // children: [
 //     {
@@ -18,7 +18,7 @@ import Home from '@/routes/Home';
 const publicRoute = [
     {
         path: 'home',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },
@@ -28,27 +28,27 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
-    {
-        path: 'event',
-        component: <Event />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: 'recruitmembers',
-        component: <Recuritment />,
-        exact: true,
-        restrict: true,
-    },
 ];
 
 const privateRoute = [
     {
         path: 'private',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },
+    {
+        path: 'recruitmembers',
+        component: <Recruitment />,
+        exact: true,
+        restrict: true,
+    },
+    // {
+    //     path: '/blog/:key',
+    //     component: <BlogDetailComponent />,
+    //     exact: false,
+    //     restrict: true,
+    // },
 ];
 
 const RouterComponent = () => {

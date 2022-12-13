@@ -108,7 +108,7 @@ const BlogDetailComponent = () => {
                 </Col>
                 {currentAction === 'active' && (
                     <Col align="middle" span={1}>
-                        <StyledContainer padding="1.2rem 0">
+                        <StyledContainer padding="1.2rem 1rem">
                             <Row gutter={[0, 32]}>
                                 {ActionElements.map((item, index) => (
                                     <Col

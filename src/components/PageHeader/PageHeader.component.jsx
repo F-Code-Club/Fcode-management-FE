@@ -9,11 +9,11 @@ import { selectTitleHeader } from '../PageHeader/slice/selector';
 // import { openNotificationWithIcon } from '../ToastDemo/style';
 // import { toastSuccess } from '../ToastNotification';
 import StyledButton from './../Button/index';
-// import { toastSuccess } from './../ToastNotification/index';
+// import { toastSuccess, toastError } from './../ToastNotification/index';
 import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
 
-import { actions as buttonActions } from '@/components/Button/slice/index';
+import { actions as buttonSlice, handleClick } from '@/components/Button/slice/index';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -59,23 +59,28 @@ const PageHeaderComponent = () => {
             <Link to="/">Trang chủ</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
-
     // Button state
     useEffect(() => {
         const currentAction = searchParams.get('action') || '';
         if (currentAction === '') {
-            dispatch(buttonActions.changeButtons({ isShow: false }));
+            dispatch(buttonSlice.changeButtons({ isShow: false }));
         }
     }, [location]);
     const handleButton = (button, articleId) => {
-        return modal.confirm(
+        modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
+                // await dispatch(
+                //     buttonActions[approveButton]({
+                //         articleId,
+                //         successContent: button.successContent,
+                //     })
                 dispatch(
-                    buttonActions[button.action]({
+                    handleClick({
+                        action: button.action,
                         articleId,
                         successContent: button.successContent,
                     })
-                );
+                ).unwrap();
                 navigate('/blog');
             })
         );

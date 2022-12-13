@@ -2,34 +2,31 @@ import { useEffect } from 'react';
 
 import { Table, Tabs, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { columns, columns2, columns3 } from './Blog.data';
 import * as Styled from './Blog.styled';
-import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
+// import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
 import { selectCurrentBlog } from './slice/selector';
 
-import articleApi from '@/utils/apiComponents/articleApi';
+// import { toastError } from '@/components/ToastNotification';
+import { getAllBlogs } from '@/routes/Blog/slice';
+
+// import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Search } = Input;
 
 const Blog = () => {
     // Using redux to store data when received
     const blogs = useSelector(selectCurrentBlog);
+    const location = useLocation();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
-            const activeBlogs = await articleApi.getActiveArticle();
-            const inactiveBlogs = await articleApi.getInactiveArticle();
-            const processingBlogs = await articleApi.getProcessingArticle();
-
-            dispatch(changeActiveBlogs(activeBlogs.data.data));
-            dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
-            dispatch(changeProcessingBlogs(processingBlogs.data.data));
+            dispatch(getAllBlogs());
         };
         fetchData();
-    }, [navigate]);
+    }, [location]);
 
     return (
         <Styled.Background>

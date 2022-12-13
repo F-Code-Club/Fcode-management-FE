@@ -1,8 +1,8 @@
-import { toastSuccess, toastError } from './../../ToastNotification/index';
+import { handler } from './../helper/ApiHandler';
 
+import { getAllBlogs } from '@/routes/Blog/slice';
 import { injectReducer } from '@/store';
-import articleApi from '@/utils/apiComponents/articleApi';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
     // make action button to the right of header bar
@@ -16,6 +16,13 @@ export const initialState = {
 
 export const name = 'actionButtons';
 
+export const handleClick = createAsyncThunk(`${name}/blogsHandle`, async (props, thunkApi) => {
+    const { action, articleId, successContent } = props;
+    // call approveArticle with handle exception
+    await handler(action, articleId, successContent).then(() => {
+        thunkApi.dispatch(getAllBlogs());
+    });
+});
 export const slice = createSlice({
     name,
     initialState,
@@ -24,34 +31,23 @@ export const slice = createSlice({
             state.actionButtons = action.payload;
         },
         approve: (state, action) => {
-            articleApi
-                .approveArticle(action.payload)
-                .then(() => {
-                    toastSuccess(action.payload.successContent);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    toastError('Duyệt bài viết thất bại');
-                });
+            // call approveArticle with handle exception
+            handler('approveArticle', action.payload.articleId, action.payload.successContent);
         },
         delete: (state, action) => {
-            try {
-                articleApi.deleteArticle(action.payload.articleId);
-                toastSuccess(action.payload.successContent);
-            } catch (err) {
-                console.log(err);
-                toastError('Xoá bài viết thất bại');
-            }
+            // call deleteArticle with handle exception
+            handler('deleteArticle', action.payload.articleId, action.payload.successContent);
         },
         disApprove: (state, action) => {
-            articleApi.disapproveArticle(action.payload).then(() => {
-                toastSuccess(action.payload.successContent);
-            });
+            // call disapproveArticle with handle exception
+            handler('disapproveArticle', action.payload.articleId, action.payload.successContent);
         },
     },
 });
 injectReducer(name, slice.reducer);
 
 export const { actions } = slice;
-
+export const buttonActions = {
+    handleClick,
+};
 export default slice;

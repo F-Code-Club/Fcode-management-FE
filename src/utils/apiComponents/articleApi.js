@@ -34,21 +34,15 @@ const articleApi = {
     },
     approveArticle: async (id) => {
         const endpoint = `/article/approve/${id}`;
-        return await put(endpoint, {}, {}, { authorization: token }).catch((err) =>
-            console.log(err)
-        );
+        return await put(endpoint, {}, {}, { authorization: token });
     },
     disapproveArticle: async (id) => {
         const endpoint = `/article/disapprove/${id}`;
-        return await put(endpoint, {}, {}, { authorization: token }).catch((err) => {
-            throw new Error(err);
-        });
+        return await put(endpoint, {}, {}, { authorization: token });
     },
     deleteArticle: async (id) => {
         const endpoint = `/article/${id}`;
-        return await remove(endpoint, {}, {}, { authorization: token }).catch((err) =>
-            console.log(err)
-        );
+        return await remove(endpoint, {}, {}, { authorization: token });
     },
     getInactiveArticle: async () => {
         const endpoint = '/article/inactive';

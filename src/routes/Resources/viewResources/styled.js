@@ -57,6 +57,16 @@ export const WrapperTabs = styled.div`
     margin-top: 20px;
     width: 1050px;
     height: 800px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+`;
+export const WrapperStyled = styled(WrapperTabs)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    overflow-y: none;
 `;
 export const ResourceCardContainer = styled.div`
     width: 1024px;

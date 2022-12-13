@@ -3,20 +3,22 @@ import { useEffect, useState } from 'react';
 import { Button, Input } from 'antd';
 
 import { ConfirmAction } from '../../components/PopupConfirmResource';
-import { UploadImage } from '../../components/UploadImg';
 // import { Editor } from 'react-draft-wysiwyg';
 import { ContainerEditor, FirstLayer } from '../../styles';
 
+import productApi from '@/utils/apiComponents/productApi';
+import LocalStorageUtils from '@/utils/localStorageUtils';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const CreateResourceChild = (props) => {
     const action = props.action;
-
+    const id = props.subject;
+    const fetchResourceBySubjectId = props.fetchResourceBySubjectId;
+    const token = LocalStorageUtils.getToken();
     const [newResourceChild, setNewResourceChild] = useState({
         title: props.type === 'edit' ? props.title : '',
         description: props.type === 'edit' ? props.description : '',
-        link: props.type === 'edit' ? props.link : '',
-        imgs: props.type === 'edit' ? props.imgs : [],
+        link: props.type === 'edit' ? props.url : '',
     });
     const [errorMsg, setErrorMsg] = useState({
         title: false,
@@ -84,15 +86,55 @@ export const CreateResourceChild = (props) => {
         if (status) await action(false, null);
     };
     const handleSaveProcess = async (status) => {
+        const typeOfWork = props.type;
+
         await setProcessState({
             ...processState,
             save: {
                 status: false,
             },
         });
-        if (status) {
-            const { description } = newResourceChild;
-            await action(true, { ...newResourceChild, description: description });
+        if (typeOfWork === 'create') {
+            const result = await productApi.createResource(
+                {
+                    contributor: newResourceChild.title,
+                    description: newResourceChild.description,
+                    subjectId: id,
+                    url: newResourceChild.link,
+                },
+                token
+            );
+            console.log(result);
+            if (status && result.data.code === 200) {
+                // await productApi.getResourceBySubjectId(id);
+                await fetchResourceBySubjectId();
+
+                await action(true);
+            } else if (status && result.data.code === 400) {
+                await action(false, result.data.message);
+            }
+        } else if (typeOfWork === 'edit') {
+            console.log(newResourceChild.title);
+            console.log(newResourceChild.description);
+            console.log(newResourceChild.link);
+            const result = await productApi.updateResource(
+                {
+                    contributor: newResourceChild.title,
+                    description: newResourceChild.description,
+                    subjectId: id,
+                    url: newResourceChild.link,
+                },
+                token
+            );
+            console.log(result);
+            if (status && result.data.code === 200) {
+                // await productApi.getResourceBySubjectId(id);
+                await fetchResourceBySubjectId();
+
+                await action(true);
+            } else if (status && result.data.code === 400) {
+                await action(false, result.data.message);
+            }
         }
     };
 
@@ -111,7 +153,7 @@ export const CreateResourceChild = (props) => {
             <div className="editor">
                 <h3>
                     <span style={{ color: 'red' }}>* </span>
-                    Tên tài nguyên
+                    Người đóng góp
                 </h3>
                 <Input
                     placeholder="example"
@@ -161,16 +203,7 @@ export const CreateResourceChild = (props) => {
                     />
                 </div>
                 {errorMsg.link && <p className="errorMsg">Trường này không được bỏ trống!</p>}
-                <UploadImage
-                    type={props.type}
-                    imgs={props.imgs}
-                    onChange={(e) =>
-                        setNewResourceChild({
-                            ...newResourceChild,
-                            imgs: e,
-                        })
-                    }
-                />
+
                 <div className="container-btn">
                     <Button
                         className="save-btn"

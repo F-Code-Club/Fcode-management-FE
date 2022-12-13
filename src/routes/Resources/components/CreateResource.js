@@ -13,7 +13,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const CreateResource = (props) => {
     const token = LocalStorageUtils.getToken();
-    console.log(token);
+
     const fetchAllSubject = props.fetchAllSubject;
     const action = props.action;
     const [newResource, setNewResource] = useState({

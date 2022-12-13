@@ -9,15 +9,18 @@ import {
 
 import { EditOutlined } from '@ant-design/icons';
 
-const ViewResourcesCard = ({ title, des, link }) => {
-    //img.length != 0 ? img[0] :
+const ViewResourcesCard = ({ title, des, link, handleClick, item }) => {
     return (
         <ResourceCardContainer>
             <ResourceImage url={`${NoPhoto}`} />
             <WrapperContent>
                 <TextTitle>
                     {title}
-                    <EditOutlined sx={{ marginLeft: '10px' }} twoToneColor="#45CE7C" />
+                    <EditOutlined
+                        sx={{ marginLeft: '10px' }}
+                        twoToneColor="#45CE7C"
+                        onClick={() => handleClick('edit', item)}
+                    />
                 </TextTitle>
                 <Description>{des}</Description>
                 <a href={link}>{link}</a>

@@ -9,7 +9,6 @@ import { CreateResourceChild } from './components/CreateResourceChild';
 import TabsCard from './components/Tabs_card';
 import ViewResourceHeader from './components/ViewResourceHeader';
 import { actions } from './slice';
-import { selectResourceChild } from './slice/selector';
 import { ViewResourceContainer, WrapperViewResource } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
@@ -17,21 +16,21 @@ import productApi from '@/utils/apiComponents/productApi';
 
 const ViewResource = () => {
     const { id } = useParams();
+
     // const navigate = useNavigate();
     // const [state, setState] = useState();
     const [resourceChild, setResourceChild] = useState();
     const [subject, setSubject] = useState();
-    const listResourceChildren = useSelector(selectResourceChild);
 
-    let tmpNewResource;
+    let tmpSubject;
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {
             status: false,
             type: '',
             description: '',
             title: '',
-            link: '',
-            imgs: [],
+            url: '',
+            subjectId: '',
             id: '',
         },
         popupConfirm: {
@@ -46,27 +45,18 @@ const ViewResource = () => {
     });
     const dispatch = useDispatch();
 
-    const handleCreate = async (status, newResourceChild) => {
+    const handleCreate = async (status, message) => {
         const typeWork = modalOpen.popupEditor.type;
-
+        console.log(typeWork);
         if (status) {
-            let addId = 1;
-            if (typeWork === 'create') {
-                if (listResourceChildren.length > 0)
-                    listResourceChildren.map(
-                        (resource) => resource.id == addId && (addId = resource.id + 1)
-                    );
-            } else {
-                addId = modalOpen.popupEditor.id;
-                await dispatch(actions.deleteResourceChild(modalOpen.popupEditor.id));
-            }
-            await dispatch(actions.addResourceChild({ ...newResourceChild, id: addId }));
             toastSuccess(
                 `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
         } else
             toastError(
-                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} tài nguyên không thành công`
+                `${
+                    typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'
+                } tài nguyên không thành công ${message}`
             );
         await setModalOpen({
             ...modalOpen,
@@ -97,7 +87,7 @@ const ViewResource = () => {
                         status: true,
                         type: 'create',
                         description: '',
-                        link: '',
+                        url: '',
                     },
                 });
                 break;
@@ -108,9 +98,10 @@ const ViewResource = () => {
                         status: true,
                         type: 'edit',
                         description: item.description,
-                        title: item.title,
-                        imgs: item.imgs,
+                        title: item.contributor,
+                        url: item.url,
                         id: item.id,
+                        subjectId: item.subjectId,
                     },
                 });
                 break;
@@ -129,6 +120,7 @@ const ViewResource = () => {
                 break;
         }
     };
+
     const fetchResourceBySubjectId = async () => {
         const result = await productApi.getResourceBySubjectId(id);
         if (result.data.code === 400) {
@@ -136,6 +128,7 @@ const ViewResource = () => {
             console.log(result.data.message);
         } else await setResourceChild(result.data.data);
         const response = await productApi.getSubjectById(id);
+
         if (response.data.code === 200) {
             await setSubject(response.data.data);
         }
@@ -148,19 +141,19 @@ const ViewResource = () => {
     if (IsLoading) {
         return <div>...Loading</div>;
     }
-    if (resourceChild === null || resourceChild === undefined) {
-        tmpNewResource = [{ title: 'unknown', description: 'unknown', link: 'unknown' }];
-    } else tmpNewResource = resourceChild;
 
-    console.log('line 157: ', tmpNewResource);
+    if (subject === null || subject === undefined) {
+        tmpSubject = [{ semester: 'unknown', name: 'unknown' }];
+    } else tmpSubject = subject;
+
     return (
         <ViewResourceContainer>
-            {tmpNewResource && (
+            {tmpSubject && (
                 <WrapperViewResource>
-                    <TabsCard resourceChild={tmpNewResource} />
+                    <TabsCard resourceChild={resourceChild} handleClick={handleResourceAction} />
                     <ViewResourceHeader
-                        title={subject.semester}
-                        DescriptionMore={subject.name}
+                        title={tmpSubject.semesters}
+                        DescriptionMore={tmpSubject.name}
                         handleClick={handleResourceAction}
                     />
                 </WrapperViewResource>
@@ -168,11 +161,13 @@ const ViewResource = () => {
 
             {modalOpen.popupEditor.status && (
                 <CreateResourceChild
+                    fetchResourceBySubjectId={fetchResourceBySubjectId}
+                    subject={id}
                     action={handleCreate}
                     type={modalOpen.popupEditor.type}
                     title={modalOpen.popupEditor.title}
                     description={modalOpen.popupEditor.description}
-                    imgs={modalOpen.popupEditor.imgs}
+                    url={modalOpen.popupEditor.url}
                 />
             )}
             {modalOpen.popupConfirm.status && (

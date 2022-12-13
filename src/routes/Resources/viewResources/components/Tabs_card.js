@@ -1,24 +1,28 @@
-import { WrapperTabs } from '../styled';
+import { Empty } from 'antd';
+
+import { WrapperTabs, WrapperStyled } from '../styled';
 import ViewResourcesCard from './ViewResourceCard';
 
-const TabsCard = ({ resourceChild }) => {
-    let tmpResources;
-
+const TabsCard = ({ resourceChild, handleClick }) => {
     if (resourceChild === null || resourceChild === undefined) {
-        tmpResources = [{ title: 'unknown', description: 'unknown', link: 'unknown' }];
-    } else {
-        tmpResources = resourceChild;
+        return (
+            <WrapperStyled>
+                <Empty />
+            </WrapperStyled>
+        );
+        // tmpResources = [{ contributor: 'unknown', description: 'unknown', url: 'unknown' }];
     }
-    console.log(tmpResources);
+
     return (
         <WrapperTabs>
-            {tmpResources.map((item, i) => (
+            {resourceChild.map((item, i) => (
                 <ViewResourcesCard
+                    handleClick={handleClick}
                     key={i}
+                    item={item}
                     des={item.contributor}
                     title={item.description}
                     link={item.url}
-                    img={item.imgs}
                 />
             ))}
         </WrapperTabs>

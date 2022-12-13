@@ -41,6 +41,7 @@ const ResourcesSection = () => {
 
     const handleCreate = async (status) => {
         const typeWork = modalOpen.popupEditor.type;
+
         if (status) {
             toastSuccess(
                 `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`

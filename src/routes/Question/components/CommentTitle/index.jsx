@@ -2,7 +2,7 @@ import { Typography, Row, Col } from 'antd';
 
 const { Title, Text } = Typography;
 const CommentTitle = (props) => {
-    const { title, time } = props;
+    const { title, time, content } = props;
     return (
         <div>
             <Row gutter={12} align>
@@ -17,11 +17,7 @@ const CommentTitle = (props) => {
                     </Title>
                 </Col>
             </Row>
-            <Text>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes
-                beautifully and efficiently.
-            </Text>
+            <Text>{content}</Text>
         </div>
     );
 };

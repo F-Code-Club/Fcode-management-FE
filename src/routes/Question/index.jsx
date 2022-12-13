@@ -8,6 +8,7 @@ import StyledButton from './../../components/Button/index';
 import { toastError, toastSuccess, toastWarning } from './../../components/ToastNotification/index';
 import commentApi from './../../utils/apiComponents/commentApi';
 import questionApi from './../../utils/apiComponents/questionApi';
+import { countDays } from './../../utils/convertTime';
 import CommentTitle from './components/CommentTitle';
 import IconText from './components/IconText';
 import ActionButton from './components/button/index';
@@ -32,19 +33,19 @@ const QuestionManagement = () => {
     // Custom hook
     const navigate = useNavigate();
 
-    const fetchComment = async (questionId = 5) => {
+    const fetchComment = async () => {
         await commentApi
-            .getLatest(questionId)
+            .getLatest()
             .then((res) => {
                 if (res.data.code === 200) {
-                    setLatestComments(res.data.data);
+                    const data = res.data.data.slice(0, 4);
+                    setLatestComments(data);
                     return;
                 }
                 if (res.data.code === 400) {
                     navigate('/home');
                     throw new Error('Phiên làm việc đã hết hạn, vui lòng đăng nhập lại');
                 }
-                console.log(res.data);
                 throw new Error('Đã có lỗi xảy ra, vui lòng thử lại sau');
             })
             .catch((err) => {
@@ -70,7 +71,6 @@ const QuestionManagement = () => {
                     navigate('/home');
                     throw new Error('Phiên làm việc đã hết hạn, vui lòng đăng nhập lại');
                 }
-                console.log('question error: ' + res.data);
                 throw new Error('Đã có lỗi xảy ra, vui lòng thử lại sau');
             })
             .catch((err) => {
@@ -105,6 +105,7 @@ const QuestionManagement = () => {
                         await commentApi.create(commentData).then(async (response) => {
                             if (response.data.code === 200) {
                                 toastSuccess('Trả lời thành công');
+                                fetchComment();
                                 fetchQuestions();
                                 return;
                             }
@@ -175,6 +176,14 @@ const QuestionManagement = () => {
             },
         });
     };
+    const calculateTime = (date) => {
+        console.log(date);
+        const countedDays = countDays(date.createdTime);
+        if (countedDays === 0) {
+            return 'Hôm nay';
+        }
+        return `${countedDays} ngày trước`;
+    };
     useEffect(() => {
         fetchComment();
         fetchQuestions();
@@ -220,7 +229,6 @@ const QuestionManagement = () => {
                                             title={item.title}
                                             description={item.authorEmail}
                                         />
-                                        {/* TODO: change to content when calling api */}
                                         <Text key="item.email">{item.content}</Text>
                                     </List.Item>
                                 )}
@@ -267,11 +275,11 @@ const QuestionManagement = () => {
                                             title={
                                                 <CommentTitle
                                                     title={item.authorEmail}
-                                                    time="2 day ago"
+                                                    time={calculateTime(item)}
+                                                    content={item.content}
                                                 />
                                             }
                                         />
-                                        {/* TODO: change to content when calling api */}
                                     </List.Item>
                                 </StyledContent>
                             )}

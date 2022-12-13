@@ -3,7 +3,7 @@ const publicRuntimeConfig = {
     API_URL: process.env.REACT_APP_API_URL,
     LOCAL_STORAGE_TOKEN: process.env.REACT_APP_TOKEN_NAME,
     // create fake token here
-    TOKEN: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZ2hpYW50c2UxNjExODBAZnB0LmVkdS52biIsImV4cCI6MTY3MDY4Mzc0NywiaWF0IjoxNjcwNjgxOTQ3fQ.48tDXBB5KtzNnvDT5-Fgba8Z4Gi7MbAvkIsjm7IZrwm5AtbZDdyYAUzI2dCRuupXevh6D3DMVUcxYOYQL9pycA',
+    TOKEN: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZ2hpYW50c2UxNjExODBAZnB0LmVkdS52biIsImV4cCI6MTY3MDk1Nzk0OCwiaWF0IjoxNjcwOTU2MTQ4fQ.lXEiAN3mQ0gWXrytEP6lk6-rXluNTRYPMCsLNgIQEKmvYfRTlsG7rmCy83VVt0OtJThf0iSiz7cXg0uJ_s63Og',
 };
 
 export const { NODE_ENV, API_URL, LOCAL_STORAGE_TOKEN, TOKEN } = publicRuntimeConfig;

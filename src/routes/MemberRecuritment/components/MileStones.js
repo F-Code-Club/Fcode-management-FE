@@ -4,7 +4,8 @@ import Element from './Element';
 import { Container } from './styled';
 
 function MileStones() {
-    const { listOfMilestones } = useSelector((state) => state.listOfEvents);
+    const { listOfMilestones } = useSelector((state) => state.listOfMilestones);
+    console.log(listOfMilestones);
     return (
         <Container>
             {listOfMilestones.map((element) => {

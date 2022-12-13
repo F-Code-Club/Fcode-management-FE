@@ -125,8 +125,6 @@ export const GreenButton = styled.div`
     color: white;
 `;
 export const AddContainer = styled.div`
-    width: ${px2vw(460)};
-    min-height: ${px2vw(550)};
     background: white;
     border-radius: 10px;
     display: flex;
@@ -152,7 +150,6 @@ export const CustomButton = styled(Button)`
     }
 `;
 export const DetailContainer = styled.div`
-    width: ${px2vw(340)};
     background: white;
     z-index: 100;
     position: absolute;
@@ -160,6 +157,7 @@ export const DetailContainer = styled.div`
     top: translate(50%, 100%);
     min-height: ${px2vw(270)};
     border-radius: 10px;
+    max-width: 500px;
 `;
 export const Header = styled.div`
     display: flex;
@@ -196,13 +194,15 @@ export const Action = styled.div`
 `;
 export const LeftHeader = styled.div`
     display: flex;
+    width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 4px 8px;
     h1 {
         margin-right: 8px;
         margin-bottom: 0;
         font-size: 24px;
+        max-width: 350px;
     }
     div {
         text-align: center;
@@ -215,8 +215,6 @@ export const LeftHeader = styled.div`
     }
 `;
 export const EditContainer = styled.div`
-    width: ${px2vw(460)};
-    min-height: ${px2vw(550)};
     background: white;
     border-radius: 10px;
     display: flex;
@@ -224,5 +222,14 @@ export const EditContainer = styled.div`
     align-items: center;
 `;
 export const RightHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 26px;
+`;
+export const EditButton = styled.div`
+    cursor: pointer;
+`;
+export const DeleteButton = styled.div`
+    cursor: pointer;
 `;

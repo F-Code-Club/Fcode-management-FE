@@ -10,6 +10,7 @@ import AddEventBox from './AddEventBox';
 import Detail from './Detail';
 import PopUp from './PopUp';
 
+import { themes } from '@/theme/theme.js';
 import { PlusSquareOutlined } from '@ant-design/icons';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -27,17 +28,17 @@ const MyCalendar = () => {
     let today = new Date();
     useEffect(() => {
         let array = [];
-        for (let i = 0; i < listOfEvents.length; i++) {
+        for (let event of listOfEvents) {
             const newEvent = {
-                ...listOfEvents[i],
-                start: new Date(listOfEvents[i].start),
-                end: new Date(listOfEvents[i].end),
+                ...event,
+                start: new Date(event.startTime),
+                end: new Date(event.endTime),
+                title: event.name,
             };
-            console.log(newEvent);
             array.push(newEvent);
         }
+        console.log(array);
         setEvents(array);
-        console.log(listOfEvents);
     }, [listOfEvents]);
 
     const handleSelect = () => {};
@@ -93,7 +94,7 @@ const MyCalendar = () => {
                 resource="Test ressource"
                 eventPropGetter={(event) => ({
                     style: {
-                        backgroundColor: event.isDone === true ? '#ad4ca4' : '#3174ad',
+                        backgroundColor: event.isDone === true ? themes.neutro5 : themes.submenu,
                     },
                 })}
             />

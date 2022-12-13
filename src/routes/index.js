@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import Recuritment from './MemberRecuritment';
+import Recruitment from './MemberRecuritment';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -36,7 +36,7 @@ const publicRoute = [
     },
     {
         path: 'recruitmembers',
-        component: <Recuritment />,
+        component: <Recruitment />,
         exact: true,
         restrict: true,
     },

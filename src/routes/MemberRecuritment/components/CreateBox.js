@@ -35,22 +35,22 @@ function CreateBox({ handle }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
         try {
             const event = {
                 start: startDate,
                 end: endDate,
                 title: values.eventName,
-                note: values.description,
+                description: values.description,
                 form: values.eventForm,
             };
             console.log(event);
             dispatch(addMile(event));
         } catch {
-            toastError('Something has gone Wrong,Please Try again');
+            toastError('Tạo cột mốc không  thành công!!');
         } finally {
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
+            toastSuccess('Tạo cột mốc thành công!!');
             handle();
         }
     };

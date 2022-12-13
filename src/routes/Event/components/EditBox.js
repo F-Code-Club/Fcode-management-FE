@@ -85,11 +85,11 @@ function EditBox({ event, handle, closeOtherBox }) {
                             },
                             {
                                 name: ['eventName'],
-                                value: `${event.title}`,
+                                value: `${event.name}`,
                             },
                             {
                                 name: ['eventPlace'],
-                                value: `${event.place}`,
+                                value: `${event.location}`,
                             },
                             {
                                 name: ['Picker'],
@@ -100,7 +100,7 @@ function EditBox({ event, handle, closeOtherBox }) {
                             },
                             {
                                 name: ['extraNotice'],
-                                value: `${event.note}`,
+                                value: `${event.description}`,
                             },
                         ]}
                         onFinish={onFinish}

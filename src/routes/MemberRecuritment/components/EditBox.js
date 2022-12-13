@@ -46,11 +46,11 @@ function EditBox({ handle, event }) {
                 form: values.eventForm,
                 id: event.id,
             };
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
+            toastSuccess('Sửa cột mốc thành công!!');
             console.log(newEvent);
             dispatch(editMile(newEvent));
         } catch {
-            toastError('Something has gone Wrong,Please Try again');
+            toastError('Sửa cột mốc không thành công!!');
         } finally {
             handle();
         }
@@ -60,7 +60,7 @@ function EditBox({ handle, event }) {
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
-        toastError('Không thể thêm cột mốc , vui lòng thử lại !!');
+        toastError('Không thể sửa cột mốc , vui lòng thử lại !!');
     };
     const onDateSelection = (value, dateString) => {
         console.log('hi');

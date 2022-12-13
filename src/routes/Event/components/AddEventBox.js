@@ -14,11 +14,14 @@ import {
 } from '../styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import productApi from '@/utils/productApi';
 
 const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
 function AddEventBox({ handle }) {
+    var token =
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5MjYyNDUsImlhdCI6MTY3MDkyNDQ0NX0._bgmQVY4ZxNOx4iZCXkgrZjothubmXtAN23kvpo33FSnE0mZw6xoC3BjDCvwMxW6UdYm4A_vbNNbQyq29d8lCQ';
     const [text, SetText] = useState([]);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -30,23 +33,23 @@ function AddEventBox({ handle }) {
     form.setFieldsValue({
         Picker: text.Picker,
     });
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('DD/MM/YYYY');
-        const formatttedEndDate = endDate.format('DD/MM/YYYY');
+        const formattedstartDate = startDate.format('YYYY-MM-DD');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD');
         try {
             const event = {
-                start: startDate,
-                end: endDate,
-                title: values.eventName,
+                name: values.eventName,
                 point: values.eventPoint,
-                place: values.eventPlace,
-                note: values.extraNotice,
-                startDate: formattedstartDate,
-                endDate: formatttedEndDate,
+                location: values.eventPlace,
+                description: values.extraNotice,
+                startTime: formattedstartDate,
+                endTime: formatttedEndDate,
+                status: 'ACTIVE',
             };
+            await productApi.postEvent(event, token);
             console.log(event);
             toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
             dispatch(addEvent(event));
@@ -56,6 +59,7 @@ function AddEventBox({ handle }) {
             handle();
         }
     };
+
     // eslint-disable-next-line arrow-body-style
     const disabledDate = (current) => {
         // Can not select days before today and today

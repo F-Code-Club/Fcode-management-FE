@@ -14,6 +14,7 @@ import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
 
 import { actions as buttonSlice, handleClick } from '@/components/Button/slice/index';
+import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -61,19 +62,19 @@ const PageHeaderComponent = () => {
     ].concat(extraBreadcrumbItems);
     // Button state
     useEffect(() => {
+        const url = `/${pathSnippets.slice(0, pathSnippets.length).join('/')}`;
+        dispatch(titleHeaderActions.changeTitle(breadcrumbNameMap[url] || 'Trang chủ'));
         const currentAction = searchParams.get('action') || '';
         if (currentAction === '') {
             dispatch(buttonSlice.changeButtons({ isShow: false }));
         }
     }, [location]);
+    const onBack = () => {
+        window.history.back();
+    };
     const handleButton = (button, articleId) => {
         modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
-                // await dispatch(
-                //     buttonActions[approveButton]({
-                //         articleId,
-                //         successContent: button.successContent,
-                //     })
                 dispatch(
                     handleClick({
                         action: button.action,
@@ -101,7 +102,7 @@ const PageHeaderComponent = () => {
                     className="site-page-header-responsive"
                     title={TitleHeader}
                     style={{ background: '#FFFFFF' }}
-                    onBack={() => window.history.back()}
+                    onBack={() => onBack()}
                     extra={
                         ActionButtons.isShow &&
                         ActionButtons.buttons.map((button, index) => (

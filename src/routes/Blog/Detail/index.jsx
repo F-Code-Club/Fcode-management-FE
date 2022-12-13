@@ -7,16 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams, useLocation, Navigate, useNavigate } from 'react-router-dom';
 
 import { changeBlog } from '../slice';
+// import articleApi from '@/utils/apiComponents/articleApi';
 // import { getGutter } from '@/utils/getGutter';
 import { selectCurrentBlog } from './../slice/selector';
 import { disableButton, ActionElements, processingButton, activeButton } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
+import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
-
-// import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Text, Title } = Typography;
 
@@ -40,6 +40,7 @@ const BlogDetailComponent = () => {
             if (data === undefined) {
                 return navigate('/blog');
             }
+            dispatch(titleHeaderActions.changeTitle(data.title));
             setArticleData(data);
             // todo make redux to main state for getting current data
             dispatch(changeBlog(data));

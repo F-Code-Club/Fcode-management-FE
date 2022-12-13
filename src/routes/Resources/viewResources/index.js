@@ -54,9 +54,9 @@ const ViewResource = () => {
             );
         } else
             toastError(
-                `${
-                    typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'
-                } tài nguyên không thành công ${message}`
+                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} tài nguyên không thành công ${
+                    message ? message : ''
+                }`
             );
         await setModalOpen({
             ...modalOpen,

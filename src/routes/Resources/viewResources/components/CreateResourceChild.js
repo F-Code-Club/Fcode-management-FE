@@ -86,7 +86,7 @@ export const CreateResourceChild = (props) => {
                 status: false,
             },
         });
-        if (status) await action(false, null);
+        if (status) await action(false);
     };
     const handleSaveProcess = async (status) => {
         const typeOfWork = props.type;

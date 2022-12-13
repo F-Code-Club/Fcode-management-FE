@@ -70,7 +70,7 @@ export const CreateResource = (props) => {
                 status: false,
             },
         });
-        if (status) await action(false, null);
+        if (status) await action(false);
     };
     const handleSaveProcess = async (status) => {
         const typeOfWork = props.type;
@@ -93,7 +93,7 @@ export const CreateResource = (props) => {
                 await fetchAllSubject();
                 await action(true);
             } else if (status && result.data.code === 400) {
-                await action(false);
+                await action(false, result.data.message);
             }
         } else if (typeOfWork === 'edit') {
             const result = await productApi.updateSubject(
@@ -109,7 +109,7 @@ export const CreateResource = (props) => {
                 await fetchAllSubject();
                 await action(true);
             } else if (status && result.data.code === 400) {
-                await action(false);
+                await action(false, result.data.message);
             }
         }
     };

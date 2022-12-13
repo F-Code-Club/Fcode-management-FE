@@ -38,7 +38,7 @@ const ResourcesSection = () => {
     const [data, setData] = useState();
     // const listResources = useSelector(selectResources);
 
-    const handleCreate = async (status) => {
+    const handleCreate = async (status, message) => {
         const typeWork = modalOpen.popupEditor.type;
 
         if (status) {
@@ -46,7 +46,11 @@ const ResourcesSection = () => {
                 `Môn học đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
         } else
-            toastError(`${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công`);
+            toastError(
+                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công ${
+                    message ? message : ''
+                }`
+            );
         await setModalOpen({
             ...modalOpen,
             popupEditor: {

@@ -16,17 +16,19 @@ import productApi from '@/utils/productApi';
 const AccountsManager = () => {
     const [accountList, setAccountList] = useState([]);
     const [loading, setLoading] = useState(false);
+    let token =
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5NTM0NzIsImlhdCI6MTY3MDk1MTY3Mn0.Rmeva_O4cnGtjMf1F_Zh8-71xHXp3eRLJWJK3IVz2qgzyQrLE_t7Zc60cetb_87zd2oyQFIi7_ea-oQB1iGhNw';
     const loadMoreData = async () => {
         if (loading) {
             return;
         }
         setLoading(true);
         await productApi
-            .getAllAccount()
+            .getAllAccount(token)
             .then((result) => {
                 setLoading(false);
-                setAccountList([...accountList, ...result.data]);
-                console.log(result.data);
+                console.log(result.data.data);
+                setAccountList([...accountList, ...result.data.data]);
             })
             .catch((err) => console.log(err));
     };
@@ -57,12 +59,14 @@ const AccountsManager = () => {
                                         name={action.name}
                                         event={action.event}
                                         status={action.isLinked}
+                                        id={item.id}
+                                        item={item}
                                     />
                                 ))}
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.picture.large} />}
-                                    title={item.name.last}
+                                    avatar={<Avatar src={item.avatarUrl} />}
+                                    title={item.firstName}
                                     description={item.email}
                                 />
                             </List.Item>

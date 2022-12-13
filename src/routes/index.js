@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import EditAccountByAdmin from './Accounts/EditAccount/index';
 import AccountsManager from './Accounts/index';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
@@ -46,6 +47,12 @@ const publicRoute = [
     {
         path: 'account',
         component: <AccountsManager />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'account/edit-account-by-admin/:id',
+        component: <EditAccountByAdmin />,
         exact: true,
         restrict: true,
     },

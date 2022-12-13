@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
+import Auth from './Auth';
 import BlogDetailComponent from './Blog/Detail/index';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
@@ -11,32 +12,24 @@ import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
 
-// children: [
-//     {
-//         index: true,
-//         element: <Home />,
-//     },
-// ],
 const publicRoute = [
+    { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
     {
-        path: 'home',
-        component: <Homepage />,
-        exact: true,
-        restrict: true,
-    },
-    {
+        index: false,
         path: 'account/edit-account',
         component: <EditAccount />,
         exact: true,
         restrict: true,
     },
     {
+        index: false,
         path: 'manage-announcement',
         component: <ManageAnnouncement />,
         exact: true,
         restrict: true,
     },
     {
+        index: false,
         path: 'manage-announcement/view-announcement/:id',
         component: <ViewAnnouncement />,
         exact: true,
@@ -45,19 +38,10 @@ const publicRoute = [
 ];
 
 const privateRoute = [
+    { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
+    { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
     {
-        path: 'private',
-        component: <Homepage />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: '/blog',
-        component: <Blog />,
-        exact: true,
-        restrict: true,
-    },
-    {
+        index: false,
         path: '/blog/:key',
         component: <BlogDetailComponent />,
         exact: false,
@@ -68,12 +52,14 @@ const privateRoute = [
 const RouterComponent = () => {
     return (
         <BrowserRouter>
-            <LayoutComponent>
-                <Routes>
-                    <Route exact path="/" element={<Navigate to="/home" />} />
-                    <Route exact path="/" element={<PrivateRoute />}>
+            <Routes>
+                <Route exact path="/" element={<Navigate to="home" />} />
+
+                <Route exact element={<PrivateRoute />}>
+                    <Route exact element={<LayoutComponent />}>
                         {privateRoute.map((route) => (
                             <Route
+                                index={route.index}
                                 key={route.path}
                                 path={route.path}
                                 element={route.component}
@@ -82,9 +68,12 @@ const RouterComponent = () => {
                             />
                         ))}
                     </Route>
-                    <Route exact path="/" element={<PublicRoute />}>
+                </Route>
+                <Route exact element={<PublicRoute />}>
+                    <Route exact element={<LayoutComponent />}>
                         {publicRoute.map((route) => (
                             <Route
+                                index={route.index}
                                 key={route.path}
                                 path={route.path}
                                 element={route.component}
@@ -93,9 +82,11 @@ const RouterComponent = () => {
                             />
                         ))}
                     </Route>
-                    <Route path="*" element={<p>404</p>} />
-                </Routes>
-            </LayoutComponent>
+                </Route>
+                <Route path="/auth" element={<Auth />} />
+
+                <Route path="*" element={<p>404</p>} />
+            </Routes>
         </BrowserRouter>
     );
 };

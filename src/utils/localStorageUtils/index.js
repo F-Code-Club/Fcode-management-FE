@@ -1,10 +1,10 @@
-import { decodeToken, isTokenExpired } from 'react-jwt';
+import { decodeToken, isExpired } from 'react-jwt';
 
 import { LOCAL_STORAGE_TOKEN } from '@/config';
 
 class LocalStorageUtils {
     getItem(key, defaultValue = '') {
-        if (typeof localStorage === undefined) {
+        if (typeof localStorage === 'undefined') {
             return undefined;
         }
         let item = localStorage.getItem(key);
@@ -14,22 +14,22 @@ class LocalStorageUtils {
         return item;
     }
     setItem(key, value = '') {
-        if (typeof localStorage !== undefined) {
+        if (typeof localStorage !== 'undefined') {
             localStorage.setItem(key, value);
         }
     }
     removeItem(key) {
-        if (typeof localStorage !== undefined) {
+        if (typeof localStorage !== 'undefined') {
             localStorage.removeItem(key);
         }
     }
     getUser() {
-        if (typeof localStorage !== undefined) {
+        if (typeof localStorage !== 'undefined') {
             const token = this.getItem(LOCAL_STORAGE_TOKEN);
             if (!token) {
                 return undefined;
             }
-            if (isTokenExpired(token)) {
+            if (isExpired(token)) {
                 this.deleteUser();
                 return undefined;
             }

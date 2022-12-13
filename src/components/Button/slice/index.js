@@ -30,18 +30,6 @@ export const slice = createSlice({
         changeButtons: (state, action) => {
             state.actionButtons = action.payload;
         },
-        approve: (state, action) => {
-            // call approveArticle with handle exception
-            handler('approveArticle', action.payload.articleId, action.payload.successContent);
-        },
-        delete: (state, action) => {
-            // call deleteArticle with handle exception
-            handler('deleteArticle', action.payload.articleId, action.payload.successContent);
-        },
-        disApprove: (state, action) => {
-            // call disapproveArticle with handle exception
-            handler('disapproveArticle', action.payload.articleId, action.payload.successContent);
-        },
     },
 });
 injectReducer(name, slice.reducer);

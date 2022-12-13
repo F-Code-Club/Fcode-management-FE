@@ -16,7 +16,6 @@ export const initialState = {
 // TODO: make a thunk to call async function
 
 export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
-    // TODO get one by one artivle
     const active = await articleApi
         .getActiveArticle()
         .then((res) => res.data.data)

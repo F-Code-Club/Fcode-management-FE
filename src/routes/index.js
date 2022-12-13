@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import Event from './Event/Index';
 import Recruitment from './MemberRecuritment';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
@@ -39,6 +40,12 @@ const privateRoute = [
     {
         path: 'recruitmembers',
         component: <Recruitment />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'event',
+        component: <Event />,
         exact: true,
         restrict: true,
     },

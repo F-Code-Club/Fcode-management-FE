@@ -12,7 +12,7 @@ function Event() {
     const [isUpdated, SetUpdated] = useState(false);
     const dispatch = useDispatch();
     let token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5MjYyNDUsImlhdCI6MTY3MDkyNDQ0NX0._bgmQVY4ZxNOx4iZCXkgrZjothubmXtAN23kvpo33FSnE0mZw6xoC3BjDCvwMxW6UdYm4A_vbNNbQyq29d8lCQ';
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5NjE5NTYsImlhdCI6MTY3MDk2MDE1Nn0.LaQ8k2jQbbyRcQ5dyQ_mmJm7Z40TApVg_O0JWhsLOA2V8n0O7A-2DcRZbjwGI9mduBwz_btxBUgpSTWVlz2M3Q';
     useEffect(() => {
         getALlEvent();
     }, []);

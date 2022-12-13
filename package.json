@@ -21,7 +21,7 @@
         "mobx-react": "^7.5.3",
         "moment": "^2.29.4",
         "react": "^18.2.0",
-        "react-big-calendar": "^1.5.0",
+        "react-big-calendar": "^1.5.2",
         "react-css-theme-switcher": "^0.3.0",
         "react-dnd": "^16.0.1",
         "react-dnd-html5-backend": "^16.0.1",

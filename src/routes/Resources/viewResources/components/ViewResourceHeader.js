@@ -1,6 +1,7 @@
 import { Title, Description, Wrap, HeaderStyled } from '../styled';
 
 const ViewResourceHeader = ({ title, DescriptionMore, handleClick }) => {
+    console.log(DescriptionMore);
     return (
         <Wrap>
             <Title> kỳ học: {title}</Title>

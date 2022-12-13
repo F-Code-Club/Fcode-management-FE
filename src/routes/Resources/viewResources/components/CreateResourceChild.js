@@ -12,7 +12,10 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const CreateResourceChild = (props) => {
     const action = props.action;
-    const id = props.subject;
+    const subjectId = props.subject;
+    const id = props.id;
+    // const resourceChild = props.resourceChild;
+
     const fetchResourceBySubjectId = props.fetchResourceBySubjectId;
     const token = LocalStorageUtils.getToken();
     const [newResourceChild, setNewResourceChild] = useState({
@@ -99,7 +102,7 @@ export const CreateResourceChild = (props) => {
                 {
                     contributor: newResourceChild.title,
                     description: newResourceChild.description,
-                    subjectId: id,
+                    subjectId: subjectId,
                     url: newResourceChild.link,
                 },
                 token
@@ -117,23 +120,25 @@ export const CreateResourceChild = (props) => {
             console.log(newResourceChild.title);
             console.log(newResourceChild.description);
             console.log(newResourceChild.link);
-            const result = await productApi.updateResource(
+            console.log(id);
+            const result2 = await productApi.updateResource(
                 {
                     contributor: newResourceChild.title,
                     description: newResourceChild.description,
-                    subjectId: id,
+                    subjectId: subjectId,
                     url: newResourceChild.link,
+                    id: id,
                 },
                 token
             );
-            console.log(result);
-            if (status && result.data.code === 200) {
+            console.log(result2);
+            if (status && result2.data.code === 200) {
                 // await productApi.getResourceBySubjectId(id);
                 await fetchResourceBySubjectId();
 
                 await action(true);
-            } else if (status && result.data.code === 400) {
-                await action(false, result.data.message);
+            } else if (status && result2.data.code === 400) {
+                await action(false, result2.data.message);
             }
         }
     };

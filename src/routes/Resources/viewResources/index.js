@@ -145,14 +145,14 @@ const ViewResource = () => {
     if (subject === null || subject === undefined) {
         tmpSubject = [{ semester: 'unknown', name: 'unknown' }];
     } else tmpSubject = subject;
-
+    console.log(tmpSubject);
     return (
         <ViewResourceContainer>
             {tmpSubject && (
                 <WrapperViewResource>
                     <TabsCard resourceChild={resourceChild} handleClick={handleResourceAction} />
                     <ViewResourceHeader
-                        title={tmpSubject.semesters}
+                        title={tmpSubject.semester}
                         DescriptionMore={tmpSubject.name}
                         handleClick={handleResourceAction}
                     />
@@ -161,6 +161,7 @@ const ViewResource = () => {
 
             {modalOpen.popupEditor.status && (
                 <CreateResourceChild
+                    resourceChild={resourceChild}
                     fetchResourceBySubjectId={fetchResourceBySubjectId}
                     subject={id}
                     action={handleCreate}
@@ -168,6 +169,7 @@ const ViewResource = () => {
                     title={modalOpen.popupEditor.title}
                     description={modalOpen.popupEditor.description}
                     url={modalOpen.popupEditor.url}
+                    id={modalOpen.popupEditor.id}
                 />
             )}
             {modalOpen.popupConfirm.status && (

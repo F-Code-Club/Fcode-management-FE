@@ -5,7 +5,6 @@ import { Button, Input } from 'antd';
 // import { Editor } from 'react-draft-wysiwyg';
 import { ContainerEditor, FirstLayer } from '../styles';
 import { ConfirmAction } from './PopupConfirmResource';
-import { UploadImage } from './UploadImg';
 
 import productApi from '@/utils/apiComponents/productApi';
 import LocalStorageUtils from '@/utils/localStorageUtils';
@@ -19,7 +18,7 @@ export const CreateResource = (props) => {
     const [newResource, setNewResource] = useState({
         title: props.type === 'edit' ? props.title : '',
         description: props.type === 'edit' ? props.description : '',
-        imgs: props.type === 'edit' ? props.imgs : [],
+        id: props.type === 'edit' ? props.id : [],
     });
     const [errorMsg, setErrorMsg] = useState({
         title: false,
@@ -74,25 +73,44 @@ export const CreateResource = (props) => {
         if (status) await action(false, null);
     };
     const handleSaveProcess = async (status) => {
+        const typeOfWork = props.type;
         await setProcessState({
             ...processState,
             save: {
                 status: false,
             },
         });
-        const result = await productApi.createSubject(
-            {
-                name: newResource.description,
-                semester: newResource.title,
-            },
-            token
-        );
+        if (typeOfWork === 'create') {
+            const result = await productApi.createSubject(
+                {
+                    name: newResource.description,
+                    semester: newResource.title,
+                },
+                token
+            );
 
-        if (status && result.data.code === 200) {
-            await fetchAllSubject();
-            await action(true);
-        } else if (status && result.data.code === 400) {
-            await action(false);
+            if (status && result.data.code === 200) {
+                await fetchAllSubject();
+                await action(true);
+            } else if (status && result.data.code === 400) {
+                await action(false);
+            }
+        } else if (typeOfWork === 'edit') {
+            const result = await productApi.updateSubject(
+                {
+                    name: newResource.description,
+                    semester: newResource.title,
+                    id: newResource.id,
+                },
+                token
+            );
+
+            if (status && result.data.code === 200) {
+                await fetchAllSubject();
+                await action(true);
+            } else if (status && result.data.code === 400) {
+                await action(false);
+            }
         }
     };
 
@@ -111,7 +129,7 @@ export const CreateResource = (props) => {
             <div className="editor">
                 <h3>
                     <span style={{ color: 'red' }}>* </span>
-                    Tên tài nguyên
+                    Tên môn học
                 </h3>
                 <Input
                     placeholder="example"
@@ -143,16 +161,7 @@ export const CreateResource = (props) => {
                 {errorMsg.description && (
                     <p className="errorMsg">Trường này không được bỏ trống!</p>
                 )}
-                <UploadImage
-                    type={props.type}
-                    imgs={props.imgs}
-                    onChange={(e) =>
-                        setNewResource({
-                            ...newResource,
-                            imgs: e,
-                        })
-                    }
-                />
+
                 <div className="container-btn">
                     <Button
                         className="save-btn"
@@ -166,7 +175,7 @@ export const CreateResource = (props) => {
                         }
                         disabled={statusButton}
                     >
-                        {props.type === 'edit' ? 'Lưu chỉnh sửa' : 'Tạo tài nguyên'}
+                        {props.type === 'edit' ? 'Lưu chỉnh sửa' : 'Tạo môn học'}
                     </Button>
                 </div>
             </div>
@@ -174,7 +183,7 @@ export const CreateResource = (props) => {
                 <ConfirmAction
                     title={`Bạn có chắc muốn hủy việc ${
                         props.type === 'edit' ? 'chỉnh sửa' : 'tạo'
-                    } tài nguyên này không?`}
+                    } môn học này không?`}
                     description=""
                     buttonValue="Đồng ý"
                     icon="delete" //op1: 'delete', op2: 'retry'
@@ -185,7 +194,7 @@ export const CreateResource = (props) => {
                 <ConfirmAction
                     title={`Bạn có chắc muốn lưu việc ${
                         props.type === 'edit' ? 'chỉnh sửa' : 'tạo'
-                    } tài nguyên này không?`}
+                    } môn học này không?`}
                     content=""
                     buttonValue="Đồng ý"
                     icon="delete" //op1: 'delete', op2: 'retry'

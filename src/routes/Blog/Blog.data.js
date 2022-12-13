@@ -54,12 +54,14 @@ export const columns = [
                     id={record.id}
                     action="approveArticle"
                     successContent="Duyệt bài viết thành công"
+                    failContent="Duyệt bài viết thất bại"
                     content="Duyệt"
                 />
                 <CustomLink
                     to="/blog"
                     id={record.id}
                     action="disapproveArticle"
+                    failContent="Từ chối viết thất bại"
                     successContent="Từ chối duyệt bài viết thành công"
                     content="Từ chối"
                 />
@@ -117,6 +119,7 @@ export const columns2 = [
                     to="/blog"
                     id={record.id}
                     action="deleteArticle"
+                    failContent="Xoá viết thất bại"
                     successContent="Xoá bài viết thành công"
                     content="Xoá"
                 />

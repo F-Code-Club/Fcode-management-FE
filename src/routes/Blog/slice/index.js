@@ -13,7 +13,6 @@ export const initialState = {
     processing: [],
     inactive: [],
 };
-// TODO: make a thunk to call async function
 
 export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
     const active = await articleApi
@@ -52,9 +51,9 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getAllBlogs.fulfilled, (state, action) => {
-            state.active = action.payload.active.sort((a, b) => (a.id > b.id ? 1 : -1));
-            state.processing = action.payload.processing.sort((a, b) => (a.id > b.id ? 1 : -1));
-            state.inactive = action.payload.inactive.sort((a, b) => (a.id > b.id ? 1 : -1));
+            state.active = action.payload.active?.sort((a, b) => (a.id > b.id ? 1 : -1));
+            state.processing = action.payload.processing?.sort((a, b) => (a.id > b.id ? 1 : -1));
+            state.inactive = action.payload.inactive?.sort((a, b) => (a.id > b.id ? 1 : -1));
         });
     },
 });

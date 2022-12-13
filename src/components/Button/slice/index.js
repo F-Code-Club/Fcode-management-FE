@@ -1,7 +1,6 @@
-import { handler } from './../helper/ApiHandler';
-
 import { getAllBlogs } from '@/routes/Blog/slice';
 import { injectReducer } from '@/store';
+import { handler } from '@/utils/apiComponents/ApiHandler';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {

@@ -1,9 +1,9 @@
-import { toastSuccess, toastError } from './../../ToastNotification/index';
+import { toastSuccess, toastError } from '../../components/ToastNotification/index';
 
 import articleApi from '@/utils/apiComponents/articleApi';
 
 export const handler = async (action, ...data) => {
-    const [id, successContent] = data;
+    const [id, successContent, failContent] = data;
     return await articleApi[action](id)
         .then((res) => {
             if (res.data.code === 200) {
@@ -17,8 +17,9 @@ export const handler = async (action, ...data) => {
             throw new Error(res.data.message);
         })
         .catch((err) => {
+            // eslint-disable-next-line no-console
             console.log(err);
-            toastError('Xoá bài viết thất bại');
+            toastError(failContent);
             return null;
         });
 };

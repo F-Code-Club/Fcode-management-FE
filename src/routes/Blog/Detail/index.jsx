@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import { Row, Col, Typography } from 'antd';
-import { EditorState, convertFromRaw } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams, useLocation, Navigate, useNavigate } from 'react-router-dom';
@@ -15,6 +16,7 @@ import { disableButton, ActionElements, processingButton, activeButton } from '.
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
 import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
+import { toastError } from '@/components/ToastNotification';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 
@@ -42,11 +44,18 @@ const BlogDetailComponent = () => {
             }
             dispatch(titleHeaderActions.changeTitle(data.title));
             setArticleData(data);
-            // todo make redux to main state for getting current data
             dispatch(changeBlog(data));
-            setEditorState(
-                EditorState.createWithContent(convertFromRaw(JSON.parse(data.content || '')))
-            );
+            try {
+                const content = htmlToDraft(JSON.parse(data.content));
+                setEditorState(
+                    EditorState.createWithContent(
+                        ContentState.createFromBlockArray(content.contentBlocks)
+                    )
+                );
+            } catch (e) {
+                console.log(e);
+                toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
+            }
         };
         getArticle();
     }, []);

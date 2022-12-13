@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { Table, Input, Space } from 'antd';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { changeBlog } from '../slice';
-// import { columns } from './PersonalBlog.columns';
 import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
@@ -14,25 +13,25 @@ import articleApi from '@/utils/apiComponents/articleApi';
 const { Search } = Input;
 
 const PersonalBlog = () => {
-    const navigate = useNavigate();
     const [blogs, setBlogs] = useState({
         all: [],
         search: [],
+        isDelete: false,
     });
-    const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
             const { data } = await articleApi.getArticleByAuthor();
-            setBlogs({ all: data.data, search: data.data });
+            setBlogs({ ...blogs, all: data.data, search: data.data });
         })();
-    }, []);
+    }, [blogs.isDelete]); // If a blog is deleted, it will re-render to get all blogs
 
     const deleteBlog = async (id) => {
         await articleApi.deleteArticle(id);
-        navigate(0);
+        setBlogs({ ...blogs, isDelete: !blogs.isDelete });
     };
 
+    const dispatch = useDispatch();
     const handleChangeBlog = (id) => {
         dispatch(changeBlog(blogs.search.filter((blog) => blog.id === id)[0]));
     };

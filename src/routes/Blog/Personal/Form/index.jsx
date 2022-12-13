@@ -102,6 +102,7 @@ const BlogForm = () => {
                 ...newBlog,
                 content: EditorStateToHTML(blog.content),
                 imageUrl: blog.imageUrl,
+                isEdit: true,
             })
         );
         if (blogID) navigate(`/personal-blog/preview/${blogID}`);

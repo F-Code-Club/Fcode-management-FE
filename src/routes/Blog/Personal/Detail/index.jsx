@@ -15,6 +15,7 @@ const PersonalDetailBlog = () => {
 
     // Convert HTML JSON to Editor state
     const blog = useSelector(selectCurrentBlog).currentBlog;
+    console.log(blog.isEdit);
     const editorState = HTMLToEditorState(blog.content);
 
     // Get ID of blog
@@ -22,7 +23,9 @@ const PersonalDetailBlog = () => {
     const blogID = params.id;
 
     const handleSubmit = async () => {
-        if (blogID) {
+        if (!blog.isEdit) {
+            navigate(`/personal-blog/edit/${blogID}`);
+        } else if (blogID) {
             // TODO: createdTime and updatedTime will be fixed later
             const newBlog = {
                 ...blog,

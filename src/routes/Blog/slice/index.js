@@ -62,7 +62,6 @@ const slice = createSlice({
 
 injectReducer(name, slice.reducer);
 
-export const { changeBlog, changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } =
-    slice.actions;
+export const { changeBlog } = slice.actions;
 
 export default slice;

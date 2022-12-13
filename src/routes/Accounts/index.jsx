@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import { List, Avatar, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import accountApi from './../../utils/apiComponents/accountApi';
 // import { themes, actions } from '@/theme/theme';
 import ListAction from './ListAction/index';
 import ListHeader from './ListHeader';
 import { actions } from './account.data';
 // import DUMMY_ACCOUNTS from './account.data';
 import { ListWrapper, Wrapper } from './style';
+
+import productApi from '@/utils/productApi';
 
 // account management with ant design table
 const AccountsManager = () => {
@@ -20,11 +21,11 @@ const AccountsManager = () => {
             return;
         }
         setLoading(true);
-        await accountApi
-            .random()
+        await productApi
+            .getAllAccount()
             .then((result) => {
                 setLoading(false);
-                setAccountList([...accountList, ...result.data.results]);
+                setAccountList([...accountList, ...result.data]);
                 console.log(result.data);
             })
             .catch((err) => console.log(err));
@@ -55,6 +56,7 @@ const AccountsManager = () => {
                                         type={action.type}
                                         name={action.name}
                                         event={action.event}
+                                        status={action.isLinked}
                                     />
                                 ))}
                             >

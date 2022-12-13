@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-    max-width: 800px;
+    max-width: 750px;
     height: 820px;
     background: #ffffff;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),

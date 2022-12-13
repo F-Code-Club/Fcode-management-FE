@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { Avatar, List } from 'antd';
-import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import { ContentState, Editor, EditorState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../assets/logo/F-Code logo.png';
@@ -9,10 +10,6 @@ import { get } from '../../utils/ApiCaller';
 import { Col1, Col2, ContainerHomepage } from './style';
 
 export const Homepage = () => {
-    localStorage.setItem(
-        'token',
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiaW5oZHRzZTE2MTA5M0BmcHQuZWR1LnZuIiwiZXhwIjoxNjcwNjAzMTU0LCJpYXQiOjE2NzA2MDEzNTR9.46cSbOj-pvrCmlV9a0rY7Y06i7Yalhv4oV0efDGvQUILdM56c4QHZn6UsWmPDKeW2NNAxo8An8yTdfg3LkuKPA'
-    );
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const [dataEvent, setDataEvent] = useState();
@@ -89,7 +86,10 @@ export const Homepage = () => {
                                         />
                                         <Editor
                                             editorState={EditorState.createWithContent(
-                                                convertFromRaw(JSON.parse(item.content))
+                                                ContentState.createFromBlockArray(
+                                                    htmlToDraft(JSON.parse(item.content))
+                                                        .contentBlocks
+                                                )
                                             )}
                                             toolbarHidden={true}
                                             readOnly="true"

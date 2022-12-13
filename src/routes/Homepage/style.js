@@ -18,6 +18,14 @@ export const ContainerHomepage = styled.div`
             0px 1px 3px rgba(0, 0, 0, 0.2);
         margin-bottom: 10px;
     }
+    .public-DraftEditor-content > div {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
 `;
 
 export const Col1 = styled.div`

@@ -1,16 +1,30 @@
+import { useEffect, useState } from 'react';
+
 import { Avatar, Button, Carousel, Image, List } from 'antd';
-import { convertFromRaw, Editor, EditorState } from 'draft-js';
+import { ContentState, Editor, EditorState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { useNavigate } from 'react-router-dom';
 
 import NoPhoto from '../../../../assets/no-photo.jpg';
 import { DataSlick } from '../Slick/slick';
 
+import { get } from '@/utils/ApiCaller';
+
 export const RenderList = (props) => {
+    const token = localStorage.getItem('token');
     const item = props.item;
     const handleClick = props.handleClick;
     const navigate = useNavigate();
+    const [dataAvatar, setDataAvatar] = useState();
 
-    const ImageAnnouncement = (DataImg) => {
+    useEffect(() => {
+        get('/member/all', '', { authorization: token })
+            .then((res) => setDataAvatar(res.data.data))
+            .catch((error) => console.log(error));
+    }, []);
+
+    const ImageAnnouncement = (data) => {
+        const DataImg = data ? data.split(';') : [];
         switch (DataImg.length) {
             case 0:
                 return (
@@ -41,16 +55,39 @@ export const RenderList = (props) => {
         }
     };
 
+    const getAvatar = (id) => {
+        let url;
+        for (let i = 0; dataAvatar && i < dataAvatar.length; i++) {
+            if (dataAvatar[i].id === id) {
+                url = dataAvatar[i].avatarUrl;
+                break;
+            }
+        }
+        return url;
+    };
+    const getAuthor = (id) => {
+        let name;
+        for (let i = 0; dataAvatar && i < dataAvatar.length; i++) {
+            if (dataAvatar[i].id === id) {
+                name = `${dataAvatar[i].lastName.trim()} ${dataAvatar[i].firstName.trim()}`;
+                break;
+            }
+        }
+        return name;
+    };
+
     return (
-        <List.Item key={item.id} extra={ImageAnnouncement(item.imgs)}>
+        <List.Item key={item.id} extra={ImageAnnouncement(item.imageUrl)}>
             <List.Item.Meta
-                avatar={<Avatar size="large" src={item.avatarAdmin} />}
+                avatar={<Avatar size="large" src={getAvatar(item.memberId)} />}
                 title={<h4 style={{ marginBottom: 0 }}>{item.title}</h4>}
-                description={item.nameAdmin}
+                description={getAuthor(item.memberId)}
             />
             <Editor
                 editorState={EditorState.createWithContent(
-                    convertFromRaw(JSON.parse(item.content))
+                    ContentState.createFromBlockArray(
+                        htmlToDraft(JSON.parse(item.description)).contentBlocks
+                    )
                 )}
                 wrapperClassName="demo-wrapper"
                 editorClassName="demo-editor"

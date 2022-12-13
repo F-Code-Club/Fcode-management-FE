@@ -15,8 +15,18 @@ const { Search } = Input;
 
 const PersonalBlog = () => {
     const navigate = useNavigate();
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState({
+        all: [],
+        search: [],
+    });
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await articleApi.getArticleByAuthor();
+            setBlogs({ all: data.data, search: data.data });
+        })();
+    }, []);
 
     const deleteBlog = async (id) => {
         await articleApi.deleteArticle(id);
@@ -92,23 +102,32 @@ const PersonalBlog = () => {
         },
     ];
 
-    useEffect(() => {
-        (async () => {
-            const { data } = await articleApi.getArticleByAuthor();
-            setBlogs(data.data);
-        })();
-    }, []);
+    const handleSearch = (value) => {
+        if (!value.trim()) {
+            setBlogs({ ...blogs, search: blogs.all });
+        } else {
+            const filteredBlogs = blogs.all.filter((blog) =>
+                blog.title.toLowerCase().includes(value.toLowerCase().trim())
+            );
+            setBlogs({ ...blogs, search: filteredBlogs });
+        }
+    };
 
     return (
         <Styled.Background>
             <Styled.Wrapper>
                 <Styled.Search>
-                    <Search placeholder="Nhập tên bài viết cần tìm" enterButton />
+                    <Search
+                        placeholder="Nhập tên bài viết cần tìm"
+                        onSearch={handleSearch}
+                        enterButton
+                        allowClear
+                    />
                     <Button>
                         <Link to="/personal-blog/create">Tạo bài viết</Link>
                     </Button>
                 </Styled.Search>
-                <Table columns={columns} dataSource={blogs} />
+                <Table columns={columns} dataSource={blogs.search} />
             </Styled.Wrapper>
         </Styled.Background>
     );

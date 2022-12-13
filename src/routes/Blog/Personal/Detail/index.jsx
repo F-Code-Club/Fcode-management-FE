@@ -20,6 +20,7 @@ const PersonalDetailBlog = () => {
     const blogID = params.id;
     const handleSubmit = async () => {
         if (blogID) {
+            // TODO: createdTime and updatedTime will be fixed later
             const newBlog = {
                 ...blog,
                 location: 'Vietnam',
@@ -34,6 +35,7 @@ const PersonalDetailBlog = () => {
                 navigate('/personal-blog');
             }
         } else {
+            // TODO: Update memberID and genreID when Login page is done
             const newBlog = {
                 ...blog,
                 memberId: 1212,

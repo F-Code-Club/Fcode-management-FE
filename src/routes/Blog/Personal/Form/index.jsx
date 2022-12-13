@@ -75,6 +75,7 @@ const BlogForm = () => {
                 navigate('/personal-blog');
             }
         } else {
+            // TODO: Update memberID and genreID when Login page is done
             const newBlog = {
                 ...values,
                 content: JSON.stringify(convertToRaw(blog.content.getCurrentContent())),

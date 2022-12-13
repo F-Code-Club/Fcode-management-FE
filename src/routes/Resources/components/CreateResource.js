@@ -129,7 +129,7 @@ export const CreateResource = (props) => {
             <div className="editor">
                 <h3>
                     <span style={{ color: 'red' }}>* </span>
-                    Tên môn học
+                    Kỳ học
                 </h3>
                 <Input
                     placeholder="example"
@@ -142,7 +142,7 @@ export const CreateResource = (props) => {
                 {errorMsg.title && <p className="errorMsg">Trường này không được bỏ trống!</p>}
                 <h3 style={{ marginTop: '0.5em' }}>
                     <span style={{ color: 'red' }}>* </span>
-                    Mô tả
+                    Môn học
                 </h3>
                 <div
                     className="container-editor"

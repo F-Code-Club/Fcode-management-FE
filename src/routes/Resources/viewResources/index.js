@@ -50,11 +50,11 @@ const ViewResource = () => {
         console.log(typeWork);
         if (status) {
             toastSuccess(
-                `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
+                `Môn học đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
         } else
             toastError(
-                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} tài nguyên không thành công ${
+                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công ${
                     message ? message : ''
                 }`
             );
@@ -69,8 +69,8 @@ const ViewResource = () => {
     const handleDelete = async (status) => {
         if (status) {
             await dispatch(actions.deleteResourceChild(modalOpen.popupConfirm.id));
-            toastSuccess('Tài nguyên đã được xóa thành công');
-        } else toastError('Xóa tài nguyên không thành công');
+            toastSuccess('Môn học đã được xóa thành công');
+        } else toastError('Xóa môn học không thành công');
         await setModalOpen({
             ...modalOpen,
             popupConfirm: {
@@ -111,8 +111,8 @@ const ViewResource = () => {
                     popupConfirm: {
                         status: true,
                         id: item.id,
-                        title: 'Bạn có chắc muốn xóa tài nguyên này?',
-                        description: 'Tài nguyên này sẽ được xóa vĩnh viễn.',
+                        title: 'Bạn có chắc muốn xóa môn học này?',
+                        description: 'Môn học này sẽ được xóa vĩnh viễn.',
                         icon: 'delete',
                         buttonValue: 'Xóa',
                     },

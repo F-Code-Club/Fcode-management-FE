@@ -7,8 +7,8 @@ const StyledDivider = styled.hr`
     width: ${(props) => (props.width ? props.width + 'px' : '100%')};
     background-image: linear-gradient(
         90deg,
-        ${themes.slate4},
-        ${themes.slate4} 75%,
+        ${themes.colors.slate4},
+        ${themes.colors.slate4} 75%,
         transparent 75%,
         transparent 100%
     );

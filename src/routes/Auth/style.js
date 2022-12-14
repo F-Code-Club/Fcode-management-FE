@@ -40,8 +40,8 @@ export const LoginWrapper = styled(Wrapper)`
 
 export const StyledHeading = styled.h1`
     margin-top: 20px;
-    color: ${themes.high_contrast};
-    font-size: ${18 / 14}rem;
+    color: ${themes.colors.high_contrast};
+    font-size: ${28 / 14}rem;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
     & strong {
@@ -54,9 +54,8 @@ export const LoginHeading = (props) => {
 };
 
 export const StyledDescription = styled.p`
-    margin-top: 10px;
-    color: ${themes.low_contrast};
-    font-size: 0.75rem;
+    color: ${themes.colors.lowContrast};
+    font-size: 1rem;
     font-weight: 500;
 `;
 
@@ -65,11 +64,33 @@ export const LoginDescription = (props) => {
 };
 
 export const LoginDivider = styled(Divider)`
-    margin: 30px 0 20px 0;
+    margin: 20px 0px;
 `;
 
-export const LoginButton = styled.button`
+export const LoginButton = styled.a`
     font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0.5rem 2rem;
+    width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
+    background-color: ${themes.colors.light};
+    color: ${themes.colors.lowContrast};
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.14))
+        drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.12)) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.2));
+
+    &:hover {
+        color: ${themes.colors.high_contrast};
+        opacity: 0.75;
+    }
 `;
 
 export const StyledLoginCredit = styled.a`

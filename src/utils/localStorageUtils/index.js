@@ -1,5 +1,7 @@
 import { decodeToken, isExpired } from 'react-jwt';
 
+import { get } from '../ApiCaller';
+
 import { LOCAL_STORAGE_TOKEN } from '@/config';
 
 class LocalStorageUtils {
@@ -23,23 +25,58 @@ class LocalStorageUtils {
             localStorage.removeItem(key);
         }
     }
+    getJWTUser() {
+        if (typeof localStorage !== 'undefined') {
+            const token = this.getItem(LOCAL_STORAGE_TOKEN);
+            if (token) {
+                try {
+                    const jwtUser = decodeToken(token);
+                    return jwtUser;
+                } catch (err) {
+                    if (err.response && err.response.status === 401) {
+                        this.deleteUser();
+                    }
+                }
+            } else return token;
+        }
+        return undefined;
+    }
+
     getUser() {
         if (typeof localStorage !== 'undefined') {
             const token = this.getItem(LOCAL_STORAGE_TOKEN);
-            if (!token) {
-                return undefined;
-            }
             if (isExpired(token)) {
                 this.deleteUser();
                 return undefined;
             }
             if (token) {
-                return decodeToken(token);
+                try {
+                    const { sub } = decodeToken(token);
+
+                    const pattern2 = /(se)+\d+/;
+                    const resulted = sub.match(pattern2);
+                    console.log(resulted[0].toUpperCase());
+                    const memberId = resulted[0].toUpperCase();
+                    const fetchedMember = get(
+                        `/member/studentId/${memberId}`,
+                        {},
+                        { authorization: token }
+                    ).then((res) => res.data);
+
+                    return fetchedMember;
+                } catch (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(err);
+                    if (err.response && err.response.status === 401) {
+                        this.deleteUser();
+                    }
+                }
+            } else {
+                return undefined;
             }
-            return token;
         }
-        return undefined;
     }
+
     deleteUser() {
         localStorage.removeItem(LOCAL_STORAGE_TOKEN);
     }

@@ -69,7 +69,7 @@ const RouterComponent = () => {
                         ))}
                     </Route>
                 </Route>
-                <Route exact element={<PublicRoute />}>
+                <Route exact path="/" element={<PublicRoute />}>
                     <Route exact element={<LayoutComponent />}>
                         {publicRoute.map((route) => (
                             <Route

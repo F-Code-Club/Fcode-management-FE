@@ -14,6 +14,16 @@ import { get } from '@/utils/ApiCaller';
 import { CloseOutlined, RightOutlined } from '@ant-design/icons';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+const getContentEditorState = (item) => {
+    try {
+        return EditorState.createWithContent(
+            ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+        );
+    } catch (error) {
+        return EditorState.createEmpty();
+    }
+};
+
 export const CreateAnnouncement = (props) => {
     const token = localStorage.getItem('token');
     const action = props.action;
@@ -21,11 +31,7 @@ export const CreateAnnouncement = (props) => {
         title: props.type === 'edit' ? props.title : '',
         description:
             props.type === 'edit'
-                ? EditorState.createWithContent(
-                      ContentState.createFromBlockArray(
-                          htmlToDraft(JSON.parse(props.description)).contentBlocks
-                      )
-                  )
+                ? getContentEditorState(props.description)
                 : EditorState.createEmpty(),
         imageUrl: props.type === 'edit' ? props.imageUrl : null,
         id: props.type === 'edit' ? props.id : null,

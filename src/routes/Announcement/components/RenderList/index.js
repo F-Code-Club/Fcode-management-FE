@@ -76,6 +76,16 @@ export const RenderList = (props) => {
         return name;
     };
 
+    const getContentEditorState = (item) => {
+        try {
+            return EditorState.createWithContent(
+                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+            );
+        } catch (error) {
+            return EditorState.createEmpty();
+        }
+    };
+
     return (
         <List.Item key={item.id} extra={ImageAnnouncement(item.imageUrl)}>
             <List.Item.Meta
@@ -84,11 +94,7 @@ export const RenderList = (props) => {
                 description={getAuthor(item.memberId)}
             />
             <Editor
-                editorState={EditorState.createWithContent(
-                    ContentState.createFromBlockArray(
-                        htmlToDraft(JSON.parse(item.description)).contentBlocks
-                    )
-                )}
+                editorState={getContentEditorState(item.description)}
                 wrapperClassName="demo-wrapper"
                 editorClassName="demo-editor"
                 readOnly

@@ -5,6 +5,7 @@ import { themes } from '@/theme/theme';
 export const ContainerHomepage = styled.div`
     width: 100%;
     min-height: calc(100vh - 190px);
+    padding: 10px 20px 0;
     display: grid;
     grid-template-columns: 65% 33%;
     justify-content: space-between;
@@ -150,7 +151,6 @@ export const Col2 = styled.div`
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
             0px 1px 5px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
-        margin-bottom: 30px;
         h3 {
             padding: 20px;
             font-weight: 600;

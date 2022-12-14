@@ -43,6 +43,18 @@ export const Homepage = () => {
         return url;
     };
 
+    const getContentEditorState = (item) => {
+        try {
+            return EditorState.createWithContent(
+                ContentState.createFromBlockArray(
+                    htmlToDraft(JSON.parse(item.content)).contentBlocks
+                )
+            );
+        } catch (error) {
+            return EditorState.createEmpty();
+        }
+    };
+
     return (
         <ContainerHomepage>
             <Col1>
@@ -85,12 +97,7 @@ export const Homepage = () => {
                                             description={item.author}
                                         />
                                         <Editor
-                                            editorState={EditorState.createWithContent(
-                                                ContentState.createFromBlockArray(
-                                                    htmlToDraft(JSON.parse(item.content))
-                                                        .contentBlocks
-                                                )
-                                            )}
+                                            editorState={getContentEditorState(item)}
                                             toolbarHidden={true}
                                             readOnly="true"
                                         />

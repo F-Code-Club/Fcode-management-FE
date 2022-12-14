@@ -28,17 +28,23 @@ export const ViewAnnouncement = () => {
             .catch((error) => console.log(error));
     }, [id]);
 
+    const getContentEditorState = (item) => {
+        try {
+            return EditorState.createWithContent(
+                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+            );
+        } catch (error) {
+            return EditorState.createEmpty();
+        }
+    };
+
     return (
         <ContainerAnnounce>
             {state && (
                 <ContentAnnounce>
                     <h1 className="title">{state.title}</h1>
                     <Editor
-                        editorState={EditorState.createWithContent(
-                            ContentState.createFromBlockArray(
-                                htmlToDraft(JSON.parse(state.description)).contentBlocks
-                            )
-                        )}
+                        editorState={getContentEditorState(state.description)}
                         wrapperClassName="demo-wrapper"
                         editorClassName="demo-editor"
                         readOnly

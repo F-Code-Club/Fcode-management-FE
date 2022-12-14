@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Row, Col, Typography } from 'antd';
+import { Row, Col, Typography, Affix } from 'antd';
 import { EditorState, ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
@@ -53,6 +53,7 @@ const BlogDetailComponent = () => {
                     )
                 );
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.log(e);
                 toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
             }
@@ -112,27 +113,29 @@ const BlogDetailComponent = () => {
                 </Col>
                 {currentAction === 'active' && (
                     <Col align="middle" span={1}>
-                        <StyledContainer padding="1.2rem 1rem">
-                            <Row gutter={[0, 32]}>
-                                {ActionElements.map((item, index) => (
-                                    <Col
-                                        key={item.name + index}
-                                        className="gutter-row"
-                                        span={24}
-                                        align="middle"
-                                        style={{ display: 'flex', flexDirection: 'column' }}
-                                    >
-                                        <item.Element
-                                            style={{
-                                                color: themes.colors.primary,
-                                                fontSize: '1.4rem',
-                                            }}
-                                        />
-                                        <Text>0</Text>
-                                    </Col>
-                                ))}
-                            </Row>
-                        </StyledContainer>
+                        <Affix offsetTop={10}>
+                            <StyledContainer padding="1.2rem 1rem">
+                                <Row gutter={[0, 32]}>
+                                    {ActionElements.map((item, index) => (
+                                        <Col
+                                            key={item.name + index}
+                                            className="gutter-row"
+                                            span={24}
+                                            align="middle"
+                                            style={{ display: 'flex', flexDirection: 'column' }}
+                                        >
+                                            <item.Element
+                                                style={{
+                                                    color: themes.colors.primary,
+                                                    fontSize: '1.4rem',
+                                                }}
+                                            />
+                                            <Text>0</Text>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </StyledContainer>
+                        </Affix>
                     </Col>
                 )}
             </Row>

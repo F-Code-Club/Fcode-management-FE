@@ -62,7 +62,7 @@ export const processingButton = {
             name: 'Từ Chối',
             type: '',
             // Action name for button when using redux
-            action: 'disApproveArticle',
+            action: 'disapproveArticle',
             configs: {
                 title: 'Bạn có muốn từ chối duyệt bài viết này không?',
                 content:

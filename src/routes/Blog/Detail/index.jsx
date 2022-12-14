@@ -72,9 +72,6 @@ const BlogDetailComponent = () => {
     } else {
         switch (currentAction) {
             case 'processing':
-                // if (!data.isApprove) {
-                //     return <Navigate to="/blog" />;
-                // }
                 dispatch(
                     reducerButton.changeButtons({
                         ...processingButton,
@@ -83,9 +80,6 @@ const BlogDetailComponent = () => {
                 );
                 break;
             case 'active':
-                // if (data.isApprove) {
-                //     return <Navigate to="/blog" />;
-                // }
                 dispatch(
                     reducerButton.changeButtons({
                         ...activeButton,
@@ -94,9 +88,6 @@ const BlogDetailComponent = () => {
                 );
                 break;
             case 'inactive':
-                // if (!data.isDeclined) {
-                //     return <Navigate to="/blog" />;
-                // }
                 dispatch(reducerButton.changeButtons(disableButton));
                 break;
             default:

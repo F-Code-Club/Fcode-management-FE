@@ -7,7 +7,6 @@ export const initialState = {
     // make action button to the right of header bar
     actionButtons: {
         type: 'inactive',
-        // TODO: change this when finish testing
         isShow: false, // show or not.
         buttons: [],
     },

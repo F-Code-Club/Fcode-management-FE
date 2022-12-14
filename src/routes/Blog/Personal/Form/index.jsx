@@ -151,6 +151,12 @@ const BlogForm = () => {
         {
             label: 'Nội dung bài viết',
             name: 'content',
+            rules: [
+                {
+                    required: true,
+                    message: 'Hãy vui lòng nhập nội dung cúa bài viết',
+                },
+            ],
             children: (
                 <Editor
                     editorState={blog.content}
@@ -161,6 +167,12 @@ const BlogForm = () => {
         {
             label: 'Tác giả bài viết',
             name: 'author',
+            rules: [
+                {
+                    required: true,
+                    message: 'Hãy vui lòng nhập tác giả cúa bài viết',
+                },
+            ],
             children: <Input placeholder="Nguyen Van A" />,
         },
         // {
@@ -182,6 +194,12 @@ const BlogForm = () => {
         {
             label: 'Hình ảnh đại diện',
             name: 'imageUrl',
+            rules: [
+                {
+                    required: true,
+                    message: 'Hãy vui lòng nhập URL hình ảnh đại diện cúa bài viết',
+                },
+            ],
             children: (
                 <Input
                     onChange={(e) => setBlog({ ...blog, imageUrl: e.target.value })}
@@ -231,6 +249,7 @@ const BlogForm = () => {
                             hasFeedback
                             rules={item.rules}
                             extra={item.extra}
+                            tooltip={item.tooltip}
                             key={idx}
                         >
                             {item.children}

@@ -7,7 +7,7 @@ import { themes } from '@/theme/theme';
 export const Wrapper = styled(Row)`
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 2rem;
     flex-direction: row;
 `;
@@ -31,9 +31,17 @@ export const ContentBlog = styled(StyledContainer)`
         background: ${themes.colors.primary};
         border-color: ${themes.colors.primary};
     }
+
+    .public-DraftEditor-content {
+        overflow-x: hidden;
+    }
 `;
 
 export const InfoList = styled(Row)`
+    margin: 0 24px;
+    position: sticky;
+    top: 25%;
+    right: 32px;
     display: flex;
     flex-direction: column !important;
     align-items: center;
@@ -41,7 +49,6 @@ export const InfoList = styled(Row)`
         0px 1px 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     background-color: ${themes.colors.light};
-    margin: 24px;
 `;
 
 export const InfoItem = styled.div`
@@ -49,5 +56,5 @@ export const InfoItem = styled.div`
     max-width: 300px;
     height: 100%;
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid ${themes.colors.light};
 `;

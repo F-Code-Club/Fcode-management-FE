@@ -15,7 +15,6 @@ const PersonalDetailBlog = () => {
 
     // Convert HTML JSON to Editor state
     const blog = useSelector(selectCurrentBlog).currentBlog;
-    console.log(blog.isEdit);
     const editorState = HTMLToEditorState(blog.content);
 
     // Get ID of blog

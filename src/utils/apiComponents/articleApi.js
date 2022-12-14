@@ -65,6 +65,10 @@ const articleApi = {
             })
             .catch((err) => toastError(err.message));
     },
+    disapproveArticle: async (id) => {
+        const endpoint = `/article/disapprove/${id}`;
+        return await put(endpoint, {}, {}, { authorization: token });
+    },
     deleteArticle: async (id) => {
         const endpoint = `/article/${id}`;
         return await remove(endpoint, {}, {}, { authorization: token })

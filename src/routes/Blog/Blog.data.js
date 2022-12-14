@@ -1,6 +1,8 @@
 import { Space } from 'antd';
 import { Link } from 'react-router-dom';
 
+import CustomLink from './CustomLink';
+
 export const columns = [
     {
         title: 'Tên bài viết',
@@ -17,8 +19,8 @@ export const columns = [
     },
     {
         title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
+        dataIndex: 'createdTime',
+        key: 'createdTime',
     },
     // {
     //     title: 'Tags',
@@ -45,10 +47,24 @@ export const columns = [
     {
         title: 'Actions',
         key: 'action',
-        render: () => (
+        render: (text, record) => (
             <Space size="middle">
-                <a href="/blog">Duyệt</a>
-                <a href="/blog">Từ chối</a>
+                <CustomLink
+                    to="/blog"
+                    id={record.id}
+                    action="approveArticle"
+                    successContent="Duyệt bài viết thành công"
+                    failContent="Duyệt bài viết thất bại"
+                    content="Duyệt"
+                />
+                <CustomLink
+                    to="/blog"
+                    id={record.id}
+                    action="disapproveArticle"
+                    failContent="Từ chối viết thất bại"
+                    successContent="Từ chối duyệt bài viết thành công"
+                    content="Từ chối"
+                />
             </Space>
         ),
     },
@@ -68,8 +84,8 @@ export const columns2 = [
     },
     {
         title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
+        dataIndex: 'createdTime',
+        key: 'createdTime',
     },
     // {
     //     title: 'Tags',
@@ -96,10 +112,17 @@ export const columns2 = [
     {
         title: 'Actions',
         key: 'action',
-        render: () => (
+        render: (text, record) => (
             <Space size="middle">
-                <a href="/blog">Ẩn</a>
-                <a href="/blog">Xóa</a>
+                {/* <Link>Ẩn</Link> */}
+                <CustomLink
+                    to="/blog"
+                    id={record.id}
+                    action="deleteArticle"
+                    failContent="Xoá viết thất bại"
+                    successContent="Xoá bài viết thành công"
+                    content="Xoá"
+                />
             </Space>
         ),
     },
@@ -119,8 +142,8 @@ export const columns3 = [
     },
     {
         title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
+        dataIndex: 'createdTime',
+        key: 'createdTime',
     },
     // {
     //     title: 'Tags',
@@ -150,6 +173,6 @@ export const data = Array.from({ length: 100 }, (_, i) => ({
     id: i + 1,
     title: 'Tên bài viết ABC',
     author: 'Nguyễn Văn A',
-    created_at: '01/01/2022',
+    createdTime: '01/01/2022',
     tags: ['Design', 'UI/UX'],
 }));

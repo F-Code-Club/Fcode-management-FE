@@ -9,11 +9,12 @@ import { selectTitleHeader } from '../PageHeader/slice/selector';
 // import { openNotificationWithIcon } from '../ToastDemo/style';
 // import { toastSuccess } from '../ToastNotification';
 import StyledButton from './../Button/index';
-// import { toastSuccess } from './../ToastNotification/index';
+// import { toastSuccess, toastError } from './../ToastNotification/index';
 import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
 
-import { actions as buttonActions } from '@/components/Button/slice/index';
+import { actions as buttonSlice, handleClick } from '@/components/Button/slice/index';
+import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -62,23 +63,28 @@ const PageHeaderComponent = () => {
             <Link to="/">Trang chủ</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
-
     // Button state
     useEffect(() => {
+        const url = `/${pathSnippets.slice(0, pathSnippets.length).join('/')}`;
+        dispatch(titleHeaderActions.changeTitle(breadcrumbNameMap[url] || 'Trang chủ'));
         const currentAction = searchParams.get('action') || '';
         if (currentAction === '') {
-            dispatch(buttonActions.changeButtons({ isShow: false }));
+            dispatch(buttonSlice.changeButtons({ isShow: false }));
         }
     }, [location]);
+    const onBack = () => {
+        window.history.back();
+    };
     const handleButton = (button, articleId) => {
-        return modal.confirm(
+        modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
                 dispatch(
-                    buttonActions[button.action]({
+                    handleClick({
+                        action: button.action,
                         articleId,
                         successContent: button.successContent,
                     })
-                );
+                ).unwrap();
                 navigate('/blog');
             })
         );
@@ -99,7 +105,7 @@ const PageHeaderComponent = () => {
                     className="site-page-header-responsive"
                     title={TitleHeader}
                     style={{ background: '#FFFFFF' }}
-                    onBack={() => window.history.back()}
+                    onBack={() => onBack()}
                     extra={
                         ActionButtons.isShow &&
                         ActionButtons.buttons.map((button, index) => (

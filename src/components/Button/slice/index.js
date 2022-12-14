@@ -1,14 +1,12 @@
-import { toastSuccess, toastError } from './../../ToastNotification/index';
-
+import { getAllBlogs } from '@/routes/Blog/slice';
 import { injectReducer } from '@/store';
-import articleApi from '@/utils/apiComponents/articleApi';
-import { createSlice } from '@reduxjs/toolkit';
+import { handler } from '@/utils/apiComponents/ApiHandler';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
     // make action button to the right of header bar
     actionButtons: {
         type: 'inactive',
-        // TODO: change this when finish testing
         isShow: false, // show or not.
         buttons: [],
     },
@@ -16,6 +14,13 @@ export const initialState = {
 
 export const name = 'actionButtons';
 
+export const handleClick = createAsyncThunk(`${name}/blogsHandle`, async (props, thunkApi) => {
+    const { action, articleId, successContent } = props;
+    // call approveArticle with handle exception
+    await handler(action, articleId, successContent).then(() => {
+        thunkApi.dispatch(getAllBlogs());
+    });
+});
 export const slice = createSlice({
     name,
     initialState,
@@ -23,35 +28,12 @@ export const slice = createSlice({
         changeButtons: (state, action) => {
             state.actionButtons = action.payload;
         },
-        approve: (state, action) => {
-            articleApi
-                .approveArticle(action.payload)
-                .then(() => {
-                    toastSuccess(action.payload.successContent);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    toastError('Duyệt bài viết thất bại');
-                });
-        },
-        delete: (state, action) => {
-            try {
-                articleApi.deleteArticle(action.payload.articleId);
-                toastSuccess(action.payload.successContent);
-            } catch (err) {
-                console.log(err);
-                toastError('Xoá bài viết thất bại');
-            }
-        },
-        disApprove: (state, action) => {
-            articleApi.disapproveArticle(action.payload).then(() => {
-                toastSuccess(action.payload.successContent);
-            });
-        },
     },
 });
 injectReducer(name, slice.reducer);
 
 export const { actions } = slice;
-
+export const buttonActions = {
+    handleClick,
+};
 export default slice;

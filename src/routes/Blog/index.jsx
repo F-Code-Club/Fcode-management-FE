@@ -1,52 +1,69 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Table, Tabs, Input } from 'antd';
+import { Table, Tabs, Input, Skeleton } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { columns, columns2, columns3 } from './Blog.data';
 import * as Styled from './Blog.styled';
-import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
+import { filterBlogs, getAllBlogs } from './slice';
+// import articleApi from '@/utils/apiComponents/articleApi';
+// import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
 import { selectCurrentBlog } from './slice/selector';
 
-import articleApi from '@/utils/apiComponents/articleApi';
+// import { toastError } from '@/components/ToastNotification';
 
 const { Search } = Input;
 
 const Blog = () => {
     // Using redux to store data when received
     const blogs = useSelector(selectCurrentBlog);
+    const location = useLocation();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
-            const activeBlogs = await articleApi.getActiveArticle();
-            const inactiveBlogs = await articleApi.getInactiveArticle();
-            const processingBlogs = await articleApi.getProcessingArticle();
-
-            dispatch(changeActiveBlogs(activeBlogs.data.data));
-            dispatch(changeInactiveBlogs(inactiveBlogs.data.data));
-            dispatch(changeProcessingBlogs(processingBlogs.data.data));
+            setLoading(true);
+            console.log(blogs);
+            await dispatch(getAllBlogs())
+                .unwrap()
+                .then(() => setLoading(false));
         };
         fetchData();
-    }, [navigate]);
-
+    }, [location]);
+    const onSearch = async (value) => {
+        setLoading(true);
+        await dispatch(filterBlogs(value))
+            .unwrap()
+            .then(() => setLoading(false));
+    };
     return (
         <Styled.Background>
             <Styled.Wrapper>
                 <Tabs defaultActiveKey="1">
                     <Tabs.TabPane tab="Chờ đươc duyệt" key="1">
-                        <Table columns={columns} dataSource={blogs.processing} />
+                        <Skeleton loading={loading}>
+                            <Table columns={columns} dataSource={blogs.searchedProcessing} />
+                        </Skeleton>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Đã được duyệt" key="2">
-                        <Table columns={columns2} dataSource={blogs.active} />
+                        <Skeleton loading={loading}>
+                            <Table columns={columns2} dataSource={blogs.searchedActive} />
+                        </Skeleton>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Từ chối duyệt" key="3">
-                        <Table columns={columns3} dataSource={blogs.inactive} />
+                        <Skeleton loading={loading}>
+                            <Table columns={columns3} dataSource={blogs.searchedInactive} />
+                        </Skeleton>
                     </Tabs.TabPane>
                 </Tabs>
                 <Styled.Search>
-                    <Search placeholder="Nhập tên bài viết cần tìm" enterButton />
+                    <Search
+                        placeholder="Nhập tên bài viết cần tìm"
+                        enterButton
+                        loading={loading}
+                        onSearch={(value) => onSearch(value)}
+                    />
                 </Styled.Search>
             </Styled.Wrapper>
         </Styled.Background>

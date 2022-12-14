@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react';
 
-import { Row, Col, Typography } from 'antd';
-import { EditorState, convertFromRaw } from 'draft-js';
+import { Row, Col, Typography, Affix } from 'antd';
+import { EditorState, ContentState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams, useLocation, Navigate, useNavigate } from 'react-router-dom';
 
 import { changeBlog } from '../slice';
+// import articleApi from '@/utils/apiComponents/articleApi';
 // import { getGutter } from '@/utils/getGutter';
 import { selectCurrentBlog } from './../slice/selector';
 import { disableButton, ActionElements, processingButton, activeButton } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
-import { Wrapper, InfoList, InfoItem } from '@/routes/Blog/Detail/style';
+import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
+import { toastError } from '@/components/ToastNotification';
+import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
 
-// import articleApi from '@/utils/apiComponents/articleApi';
-
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const BlogDetailComponent = () => {
     // Get current action (processing, active, inactive)
@@ -32,7 +34,6 @@ const BlogDetailComponent = () => {
     const params = useParams();
     const currentAction = searchParams.get('action');
     const articleId = parseInt(params.id) || 0;
-
     const [editorState, setEditorState] = useState();
 
     useEffect(() => {
@@ -41,12 +42,21 @@ const BlogDetailComponent = () => {
             if (data === undefined) {
                 return navigate('/blog');
             }
+            dispatch(titleHeaderActions.changeTitle(data.title));
             setArticleData(data);
-            // todo make redux to main state for getting current data
             dispatch(changeBlog(data));
-            setEditorState(
-                EditorState.createWithContent(convertFromRaw(JSON.parse(data.content || '')))
-            );
+            try {
+                const content = htmlToDraft(JSON.parse(data.content));
+                setEditorState(
+                    EditorState.createWithContent(
+                        ContentState.createFromBlockArray(content.contentBlocks)
+                    )
+                );
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.log(e);
+                toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
+            }
         };
         getArticle();
     }, []);
@@ -63,9 +73,6 @@ const BlogDetailComponent = () => {
     } else {
         switch (currentAction) {
             case 'processing':
-                // if (!data.isApprove) {
-                //     return <Navigate to="/blog" />;
-                // }
                 dispatch(
                     reducerButton.changeButtons({
                         ...processingButton,
@@ -74,9 +81,6 @@ const BlogDetailComponent = () => {
                 );
                 break;
             case 'active':
-                // if (data.isApprove) {
-                //     return <Navigate to="/blog" />;
-                // }
                 dispatch(
                     reducerButton.changeButtons({
                         ...activeButton,
@@ -85,9 +89,6 @@ const BlogDetailComponent = () => {
                 );
                 break;
             case 'inactive':
-                // if (!data.isDeclined) {
-                //     return <Navigate to="/blog" />;
-                // }
                 dispatch(reducerButton.changeButtons(disableButton));
                 break;
             default:
@@ -97,8 +98,11 @@ const BlogDetailComponent = () => {
     return (
         <Wrapper>
             <Row align="top" justify="center" gutter={17} style={{ width: '100%' }}>
-                <Col span={currentAction === 'active' ? 20 : 16}>
+                <Col span={currentAction === 'active' ? 16 : 20}>
                     <StyledContainer>
+                        <Row align="center">
+                            <Title level={2}>{articleData.title}</Title>
+                        </Row>
                         <Editor
                             editorState={editorState}
                             toolbarHidden={true}
@@ -107,37 +111,31 @@ const BlogDetailComponent = () => {
                         />
                     </StyledContainer>
                 </Col>
-                <Col span={4}>
-                    <InfoList>
-                        <InfoItem>Trạng thái: Đã được duyệt</InfoItem>
-                        <InfoItem>Ngày tạo: {article.createAt} </InfoItem>;
-                        <InfoItem>Ngày đăng: 24.05.2019</InfoItem>
-                        <InfoItem>Thể loại: F-Code, Tách file, ngôn ngữ C</InfoItem>
-                    </InfoList>
-                </Col>
-                {currentAction === '' && (
-                    <Col align="middle" span={8}>
-                        <StyledContainer padding="1.2rem 0">
-                            <Row gutter={[0, 32]}>
-                                {ActionElements.map((item, index) => (
-                                    <Col
-                                        key={item.name + index}
-                                        className="gutter-row"
-                                        span={24}
-                                        align="middle"
-                                        style={{ display: 'flex', flexDirection: 'column' }}
-                                    >
-                                        <item.Element
-                                            style={{
-                                                color: themes.colors.primary,
-                                                fontSize: '1.4rem',
-                                            }}
-                                        />
-                                        <Text>12</Text>
-                                    </Col>
-                                ))}
-                            </Row>
-                        </StyledContainer>
+                {currentAction === 'active' && (
+                    <Col align="middle" span={1}>
+                        <Affix offsetTop={10}>
+                            <StyledContainer padding="1.2rem 1rem">
+                                <Row gutter={[0, 32]}>
+                                    {ActionElements.map((item, index) => (
+                                        <Col
+                                            key={item.name + index}
+                                            className="gutter-row"
+                                            span={24}
+                                            align="middle"
+                                            style={{ display: 'flex', flexDirection: 'column' }}
+                                        >
+                                            <item.Element
+                                                style={{
+                                                    color: themes.colors.primary,
+                                                    fontSize: '1.4rem',
+                                                }}
+                                            />
+                                            <Text>0</Text>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </StyledContainer>
+                        </Affix>
                     </Col>
                 )}
             </Row>

@@ -206,7 +206,9 @@ const BlogForm = () => {
                     placeholder="https://..."
                 />
             ),
-            extra: <Image src={blog.imageUrl} width="200px" />,
+            extra: (() => {
+                return blog.imageUrl && <Image src={blog.imageUrl} width="200px" />;
+            })(),
         },
         {
             children: (

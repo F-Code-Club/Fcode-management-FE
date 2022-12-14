@@ -14,14 +14,13 @@ import {
 } from '../styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { token } from '@/utils/data';
 import productApi from '@/utils/productApi';
 
 const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
 function AddEventBox({ handle }) {
-    var token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5NjE5NTYsImlhdCI6MTY3MDk2MDE1Nn0.LaQ8k2jQbbyRcQ5dyQ_mmJm7Z40TApVg_O0JWhsLOA2V8n0O7A-2DcRZbjwGI9mduBwz_btxBUgpSTWVlz2M3Q';
     const [text, SetText] = useState([]);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -42,6 +41,7 @@ function AddEventBox({ handle }) {
         try {
             const event = {
                 name: values.eventName,
+
                 point: values.eventPoint,
                 location: values.eventPlace,
                 description: values.extraNotice,

@@ -6,13 +6,15 @@ import MyCalendar from './components/Calendar';
 import { setEvent } from './slice';
 import { Container } from './styled';
 
+import { token } from '@/utils/data';
 import productApi from '@/utils/productApi';
 
 function Event() {
     const [isUpdated, SetUpdated] = useState(false);
     const dispatch = useDispatch();
-    let token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5NjE5NTYsImlhdCI6MTY3MDk2MDE1Nn0.LaQ8k2jQbbyRcQ5dyQ_mmJm7Z40TApVg_O0JWhsLOA2V8n0O7A-2DcRZbjwGI9mduBwz_btxBUgpSTWVlz2M3Q';
+
+    console.log(token);
+
     useEffect(() => {
         getALlEvent();
     }, []);

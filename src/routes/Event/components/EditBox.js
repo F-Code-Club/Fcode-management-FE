@@ -14,6 +14,8 @@ import {
 } from '../styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { token } from '@/utils/data';
+import productApi from '@/utils/productApi';
 
 const { TextArea } = Input;
 
@@ -30,25 +32,23 @@ function EditBox({ event, handle, closeOtherBox }) {
     form.setFieldsValue({
         Picker: text.Picker,
     });
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('DD/MM/YYYY');
-        const formatttedEndDate = endDate.format('DD/MM/YYYY');
+        const formattedstartDate = startDate.format('YYYY-MM-DD');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD');
         try {
             const newEvent = {
-                start: startDate,
-                end: endDate,
-                title: values.eventName,
+                name: values.eventName,
                 point: values.eventPoint,
-                place: values.eventPlace,
-                note: values.extraNotice,
-                startDate: formattedstartDate,
-                endDate: formatttedEndDate,
+                location: values.eventPlace,
+                description: values.extraNotice,
+                startTime: formattedstartDate,
+                endTime: formatttedEndDate,
                 id: event.id,
             };
-            console.log(newEvent);
+            await productApi.editEvent(newEvent, token);
             toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
             dispatch(editEvent(newEvent));
         } catch {
@@ -94,8 +94,8 @@ function EditBox({ event, handle, closeOtherBox }) {
                             {
                                 name: ['Picker'],
                                 value: [
-                                    moment(event.start, 'YYYY-MM-DD HH:mm:ss'),
-                                    moment(event.end, 'YYYY-MM-DD HH:mm:ss'),
+                                    moment(event.startTime, 'YYYY-MM-DD HH:mm:ss'),
+                                    moment(event.endTime, 'YYYY-MM-DD HH:mm:ss'),
                                 ],
                             },
                             {

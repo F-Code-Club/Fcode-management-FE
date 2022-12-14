@@ -18,6 +18,8 @@ import {
 import EditBox from './EditBox';
 
 import { toastSuccess } from '@/components/ToastNotification';
+import { token } from '@/utils/data';
+import productApi from '@/utils/productApi';
 import { CloseCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 function Detail({ event, handle }) {
@@ -27,11 +29,16 @@ function Detail({ event, handle }) {
         setEditBoxOpen(true);
     };
 
-    const handleConfirm = (event) => {
+    const handleConfirm = async (event) => {
+        await productApi.removeEvent(event.id, token);
         dispatch(removeEvent(event));
         handle();
         toastSuccess('Xóa sự kiến thành công!!');
     };
+    function ChangeFormateDate(oldDate) {
+        return oldDate.split('-').reverse().join('/');
+    }
+
     return (
         <BoxContainer>
             <DetailContainer>
@@ -46,12 +53,18 @@ function Detail({ event, handle }) {
                 </DetailHeader>
                 <hr className="solid"></hr>
                 <DetailBody>
-                    <h2>{`${event.startTime} - ${event.endTime}`}</h2>
-
-                    <br></br>
-                    <h2>{`Địa Điểm : ${event.location}`}</h2>
-                    <br></br>
-                    <h2>{`Ghi Chú : ${event.description}`}</h2>
+                    <div>
+                        <h1>Thời gian :</h1>
+                        <h2>{`${ChangeFormateDate(event.startTime)} --> ${ChangeFormateDate(
+                            event.endTime
+                        )}`}</h2>
+                    </div>
+                    <div>
+                        <h1>Địa Điểm : </h1>
+                        <h2>{`${event.location}`}</h2>
+                    </div>
+                    <h1>Ghi Chú :</h1>
+                    <h2>{`${event.description}`}</h2>
                 </DetailBody>
                 <Action>
                     <EditButton onClick={handleOpenEditBox}>

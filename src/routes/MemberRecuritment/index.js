@@ -8,12 +8,11 @@ import MileStones from './components/MileStones';
 import { setMile } from './slice';
 import { Container, Button } from './styled';
 
+import { token } from '@/utils/data';
 import productApi from '@/utils/productApi';
 
 function Recruitment() {
     const [isUpdated, SetUpdated] = useState(false);
-    let token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA2OTE4ODcsImlhdCI6MTY3MDY5MDA4N30.Kv2AiUbnYBRnsFHOceS2XPnDr71WCiu8pINxjp2-TFfWZkPxp-F-snYtSO3bH4yXM4aw4zMk3v9yYpohRhr93g';
     const dispatch = useDispatch();
     const { listOfMilestones } = useSelector((state) => state.listOfMilestones);
     console.log(listOfMilestones);
@@ -30,7 +29,7 @@ function Recruitment() {
     }, []);
     const getAllChallenge = async () => {
         const path = await productApi.getAllChallenge(token);
-        console.log(path.data.data);
+        console.log(path.data);
         SetUpdated(true);
         dispatch(setMile(path.data.data));
     };

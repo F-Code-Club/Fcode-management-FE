@@ -17,6 +17,8 @@ import {
 } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { token } from '@/utils/data';
+import productApi from '@/utils/productApi';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
@@ -39,12 +41,13 @@ function CreateBox({ handle }) {
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
         try {
             const event = {
-                start: startDate,
-                end: endDate,
+                startTime: startDate,
+                endTime: endDate,
                 title: values.eventName,
                 description: values.description,
-                form: values.eventForm,
+                status: 'ACTIVE',
             };
+            productApi.postChallange(event, token);
             console.log(event);
             dispatch(addMile(event));
         } catch {
@@ -61,12 +64,10 @@ function CreateBox({ handle }) {
         console.log('Failed:', errorInfo);
         toastError('Không thể thêm cột mốc , vui lòng thử lại !!');
     };
-    const onDateSelection = (value, dateString) => {
+    const onDateSelection = (value) => {
         SetText({
             Picker: [value[0], value[1]],
         });
-        console.log(value);
-        console.log(dateString);
     };
     const props = {
         name: 'file',

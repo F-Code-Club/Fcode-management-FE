@@ -31,7 +31,7 @@ export const Container = styled.div`
     justify-content: center;
 `;
 export const MilestoneContainer = styled.div`
-    max-width: 700px;
+    width: 700px;
     background: white;
     display: flex;
     align-items: center;

@@ -16,11 +16,21 @@ export const DetailHeader = styled.div`
 
 export const Title = styled.div``;
 export const DetailBody = styled.div`
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
     line-height: 24px;
     margin-left: 20px;
+    div {
+        display: flex;
+    }
+    h1 {
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+    h2 {
+        font-weight: 400;
+        font-size: 14px;
+    }
 `;
 export const BoxContainer = styled.div`
     height: 100vh;

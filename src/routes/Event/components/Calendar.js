@@ -11,6 +11,7 @@ import Detail from './Detail';
 import PopUp from './PopUp';
 
 import { themes } from '@/theme/theme.js';
+import { dateToyyyymmdd } from '@/utils/DateFormat';
 import { PlusSquareOutlined } from '@ant-design/icons';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -51,7 +52,14 @@ const MyCalendar = () => {
     const onEventDrop = ({ event, start, end }) => {
         let answer = window.confirm('Are you sure you want to  change The Date?');
         if (answer) {
-            const updatedEvent = { ...event, start: start.toString(), end: end.toString() };
+            const updatedEvent = {
+                ...event,
+                start: start.toString(),
+                end: end.toString(),
+                startTime: dateToyyyymmdd(start),
+                endTime: dateToyyyymmdd(end),
+            };
+            console.log(updatedEvent);
             setEvents((prevEvents) => {
                 const filtered = prevEvents.filter((item) => item.id !== event.id);
                 dispatch(editEvent(updatedEvent));

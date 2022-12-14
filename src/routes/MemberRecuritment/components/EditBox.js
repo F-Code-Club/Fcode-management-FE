@@ -17,6 +17,8 @@ import {
 } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { token } from '@/utils/data';
+import productApi from '@/utils/productApi';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
@@ -35,17 +37,18 @@ function EditBox({ handle, event }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('YYYY/MM/DD');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
         try {
             const newEvent = {
                 start: startDate,
                 end: endDate,
                 title: values.eventName,
-                note: values.description,
-                form: values.eventForm,
+                description: values.description,
                 id: event.id,
+                status: 'ACTIVE',
             };
+            productApi.editChallenge(event, token);
             toastSuccess('Sửa cột mốc thành công!!');
             console.log(newEvent);
             dispatch(editMile(newEvent));
@@ -111,18 +114,18 @@ function EditBox({ handle, event }) {
                             },
                             {
                                 name: ['eventForm'],
-                                value: `${event.form}`,
+                                value: `${event.form || ''}`,
                             },
                             {
                                 name: ['Picker'],
                                 value: [
-                                    moment(event.start, 'DD/MM/YYYY'),
-                                    moment(event.end, 'DD/MM/YYYY'),
+                                    moment(event.startTime, 'YYYY-MM-DD HH:mm:ss'),
+                                    moment(event.endTime, 'YYYY-MM-DD HH:mm:ss'),
                                 ],
                             },
                             {
                                 name: ['description'],
-                                value: `${event.note}`,
+                                value: `${event.description}`,
                             },
                         ]}
                         onFinish={onFinish}

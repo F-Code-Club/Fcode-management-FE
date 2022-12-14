@@ -16,8 +16,11 @@ export const slice = createSlice({
             state.listOfMilestones = action.payload;
         },
         addMile: (state, action) => {
-            let newEvent = { ...action.payload, id: state.mileId };
-            state.id++;
+            let newEvent = {
+                ...action.payload,
+                id: state.listOfMilestones[state.listOfMilestones.length - 1].id + 1,
+            };
+
             state.listOfMilestones.push(newEvent);
         },
         editMile: (state, action) => {

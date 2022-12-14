@@ -20,6 +20,8 @@ import {
 } from './styled';
 
 import { toastSuccess } from '@/components/ToastNotification';
+import { token } from '@/utils/data';
+import productApi from '@/utils/productApi';
 import { GlobalOutlined } from '@ant-design/icons';
 
 function Element({ event }) {
@@ -32,7 +34,7 @@ function Element({ event }) {
         setEdit(false);
     };
     const handleConfirm = (event) => {
-        console.log('yes');
+        productApi.removeChallenge(event.id, token);
         dispatch(removeMile(event));
         toastSuccess('Sửa cột mốc thành công!!');
     };
@@ -53,7 +55,7 @@ function Element({ event }) {
                 <Form>Link của form : </Form>
             </LeftSide>
             <RightSide>
-                <Avatar src="https://scontent.fsgn2-1.fna.fbcdn.net/v/t39.30808-6/298917782_2850144668625493_4934864891793808158_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=mpP7YyiOqTYAX8M75XW&_nc_ht=scontent.fsgn2-1.fna&oh=00_AfD9vaSFisUWa9RbKDSwZ5lJdwovKurfXsjbijYlwm6Jrg&oe=63955A08" />
+                <Avatar src="https://images.unsplash.com/photo-1671037028800-34d2839771a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" />
                 <ButtonContainer>
                     <FirstButton onClick={() => handleOpenEdit()}>Chỉnh sửa</FirstButton>
                     <Popconfirm

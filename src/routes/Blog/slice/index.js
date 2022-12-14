@@ -13,6 +13,7 @@ export const initialState = {
     active: [],
     processing: [],
     inactive: [],
+    author: [],
     searchedActive: [],
     searchedProcessing: [],
     searchedInactive: [],
@@ -55,7 +56,15 @@ export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
             console.log(err);
             toastError('Lấy danh sách bài viết thất bại');
         });
-    return { active, processing, inactive };
+    const author = await articleApi
+        .getArticleByAuthor()
+        .then((res) => res.data.data)
+        .catch((err) => {
+            // eslint-disable-next-line no-console
+            console.log(err);
+            toastError('Lấy danh sách bài viết thất bại');
+        });
+    return { active, processing, inactive, author };
 });
 const slice = createSlice({
     name,
@@ -73,6 +82,7 @@ const slice = createSlice({
                     a.id > b.id ? 1 : -1
                 );
                 state.inactive = action.payload.inactive?.sort((a, b) => (a.id > b.id ? 1 : -1));
+                state.author = action.payload.author?.sort((a, b) => (a.id > b.id ? 1 : -1));
                 state.searchedActive = state.active;
                 state.searchedProcessing = state.processing;
                 state.searchedInactive = state.inactive;

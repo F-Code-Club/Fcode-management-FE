@@ -36,7 +36,7 @@ const PersonalDetailBlog = () => {
             delete newBlog.category;
             const { data } = await articleApi.updateArticle(newBlog);
             if (data.code === 200) {
-                toastSuccess(data.message);
+                toastSuccess('Chỉnh sửa bài viết thành công');
                 navigate('/personal-blog');
             }
         } else {
@@ -49,7 +49,7 @@ const PersonalDetailBlog = () => {
             };
             const { data } = await articleApi.createArticle(newBlog);
             if (data.code === 200) {
-                toastSuccess(data.message);
+                toastSuccess('Tạo bài viết thành cống');
                 navigate('/personal-blog');
             }
         }

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { Table, Input, Space } from 'antd';
-import { useDispatch } from 'react-redux';
+import { Table, Input, Space, Skeleton } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { changeBlog } from '../slice';
+import { changeBlog, getAllBlogs } from '../slice';
+import { selectCurrentBlog } from '../slice/selector';
 import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
@@ -14,24 +15,34 @@ const { Search } = Input;
 
 const PersonalBlog = () => {
     const [blogs, setBlogs] = useState({
-        all: [],
-        search: [],
+        all: useSelector(selectCurrentBlog).author,
+        search: useSelector(selectCurrentBlog).author,
         isDelete: false,
+        loading: false,
     });
 
+    const dispatch = useDispatch();
     useEffect(() => {
         (async () => {
-            const { data } = await articleApi.getArticleByAuthor();
-            setBlogs({ ...blogs, all: data.data, search: data.data });
+            // const { data } = await articleApi.getArticleByAuthor();
+            // setBlogs({ ...blogs, all: data.data, search: data.data });
+            setBlogs({ ...blogs, loading: true });
+            await dispatch(getAllBlogs()).then((res) =>
+                setBlogs({
+                    ...blogs,
+                    loading: false,
+                    all: res.payload.author,
+                    search: res.payload.author,
+                })
+            );
         })();
     }, [blogs.isDelete]); // If a blog is deleted, it will re-render to get all blogs
 
     const deleteBlog = async (id) => {
         await articleApi.deleteArticle(id);
-        setBlogs({ ...blogs, isDelete: !blogs.isDelete });
+        setBlogs({ ...blogs, isDelete: true });
     };
 
-    const dispatch = useDispatch();
     const handleChangeBlog = (id) => {
         dispatch(changeBlog(blogs.search.filter((blog) => blog.id === id)[0]));
     };
@@ -126,7 +137,9 @@ const PersonalBlog = () => {
                         <Link to="/personal-blog/create">Tạo bài viết</Link>
                     </Button>
                 </Styled.Search>
-                <Table columns={columns} dataSource={blogs.search} />
+                <Skeleton loading={blogs.loading}>
+                    <Table columns={columns} dataSource={blogs.search} />
+                </Skeleton>
             </Styled.Wrapper>
         </Styled.Background>
     );

@@ -56,7 +56,7 @@ const BlogForm = () => {
                 content: HTMLToEditorState(newBlog.content),
             });
         })();
-    }, [window.location]);
+    }, []);
 
     const onFinish = async (values) => {
         let res;
@@ -71,7 +71,7 @@ const BlogForm = () => {
             delete newBlog.memberId;
             res = await articleApi.updateArticle(newBlog);
             if (res.data.code === 200) {
-                toastSuccess(res.data.message);
+                toastSuccess('Chỉnh sửa bài viết thành công');
                 navigate('/personal-blog');
             }
         } else {
@@ -86,7 +86,7 @@ const BlogForm = () => {
             };
             res = await articleApi.createArticle(newBlog);
             if (res.data.code === 200) {
-                toastSuccess(res.data.message);
+                toastSuccess('Tạo bài viết thành công');
                 navigate('/personal-blog');
             }
         }
@@ -112,6 +112,8 @@ const BlogForm = () => {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    console.log(blog.content);
 
     const FORM_LIST = [
         {
@@ -151,6 +153,14 @@ const BlogForm = () => {
         {
             label: 'Nội dung bài viết',
             name: 'content',
+            validateStatus: (() => {
+                if (blog.content) {
+                    // TODO: Hỏi anh Bình. anh Nghĩa validate cái này
+                    return EditorStateToHTML(blog.content).trim().toString() != '<p></p>\n'
+                        ? 'success'
+                        : 'error';
+                }
+            })(),
             rules: [
                 {
                     required: true,
@@ -252,6 +262,7 @@ const BlogForm = () => {
                             rules={item.rules}
                             extra={item.extra}
                             tooltip={item.tooltip}
+                            validateStatus={item.validateStatus}
                             key={idx}
                         >
                             {item.children}

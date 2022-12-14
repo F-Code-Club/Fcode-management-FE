@@ -1,35 +1,42 @@
 import { useEffect, useState } from 'react';
 
-import { convertFromRaw, EditorState } from 'draft-js';
+import { ContentState, EditorState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { selectAnnounce } from '../../slice/selectors';
 import { ContainerAnnounce, ContentAnnounce } from './style';
 
+import { get } from '@/utils/ApiCaller';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const ViewAnnouncement = () => {
+    const token = localStorage.getItem('token');
     const [state, setState] = useState();
     const { id } = useParams();
     const navigate = useNavigate();
-    const listAnnounce = useSelector(selectAnnounce);
 
     useEffect(() => {
-        let item = null;
-        for (let i = 0; i < listAnnounce.length; i++) {
-            if (listAnnounce[i].id == id) {
-                item = listAnnounce[i];
-                break;
-            }
-        }
-        if (item != null) {
-            setState(item);
-        } else {
-            navigate('/manage-announcement');
-        }
+        get(`/announcement/one/${id}`, '', { authorization: token })
+            .then((item) => {
+                if (item != null) {
+                    setState(item.data.data);
+                } else {
+                    navigate('/manage-announcement');
+                }
+            })
+            .catch((error) => console.log(error));
     }, [id]);
+
+    const getContentEditorState = (item) => {
+        try {
+            return EditorState.createWithContent(
+                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+            );
+        } catch (error) {
+            return EditorState.createEmpty();
+        }
+    };
 
     return (
         <ContainerAnnounce>
@@ -37,9 +44,7 @@ export const ViewAnnouncement = () => {
                 <ContentAnnounce>
                     <h1 className="title">{state.title}</h1>
                     <Editor
-                        editorState={EditorState.createWithContent(
-                            convertFromRaw(JSON.parse(state.content))
-                        )}
+                        editorState={getContentEditorState(state.description)}
                         wrapperClassName="demo-wrapper"
                         editorClassName="demo-editor"
                         readOnly

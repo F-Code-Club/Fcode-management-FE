@@ -2,6 +2,7 @@ import { toastError } from './../../../components/ToastNotification/index';
 import articleApi from './../../../utils/apiComponents/articleApi';
 
 import { injectReducer } from '@/store';
+import { searchString } from '@/utils/stringHelper';
 // import articleApi from '@/utils/apiComponents/articleApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -12,8 +13,23 @@ export const initialState = {
     active: [],
     processing: [],
     inactive: [],
+    searchedActive: [],
+    searchedProcessing: [],
+    searchedInactive: [],
 };
-
+export const filterBlogs = createAsyncThunk('blog/filterBlogs', async (keyword, thunkApi) => {
+    // search blog by keyword
+    const active = thunkApi
+        .getState()
+        .blog.active?.filter((item) => searchString(item.title, keyword));
+    const processing = thunkApi
+        .getState()
+        .blog.processing?.filter((item) => searchString(item.title, keyword));
+    const inactive = thunkApi
+        .getState()
+        .blog.inactive?.filter((item) => searchString(item.title, keyword));
+    return { active, processing, inactive };
+});
 export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
     const active = await articleApi
         .getActiveArticle()
@@ -50,11 +66,28 @@ const slice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getAllBlogs.fulfilled, (state, action) => {
-            state.active = action.payload.active?.sort((a, b) => (a.id > b.id ? 1 : -1));
-            state.processing = action.payload.processing?.sort((a, b) => (a.id > b.id ? 1 : -1));
-            state.inactive = action.payload.inactive?.sort((a, b) => (a.id > b.id ? 1 : -1));
-        });
+        builder
+            .addCase(getAllBlogs.fulfilled, (state, action) => {
+                state.active = action.payload.active?.sort((a, b) => (a.id > b.id ? 1 : -1));
+                state.processing = action.payload.processing?.sort((a, b) =>
+                    a.id > b.id ? 1 : -1
+                );
+                state.inactive = action.payload.inactive?.sort((a, b) => (a.id > b.id ? 1 : -1));
+                state.searchedActive = state.active;
+                state.searchedProcessing = state.processing;
+                state.searchedInactive = state.inactive;
+            })
+            .addCase(filterBlogs.fulfilled, (state, action) => {
+                state.searchedActive = action.payload.active?.sort((a, b) =>
+                    a.id > b.id ? 1 : -1
+                );
+                state.searchedProcessing = action.payload.processing?.sort((a, b) =>
+                    a.id > b.id ? 1 : -1
+                );
+                state.searchedInactive = action.payload.inactive?.sort((a, b) =>
+                    a.id > b.id ? 1 : -1
+                );
+            });
     },
 });
 

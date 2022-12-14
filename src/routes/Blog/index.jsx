@@ -1,18 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Table, Tabs, Input } from 'antd';
+import { Table, Tabs, Input, Skeleton } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { columns, columns2, columns3 } from './Blog.data';
 import * as Styled from './Blog.styled';
+import { filterBlogs, getAllBlogs } from './slice';
+// import articleApi from '@/utils/apiComponents/articleApi';
 // import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
 import { selectCurrentBlog } from './slice/selector';
 
 // import { toastError } from '@/components/ToastNotification';
-import { getAllBlogs } from '@/routes/Blog/slice';
-
-// import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Search } = Input;
 
@@ -21,29 +20,50 @@ const Blog = () => {
     const blogs = useSelector(selectCurrentBlog);
     const location = useLocation();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
-            dispatch(getAllBlogs());
+            setLoading(true);
+            console.log(blogs);
+            await dispatch(getAllBlogs())
+                .unwrap()
+                .then(() => setLoading(false));
         };
         fetchData();
     }, [location]);
-
+    const onSearch = async (value) => {
+        setLoading(true);
+        await dispatch(filterBlogs(value))
+            .unwrap()
+            .then(() => setLoading(false));
+    };
     return (
         <Styled.Background>
             <Styled.Wrapper>
                 <Tabs defaultActiveKey="1">
                     <Tabs.TabPane tab="Chờ đươc duyệt" key="1">
-                        <Table columns={columns} dataSource={blogs.processing} />
+                        <Skeleton loading={loading}>
+                            <Table columns={columns} dataSource={blogs.searchedProcessing} />
+                        </Skeleton>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Đã được duyệt" key="2">
-                        <Table columns={columns2} dataSource={blogs.active} />
+                        <Skeleton loading={loading}>
+                            <Table columns={columns2} dataSource={blogs.searchedActive} />
+                        </Skeleton>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Từ chối duyệt" key="3">
-                        <Table columns={columns3} dataSource={blogs.inactive} />
+                        <Skeleton loading={loading}>
+                            <Table columns={columns3} dataSource={blogs.searchedInactive} />
+                        </Skeleton>
                     </Tabs.TabPane>
                 </Tabs>
                 <Styled.Search>
-                    <Search placeholder="Nhập tên bài viết cần tìm" enterButton />
+                    <Search
+                        placeholder="Nhập tên bài viết cần tìm"
+                        enterButton
+                        loading={loading}
+                        onSearch={(value) => onSearch(value)}
+                    />
                 </Styled.Search>
             </Styled.Wrapper>
         </Styled.Background>

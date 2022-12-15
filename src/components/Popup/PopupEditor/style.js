@@ -21,9 +21,9 @@ export const ContainerEditor = styled.div`
     top: 0;
     left: 0;
     animation: ${move} 0.15s linear forwards;
-    /* wave-shadow-color: red; */
     .editor {
         width: 70%;
+        min-width: 900px;
         position: absolute;
         margin-bottom: 3rem;
         background: white;
@@ -32,6 +32,10 @@ export const ContainerEditor = styled.div`
         transform: translate(-50%, -50%);
         border-radius: 10px;
         padding: 25px;
+        h2 {
+            text-align: center;
+            margin: 0 auto;
+        }
         .rdw-link-modal,
         .rdw-embedded-modal {
             height: auto;
@@ -43,7 +47,31 @@ export const ContainerEditor = styled.div`
         }
         .checkbox {
             margin: 0.5rem 0;
-            display: flex;
+            display: grid;
+            grid-template-columns: 49% 49%;
+            justify-content: space-between;
+            .container-choose-receiver {
+                display: flex;
+                flex-direction: column;
+                margin-top: 1rem;
+                h3 {
+                    margin: auto 0;
+                }
+                .ant-checkbox-wrapper {
+                    display: flex;
+                    align-items: center;
+                }
+                .choose-receiver {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin-bottom: 1rem;
+                }
+                .choose-individual {
+                    display: grid;
+                    grid-template-columns: 85px calc(100% - 85px);
+                }
+            }
         }
         .container-btn {
             text-align: center;
@@ -59,6 +87,18 @@ export const ContainerEditor = styled.div`
                 background: white;
             }
         }
+        .close-btn {
+            cursor: pointer;
+            padding: 2px;
+            transition: 0.2s linear;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            :hover {
+                color: red;
+                transform: rotate(90deg);
+            }
+        }
     }
     .errorMsg {
         color: red;
@@ -72,3 +112,12 @@ export const FirstLayer = styled.div`
     background: rgba(0, 0, 0, 0.38);
     position: absolute;
 `;
+
+export const optionStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '8px',
+    background: 'white',
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.15)',
+    lineHeight: '25px',
+};

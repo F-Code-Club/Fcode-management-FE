@@ -40,13 +40,7 @@ const itemsAdmin = [
     getItem(
         <SidebarLink to="/manage-announcement" child="Quản lý thông báo" />,
         '6',
-        <NotificationOutlined />,
-        [
-            getItem(
-                <SidebarLink to="/manage-announcement/view-announcement" child="Xem thông báo" />,
-                '10'
-            ),
-        ]
+        <NotificationOutlined />
     ),
     getItem(
         <SidebarLink to="/recruitmembers" child="Tuyển thành viên" />,

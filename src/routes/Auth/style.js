@@ -40,9 +40,11 @@ export const LoginWrapper = styled(Wrapper)`
 
 export const StyledHeading = styled.h1`
     margin-top: 20px;
+    padding: 0 0.75rem;
     color: ${themes.colors.high_contrast};
     font-size: ${28 / 14}rem;
     font-weight: 500;
+    text-align: center;
     font-family: 'Inter', sans-serif;
     & strong {
         font-weight: 900;
@@ -55,8 +57,9 @@ export const LoginHeading = (props) => {
 
 export const StyledDescription = styled.p`
     color: ${themes.colors.lowContrast};
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-weight: 500;
+    text-align: center;
 `;
 
 export const LoginDescription = (props) => {

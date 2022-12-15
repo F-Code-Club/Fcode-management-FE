@@ -1,8 +1,6 @@
-import { useDispatch } from 'react-redux';
 import { useLocation, Navigate } from 'react-router-dom';
 
 import Icon from '../../components/Icon';
-import { setUser } from './slice';
 import {
     Logo,
     LoginWrapper,
@@ -17,8 +15,6 @@ import {
 import LocalStorageUtils from '@/utils/localStorageUtils';
 
 const Auth = () => {
-    const dispatch = useDispatch();
-
     const ApiUrl = process.env.REACT_APP_API_URL + '/login/member';
     // get token from the url after successful signed in
     let location = useLocation();
@@ -35,23 +31,6 @@ const Auth = () => {
         return <Navigate to="/" replace />;
     }
 
-    const getUser = async () => {
-        console.log('run');
-        await LocalStorageUtils.getUser().then((user) => {
-            if (user.code === 200) {
-                const { data } = user;
-                const formatUser = {
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    role: data.role,
-                };
-                console.log('line 48', formatUser);
-                dispatch(setUser(formatUser));
-            }
-        });
-        return null;
-        // const result = await memberApi.getMemberByStudentId(id);
-    };
     //0 : student
     //1 : member
     //2 : manager
@@ -76,7 +55,7 @@ const Auth = () => {
                     }}
                 />
             </LoginButton>
-            <button onClick={getUser}>click me but need but token </button>
+
             <LoginCredit>
                 Designed by <strong>F-Code Team.</strong>
             </LoginCredit>

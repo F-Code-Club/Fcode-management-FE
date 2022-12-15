@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, Image, Input, Modal } from 'antd';
 
@@ -8,33 +8,45 @@ import { PlusOutlined } from '@ant-design/icons';
 
 export const UploadImage = (props) => {
     const actions = props.onChange;
-    const [imgList, setImgList] = useState(props.type === 'edit' ? props.imgs : []);
     const [loading, setLoading] = useState(false);
-    const [newUrl, setNewUrl] = useState({
-        url1: props.type === 'edit' ? props.imgs[0] : '',
-        url2: props.type === 'edit' ? props.imgs[1] : '',
-    });
+    const [imgUrl, setImgUrl] = useState({ url1: '', url2: '' });
+    const [newUrl, setNewUrl] = useState({ url1: '', url2: '' });
+
+    useEffect(() => {
+        if (props.type === 'edit' && props.imageUrl) {
+            let dataUrl = props.imageUrl.split(';');
+            switch (dataUrl.length) {
+                case 1:
+                    setImgUrl({ url1: dataUrl[0] });
+                    setNewUrl({ url1: dataUrl[0] });
+                    break;
+                case 2:
+                    setImgUrl({ url1: dataUrl[0], url2: dataUrl[1] });
+                    setNewUrl({ url1: dataUrl[0], url2: dataUrl[1] });
+                    break;
+            }
+        }
+    }, []);
 
     const handleUpload = () => {
-        let res = [];
-        if (newUrl.url1.trim() != '' || newUrl.url1) res.push(newUrl.url1);
-        if (newUrl.url2.trim() != '' || newUrl.url2) res.push(newUrl.url2);
+        let res = newUrl.url1.trim();
+        if (newUrl.url1.trim() != '' && newUrl.url2.trim() != '') res = res + ';';
+        res = res + newUrl.url2.trim();
+        setImgUrl({ url1: newUrl.url1.trim(), url2: newUrl.url2.trim() });
         actions(res);
-        setImgList(res);
+        setLoading(false);
+    };
+    const handleCancel = () => {
         setLoading(false);
     };
 
     return (
         <ContainerUploadImg>
             <h3 className="title">
-                Upload <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>(Optional)</span> :
+                Thêm hình :<div style={{ color: 'rgba(0, 0, 0, 0.45)' }}>(Optional)</div>
             </h3>
-
-            {imgList.length > 0 &&
-                imgList.map(
-                    (item, key) =>
-                        item && <Image key={key} alt="Not found" height={100} src={item} />
-                )}
+            {imgUrl.url1 && <Image src={imgUrl.url1.trim()} alt="announcement" height={100} />}
+            {imgUrl.url2 && <Image src={imgUrl.url2.trim()} alt="announcement" height={100} />}
 
             <ImageUpload onClick={() => setLoading(true)}>
                 <PlusOutlined />
@@ -45,7 +57,7 @@ export const UploadImage = (props) => {
                 open={loading}
                 title="Nhập url của hình ảnh vào đây:"
                 footer={false}
-                onCancel={() => setLoading(false)}
+                onCancel={() => handleCancel()}
                 closable={true}
                 centered
             >
@@ -73,10 +85,14 @@ export const UploadImage = (props) => {
                         placeholder="https://image"
                     />
                     <br />
-                    {newUrl.url1 && <Image src={newUrl.url1} alt="Not found" height={100} />}
-                    {newUrl.url2 && <Image src={newUrl.url2} alt="Not found" height={100} />}
+                    {newUrl.url1 && (
+                        <Image src={newUrl.url1.trim()} alt="announcement" height={100} />
+                    )}
+                    {newUrl.url2 && (
+                        <Image src={newUrl.url2.trim()} alt="announcement" height={100} />
+                    )}
                     <div className="two-button">
-                        <Button onClick={() => setLoading(false)} className="cancel-btn">
+                        <Button onClick={() => handleCancel()} className="cancel-btn">
                             Hủy
                         </Button>
                         <Button onClick={() => handleUpload()} className="ok-btn">

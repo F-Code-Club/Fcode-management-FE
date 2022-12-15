@@ -4,7 +4,6 @@ import { faker } from '@faker-js/faker';
 import { createSlice } from '@reduxjs/toolkit';
 
 const fullName = faker.name.fullName().split(' ');
-
 export const initialState = {
     fullName: fullName.join(' '),
     avatar: faker.image.cats(160, 160),
@@ -19,37 +18,7 @@ export const initialState = {
     personalEmail: faker.internet.email(fullName[0], fullName[1], 'gmail.com'),
     facebook: 'facebook.com/' + faker.internet.userName(fullName[0], fullName[1]),
     bio: '',
-    tags: {
-        organizer: 'geekblue',
-        participant: 'green',
-        developer: 'volcano',
-    },
-    activities: [
-        {
-            key: '0',
-            semester: 'FA23',
-            activity: 'Techaway',
-            roles: ['participant', 'developer', 'organizer'],
-        },
-        {
-            key: '1',
-            semester: 'SU20',
-            activity: 'Battle R.ODE',
-            roles: ['organizer', 'participant'],
-        },
-        {
-            key: '2',
-            semester: 'SP22',
-            activity: 'Recruitment',
-            roles: ['organizer'],
-        },
-        {
-            key: '4',
-            semester: 'SP21',
-            activity: 'Team building',
-            roles: ['organizer', 'participant'],
-        },
-    ],
+    isUpdate: 'hi',
     modal: {
         confirm: false,
     },
@@ -62,16 +31,26 @@ export const slice = createSlice({
     initialState,
     reducers: {
         ...generateActions(initialState),
-        removeRole: (state, action) => {
-            const { key, role } = action.payload;
-            const activityIndex = state.activities.findIndex((activity) => activity.key == key);
-            const roles = state.activities[activityIndex].roles;
-            state.activities[activityIndex].roles = roles.filter((_role) => _role != role);
-        },
+
         modal_confirm: (state, action) => {
             state.modal.confirm = action.payload;
         },
-        // setAccount: (state, action) => {},
+        setAccount: (state, action) => {
+            console.log('redux');
+            state.fullName = action.payload.firstName;
+            (state.avatar =
+                'https://scontent.fsgn2-4.fna.fbcdn.net/v/t1.15752-9/318388454_560905159186930_4013435206853235624_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=ae9488&_nc_ohc=X8_2wSY4oWYAX_d-cLd&_nc_ht=scontent.fsgn2-4.fna&oh=03_AdR_ySyMrHF83Repe7IxOHjGFgMY7Ub197Olezoig2pRTQ&oe=63C00F38'),
+                (state.heroImage = faker.image.city(920, 200)),
+                (state.joinDate = action.payload.clubEntryDate);
+            (state.role = action.payload.role),
+                (state.position = 'Chủ nhiệm'),
+                (state.currentGender = (Math.random() <= 0.5) / 1),
+                (state.birthdate = action.payload.dateOfBirth);
+            state.emailFPT = action.payload.schoolMail;
+            state.personalEmail = action.payload.personalMail;
+            state.facebook = action.payload.facebookUrl;
+            state.bio = action.description;
+        },
     },
 });
 

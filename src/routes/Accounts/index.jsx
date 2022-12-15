@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // import { themes, actions } from '@/theme/theme';
 import ListAction from './ListAction/index';
 import ListHeader from './ListHeader';
-import { actions } from './account.data';
+import { token, actions } from './account.data';
 // import DUMMY_ACCOUNTS from './account.data';
 import { ListWrapper, Wrapper } from './style';
 
@@ -16,8 +16,7 @@ import productApi from '@/utils/productApi';
 const AccountsManager = () => {
     const [accountList, setAccountList] = useState([]);
     const [loading, setLoading] = useState(false);
-    let token =
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW9uZHNlMTczMDI0QGZwdC5lZHUudm4iLCJleHAiOjE2NzA5NTM0NzIsImlhdCI6MTY3MDk1MTY3Mn0.Rmeva_O4cnGtjMf1F_Zh8-71xHXp3eRLJWJK3IVz2qgzyQrLE_t7Zc60cetb_87zd2oyQFIi7_ea-oQB1iGhNw';
+
     const loadMoreData = async () => {
         if (loading) {
             return;

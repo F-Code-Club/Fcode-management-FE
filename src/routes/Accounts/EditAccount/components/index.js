@@ -1,4 +1,3 @@
-import ActivityTable from './data-display/ActivityTable';
 import InputBio from './data-entry/InputBio';
 import InputEmailFPT from './data-entry/InputEmailFPT';
 import InputFacebook from './data-entry/InputFacebook';
@@ -10,7 +9,6 @@ import ConfirmModal from './feedback/ConfirmModal';
 import FullName from './general/FullName';
 
 export {
-    ActivityTable,
     InputBio,
     InputFacebook,
     InputFullName,

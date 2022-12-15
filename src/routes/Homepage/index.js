@@ -1,12 +1,43 @@
-import { Avatar, List } from 'antd';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
+import { Avatar, List } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { setUser } from '../Auth/slice';
 import { DATA } from './components/fakeData/data';
 import { Col1, Col2, ContainerHomepage } from './style';
 
-export const Homepage = () => {
-    const data = DATA;
+import authApi from '@/utils/apiComponents/authApi';
+import LocalStorageUtils from '@/utils/localStorageUtils';
 
+export const Homepage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const data = DATA;
+    useEffect(() => {
+        // const token = LocalStorageUtils.getItem('token');
+        // const userId = LocalStorageUtils.getJWTUser().id;
+        const getData = async () => {
+            const response = await authApi.getUser();
+            console.log(response);
+
+            if (response.data.code === 200) {
+                const { data } = response.data;
+                const formatUser = {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    role: data.role,
+                };
+                dispatch(setUser(formatUser));
+            }
+            if (response.data.code === 408) {
+                LocalStorageUtils.removeItem('token');
+                navigate('/auth');
+            }
+        };
+        getData();
+    }, []);
     return (
         <ContainerHomepage>
             <Col1>

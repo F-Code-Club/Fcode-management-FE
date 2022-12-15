@@ -31,10 +31,10 @@ const Auth = () => {
             success: UrlParams.get('success'),
             token: UrlParams.get('token'),
         };
-        console.log(response.token);
         LocalStorageUtils.setItem('token', response.token);
         return <Navigate to="/" replace />;
     }
+
     const getUser = async () => {
         console.log('run');
         await LocalStorageUtils.getUser().then((user) => {

@@ -3,10 +3,14 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { selectUser } from './Auth/slice/selector';
 
-const ManagerRoute = async () => {
+const ManagerRoute = () => {
     const User = useSelector(selectUser);
 
-    return User === 'MANAGER' ? <Outlet /> : <Navigate to="/" replace />;
+    return User.role === 'MANAGER' || User.role === 'ADMIN' ? (
+        <Outlet />
+    ) : (
+        <Navigate to="/auth" replace />
+    );
 };
 
 export default ManagerRoute;

@@ -19,7 +19,7 @@ import LocalStorageUtils from '@/utils/localStorageUtils';
 const Auth = () => {
     const dispatch = useDispatch();
 
-    const ApiUrl = process.env.REACT_APP_API_URL + '/login/member/';
+    const ApiUrl = process.env.REACT_APP_API_URL + '/login/member';
     // get token from the url after successful signed in
     let location = useLocation();
 
@@ -31,11 +31,12 @@ const Auth = () => {
             success: UrlParams.get('success'),
             token: UrlParams.get('token'),
         };
-        getUser();
+        console.log(response.token);
         LocalStorageUtils.setItem('token', response.token);
         return <Navigate to="/" replace />;
     }
     const getUser = async () => {
+        console.log('run');
         await LocalStorageUtils.getUser().then((user) => {
             if (user.code === 200) {
                 const { data } = user;
@@ -44,9 +45,11 @@ const Auth = () => {
                     lastName: data.lastName,
                     role: data.role,
                 };
+                console.log('line 48', formatUser);
                 dispatch(setUser(formatUser));
             }
         });
+        return null;
         // const result = await memberApi.getMemberByStudentId(id);
     };
     //0 : student

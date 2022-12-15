@@ -16,7 +16,7 @@ const ResourceCard = ({ clickEvent, item }) => {
     return (
         <CardWrapper>
             <BackgroundCard url={`${ResourceImage}`}>
-                <TitleResource>kỳ Học: {item.semester}</TitleResource>
+                <TitleResource>Kỳ học: {item.semester}</TitleResource>
                 <ContentResource>{item.name}</ContentResource>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '200px' }}>

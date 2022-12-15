@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const ContainerAnnounce = styled.div`
-    min-height: calc(100vh - 190px);
-    padding: 0 10rem;
+    min-height: calc(100vh - 140px);
+    padding: 0 5rem;
     .rdw-editor-toolbar {
         display: none;
     }

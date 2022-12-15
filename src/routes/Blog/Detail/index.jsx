@@ -35,6 +35,7 @@ const BlogDetailComponent = () => {
     const [editorState, setEditorState] = useState(() =>
         EditorState.createWithContent(contentState)
     );
+    console.log(data.content);
     //TODO: routing to blog when finish
     // If out of data
     if (

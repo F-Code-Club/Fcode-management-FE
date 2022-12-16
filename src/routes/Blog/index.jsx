@@ -24,7 +24,6 @@ const Blog = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            console.log(blogs);
             await dispatch(getAllBlogs())
                 .unwrap()
                 .then(() => setLoading(false));

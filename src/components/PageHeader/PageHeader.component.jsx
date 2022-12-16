@@ -23,8 +23,11 @@ let breadcrumbNameMap = {
     '/event': 'Quản lý sự kiện',
     '/source': 'Quản lý tài nguyên',
     '/member': 'Quản lý thành viên',
-    '/blog': 'Quản lý bài viết',
-    '/blog/create': 'Tạo bài viết',
+    '/blog': 'Quản lý bài viết thành viên',
+    '/personal-blog': 'Quản lý bài viết cá nhân',
+    '/personal-blog/create': 'Tạo bài viết',
+    '/personal-blog/edit': 'Chỉnh sửa bài viết',
+    '/personal-blog/preview': 'Xem trước bài viết',
     '/manage-announcement': 'Quản lý thông báo',
     '/manage-announcement/view-announcement': 'Xem thông báo',
     '/information': 'Thông tin cá nhân',
@@ -35,7 +38,7 @@ let breadcrumbNameMap = {
     '/information/view-information': 'Xem thông tin',
 };
 for (let i = 1; i <= 100; i++) {
-    breadcrumbNameMap[`/blog/${i}`] = `Bài viết số ${i}`;
+    breadcrumbNameMap[`/personal-blog/${i}`] = `Chi tiết bài viết`;
     breadcrumbNameMap[`/manage-announcement/view-announcement/${i}`] = `Thông báo số ${i}`;
 }
 const PageHeaderComponent = () => {

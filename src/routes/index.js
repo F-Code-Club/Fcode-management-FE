@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import BlogDetailComponent from './Blog/Detail';
+import PersonalBlog from './Blog/Personal';
+import PersonalDetailBlog from './Blog/Personal/Detail/index';
+import BlogForm from './Blog/Personal/Form';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -60,6 +63,43 @@ const privateRoute = [
     {
         path: '/blog/:id',
         component: <BlogDetailComponent />,
+        exact: false,
+        restrict: true,
+    },
+    // Personal Blog
+    {
+        path: '/personal-blog',
+        component: <PersonalBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
         exact: false,
         restrict: true,
     },

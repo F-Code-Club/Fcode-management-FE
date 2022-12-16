@@ -26,15 +26,19 @@ const Blog = () => {
             setLoading(true);
             await dispatch(getAllBlogs())
                 .unwrap()
-                .then(() => setLoading(false));
+                // eslint-disable-next-line no-console
+                .catch((err) => console.log(err))
+                .finally(() => setLoading(false));
         };
         fetchData();
-    }, [location]);
+    }, [location.pathname]);
     const onSearch = async (value) => {
         setLoading(true);
         await dispatch(filterBlogs(value))
             .unwrap()
-            .then(() => setLoading(false));
+            // eslint-disable-next-line no-console
+            .catch((err) => console.log(err))
+            .finally(() => setLoading(false));
     };
     return (
         <Styled.Background>

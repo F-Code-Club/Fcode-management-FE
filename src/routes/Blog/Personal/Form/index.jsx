@@ -110,10 +110,9 @@ const BlogForm = () => {
     };
 
     const onFinishFailed = (errorInfo) => {
+        // eslint-disable-next-line no-console
         console.log('Failed:', errorInfo);
     };
-
-    console.log(blog.content);
 
     const FORM_LIST = [
         {

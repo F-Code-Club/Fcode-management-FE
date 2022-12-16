@@ -19,6 +19,7 @@ import { actions as titleHeaderActions } from '@/components/PageHeader/slice/ind
 import { toastError } from '@/components/ToastNotification';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
+import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 
 const { Text, Title } = Typography;
 
@@ -46,12 +47,7 @@ const BlogDetailComponent = () => {
             setArticleData(data);
             dispatch(changeBlog(data));
             try {
-                const content = htmlToDraft(JSON.parse(data.content));
-                setEditorState(
-                    EditorState.createWithContent(
-                        ContentState.createFromBlockArray(content.contentBlocks)
-                    )
-                );
+                setEditorState(HTMLToEditorState(data.content));
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.log(e);

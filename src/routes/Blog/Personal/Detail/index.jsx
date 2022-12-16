@@ -1,8 +1,9 @@
 import { Button, Image, Row, Space } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { changeBlog } from '../../slice';
 import { selectCurrentBlog } from '../../slice/selector';
 import { Wrapper, ContentBlog, InfoList, InfoItem } from './PersonalDetail.styled';
 
@@ -11,6 +12,7 @@ import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 
 const PersonalDetailBlog = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     // Convert HTML JSON to Editor state
@@ -36,6 +38,7 @@ const PersonalDetailBlog = () => {
             delete newBlog.category;
             const { data } = await articleApi.updateArticle(newBlog);
             if (data.code === 200) {
+                dispatch(changeBlog({}));
                 toastSuccess('Chỉnh sửa bài viết thành công');
                 navigate('/personal-blog');
             }
@@ -49,6 +52,7 @@ const PersonalDetailBlog = () => {
             };
             const { data } = await articleApi.createArticle(newBlog);
             if (data.code === 200) {
+                dispatch(changeBlog({}));
                 toastSuccess('Tạo bài viết thành cống');
                 navigate('/personal-blog');
             }

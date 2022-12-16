@@ -9,7 +9,7 @@ import { changeBlog } from '../../slice';
 import { selectCurrentBlog } from '../../slice/selector';
 import * as Styled from './BlogForm.styled';
 
-import { toastSuccess } from '@/components/ToastNotification';
+import { toastError, toastSuccess } from '@/components/ToastNotification';
 import { EditorStateToHTML, HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 
@@ -71,6 +71,7 @@ const BlogForm = () => {
             delete newBlog.memberId;
             res = await articleApi.updateArticle(newBlog);
             if (res.data.code === 200) {
+                dispatch(changeBlog({}));
                 toastSuccess('Chỉnh sửa bài viết thành công');
                 navigate('/personal-blog');
             }
@@ -86,6 +87,7 @@ const BlogForm = () => {
             };
             res = await articleApi.createArticle(newBlog);
             if (res.data.code === 200) {
+                dispatch(changeBlog({}));
                 toastSuccess('Tạo bài viết thành công');
                 navigate('/personal-blog');
             }
@@ -93,27 +95,34 @@ const BlogForm = () => {
     };
 
     const handlePreview = () => {
-        let newBlog = {};
-        fields.forEach((item) => {
-            newBlog[item.name] = item.value;
-        });
-        dispatch(
-            changeBlog({
-                ...newBlog,
-                content: EditorStateToHTML(blog.content),
-                imageUrl: blog.imageUrl,
-                isEdit: true,
-            })
-        );
-        if (blogID) navigate(`/personal-blog/preview/${blogID}`);
-        else navigate('/personal-blog/preview/');
+        const isAllFieldsTouched =
+            Object.values(form.getFieldsValue()).every((x) => x) && !!blog.content;
+        if (!isAllFieldsTouched) {
+            toastError('Hãy hoàn tất form nhé');
+            form.submit();
+        } else {
+            // const isValid = form.getFieldsError().every((item) => !item.errors.length);
+            let newBlog = {};
+            fields.forEach((item) => {
+                newBlog[item.name] = item.value;
+            });
+            dispatch(
+                changeBlog({
+                    ...newBlog,
+                    content: EditorStateToHTML(blog.content),
+                    imageUrl: blog.imageUrl,
+                    isEdit: true,
+                    // isValid,
+                })
+            );
+            if (blogID) navigate(`/personal-blog/preview/${blogID}`);
+            else navigate('/personal-blog/preview/');
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-
-    console.log(blog.content);
 
     const FORM_LIST = [
         {
@@ -153,14 +162,14 @@ const BlogForm = () => {
         {
             label: 'Nội dung bài viết',
             name: 'content',
-            validateStatus: (() => {
-                if (blog.content) {
-                    // TODO: Hỏi anh Bình. anh Nghĩa validate cái này
-                    return EditorStateToHTML(blog.content).trim().toString() != '<p></p>\n'
-                        ? 'success'
-                        : 'error';
-                }
-            })(),
+            // validateStatus: (() => {
+            //     if (blog.content) {
+            //         // TODO: Hỏi anh Bình. anh Nghĩa validate cái này
+            //         return EditorStateToHTML(blog.content).trim().toString() != '<p></p>\n'
+            //             ? 'success'
+            //             : 'error';
+            //     }
+            // })(),
             rules: [
                 {
                     required: true,

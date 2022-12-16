@@ -107,12 +107,15 @@ const BlogDetailComponent = () => {
                             editorState={editorState}
                             toolbarHidden={true}
                             onChange={setEditorState}
+                            editorStyle={{
+                                overflow: 'hidden',
+                            }}
                             readOnly="false"
                         />
                     </StyledContainer>
                 </Col>
                 {currentAction === 'active' && (
-                    <Col align="middle" span={1}>
+                    <Col align="middle" xxl={1} xs={2}>
                         <Affix offsetTop={10}>
                             <StyledContainer padding="1.2rem 1rem">
                                 <Row gutter={[0, 32]}>

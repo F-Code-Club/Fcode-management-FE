@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { Button, Image, Row, Space } from 'antd';
+import moment from 'moment';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,7 +10,7 @@ import { changeBlog } from '../../slice';
 import { selectCurrentBlog } from '../../slice/selector';
 import { Wrapper, ContentBlog, InfoList, InfoItem } from './PersonalDetail.styled';
 
-import { toastSuccess } from '@/components/ToastNotification';
+import { toastError, toastSuccess } from '@/components/ToastNotification';
 import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 
@@ -15,24 +18,35 @@ const PersonalDetailBlog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Convert HTML JSON to Editor state
     const blog = useSelector(selectCurrentBlog).currentBlog;
-    const editorState = HTMLToEditorState(blog.content);
+    const [editorState, setEditorState] = useState('');
 
     // Get ID of blog
     const params = useParams();
     const blogID = params.id;
 
+    useEffect(() => {
+        if (!Object.values(blog).length) navigate('/personal-blog');
+        else if (blog.content) {
+            try {
+                setEditorState(HTMLToEditorState(blog.content));
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.log(e);
+                toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
+            }
+        }
+    }, []);
+
     const handleSubmit = async () => {
         if (!blog.isEdit) {
             navigate(`/personal-blog/edit/${blogID}`);
         } else if (blogID) {
-            // TODO: createdTime and updatedTime will be fixed later
             const newBlog = {
                 ...blog,
                 location: 'Vietnam',
-                createdTime: '2022-12-11',
-                updatedTime: '2022-12-20',
+                createdTime: moment().format('YYYY-MM-DD'),
+                updatedTime: moment().format('YYYY-MM-DD'),
                 id: parseInt(blogID),
             };
             delete newBlog.category;
@@ -59,6 +73,30 @@ const PersonalDetailBlog = () => {
         }
     };
 
+    const INFO_LIST = [
+        {
+            title: 'Trạng thái',
+            content: 'Đã được duyệt',
+        },
+        {
+            title: 'Ngày tạo',
+            content: blog.createdTime,
+        },
+        {
+            title: 'Ngày chỉnh sửa',
+            content: blog.updatedTime,
+        },
+        // TODO: Uncomment these line when having specific genreID
+        // {
+        //     title: 'Thể loại',
+        //     content: 'F-Code, Tách file, ngôn ngữ C',
+        // },
+        {
+            title: 'Ảnh đại diện',
+            content: <Image src={blog.imageUrl} width="200px" />,
+        },
+    ];
+
     return (
         <Wrapper>
             <ContentBlog>
@@ -75,21 +113,12 @@ const PersonalDetailBlog = () => {
                 </Row>
             </ContentBlog>
             <InfoList>
-                <InfoItem>
-                    <strong>Trạng thái:</strong> Đã được duyệt
-                </InfoItem>
-                <InfoItem>
-                    <strong>Ngày tạo:</strong> {blog.createdTime}
-                </InfoItem>
-                <InfoItem>
-                    <strong>Ngày đăng:</strong> {blog.updatedTime}
-                </InfoItem>
-                <InfoItem>
-                    <strong>Thể loại:</strong> F-Code, Tách file, ngôn ngữ C
-                </InfoItem>
-                <InfoItem>
-                    <strong>Ảnh đại hiện:</strong> <Image src={blog.imageUrl} width="200px" />
-                </InfoItem>
+                {Object.keys(blog).length &&
+                    INFO_LIST.map((item) => (
+                        <InfoItem key={item.title}>
+                            <strong>{item.title}:</strong> {item.content}
+                        </InfoItem>
+                    ))}
             </InfoList>
         </Wrapper>
     );

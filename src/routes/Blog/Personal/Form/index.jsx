@@ -163,6 +163,7 @@ const BlogForm = () => {
         {
             label: 'Nội dung bài viết',
             name: 'content',
+            // * In case of validate content of the blog is error, uncomment these line
             // validateStatus: (() => {
             //     if (blog.content) {
             //         // TODO: Hỏi anh Bình. anh Nghĩa validate cái này
@@ -195,6 +196,7 @@ const BlogForm = () => {
             ],
             children: <Input placeholder="Nguyen Van A" />,
         },
+        // * In case of the client need the feature to change font style, uncomment these line
         // {
         //     children: (
         //         <Row gutter={32}>

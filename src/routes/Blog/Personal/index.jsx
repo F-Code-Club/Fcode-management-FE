@@ -24,8 +24,10 @@ const PersonalBlog = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         (async () => {
+            // * Un alternative way to get all blog when calling with Redux Thunk is slow
             // const { data } = await articleApi.getArticleByAuthor();
             // setBlogs({ ...blogs, all: data.data, search: data.data });
+
             setBlogs({ ...blogs, loading: true });
             await dispatch(getAllBlogs()).then((res) =>
                 setBlogs({
@@ -76,6 +78,7 @@ const PersonalBlog = () => {
             dataIndex: 'updatedTime',
             key: 'updatedTime',
         },
+        // TODO: Uncomment these line when having specific genreID
         // {
         //     title: 'Tags',
         //     key: 'tags',

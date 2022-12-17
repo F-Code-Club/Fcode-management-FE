@@ -3,7 +3,6 @@ import { toastError } from './../../../components/ToastNotification/index';
 import { injectReducer } from '@/store';
 import { handler } from '@/utils/apiComponents/ApiHandler';
 import { searchString } from '@/utils/stringHelper';
-// import articleApi from '@/utils/apiComponents/articleApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const name = 'blog';

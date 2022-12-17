@@ -22,32 +22,10 @@ export const columns = [
         dataIndex: 'createdTime',
         key: 'createdTime',
     },
-    // {
-    //     title: 'Tags',
-    //     key: 'tags',
-    //     dataIndex: 'tags',
-    //     render: (_, { tags }) => (
-    //         <>
-    //             {tags.map((tag) => {
-    //                 let color = tag.length > 5 ? 'geekblue' : 'green';
-
-    //                 if (tag === 'loser') {
-    //                     color = 'volcano';
-    //                 }
-
-    //                 return (
-    //                     <Tag color={color} key={tag}>
-    //                         {tag.toUpperCase()}
-    //                     </Tag>
-    //                 );
-    //             })}
-    //         </>
-    //     ),
-    // },
     {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => (
+        render: (_, record) => (
             <Space size="middle">
                 <CustomLink
                     to="/blog"
@@ -87,34 +65,11 @@ export const columns2 = [
         dataIndex: 'createdTime',
         key: 'createdTime',
     },
-    // {
-    //     title: 'Tags',
-    //     key: 'tags',
-    //     dataIndex: 'tags',
-    //     render: (_, { tags }) => (
-    //         <>
-    //             {tags.map((tag) => {
-    //                 let color = tag.length > 5 ? 'geekblue' : 'green';
-
-    //                 if (tag === 'loser') {
-    //                     color = 'volcano';
-    //                 }
-
-    //                 return (
-    //                     <Tag color={color} key={tag}>
-    //                         {tag.toUpperCase()}
-    //                     </Tag>
-    //                 );
-    //             })}
-    //         </>
-    //     ),
-    // },
     {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => (
+        render: (_, record) => (
             <Space size="middle">
-                {/* <Link>Ẩn</Link> */}
                 <CustomLink
                     to="/blog"
                     id={record.id}
@@ -145,28 +100,6 @@ export const columns3 = [
         dataIndex: 'createdTime',
         key: 'createdTime',
     },
-    // {
-    //     title: 'Tags',
-    //     key: 'tags',
-    //     dataIndex: 'tags',
-    //     render: (_, { tags }) => (
-    //         <>
-    //             {tags.map((tag) => {
-    //                 let color = tag.length > 5 ? 'geekblue' : 'green';
-
-    //                 if (tag === 'loser') {
-    //                     color = 'volcano';
-    //                 }
-
-    //                 return (
-    //                     <Tag color={color} key={tag}>
-    //                         {tag.toUpperCase()}
-    //                     </Tag>
-    //                 );
-    //             })}
-    //         </>
-    //     ),
-    // },
 ];
 
 export const data = Array.from({ length: 100 }, (_, i) => ({

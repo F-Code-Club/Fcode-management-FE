@@ -40,12 +40,7 @@ const articleApi = {
     },
     getActiveArticle: async () => {
         const endpoint = '/article/all';
-        return await get(endpoint, {}, { authorization: token })
-            .then((res) => {
-                if (res.data.code !== 200) toastError(res.data.message);
-                return res;
-            })
-            .catch((err) => toastError(err.message));
+        return await get(endpoint, {}, { authorization: token });
     },
     approveAllArticles: async () => {
         const endpoint = '/article/approve/all';
@@ -58,12 +53,7 @@ const articleApi = {
     },
     approveArticle: async (id) => {
         const endpoint = `/article/approve/${id}`;
-        return await put(endpoint, {}, {}, { authorization: token })
-            .then((res) => {
-                if (res.data.code !== 200) toastError(res.data.message);
-                return res;
-            })
-            .catch((err) => toastError(err.message));
+        return await put(endpoint, {}, {}, { authorization: token });
     },
     disapproveArticle: async (id) => {
         const endpoint = `/article/disapprove/${id}`;
@@ -71,39 +61,19 @@ const articleApi = {
     },
     deleteArticle: async (id) => {
         const endpoint = `/article/${id}`;
-        return await remove(endpoint, {}, {}, { authorization: token })
-            .then((res) => {
-                if (res.data.code !== 200) toastError(res.data.message);
-                return res;
-            })
-            .catch((err) => toastError(err.message));
+        return await remove(endpoint, {}, {}, { authorization: token });
     },
     getInactiveArticle: async () => {
         const endpoint = '/article/inactive';
-        return await get(endpoint, {}, { authorization: token })
-            .then((res) => {
-                if (res.data.code !== 200) toastError(res.data.message);
-                return res;
-            })
-            .catch((err) => toastError(err.message));
+        return await get(endpoint, {}, { authorization: token });
     },
     getProcessingArticle: async () => {
         const endpoint = '/article/processing';
-        return await get(endpoint, {}, { authorization: token })
-            .then((res) => {
-                if (res.data.code !== 200) toastError(res.data.message);
-                return res;
-            })
-            .catch((err) => toastError(err.message));
+        return await get(endpoint, {}, { authorization: token });
     },
     getArticleByAuthor: async () => {
         const endpoint = '/article/author';
-        return await get(endpoint, {}, { authorization: token })
-            .then((res) => {
-                if (res.data.code !== 200) toastError(res.data.message);
-                return res;
-            })
-            .catch((err) => toastError(err.message));
+        return await get(endpoint, {}, { authorization: token });
     },
 };
 

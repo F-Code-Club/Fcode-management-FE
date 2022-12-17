@@ -1,7 +1,7 @@
 import { toastError } from './../../../components/ToastNotification/index';
-import articleApi from './../../../utils/apiComponents/articleApi';
 
 import { injectReducer } from '@/store';
+import { handler } from '@/utils/apiComponents/ApiHandler';
 import { searchString } from '@/utils/stringHelper';
 // import articleApi from '@/utils/apiComponents/articleApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -31,39 +31,17 @@ export const filterBlogs = createAsyncThunk('blog/filterBlogs', async (keyword, 
         .blog.inactive?.filter((item) => searchString(item.title, keyword));
     return { active, processing, inactive };
 });
-export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async () => {
-    const active = await articleApi
-        .getActiveArticle()
-        .then((res) => res.data.data)
-        .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            toastError('Lấy danh sách bài viết thất bại');
-        });
-    const processing = await articleApi
-        .getProcessingArticle()
-        .then((res) => res.data.data)
-        .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            toastError('Lấy danh sách bài viết thất bại');
-        });
-    const inactive = await articleApi
-        .getInactiveArticle()
-        .then((res) => res.data.data)
-        .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            toastError('Lấy danh sách bài viết thất bại');
-        });
-    const author = await articleApi
-        .getArticleByAuthor()
-        .then((res) => res.data.data)
-        .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            toastError('Lấy danh sách bài viết thất bại');
-        });
+export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async (thunkApi) => {
+    const active = await handler('getActiveArticle');
+    const processing = await handler('getProcessingArticle');
+    const inactive = await handler('getInactiveArticle');
+    const author = await handler('getArticleByAuthor');
+    if (active == null || processing == null || inactive == null || author == null) {
+        return thunkApi.rejectWithValue('Phiên đăng nhập hết hạn');
+    }
+    if (active instanceof Error || processing instanceof Error || inactive instanceof Error) {
+        return thunkApi.rejectWithValue(processing);
+    }
     return { active, processing, inactive, author };
 });
 const slice = createSlice({
@@ -97,6 +75,11 @@ const slice = createSlice({
                 state.searchedInactive = action.payload.inactive?.sort((a, b) =>
                     a.id > b.id ? 1 : -1
                 );
+            })
+            .addCase(getAllBlogs.rejected, (state, action) => {
+                // eslint-disable-next-line no-console
+                console.log(action.payload);
+                toastError('Lấy danh sách bài viết thất bại');
             });
     },
 });

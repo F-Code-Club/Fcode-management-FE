@@ -19,6 +19,7 @@ import { actions as titleHeaderActions } from '@/components/PageHeader/slice/ind
 import { toastError } from '@/components/ToastNotification';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
+import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 
 const { Text, Title } = Typography;
 
@@ -46,12 +47,7 @@ const BlogDetailComponent = () => {
             setArticleData(data);
             dispatch(changeBlog(data));
             try {
-                const content = htmlToDraft(JSON.parse(data.content));
-                setEditorState(
-                    EditorState.createWithContent(
-                        ContentState.createFromBlockArray(content.contentBlocks)
-                    )
-                );
+                setEditorState(HTMLToEditorState(data.content));
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.log(e);
@@ -107,12 +103,15 @@ const BlogDetailComponent = () => {
                             editorState={editorState}
                             toolbarHidden={true}
                             onChange={setEditorState}
+                            editorStyle={{
+                                overflow: 'hidden',
+                            }}
                             readOnly="false"
                         />
                     </StyledContainer>
                 </Col>
                 {currentAction === 'active' && (
-                    <Col align="middle" span={1}>
+                    <Col align="middle" xxl={1} xs={2}>
                         <Affix offsetTop={10}>
                             <StyledContainer padding="1.2rem 1rem">
                                 <Row gutter={[0, 32]}>

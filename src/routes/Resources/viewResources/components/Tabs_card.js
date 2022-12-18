@@ -1,31 +1,54 @@
-import { Empty } from 'antd';
+import { Empty, List } from 'antd';
 
-import { WrapperTabs, WrapperStyled } from '../styled';
+import { WrapperTabs, WrapperStyledEmpty } from '../styled';
 import ViewResourcesCard from './ViewResourceCard';
 
 const TabsCard = ({ resourceChild, handleClick }) => {
     if (resourceChild === null || resourceChild === undefined) {
         return (
-            <WrapperStyled>
+            <WrapperStyledEmpty>
                 <Empty />
-            </WrapperStyled>
+            </WrapperStyledEmpty>
         );
-        // tmpResources = [{ contributor: 'unknown', description: 'unknown', url: 'unknown' }];
     }
 
     return (
         <WrapperTabs>
-            {resourceChild.map((item, i) => (
-                <ViewResourcesCard
-                    handleClick={handleClick}
-                    key={i}
-                    item={item}
-                    des={item.contributor}
-                    title={item.description}
-                    link={item.url}
-                />
-            ))}
+            <List
+                size="large"
+                pagination={{
+                    showSizeChanger: true,
+                    pageSizeOptions: ['10', '50', '100', '1000'],
+                    position: 'bottom',
+                    pageSize: 3,
+                }}
+                dataSource={resourceChild ? [...resourceChild].reverse() : []}
+                renderItem={(item, i) => {
+                    return (
+                        <ViewResourcesCard
+                            handleClick={handleClick}
+                            key={i}
+                            item={item}
+                            des={item.contributor}
+                            title={item.description}
+                            link={item.url}
+                        />
+                    );
+                }}
+            />
         </WrapperTabs>
     );
 };
 export default TabsCard;
+//  WrapperTabs
+// // {resourceChild.map((item, i) => (
+// //     <ViewResourcesCard
+// //         handleClick={handleClick}
+// //         key={i}
+// //         item={item}
+// //         des={item.contributor}
+// //         title={item.description}
+// //         link={item.url}
+// //     />
+// // ))}
+// //

@@ -13,7 +13,8 @@ export const ViewResourceContainer = styled.div`
 `;
 export const WrapperViewResource = styled.div`
     width: 1110px;
-    height: 840px;
+    // height: 840px;
+    // min-height: 400px;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
@@ -55,10 +56,8 @@ export const HeaderStyled = styled(HeaderButton)`
 
 export const WrapperTabs = styled.div`
     margin-top: 20px;
-    width: 1050px;
-    height: 800px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    // width: 1050px;
+    // height: 800px;
 `;
 export const WrapperStyled = styled(WrapperTabs)`
     display: flex;
@@ -67,6 +66,10 @@ export const WrapperStyled = styled(WrapperTabs)`
     text-align: center;
     overflow: hidden;
     overflow-y: none;
+`;
+export const WrapperStyledEmpty = styled(WrapperStyled)`
+    width: 100%;
+    height: 100%;
 `;
 export const ResourceCardContainer = styled.div`
     width: 1024px;

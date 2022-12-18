@@ -1,9 +1,11 @@
 import { Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import SidebarLink from '../SidebarLink';
 import { Logo, SideBar, Wrapper, SignOut } from './sdiebar.style';
 
 import { ReactComponent as FcodeLogo } from '@/assets/logo/logo.svg';
+import localStorageUtils from '@/utils/localStorageUtils';
 import {
     HomeOutlined,
     LogoutOutlined,
@@ -64,6 +66,7 @@ const itemsAdmin = [
 // ];
 
 const SidebarComponent = () => {
+    const navigate = useNavigate();
     return (
         <Wrapper>
             <SideBar width="250px">
@@ -71,7 +74,12 @@ const SidebarComponent = () => {
                     <FcodeLogo width={50} height={50} />F - CODE
                 </Logo>
                 <Menu mode="inline" items={itemsAdmin} />
-                <SignOut>
+                <SignOut
+                    onClick={() => {
+                        localStorageUtils.deleteUser();
+                        navigate('/auth');
+                    }}
+                >
                     <LogoutOutlined style={{ paddingRight: 10 }} />
                     Đăng Xuất
                 </SignOut>

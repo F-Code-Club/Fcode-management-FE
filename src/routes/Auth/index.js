@@ -11,6 +11,7 @@ import {
     LoginCredit,
 } from './style';
 
+import { toastWarning } from '@/components/ToastNotification';
 // import memberApi from '@/utils/apiComponents/memberApi';
 import LocalStorageUtils from '@/utils/localStorageUtils';
 
@@ -29,6 +30,8 @@ const Auth = () => {
         };
         LocalStorageUtils.setItem('token', response.token);
         return <Navigate to="/" replace />;
+    } else if (UrlParams.get('success') === 'false') {
+        toastWarning('your account is not in database');
     }
 
     //0 : student

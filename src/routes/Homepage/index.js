@@ -62,10 +62,10 @@ export const Homepage = () => {
         }
     };
     useEffect(() => {
-        // const token = LocalStorageUtils.getItem('token');
+        const token = LocalStorageUtils.getItem('token');
         // const userId = LocalStorageUtils.getJWTUser().id;
-        const getData = async () => {
-            const response = await authApi.getUser();
+        const getData = async (token) => {
+            const response = await authApi.getUser(token);
             console.log(response);
 
             if (response.data.code === 200) {
@@ -82,7 +82,9 @@ export const Homepage = () => {
                 navigate('/auth');
             }
         };
-        getData();
+        if (token) {
+            getData(token);
+        }
     }, []);
     return (
         <ContainerHomepage>

@@ -10,6 +10,7 @@ import { changeBlog } from '../../slice';
 import { selectCurrentBlog } from '../../slice/selector';
 import { Wrapper, ContentBlog, InfoList, InfoItem } from './PersonalDetail.styled';
 
+import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
@@ -76,7 +77,7 @@ const PersonalDetailBlog = () => {
     const INFO_LIST = [
         {
             title: 'Trạng thái',
-            content: 'Đã được duyệt',
+            content: blog.isEdit ? 'Đang chỉnh sửa' : 'Đã được duyệt',
         },
         {
             title: 'Ngày tạo',
@@ -93,7 +94,7 @@ const PersonalDetailBlog = () => {
         // },
         {
             title: 'Ảnh đại diện',
-            content: <Image src={blog.imageUrl} width="200px" />,
+            content: <Image src={blog.imageUrl} fallback={fallbackImg} width="200px" />,
         },
     ];
 

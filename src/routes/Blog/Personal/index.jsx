@@ -9,6 +9,7 @@ import { selectCurrentBlog } from '../slice/selector';
 import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
+import { toastError, toastSuccess } from '@/components/ToastNotification';
 import articleApi from '@/utils/apiComponents/articleApi';
 
 const { Search } = Input;
@@ -17,8 +18,8 @@ const PersonalBlog = () => {
     const [blogs, setBlogs] = useState({
         all: useSelector(selectCurrentBlog).author,
         search: useSelector(selectCurrentBlog).author,
-        isDelete: false,
         loading: false,
+        isDelete: false,
     });
 
     const dispatch = useDispatch();
@@ -28,21 +29,27 @@ const PersonalBlog = () => {
             // const { data } = await articleApi.getArticleByAuthor();
             // setBlogs({ ...blogs, all: data.data, search: data.data });
 
-            setBlogs({ ...blogs, loading: true });
-            await dispatch(getAllBlogs()).then((res) =>
+            setBlogs({ ...blogs, loading: true, isDelete: false });
+            await dispatch(getAllBlogs()).then((res) => {
                 setBlogs({
                     ...blogs,
                     loading: false,
+                    isDelete: false,
                     all: res.payload.author,
                     search: res.payload.author,
-                })
-            );
+                });
+            });
         })();
     }, [blogs.isDelete]); // If a blog is deleted, it will re-render to get all blogs
 
     const deleteBlog = async (id) => {
-        await articleApi.deleteArticle(id);
-        setBlogs({ ...blogs, isDelete: true });
+        const res = await articleApi.deleteArticle(id);
+        if (res.data.code === 200) {
+            toastSuccess('Xoá bài viết thành công!');
+            setBlogs({ ...blogs, isDelete: true });
+        } else {
+            toastError('Xoá bài viết thất bại, vui lòng liên hệ quản trị viên!');
+        }
     };
 
     const handleChangeBlog = (id) => {
@@ -133,6 +140,7 @@ const PersonalBlog = () => {
                     <Search
                         placeholder="Nhập tên bài viết cần tìm"
                         onSearch={handleSearch}
+                        loading={blogs.loading}
                         enterButton
                         allowClear
                     />

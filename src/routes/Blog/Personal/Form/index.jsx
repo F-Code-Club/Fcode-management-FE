@@ -9,6 +9,7 @@ import { changeBlog } from '../../slice';
 import { selectCurrentBlog } from '../../slice/selector';
 import * as Styled from './BlogForm.styled';
 
+import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import { EditorStateToHTML, HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
@@ -228,9 +229,9 @@ const BlogForm = () => {
                     placeholder="https://..."
                 />
             ),
-            extra: (() => {
-                return blog.imageUrl && <Image src={blog.imageUrl} width="200px" />;
-            })(),
+            extra: blog.imageUrl && (
+                <Image src={blog.imageUrl} fallback={fallbackImg} width="200px" />
+            ),
         },
         {
             children: (

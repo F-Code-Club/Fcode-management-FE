@@ -8,12 +8,19 @@ const InputFullName = () => {
     const dispatch = useDispatch();
 
     const fullName = useSelector(selector.fullName);
-
     const handleFullNameChange = (e) => {
         dispatch(actions.setFullName(e.target.value));
+        dispatch(actions.getAccount());
     };
 
-    return <Input placeholder="Họ và tên" value={fullName} onChange={handleFullNameChange} />;
+    return (
+        <Input
+            disabled={true}
+            placeholder="Họ và tên"
+            value={fullName}
+            onChange={handleFullNameChange}
+        />
+    );
 };
 
 export default InputFullName;

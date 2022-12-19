@@ -11,10 +11,12 @@ const InputFacebook = () => {
 
     const handleFacebookChange = (e) => {
         dispatch(actions.setFacebook(e.target.value));
+        dispatch(actions.getAccount());
     };
 
     return (
         <Input
+            disabled={true}
             placeholder="facebook.com/user_name"
             value={facebook}
             onChange={handleFacebookChange}

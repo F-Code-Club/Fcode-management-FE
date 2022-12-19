@@ -6,25 +6,26 @@ import selector from '../../slice/selectors';
 
 const { Option } = Select;
 
-const SelectGender = () => {
+const SelectMajor = () => {
     const dispatch = useDispatch();
 
-    const genders = useSelector(selector.genders);
-    const currentGender = useSelector(selector.currentGender);
+    const crews = useSelector(selector.crews);
+    const crewId = useSelector(selector.crewId);
 
     const handleGenderChange = (value) => {
-        dispatch(actions.setCurrentGender(value));
+        dispatch(actions.setCrewId(value));
+        dispatch(actions.getAccount());
     };
 
     return (
-        <Select defaultValue={genders[currentGender]} onChange={handleGenderChange}>
-            {genders.map((gender, index) => (
+        <Select defaultValue={crews[crewId]} onChange={handleGenderChange}>
+            {crews.map((crew, index) => (
                 <Option value={index} key={index}>
-                    {gender}
+                    {crew}
                 </Option>
             ))}
         </Select>
     );
 };
 
-export default SelectGender;
+export default SelectMajor;

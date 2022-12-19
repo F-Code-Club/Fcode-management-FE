@@ -11,6 +11,7 @@ const InputPersonalEmail = () => {
 
     const handlePersonalEmailChange = (e) => {
         dispatch(actions.setPersonalEmail(e.target.value));
+        dispatch(actions.getAccount());
     };
 
     return (

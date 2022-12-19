@@ -12,6 +12,7 @@ const SelectGender = () => {
 
     const handleBirthdateChange = (date) => {
         dispatch(actions.setBirthdate(date.valueOf()));
+        dispatch(actions.getAccount());
     };
 
     return <DatePicker value={moment(birthdate)} onChange={handleBirthdateChange} />;

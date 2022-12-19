@@ -11,6 +11,7 @@ const InputEmailFPT = () => {
 
     const handleEmailFPTChange = (e) => {
         dispatch(actions.setEmailFPT(e.target.value));
+        dispatch(actions.getAccount());
     };
 
     return (

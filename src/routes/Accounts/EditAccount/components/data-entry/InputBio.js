@@ -13,10 +13,12 @@ const InputBio = () => {
 
     const handleBioChange = (e) => {
         dispatch(actions.setBio(e.target.value));
+        dispatch(actions.getAccount());
     };
 
     return (
         <TextArea
+            disabled={true}
             showCount
             maxLength={200}
             style={{ height: 120 }}

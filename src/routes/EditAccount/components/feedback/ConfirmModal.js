@@ -1,15 +1,21 @@
-import { Modal, notification, Button } from 'antd';
+import { Modal, Button } from 'antd';
 
+// import { token } from '@/routes/Accounts/account.data';
+// import productApi from '@/utils/productApi';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
-const openNotification = () => {
-    notification.success({
-        message: `Thông tin tài khoản đã được thay đổi thành công`,
-        placement: 'bottomRight',
-    });
-};
+// const openNotification = () => {
+//     notification.sucyarncess({
+//         message: `Thông tin tài khoản đã được thay đổi thành công`,
+//         placement: 'bottomRight',
+//     });
+// };
 
-const confirm = () => {
+const UpdateInfo = (info) => {
+    console.log(info);
+    // productApi.putAccountByAdmin(info, token);
+};
+const confirm = (info) => {
     Modal.confirm({
         maskClosable: true,
         title: 'Bạn có muốn thay đổi thông tin tài khoản?',
@@ -18,14 +24,14 @@ const confirm = () => {
         okText: 'Xác nhận',
         cancelText: 'Huỷ',
         onOk: () => {
-            openNotification();
+            // openNotification();
+            UpdateInfo(info);
         },
     });
 };
-
-const ConfirmModal = () => {
+const ConfirmModal = ({ info }) => {
     return (
-        <Button type="primary" block onClick={confirm}>
+        <Button type="primary" block onClick={() => confirm(info)}>
             Xác nhận
         </Button>
     );

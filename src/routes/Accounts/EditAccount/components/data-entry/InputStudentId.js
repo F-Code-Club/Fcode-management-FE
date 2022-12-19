@@ -4,24 +4,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../slice';
 import selector from '../../slice/selectors';
 
-const InputEmailFPT = () => {
+const InputStudentId = () => {
     const dispatch = useDispatch();
 
-    const emailFPT = useSelector(selector.emailFPT);
-
-    const handleEmailFPTChange = (e) => {
-        dispatch(actions.setEmailFPT(e.target.value));
+    const StudentId = useSelector(selector.studentId);
+    const handleStudentIdChange = (e) => {
+        dispatch(actions.setStudentId(e.target.value));
         dispatch(actions.getAccount());
     };
 
     return (
         <Input
             disabled={true}
-            placeholder="student_id@fpt.edu.vn"
-            value={emailFPT}
-            onChange={handleEmailFPTChange}
+            placeholder="MSSV"
+            value={StudentId}
+            onChange={handleStudentIdChange}
         />
     );
 };
 
-export default InputEmailFPT;
+export default InputStudentId;

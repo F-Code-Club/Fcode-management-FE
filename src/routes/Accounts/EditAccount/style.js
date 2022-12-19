@@ -1,3 +1,4 @@
+import { Image } from 'antd';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -58,4 +59,7 @@ export const Container = styled.div`
             width: 100%;
         }
     }
+`;
+export const StyleImage = styled(Image)`
+    object-fit: cover;
 `;

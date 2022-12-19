@@ -17,6 +17,27 @@ export const Wrapper = styled.div`
         border: 1px solid ${themes.colors.primary};
         box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
     }
+    .ant-input-search .ant-input:hover {
+        border-color: ${themes.colors.primary};
+    }
+    .ant-btn:focus,
+    .ant-btn:hover {
+        color: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
+        span {
+            color: ${themes.colors.primary};
+        }
+    }
+    .ant-btn-primary:focus,
+    .ant-btn-primary:hover {
+        background: ${themes.colors.primary};
+        span {
+            color: white;
+        }
+    }
+    .ant-input-search .ant-input:focus {
+        border-color: ${themes.colors.primary};
+    }
 `;
 
 // search box

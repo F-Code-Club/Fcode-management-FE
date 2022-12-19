@@ -11,10 +11,12 @@ const InputPersonalEmail = () => {
 
     const handlePersonalEmailChange = (e) => {
         dispatch(actions.setPersonalEmail(e.target.value));
+        dispatch(actions.getAccount());
     };
 
     return (
         <Input
+            disabled={true}
             placeholder="personal_email@gmail.com"
             value={personalEmail}
             onChange={handlePersonalEmailChange}

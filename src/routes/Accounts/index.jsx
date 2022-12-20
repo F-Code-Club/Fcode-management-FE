@@ -10,6 +10,7 @@ import { token, actions } from './account.data';
 // import DUMMY_ACCOUNTS from './account.data';
 import { ListWrapper, Wrapper } from './style';
 
+import { toastError } from '@/components/ToastNotification';
 import productApi from '@/utils/productApi';
 
 // account management with ant design table
@@ -27,9 +28,10 @@ const AccountsManager = () => {
             .then((result) => {
                 setLoading(false);
                 console.log(result.data.data);
-                setAccountList([...accountList, ...result.data.data]);
+                // setAccountList([...accountList, ...result.data.data]);
+                setAccountList(result.data.data);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => toastError(err));
     };
     useEffect(() => {
         loadMoreData();
@@ -65,7 +67,7 @@ const AccountsManager = () => {
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.avatarUrl} />}
-                                    title={item.firstName}
+                                    title={item.lastName + ' ' + item.firstName}
                                     description={item.email}
                                 />
                             </List.Item>

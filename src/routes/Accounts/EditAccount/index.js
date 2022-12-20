@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Avatar, Col, Row, Space, Card, Typography, Button, Modal } from 'antd';
+import { Avatar, Col, Row, Space, Card, Typography, Button, Modal, Form } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -35,6 +35,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { Title, Text } = Typography;
 
 const EditAccount = () => {
+    const [form] = Form.useForm();
     const [isUpdated, setUpdated] = useState(false);
     const dispatch = useDispatch();
     const setTheme = useTheme();
@@ -82,11 +83,11 @@ const EditAccount = () => {
             okText: 'Xác nhận',
             cancelText: 'Huỷ',
             onOk: () => {
-                // openNotification();
                 UpdateInfo();
             },
         });
     };
+
     return (
         <Container>
             {isUpdated && (
@@ -145,52 +146,53 @@ const EditAccount = () => {
                                     >
                                         Thông tin cơ bản
                                     </Title>
-                                    <Row gutter={[getGutter(1), getGutter(1)]}>
-                                        <Col span={24}>
-                                            <Title level={5}>Họ và tên</Title>
-                                            <InputFullName />
-                                        </Col>
-                                        <Col span={12}>
-                                            <Title level={5}>Ngày sinh</Title>
-                                            <SelectBirthdate />
-                                        </Col>
-                                        <Col span={12}>
-                                            <Title level={5}>Crew</Title>
-                                            <SelectMajor />
-                                        </Col>
-                                        <Col span={12}>
-                                            <Title level={5}>MSSV</Title>
-                                            <InputStudentId />
-                                        </Col>
-                                        <Col span={12}>
-                                            <Title level={5}>Role</Title>
-                                            <SelectRole />
-                                        </Col>
-                                        <Col span={24}>
-                                            <Title level={5}>Chức vụ</Title>
-                                            <SelectPosition />
-                                        </Col>
-                                        <Col span={24}>
-                                            <Title level={5}>Số Điện Thoại</Title>
-                                            <InputPhone />
-                                        </Col>
-                                        <Col span={24}>
-                                            <Title level={5}>Email FPT</Title>
-                                            <InputEmailFPT />
-                                        </Col>
-                                        <Col span={24}>
-                                            <Title level={5}>Email liên kết</Title>
-                                            <InputPersonalEmail />
-                                        </Col>
-                                        <Col span={24}>
-                                            <Title level={5}>Facebook</Title>
-                                            <InputFacebook />
-                                        </Col>
-                                        <Col span={24}>
-                                            <Title level={5}>Bio</Title>
-                                            <InputBio />
-                                        </Col>
-                                    </Row>
+                                    <Form form={form} name="form1">
+                                        <Row gutter={[getGutter(1), getGutter(1)]}>
+                                            <Col span={24}>
+                                                <InputFullName />
+                                            </Col>
+                                            <Col span={12}>
+                                                <Title level={5}>Ngày sinh</Title>
+                                                <SelectBirthdate />
+                                            </Col>
+                                            <Col span={12}>
+                                                <Title level={5}>Crew</Title>
+                                                <SelectMajor />
+                                            </Col>
+                                            <Col span={12}>
+                                                <Title level={5}>MSSV</Title>
+                                                <InputStudentId />
+                                            </Col>
+                                            <Col span={12}>
+                                                <Title level={5}>Role</Title>
+                                                <SelectRole />
+                                            </Col>
+                                            <Col span={24}>
+                                                <Title level={5}>Chức vụ</Title>
+                                                <SelectPosition />
+                                            </Col>
+                                            <Col span={24}>
+                                                <Title level={5}>Số Điện Thoại</Title>
+                                                <InputPhone />
+                                            </Col>
+                                            <Col span={24}>
+                                                <Title level={5}>Email FPT</Title>
+                                                <InputEmailFPT />
+                                            </Col>
+                                            <Col span={24}>
+                                                <Title level={5}>Email liên kết</Title>
+                                                <InputPersonalEmail />
+                                            </Col>
+                                            <Col span={24}>
+                                                <Title level={5}>Facebook</Title>
+                                                <InputFacebook />
+                                            </Col>
+                                            <Col span={24}>
+                                                <Title level={5}>Bio</Title>
+                                                <InputBio />
+                                            </Col>
+                                        </Row>
+                                    </Form>
                                 </Space>
                             </Card>
                         </Col>

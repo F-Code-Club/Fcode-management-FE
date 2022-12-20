@@ -115,7 +115,10 @@ export const Homepage = () => {
                             pagination={{ pageSize: 2 }}
                             dataSource={dataArticle}
                             renderItem={(item) => (
-                                <Link to={`/blog/${item.id}`} style={{ color: 'black' }}>
+                                <Link
+                                    to={`/blog/${item.id}?action=processing`}
+                                    style={{ color: 'black' }}
+                                >
                                     <List.Item
                                         key={item.title}
                                         extra={<img width={272} alt="blog" src={item.imageUrl} />}

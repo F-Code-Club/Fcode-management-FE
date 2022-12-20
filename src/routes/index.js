@@ -59,14 +59,15 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
-];
-const adminRoute = [
     {
+        index: false,
         path: 'manage-resource/:id',
         component: <ViewResource />,
         exact: true,
         restrict: true,
     },
+];
+const adminRoute = [
     {
         index: true,
         path: 'comment',

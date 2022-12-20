@@ -12,7 +12,7 @@ export const Background = styled.div`
 export const Wrapper = styled.div`
     width: 920px;
     min-height: 693px;
-    background: #ffffff;
+    background: ${themes.colors.light};
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
         0px 1px 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -41,14 +41,24 @@ export const Wrapper = styled.div`
 `;
 
 export const Search = styled.div`
-    position: absolute;
     display: flex;
-    width: 400px;
-    height: 30px;
+    margin-left: auto;
+    margin-bottom: 12px;
+    width: 500px;
+    height: 40px;
     right: 30px;
     top: 30px;
 
     & button {
         margin-left: 10px;
+    }
+
+    .ant-btn:focus,
+    .ant-btn:hover,
+    .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+    .ant-input-affix-wrapper-focused,
+    .ant-input-affix-wrapper:focus {
+        color: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
     }
 `;

@@ -6,6 +6,7 @@ import AdminRoute from './AdminRoute';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import Auth from './Auth';
+import Blog from './Blog';
 import BlogDetailComponent from './Blog/Detail';
 import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
@@ -14,7 +15,6 @@ import Event from './Event/Index';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
 import MemberRoute from './MemberRoute';
-import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import QuestionManagement from './Question/index';
 import ResourcesSection from './Resources';
@@ -87,6 +87,7 @@ const managerRoute = [
         restrict: true,
     },
     {
+        index: true,
         path: 'recruitmembers',
         component: <Recruitment />,
         exact: true,
@@ -108,6 +109,9 @@ const memberRoute = [
         path: 'event',
         component: <Event />,
         index: false,
+        restrict: true,
+    },
+    {
         path: '/blog/:id',
         component: <BlogDetailComponent />,
         exact: false,

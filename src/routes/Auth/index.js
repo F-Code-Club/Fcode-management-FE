@@ -19,7 +19,7 @@ const Auth = () => {
     const ApiUrl = process.env.REACT_APP_API_URL + '/login/member';
     // get token from the url after successful signed in
     let location = useLocation();
-
+    const CheckToken = LocalStorageUtils.getToken();
     const UrlParams = new URLSearchParams(location.search);
 
     if (UrlParams.get('success') === 'true') {
@@ -33,7 +33,9 @@ const Auth = () => {
     } else if (UrlParams.get('success') === 'false') {
         toastWarning('your account is not in database');
     }
-
+    if (CheckToken) {
+        <Navigate to="/" replace />;
+    }
     return (
         <LoginWrapper minHeight="100vh" width="100vw">
             <Logo size={160} />

@@ -23,6 +23,35 @@ const productApi = {
             { authorization: token }
         );
     },
+    getPersonalAccount: (token) => {
+        const url = `/member/own`;
+        return get(url, {}, { authorization: token });
+    },
+    updateOwnAccount: (info, token) => {
+        const url = `/member/us`;
+        return put(
+            url,
+            {
+                avatarUrl: info.avatar,
+                clubEntryDate: info.joinDate,
+                crewId: info.crewId + 1,
+                dateOfBirth: info.birthdate,
+                description: info.bio,
+                facebookUrl: info.facebook,
+                firstName: info.firstName,
+                lastName: info.lastName,
+                major: info.major,
+                personalMail: info.personalEmail,
+                phone: info.phone,
+                positionId: info.position + 1,
+                role: info.role,
+                schoolMail: info.emailFPT,
+                studentId: info.studentId,
+            },
+            {},
+            { authorization: token }
+        );
+    },
     editEvent: (event, token) => {
         const url = '/event';
         return put(
@@ -40,6 +69,10 @@ const productApi = {
             {},
             { authorization: token }
         );
+    },
+    removeMember: (id, token) => {
+        const url = `/member/id/${id}`;
+        return remove(url, {}, {}, { authorization: token });
     },
     removeEvent: (id, token) => {
         const url = `/event/${id}`;

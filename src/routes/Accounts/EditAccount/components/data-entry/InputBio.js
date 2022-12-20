@@ -18,6 +18,7 @@ const InputBio = () => {
 
     return (
         <TextArea
+            disabled={true}
             showCount
             maxLength={200}
             style={{ height: 120 }}

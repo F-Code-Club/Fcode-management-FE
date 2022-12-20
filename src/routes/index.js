@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Error403Page from './403Page';
 import Error404Page from './404Page';
+import EditAccountByAdmin from './Accounts/EditAccount/index';
+import AccountsManager from './Accounts/index';
 import AdminRoute from './AdminRoute';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
@@ -29,7 +31,18 @@ import { Homepage } from '@/routes/Homepage';
 const publicRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
     {
-        index: false,
+        path: 'account/edit-account-by-admin/:id',
+        component: <EditAccountByAdmin />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'home',
+        component: <Homepage />,
+        exact: true,
+        restrict: true,
+    },
+    {
         path: 'account/edit-account',
         component: <EditAccount />,
         exact: true,
@@ -62,7 +75,13 @@ const publicRoute = [
         restrict: true,
     },
     {
+        path: 'account',
+        component: <AccountsManager />,
         index: false,
+        exact: true,
+        restrict: true,
+    },
+    {
         path: 'manage-resource/:id',
         component: <ViewResource />,
         exact: true,

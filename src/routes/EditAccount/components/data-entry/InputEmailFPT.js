@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import { Input, Form } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { actions } from '../../slice';
@@ -11,14 +11,32 @@ const InputEmailFPT = () => {
 
     const handleEmailFPTChange = (e) => {
         dispatch(actions.setEmailFPT(e.target.value));
+        dispatch(actions.getAccount());
     };
 
     return (
-        <Input
-            placeholder="student_id@fpt.edu.vn"
-            value={emailFPT}
-            onChange={handleEmailFPTChange}
-        />
+        <Form.Item
+            name="emailFPT"
+            rules={[
+                { required: true, message: 'Email fpt không được để trống !!' },
+                {
+                    message: 'Email fpt phải chứa @fpt.edu.vn',
+                    validator: (_, value) => {
+                        if (/^[a-z0-9](\.?[a-z0-9]){5,}@fpt.edu.vn$/.test(value)) {
+                            return Promise.resolve();
+                        } else {
+                            return Promise.reject('Some message here');
+                        }
+                    },
+                },
+            ]}
+        >
+            <Input
+                placeholder="student_id@fpt.edu.vn"
+                value={emailFPT}
+                onChange={handleEmailFPTChange}
+            />
+        </Form.Item>
     );
 };
 

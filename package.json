@@ -22,7 +22,6 @@
         "mobx-react": "^7.5.3",
         "moment": "^2.29.4",
         "prop-types": "^15.8.1",
-        "rc-virtual-list": "^3.4.11",
         "react": "^18.2.0",
         "react-big-calendar": "^1.5.2",
         "react-css-theme-switcher": "^0.3.0",
@@ -40,7 +39,8 @@
         "redux-logger": "^3.0.6",
         "styled-breakpoints": "^11.1.1",
         "styled-components": "^5.3.5",
-        "web-vitals": "^2.1.0"
+        "web-vitals": "^2.1.0",
+        "yup": "^0.32.11"
     },
     "scripts": {
         "start": "craco start",

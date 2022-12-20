@@ -48,7 +48,6 @@ function CreateBox({ handle }) {
                 status: 'ACTIVE',
             };
             productApi.postChallange(event, token);
-            console.log(event);
             dispatch(addMile(event));
         } catch {
             toastError('Tạo cột mốc không  thành công!!');
@@ -61,8 +60,7 @@ function CreateBox({ handle }) {
         console.log(`switch to ${checked}`);
     };
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-        toastError('Không thể thêm cột mốc , vui lòng thử lại !!');
+        toastError(errorInfo);
     };
     const onDateSelection = (value) => {
         SetText({

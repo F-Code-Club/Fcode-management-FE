@@ -13,14 +13,11 @@ function Event() {
     const [isUpdated, SetUpdated] = useState(false);
     const dispatch = useDispatch();
 
-    console.log(token);
-
     useEffect(() => {
         getALlEvent();
     }, []);
     const getALlEvent = async () => {
         const path = await productApi.getAllEvent(token);
-        console.log(path.data.data);
         SetUpdated(true);
         dispatch(setEvent(path.data.data));
     };

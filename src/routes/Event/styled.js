@@ -1,11 +1,10 @@
 import { Button } from 'antd';
 import styled from 'styled-components';
 
-import px2vw from '@/utils/px2vw';
-
 export const Container = styled.div`
     background-color: white;
     padding: 24px;
+    min-height: 90vh;
 `;
 
 export const DetailHeader = styled.div`
@@ -142,7 +141,17 @@ export const AddContainer = styled.div`
     align-items: center;
 `;
 export const InputContainer = styled.div`
-    width: 80%;
+    h1 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 34px;
+        line-height: 123.5%;
+    }
+    padding: 20px 30px;
+    .ant-form {
+        width: 100%;
+    }
 `;
 export const ButtonContainer = styled.div`
     display: flex;
@@ -165,9 +174,9 @@ export const DetailContainer = styled.div`
     position: absolute;
     border: 2px solid #45ce7c;
     top: translate(50%, 100%);
-    min-height: ${px2vw(270)};
     border-radius: 10px;
     max-width: 500px;
+    padding: 20px 20px;
 `;
 export const Header = styled.div`
     display: flex;
@@ -195,7 +204,7 @@ export const Action = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        height: ${px2vw(40)};
+        height: 40px;
         &:hover {
             background: #e6f8ec;
             color: black;
@@ -206,13 +215,14 @@ export const LeftHeader = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 4px 8px;
     h1 {
         margin-right: 8px;
         margin-bottom: 0;
         font-size: 24px;
         max-width: 350px;
+        flex: 0.9;
     }
     div {
         text-align: center;

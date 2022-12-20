@@ -11,7 +11,7 @@ import Detail from './Detail';
 import PopUp from './PopUp';
 
 import { themes } from '@/theme/theme.js';
-import { dateToyyyymmdd } from '@/utils/DateFormat';
+import { formatDate } from '@/utils/DateFormat';
 import { PlusSquareOutlined } from '@ant-design/icons';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -56,8 +56,8 @@ const MyCalendar = () => {
                 ...event,
                 start: start.toString(),
                 end: end.toString(),
-                startTime: dateToyyyymmdd(start),
-                endTime: dateToyyyymmdd(end),
+                startTime: formatDate(start),
+                endTime: formatDate(end),
             };
             console.log(updatedEvent);
             setEvents((prevEvents) => {

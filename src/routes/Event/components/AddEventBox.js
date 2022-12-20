@@ -33,7 +33,6 @@ function AddEventBox({ handle }) {
         Picker: text.Picker,
     });
     const onFinish = async (values) => {
-        console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
         const formattedstartDate = startDate.format('YYYY-MM-DD');
@@ -50,7 +49,7 @@ function AddEventBox({ handle }) {
                 status: 'ACTIVE',
             };
             await productApi.postEvent(event, token);
-            console.log(event);
+
             toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
             dispatch(addEvent(event));
         } catch {
@@ -68,10 +67,7 @@ function AddEventBox({ handle }) {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-    const onDateSelection = (value, dateString) => {
-        console.log(value);
-        console.log(dateString);
-    };
+    const onDateSelection = () => {};
     return (
         <BoxContainer>
             <AddContainer>

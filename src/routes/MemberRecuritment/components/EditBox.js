@@ -50,7 +50,6 @@ function EditBox({ handle, event }) {
             };
             productApi.editChallenge(event, token);
             toastSuccess('Sửa cột mốc thành công!!');
-            console.log(newEvent);
             dispatch(editMile(newEvent));
         } catch {
             toastError('Sửa cột mốc không thành công!!');
@@ -61,15 +60,10 @@ function EditBox({ handle, event }) {
     const onChange = (checked) => {
         console.log(`switch to ${checked}`);
     };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+    const onFinishFailed = () => {
         toastError('Không thể sửa cột mốc , vui lòng thử lại !!');
     };
-    const onDateSelection = (value, dateString) => {
-        console.log('hi');
-        console.log(value);
-        console.log(dateString);
-    };
+    const onDateSelection = () => {};
     const props = {
         name: 'file',
         action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -102,7 +96,7 @@ function EditBox({ handle, event }) {
                             span: 8,
                         }}
                         wrapperCol={{
-                            span: 16,
+                            span: 8,
                         }}
                         initialValues={{
                             remember: true,

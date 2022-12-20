@@ -1,8 +1,6 @@
 import { Button, Switch } from 'antd';
 import styled from 'styled-components';
 
-import px2vw from '@/utils/px2vw';
-
 export const Img = styled.img`
     margin-bottom: 43px;
 `;
@@ -43,6 +41,7 @@ export const MilestoneContainer = styled.div`
         0px 1px 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     margin-bottom: 25px;
+    padding: 20px 20px;
 `;
 export const Hero = styled.div`
     margin-top: 12px;
@@ -195,16 +194,12 @@ export const BoxContainer = styled.div`
     justify-content: center;
 `;
 export const AddContainer = styled.div`
-    width: ${px2vw(480)};
-    min-height: ${px2vw(610)};
+    width: 480px;
+    min-height: 610px;
     background: white;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 `;
 export const InputContainer = styled.div`
-    width: 80%;
     h1 {
         margin-top: 40px;
         text-align: center;
@@ -222,6 +217,10 @@ export const InputContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 20px 30px;
+    .ant-form {
+        width: 100%;
+    }
 `;
 export const CustomButton = styled(Button)`
     margin: 8px 12px;
@@ -258,7 +257,7 @@ export const MySwitch = styled(Switch)`
 export const CancelButon = styled.button`
     padding: 4px 15px;
     gap: 10px;
-
+    margin: 8px 12px;
     width: 57px;
     height: 32px;
 

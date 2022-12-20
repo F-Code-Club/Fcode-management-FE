@@ -238,15 +238,17 @@ const BlogForm = () => {
         {
             children: (
                 <Row justify="center">
-                    <Space>
-                        <Button type="primary" onClick={handlePreview}>
-                            Xem trước
-                        </Button>
-                        <Button type="primary" htmlType="submit">
-                            Hoàn thành
-                        </Button>
-                        <Button onClick={() => navigate(-1)}>Hủy</Button>
-                    </Space>
+                    <Styled.WrapperBtns>
+                        <Space>
+                            <Button type="primary" onClick={handlePreview}>
+                                Xem trước
+                            </Button>
+                            <Button type="primary" htmlType="submit">
+                                Hoàn thành
+                            </Button>
+                            <Button onClick={() => navigate(-1)}>Hủy</Button>
+                        </Space>
+                    </Styled.WrapperBtns>
                 </Row>
             ),
         },

@@ -52,4 +52,13 @@ export const Search = styled.div`
     & button {
         margin-left: 10px;
     }
+
+    .ant-btn:focus,
+    .ant-btn:hover,
+    .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+    .ant-input-affix-wrapper-focused,
+    .ant-input-affix-wrapper:focus {
+        color: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
+    }
 `;

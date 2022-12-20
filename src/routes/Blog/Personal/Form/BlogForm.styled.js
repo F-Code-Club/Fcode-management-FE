@@ -30,3 +30,22 @@ export const Border = styled.div`
         border-color: ${themes.colors.primary};
     }
 `;
+
+export const WrapperBtns = styled.div`
+    .ant-btn-primary {
+        border-color: ${themes.colors.primary};
+        background: ${themes.colors.primary};
+    }
+
+    .ant-btn-primary:hover {
+        border-color: ${themes.colors.primary};
+        background: ${themes.colors.light};
+        color: ${themes.colors.primary};
+    }
+
+    .ant-btn:focus,
+    .ant-btn:hover {
+        border-color: ${themes.colors.primary};
+        color: ${themes.colors.primary};
+    }
+`;

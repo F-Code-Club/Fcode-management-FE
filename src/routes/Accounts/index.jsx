@@ -6,15 +6,17 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // import { themes, actions } from '@/theme/theme';
 import ListAction from './ListAction/index';
 import ListHeader from './ListHeader';
-import { token, actions } from './account.data';
+import { actions } from './account.data';
 // import DUMMY_ACCOUNTS from './account.data';
 import { ListWrapper, Wrapper } from './style';
 
 import { toastError } from '@/components/ToastNotification';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
 // account management with ant design table
 const AccountsManager = () => {
+    const token = localStorageUtils.getItem('token');
     const [accountList, setAccountList] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -34,6 +36,7 @@ const AccountsManager = () => {
     };
     useEffect(() => {
         loadMoreData();
+        setLoading(false);
     }, []);
     return (
         <Wrapper>
@@ -41,7 +44,6 @@ const AccountsManager = () => {
                 <InfiniteScroll
                     dataLength={accountList.length}
                     next={loadMoreData}
-                    hasMore={accountList.length < 30}
                     loader={<Skeleton active paragraph={{ row: 1 }} avatar />}
                     endMessage={<h4>No more data to load</h4>}
                     scrollableTarget="scrollableDiv"

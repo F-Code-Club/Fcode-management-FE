@@ -5,7 +5,6 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { token } from '../account.data';
 import {
     InputBio,
     InputFacebook,
@@ -26,6 +25,7 @@ import { StyleImage, Container } from './style';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import useTheme from '@/utils/useTheme';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -35,6 +35,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { Title, Text } = Typography;
 
 const EditAccount = () => {
+    const token = localStorageUtils.getItem('token');
     const [form] = Form.useForm();
     const [isUpdated, setUpdated] = useState(false);
     const dispatch = useDispatch();

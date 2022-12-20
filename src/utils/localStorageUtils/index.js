@@ -1,4 +1,4 @@
-import { decodeToken, isTokenExpired } from 'react-jwt';
+import { decodeToken, isExpired } from 'react-jwt';
 
 import { LOCAL_STORAGE_TOKEN } from '@/config';
 
@@ -29,7 +29,7 @@ class LocalStorageUtils {
             if (!token) {
                 return undefined;
             }
-            if (isTokenExpired(token)) {
+            if (isExpired(token)) {
                 this.deleteUser();
                 return undefined;
             }

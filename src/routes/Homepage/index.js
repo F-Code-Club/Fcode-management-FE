@@ -20,15 +20,19 @@ export const Homepage = () => {
     useEffect(() => {
         get('/event/all', '', { authorization: token })
             .then((res) => setDataEvent(res.data.data.reverse()))
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         get('/article/processing', '', { authorization: token })
             .then((res) => setDataArticle(res.data.data.reverse()))
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         get('/announcement/all', '', { authorization: token })
             .then((res) => setDataAnnounce(res.data.data.reverse()))
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         get('/member/all', '', { authorization: token })
             .then((res) => setDataAvatar(res.data.data))
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
     }, []);
 

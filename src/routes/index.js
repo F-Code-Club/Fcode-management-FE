@@ -8,6 +8,7 @@ import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import QuestionManagement from './Question/index';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
@@ -42,6 +43,12 @@ const publicRoute = [
     {
         path: 'manage-announcement/view-announcement/:id',
         component: <ViewAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'comment',
+        component: <QuestionManagement />,
         exact: true,
         restrict: true,
     },

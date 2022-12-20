@@ -14,6 +14,8 @@ import ManagerRoute from './ManagerRoute';
 import MemberRoute from './MemberRoute';
 import PublicRoute from './PublicRoute';
 import QuestionManagement from './Question/index';
+import ResourcesSection from './Resources';
+import ViewResource from './Resources/viewResources';
 import TestRouteManager from './TestManagerRoute';
 
 // import TestRouteAdmin from './testRouteAdmin';
@@ -28,6 +30,18 @@ const publicRoute = [
         index: false,
         path: 'account/edit-account',
         component: <EditAccount />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource',
+        component: <ResourcesSection />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource',
+        component: <ResourcesSection />,
         exact: true,
         restrict: true,
     },
@@ -47,6 +61,12 @@ const publicRoute = [
     },
 ];
 const adminRoute = [
+    {
+        path: 'manage-resource/:id',
+        component: <ViewResource />,
+        exact: true,
+        restrict: true,
+    },
     {
         index: true,
         path: 'comment',

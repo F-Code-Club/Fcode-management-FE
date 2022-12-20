@@ -49,6 +49,10 @@ class LocalStorageUtils {
                 this.deleteUser();
                 return undefined;
             }
+            if (isExpired(token)) {
+                this.deleteUser();
+                return undefined;
+            }
             if (token) {
                 try {
                     const { sub } = decodeToken(token);

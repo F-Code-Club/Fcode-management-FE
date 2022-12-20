@@ -212,7 +212,7 @@ export const ManageAnnouncement = () => {
                     title={state.popupConfirm.title}
                     content={state.popupConfirm.content}
                     buttonValue={state.popupConfirm.buttonValue}
-                    icon={state.popupConfirm.icon} //op1: 'delete', op2: 'retry'
+                    icon={state.popupConfirm.icon}
                     action={handleDelete}
                 />
             )}

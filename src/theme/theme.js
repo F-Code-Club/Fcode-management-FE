@@ -34,9 +34,7 @@ export const themes = {
         submenu: '#818181',
         primary050: '#E6F8EC',
         secondary050: '#E3F2FE',
-        lowContrast: '#54585C',
-        slate4: '#C4C4C4',
-        high_contrast: '#11181C',
+        subtitle: '#767676',
     },
 };
 

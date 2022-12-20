@@ -17,7 +17,7 @@ import {
 } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
-import { token } from '@/utils/data';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -25,6 +25,7 @@ const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
 function EditBox({ handle, event }) {
+    const token = localStorageUtils.getToken();
     const [form] = Form.useForm();
     const [text, SetText] = useState([]);
     const dispatch = useDispatch();

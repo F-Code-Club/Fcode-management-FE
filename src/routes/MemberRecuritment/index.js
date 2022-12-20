@@ -8,10 +8,11 @@ import MileStones from './components/MileStones';
 import { setMile } from './slice';
 import { Container, Button } from './styled';
 
-import { token } from '@/utils/data';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
 function Recruitment() {
+    const token = localStorageUtils.getToken();
     const [isUpdated, SetUpdated] = useState(false);
     const dispatch = useDispatch();
     const { listOfMilestones } = useSelector((state) => state.listOfMilestones);

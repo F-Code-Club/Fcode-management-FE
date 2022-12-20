@@ -6,10 +6,12 @@ import MyCalendar from './components/Calendar';
 import { setEvent } from './slice';
 import { Container } from './styled';
 
-import { token } from '@/utils/data';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
 function Event() {
+    const token = localStorageUtils.getItem('token');
+    console.log(token);
     const [isUpdated, SetUpdated] = useState(false);
     const dispatch = useDispatch();
 

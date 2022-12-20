@@ -14,13 +14,14 @@ import {
 } from '../styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
-import { token } from '@/utils/data';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
 const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
 function EditBox({ event, handle, closeOtherBox }) {
+    const token = localStorageUtils.getItem('token');
     const [form] = Form.useForm();
     const [text, SetText] = useState([]);
     const dispatch = useDispatch();

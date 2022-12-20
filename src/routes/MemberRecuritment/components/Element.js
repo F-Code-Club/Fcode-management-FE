@@ -20,11 +20,12 @@ import {
 } from './styled';
 
 import { toastSuccess } from '@/components/ToastNotification';
-import { token } from '@/utils/data';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import { GlobalOutlined } from '@ant-design/icons';
 
 function Element({ event }) {
+    const token = localStorageUtils.getToken();
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false);
     const handleOpenEdit = () => {

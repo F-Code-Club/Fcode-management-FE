@@ -18,11 +18,12 @@ import {
 import EditBox from './EditBox';
 
 import { toastSuccess } from '@/components/ToastNotification';
-import { token } from '@/utils/data';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import { CloseCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 function Detail({ event, handle }) {
+    const token = localStorageUtils.getItem('token');
     const [isEditBoxOpen, setEditBoxOpen] = useState(false);
     const dispatch = useDispatch();
     const handleOpenEditBox = () => {

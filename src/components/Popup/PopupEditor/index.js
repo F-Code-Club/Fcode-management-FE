@@ -99,6 +99,7 @@ export const CreateAnnouncement = (props) => {
                     );
                 setListUser(data);
             })
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         let dataCrew = [];
         get('/crew/all', '', { authorization: token })
@@ -117,6 +118,7 @@ export const CreateAnnouncement = (props) => {
                 )
                     setCheckAll(true);
             })
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
     }, []);
 

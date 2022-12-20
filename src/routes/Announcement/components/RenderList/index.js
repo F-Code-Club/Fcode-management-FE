@@ -20,6 +20,7 @@ export const RenderList = (props) => {
     useEffect(() => {
         get('/member/all', '', { authorization: token })
             .then((res) => setDataAvatar(res.data.data))
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
     }, []);
 

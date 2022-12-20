@@ -33,7 +33,10 @@ const itemsAdmin = [
         '3',
         <InboxOutlined />
     ),
-    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '4', <SendOutlined />),
+    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '4', <SendOutlined />, [
+        getItem(<SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />, '11'),
+        getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '12'),
+    ]),
     getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '5', <TeamOutlined />, [
         getItem(<SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />, '9'),
     ]),

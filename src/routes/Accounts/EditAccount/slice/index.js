@@ -5,6 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const fullName = faker.name.fullName().split(' ');
 export const initialState = {
+    allAccount: [],
     fullName: fullName.join(' '),
     avatar: faker.image.cats(160, 160),
     heroImage: faker.image.nightlife(920, 200),
@@ -95,6 +96,9 @@ export const slice = createSlice({
                 firstName: state.fullName.split(' ').slice(-1).join(' '),
                 lastName: state.fullName.split(' ').slice(0, -1).join(' '),
             };
+        },
+        getAllAccount: (state, action) => {
+            state.allAccount = action.payload;
         },
     },
 });

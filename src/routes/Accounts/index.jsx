@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { List, Avatar, Skeleton } from 'antd';
+import { List, Avatar, Skeleton, Input } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-// import { themes, actions } from '@/theme/theme';
 import ListAction from './ListAction/index';
-import ListHeader from './ListHeader';
-import { actions } from './account.data';
-// import DUMMY_ACCOUNTS from './account.data';
-import { ListWrapper, Wrapper } from './style';
+import { actions_btn } from './account.data';
+import { ListWrapper, Wrapper, Container, SearchWrapper, SearchBox } from './style';
 
 import { toastError } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
@@ -16,10 +13,11 @@ import productApi from '@/utils/productApi';
 
 // account management with ant design table
 const AccountsManager = () => {
+    const [filterInput, setFilterInput] = useState('');
     const token = localStorageUtils.getItem('token');
     const [accountList, setAccountList] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const { Search } = Input;
     const loadMoreData = async () => {
         if (loading) {
             return;
@@ -29,17 +27,38 @@ const AccountsManager = () => {
             .getAllAccount(token)
             .then((result) => {
                 setLoading(false);
-                console.log(result.data.data);
-                setAccountList([...accountList, ...result.data.data]);
+                setAccountList(result.data.data);
             })
+
             .catch((err) => toastError(err));
     };
     useEffect(() => {
         loadMoreData();
         setLoading(false);
     }, []);
+    const filterData = () => {
+        if (filterInput === '') return accountList;
+
+        return accountList.filter(
+            ({ firstName, lastName }) =>
+                firstName.includes(filterInput) || lastName.includes(filterInput)
+        );
+    };
     return (
         <Wrapper>
+            {/* Search Section*/}
+            <Container>
+                <SearchWrapper className="list-header">
+                    <SearchBox>
+                        <Search
+                            placeholder="Nhập tên bài viết cần tìm"
+                            enterButton
+                            onSearch={setFilterInput}
+                        />
+                    </SearchBox>
+                </SearchWrapper>
+            </Container>
+            {/* End of Search Section*/}
             <ListWrapper id="scrollableDiv">
                 <InfiniteScroll
                     dataLength={accountList.length}
@@ -49,12 +68,11 @@ const AccountsManager = () => {
                     scrollableTarget="scrollableDiv"
                 >
                     <List
-                        header={<ListHeader />}
-                        dataSource={accountList}
+                        dataSource={filterData()}
                         renderItem={(item) => (
                             <List.Item
                                 key={item.email}
-                                actions={actions.map((action) => (
+                                actions={actions_btn.map((action) => (
                                     <ListAction
                                         key={action.key}
                                         type={action.type}
@@ -69,7 +87,7 @@ const AccountsManager = () => {
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.avatarUrl} />}
                                     title={item.lastName + ' ' + item.firstName}
-                                    description={item.email}
+                                    description={item.studentId}
                                 />
                             </List.Item>
                         )}

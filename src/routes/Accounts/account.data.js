@@ -1,6 +1,6 @@
 // list of dummy accounts
 
-export const actions = [
+export const actions_btn = [
     {
         key: 'editAccount',
         name: 'Chỉnh sửa',

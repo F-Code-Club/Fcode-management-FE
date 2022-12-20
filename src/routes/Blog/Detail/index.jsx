@@ -1,110 +1,138 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { Row, Col, Typography } from 'antd';
-import { ContentState, EditorState } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
+import { Row, Col, Typography, Affix } from 'antd';
 import { Editor } from 'react-draft-wysiwyg';
-import { useDispatch } from 'react-redux';
-import { Navigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useSearchParams, useLocation, Navigate, useNavigate } from 'react-router-dom';
 
-import { approveButton, disableButton, hiddenButton, ActionElements } from './configComponent';
+import { changeBlog } from '../slice';
+// import articleApi from '@/utils/apiComponents/articleApi';
+// import { getGutter } from '@/utils/getGutter';
+import { selectCurrentBlog } from './../slice/selector';
+import { disableButton, ActionElements, processingButton, activeButton } from './configComponent';
 
 import { actions as reducerButton } from '@/components/Button/slice/index';
 import StyledContainer from '@/components/Container';
+import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
+import { toastError } from '@/components/ToastNotification';
 import { Wrapper } from '@/routes/Blog/Detail/style';
 import { themes } from '@/theme/theme';
-import { DUMMY_CONTENT } from '@/utils/dummy.js';
+import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 
-// import { getGutter } from '@/utils/getGutter';
-
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const BlogDetailComponent = () => {
-    //router variable
-    const params = useParams();
+    // Get current action (processing, active, inactive)
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
-    const currentAction = searchParams.get('action') || '';
-    const data = DUMMY_CONTENT[params.key - 1]
-        ? DUMMY_CONTENT[params.key - 1]
-        : { content: '', isApprove: false };
-    // Global state
+    const [articleData, setArticleData] = useState({});
+    const article = useSelector(selectCurrentBlog);
     const dispatch = useDispatch();
-    // Local variable
-    const content = htmlToDraft(data.content);
-    const contentState = ContentState.createFromBlockArray(content.contentBlocks);
-    const [editorState, setEditorState] = useState(() =>
-        EditorState.createWithContent(contentState)
-    );
-    console.log(data.content);
+    const navigate = useNavigate();
+    // Get id of blog
+    const params = useParams();
+    const currentAction = searchParams.get('action');
+    const articleId = parseInt(params.id) || 0;
+    const [editorState, setEditorState] = useState();
+
+    useEffect(() => {
+        const getArticle = () => {
+            const data = article[currentAction].find((item) => item.id === articleId);
+            if (data === undefined) {
+                return navigate('/blog');
+            }
+            dispatch(titleHeaderActions.changeTitle(data.title));
+            setArticleData(data);
+            dispatch(changeBlog(data));
+            try {
+                setEditorState(HTMLToEditorState(data.content));
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.log(e);
+                toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
+            }
+        };
+        getArticle();
+    }, []);
+
     //TODO: routing to blog when finish
-    // If out of data
+    // Handle change button in header
     if (
         currentAction === '' ||
-        data.content === '' ||
-        !currentAction.match(/[(approve),(hidden),(decline)]/g)
+        // data.content === '' ||
+        !currentAction.match(/[(processing),(active),(inactive)]/g)
     ) {
         dispatch(reducerButton.changeButtons(disableButton));
         return <Navigate to="/" />;
     } else {
         switch (currentAction) {
-            case 'approve':
-                if (!data.isApprove) {
-                    return <Navigate to="/blog" />;
-                }
-                dispatch(reducerButton.changeButtons(approveButton));
+            case 'processing':
+                dispatch(
+                    reducerButton.changeButtons({
+                        ...processingButton,
+                        articleId: article.currentBlog.id,
+                    })
+                );
                 break;
-            case 'hidden':
-                if (data.isApprove) {
-                    return <Navigate to="/blog" />;
-                }
-                dispatch(reducerButton.changeButtons(hiddenButton));
+            case 'active':
+                dispatch(
+                    reducerButton.changeButtons({
+                        ...activeButton,
+                        articleId: articleData.id,
+                    })
+                );
                 break;
-            case 'decline':
-                if (!data.isDeclined) {
-                    return <Navigate to="/blog" />;
-                }
+            case 'inactive':
+                dispatch(reducerButton.changeButtons(disableButton));
                 break;
             default:
-                dispatch(disableButton);
+            // dispatch(disableButton);
         }
     }
     return (
         <Wrapper>
-            <Row align="top" justify="center" gutter={17}>
-                <Col span={currentAction === 'hidden' ? 20 : 24}>
+            <Row align="top" justify="center" gutter={17} style={{ width: '100%' }}>
+                <Col span={currentAction === 'active' ? 16 : 20}>
                     <StyledContainer>
+                        <Row align="center">
+                            <Title level={2}>{articleData.title}</Title>
+                        </Row>
                         <Editor
                             editorState={editorState}
                             toolbarHidden={true}
                             onChange={setEditorState}
+                            editorStyle={{
+                                overflow: 'hidden',
+                            }}
                             readOnly="false"
                         />
                     </StyledContainer>
                 </Col>
-                {currentAction === 'hidden' && (
-                    <Col align="middle">
-                        <StyledContainer padding="1.2rem 0">
-                            <Row gutter={[0, 32]}>
-                                {ActionElements.map((item, index) => (
-                                    <Col
-                                        key={item.name + index}
-                                        className="gutter-row"
-                                        span={24}
-                                        align="middle"
-                                        style={{ display: 'flex', flexDirection: 'column' }}
-                                    >
-                                        <item.Element
-                                            style={{
-                                                color: themes.colors.primary,
-                                                fontSize: '1.4rem',
-                                            }}
-                                        />
-                                        <Text>12</Text>
-                                    </Col>
-                                ))}
-                            </Row>
-                        </StyledContainer>
+                {currentAction === 'active' && (
+                    <Col align="middle" xxl={1} xs={2}>
+                        <Affix offsetTop={10}>
+                            <StyledContainer padding="1.2rem 1rem">
+                                <Row gutter={[0, 32]}>
+                                    {ActionElements.map((item, index) => (
+                                        <Col
+                                            key={item.name + index}
+                                            className="gutter-row"
+                                            span={24}
+                                            align="middle"
+                                            style={{ display: 'flex', flexDirection: 'column' }}
+                                        >
+                                            <item.Element
+                                                style={{
+                                                    color: themes.colors.primary,
+                                                    fontSize: '1.4rem',
+                                                }}
+                                            />
+                                            <Text>0</Text>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </StyledContainer>
+                        </Affix>
                     </Col>
                 )}
             </Row>

@@ -27,6 +27,7 @@ export const ManageAnnouncement = () => {
     useEffect(() => {
         get('/announcement/all', '', { authorization: token })
             .then((res) => setDataAnnounce(res.data.data.reverse()))
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
     }, [reload]);
 
@@ -58,6 +59,7 @@ export const ManageAnnouncement = () => {
                         })
                         .catch((error) => {
                             toastError('Tạo thông báo không thành công');
+                            // eslint-disable-next-line no-console
                             console.log(error);
                         });
                     break;
@@ -89,6 +91,7 @@ export const ManageAnnouncement = () => {
                         })
                         .catch((error) => {
                             toastError('Chỉnh sửa thông báo không thành công');
+                            // eslint-disable-next-line no-console
                             console.log(error);
                         });
                     break;
@@ -114,6 +117,7 @@ export const ManageAnnouncement = () => {
                         toastSuccess('Thông báo đã được xóa thành công');
                     } else toastError(`Xóa thông báo không thành công ${res.data.message}`);
                 })
+                // eslint-disable-next-line no-console
                 .catch((err) => console.log(err));
         }
         setState({

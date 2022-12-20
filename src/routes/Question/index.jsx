@@ -177,7 +177,6 @@ const QuestionManagement = () => {
         });
     };
     const calculateTime = (date) => {
-        console.log(date);
         const countedDays = countDays(date.createdTime);
         if (countedDays === 0) {
             return 'Hôm nay';

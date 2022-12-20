@@ -1,35 +1,23 @@
-import { get, put, remove } from './ApiCaller';
+import { get, post, put, remove } from './ApiCaller';
 
 const productApi = {
-    getAllAccount: (token) => {
-        const url = '/member/all';
+    getAllEvent: (token) => {
+        const url = `/event/all`;
         return get(url, {}, { authorization: token });
     },
-    getAccountById: (id, token) => {
-        const url = `/member/memberId/${id}`;
-        return get(url, {}, { authorization: token });
-    },
-    putAccountByAdmin: (info, token) => {
-        const url = `/member/ad`;
-        return put(
+
+    postEvent: (event, token) => {
+        const url = '/event/new';
+        return post(
             url,
             {
-                avatarUrl: info.avatar,
-                clubEntryDate: info.joinDate,
-                crewId: info.crewId + 1,
-                dateOfBirth: info.birthdate,
-                description: info.bio,
-                facebookUrl: info.facebook,
-                firstName: info.firstName,
-                lastName: info.lastName,
-                major: info.major,
-                id: info.id,
-                personalMail: info.personalEmail,
-                phone: info.phone,
-                positionId: info.position + 1,
-                role: info.roles[info.role],
-                schoolMail: info.emailFPT,
-                studentId: info.studentId,
+                description: event.description,
+                endTime: event.endTime,
+                location: event.location,
+                name: event.name,
+                point: event.point,
+                startTime: event.startTime,
+                status: event.status,
             },
             {},
             { authorization: token }
@@ -64,8 +52,69 @@ const productApi = {
             { authorization: token }
         );
     },
+    editEvent: (event, token) => {
+        const url = '/event';
+        return put(
+            url,
+            {
+                description: event.description,
+                endTime: event.endTime,
+                location: event.location,
+                name: event.name,
+                point: event.point,
+                startTime: event.startTime,
+                status: event.status,
+                id: event.id,
+            },
+            {},
+            { authorization: token }
+        );
+    },
     removeMember: (id, token) => {
         const url = `/member/id/${id}`;
+        return remove(url, {}, {}, { authorization: token });
+    },
+    removeEvent: (id, token) => {
+        const url = `/event/${id}`;
+        return remove(url, {}, {}, { authorization: token });
+    },
+    getAllChallenge: (token) => {
+        const url = `/challenge/all`;
+        return get(url, {}, { authorization: token });
+    },
+    postChallange: (event, token) => {
+        const url = '/challenge/new';
+        return post(
+            url,
+            {
+                description: event.description,
+                endTime: event.endTime,
+                startTime: event.startTime,
+                status: event.status,
+                title: event.title,
+            },
+            {},
+            { authorization: token }
+        );
+    },
+    editChallenge: (event, token) => {
+        const url = '/challenge';
+        return put(
+            url,
+            {
+                description: event.description,
+                endTime: event.endTime,
+                title: event.title,
+                startTime: event.startTime,
+                status: event.status,
+                id: event.id,
+            },
+            {},
+            { authorization: token }
+        );
+    },
+    removeChallenge: (id, token) => {
+        const url = `/challenge/${id}`;
         return remove(url, {}, {}, { authorization: token });
     },
 };

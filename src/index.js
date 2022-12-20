@@ -2,13 +2,13 @@ import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
+import Toast from './components/ToastNotification';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import RouterComponent from './routes';
 // import { fetchAllSubject } from './routes/Resources/slice';
 import store from './store';
 
-import Toast from '@/components/ToastNotification/index';
 import { themes } from '@/theme/theme';
 import 'antd/dist/antd.css';
 

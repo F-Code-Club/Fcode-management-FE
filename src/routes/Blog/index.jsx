@@ -11,12 +11,16 @@ import { filterBlogs, getAllBlogs } from './slice';
 // import { changeActiveBlogs, changeInactiveBlogs, changeProcessingBlogs } from './slice';
 import { selectCurrentBlog } from './slice/selector';
 
+import localStorageUtils from '@/utils/localStorageUtils';
 // import { toastError } from '@/components/ToastNotification';
+import usePersistedState from '@/utils/usePersistedState';
 
 const { Search } = Input;
 
 const Blog = () => {
     // Using redux to store data when received
+    const token = localStorageUtils.getToken();
+    const [tokens, setToken] = usePersistedState('token', token);
     const blogs = useSelector(selectCurrentBlog);
     const location = useLocation();
     const dispatch = useDispatch();
@@ -24,7 +28,7 @@ const Blog = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await dispatch(getAllBlogs())
+            await dispatch(getAllBlogs(tokens))
                 .unwrap()
                 // eslint-disable-next-line no-console
                 .catch((err) => console.log(err))

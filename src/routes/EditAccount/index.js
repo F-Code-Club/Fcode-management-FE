@@ -42,7 +42,7 @@ const EditAccount = () => {
     const heroImage = useSelector(selector.heroImage);
     const joinDate = useSelector(selector.joinDate);
     const role = useSelector(selector.role);
-    // const fullName = useSelector(selector.fullName);
+    const fullName = useSelector(selector.fullName);
     const phone = useSelector(selector.phone);
     const position = useSelector(selector.position);
     const info = useSelector(selector.info);
@@ -75,6 +75,14 @@ const EditAccount = () => {
             toastError(response.data.message);
         }
     };
+    const handleFinish = () => {
+        UpdateInfo();
+        toastSuccess('Thành Công');
+    };
+
+    const handleFinishFailed = () => {
+        toastError(' Hãy nhập tất cả các field !!');
+    };
     const confirm = () => {
         Modal.confirm({
             maskClosable: true,
@@ -84,8 +92,8 @@ const EditAccount = () => {
             okText: 'Xác nhận',
             cancelText: 'Huỷ',
             onOk: () => {
+                form.submit();
                 // openNotification();
-                UpdateInfo();
             },
         });
     };
@@ -154,7 +162,10 @@ const EditAccount = () => {
                                             phone: phone,
                                             personalEmail: personalEmail,
                                             emailFPT: emailFPT,
+                                            fullName: fullName,
                                         }}
+                                        onFinish={handleFinish}
+                                        onFinishFailed={handleFinishFailed}
                                     >
                                         <Row gutter={[getGutter(1), getGutter(1)]}>
                                             <Col span={24}>

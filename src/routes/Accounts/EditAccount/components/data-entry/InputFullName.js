@@ -1,4 +1,4 @@
-import { Input, Form } from 'antd';
+import { Input } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import * as yup from 'yup';
@@ -23,29 +23,12 @@ const InputFullName = () => {
     };
 
     return (
-        <Form.Item
-            name="age"
-            label="Họ và tên"
-            rules={[
-                { required: true, message: 'Tên không được để trống !!' },
-                {
-                    message: 'this is custom',
-                    validator: (_, value) => {
-                        if (
-                            /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/.test(
-                                value
-                            )
-                        ) {
-                            return Promise.resolve();
-                        } else {
-                            return Promise.reject('Some message here');
-                        }
-                    },
-                },
-            ]}
-        >
-            <Input placeholder="Họ và tên" value={fullName} onChange={handleFullNameChange} />
-        </Form.Item>
+        <Input
+            disabled={true}
+            placeholder="Họ và tên"
+            value={fullName}
+            onChange={handleFullNameChange}
+        />
     );
 };
 

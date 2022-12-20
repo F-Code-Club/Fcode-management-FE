@@ -28,8 +28,7 @@ const AccountsManager = () => {
             .then((result) => {
                 setLoading(false);
                 console.log(result.data.data);
-                // setAccountList([...accountList, ...result.data.data]);
-                setAccountList(result.data.data);
+                setAccountList([...accountList, ...result.data.data]);
             })
             .catch((err) => toastError(err));
     };

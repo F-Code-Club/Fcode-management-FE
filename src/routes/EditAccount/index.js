@@ -4,7 +4,6 @@ import { Avatar, Col, Row, Space, Card, Typography, Button, Modal, Form } from '
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { token } from './account.data';
 import {
     InputBio,
     InputFacebook,
@@ -25,6 +24,7 @@ import { StyleImage, Container } from './style';
 
 import { toastSuccess, toastError } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';
+import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import useTheme from '@/utils/useTheme';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -34,6 +34,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { Title, Text } = Typography;
 
 const EditAccount = () => {
+    const token = localStorageUtils.getItem('token');
     const [isUpdated, setUpdated] = useState(false);
     const dispatch = useDispatch();
     const setTheme = useTheme();

@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import Error403Page from './403Page';
+import Error404Page from './404Page';
 import AdminRoute from './AdminRoute';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
@@ -13,8 +15,8 @@ import MemberRoute from './MemberRoute';
 import PublicRoute from './PublicRoute';
 import QuestionManagement from './Question/index';
 import TestRouteManager from './TestManagerRoute';
-import TestRouteAdmin from './testRouteAdmin';
 
+// import TestRouteAdmin from './testRouteAdmin';
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
@@ -177,7 +179,9 @@ const RouterComponent = () => {
                     </Route>
                 </Route>
                 <Route path="/auth" element={<Auth />} />
-                <Route path="*" element={<p>404</p>} />
+                <Route path="/403" element={<Error403Page />} />
+
+                <Route path="*" element={<Error404Page />} />
             </Routes>
         </BrowserRouter>
     );

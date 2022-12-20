@@ -34,14 +34,7 @@ const Auth = () => {
         toastWarning('your account is not in database');
     }
 
-    //0 : student
-    //1 : member
-    //2 : manager
-    //3 : admin
     return (
-        // <div>
-        //   <LoginButton href={ApiUrl + 'google'}>Sign in</LoginButton>
-        // </div>
         <LoginWrapper minHeight="100vh" width="100vw">
             <Logo size={160} />
             <LoginHeading>

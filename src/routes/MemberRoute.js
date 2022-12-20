@@ -9,7 +9,7 @@ const MemberRoute = () => {
     return User.role === 'MEMBER' || User.role === 'MANAGER' || User.role === 'ADMIN' ? (
         <Outlet />
     ) : (
-        <Navigate to="/" replace />
+        <Navigate to="/403" replace />
     );
 };
 

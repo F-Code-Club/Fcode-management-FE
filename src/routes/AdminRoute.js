@@ -5,8 +5,8 @@ import { selectUser } from './Auth/slice/selector';
 
 const AdminRoute = () => {
     const User = useSelector(selectUser);
-    console.log(User);
-    return User.role === 'ADMIN' ? <Outlet /> : <Navigate to="/" replace />;
+
+    return User.role === 'ADMIN' ? <Outlet /> : <Navigate to="/403" replace />;
 };
 
 export default AdminRoute;

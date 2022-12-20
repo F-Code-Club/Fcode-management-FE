@@ -9,7 +9,7 @@ const ManagerRoute = () => {
     return User.role === 'MANAGER' || User.role === 'ADMIN' ? (
         <Outlet />
     ) : (
-        <Navigate to="/auth" replace />
+        <Navigate to="/403" replace />
     );
 };
 

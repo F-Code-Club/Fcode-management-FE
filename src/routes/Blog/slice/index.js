@@ -59,7 +59,7 @@ const slice = createSlice({
                     a.id > b.id ? 1 : -1
                 );
                 state.inactive = action.payload.inactive?.sort((a, b) => (a.id > b.id ? 1 : -1));
-                state.author = action.payload.author?.sort((a, b) => (a.id > b.id ? 1 : -1));
+                state.author = action.payload?.author?.sort((a, b) => (a.id > b.id ? 1 : -1));
                 state.searchedActive = state.active;
                 state.searchedProcessing = state.processing;
                 state.searchedInactive = state.inactive;

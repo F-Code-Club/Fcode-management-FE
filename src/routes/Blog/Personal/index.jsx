@@ -31,15 +31,19 @@ const PersonalBlog = () => {
 
             dispatch(changeBlog({}));
             setBlogs({ ...blogs, loading: true, isDelete: false });
-            await dispatch(getAllBlogs()).then((res) => {
-                setBlogs({
-                    ...blogs,
-                    loading: false,
-                    isDelete: false,
-                    all: res.payload.author,
-                    search: res.payload.author,
+            await dispatch(getAllBlogs())
+                .then((res) => {
+                    setBlogs({
+                        ...blogs,
+                        loading: false,
+                        isDelete: false,
+                        all: res.payload.author?.length ? res.payload.author : [],
+                        search: res.payload.author?.length ? res.payload.author : [],
+                    });
+                })
+                .finally(() => {
+                    setBlogs({ ...blogs, loading: false, isDelete: false });
                 });
-            });
         })();
     }, [blogs.isDelete]); // If a blog is deleted, it will re-render to get all blogs
 

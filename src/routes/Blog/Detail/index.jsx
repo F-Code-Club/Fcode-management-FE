@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import { Row, Col, Typography, Affix } from 'antd';
-import { EditorState, ContentState } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams, useLocation, Navigate, useNavigate } from 'react-router-dom';

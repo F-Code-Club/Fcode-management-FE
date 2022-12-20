@@ -1,4 +1,4 @@
-import { get, put } from './ApiCaller';
+import { get, put, remove } from './ApiCaller';
 
 const productApi = {
     getAllAccount: (token) => {
@@ -63,6 +63,10 @@ const productApi = {
             {},
             { authorization: token }
         );
+    },
+    removeMember: (id, token) => {
+        const url = `/member/id/${id}`;
+        return remove(url, {}, {}, { authorization: token });
     },
 };
 

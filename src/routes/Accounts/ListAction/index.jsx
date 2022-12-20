@@ -1,9 +1,27 @@
-import { Typography } from 'antd';
+import { Typography, Modal } from 'antd';
 
+import LocalStorageUtils from '../../../utils/localStorageUtils/index';
+import productApi from '../../../utils/productApi';
 import { RouterLink } from './styled';
 
-const { Link } = Typography;
+import { StopOutlined } from '@ant-design/icons';
 
+const token = LocalStorageUtils.getItem('token');
+const { Link } = Typography;
+const confirm = (id) => {
+    Modal.confirm({
+        maskClosable: true,
+        title: 'Bạn có muốn xóa tài khoản này',
+        icon: <StopOutlined />,
+        content: 'Tài khoản này sẽ không tồn tại nữa .',
+        okText: 'Xác nhận',
+        cancelText: 'Huỷ',
+        onOk: async () => {
+            await productApi.removeMember(id, token);
+            await productApi.getAllAccount(token);
+        },
+    });
+};
 const ListAction = (props) => {
     const { name, event, type, status, id } = props;
     if (status) {
@@ -14,7 +32,7 @@ const ListAction = (props) => {
         );
     } else {
         return (
-            <Link type={type} onClick={event}>
+            <Link type={type} onClick={() => confirm(id)}>
                 {name}
             </Link>
         );

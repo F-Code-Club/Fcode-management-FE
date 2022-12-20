@@ -27,6 +27,12 @@ import { Homepage } from '@/routes/Homepage';
 // ],
 const publicRoute = [
     {
+        path: 'account/edit-account-by-admin/:id',
+        component: <EditAccountByAdmin />,
+        exact: true,
+        restrict: true,
+    },
+    {
         path: 'home',
         component: <Homepage />,
         exact: true,

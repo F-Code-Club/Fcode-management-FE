@@ -30,11 +30,11 @@ export const filterBlogs = createAsyncThunk('blog/filterBlogs', async (keyword, 
         .blog.inactive?.filter((item) => searchString(item.title, keyword));
     return { active, processing, inactive };
 });
-export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async (thunkApi) => {
-    const active = await handler('getActiveArticle');
-    const processing = await handler('getProcessingArticle');
-    const inactive = await handler('getInactiveArticle');
-    const author = await handler('getArticleByAuthor');
+export const getAllBlogs = createAsyncThunk('blog/getAllBlogs', async (token, thunkApi) => {
+    const active = await handler('getActiveArticle', token);
+    const processing = await handler('getProcessingArticle', token);
+    const inactive = await handler('getInactiveArticle', token);
+    const author = await handler('getArticleByAuthor', token);
     if (active == null || processing == null || inactive == null || author == null) {
         return thunkApi.rejectWithValue('Phiên đăng nhập hết hạn');
     }

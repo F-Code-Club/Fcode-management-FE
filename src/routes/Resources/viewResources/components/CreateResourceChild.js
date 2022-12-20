@@ -107,7 +107,7 @@ export const CreateResourceChild = (props) => {
                 },
                 token
             );
-            console.log(result);
+
             if (status && result.data.code === 200) {
                 // await productApi.getResourceBySubjectId(id);
                 await fetchResourceBySubjectId();
@@ -117,10 +117,6 @@ export const CreateResourceChild = (props) => {
                 await action(false, result.data.message);
             }
         } else if (typeOfWork === 'edit') {
-            console.log(newResourceChild.title);
-            console.log(newResourceChild.description);
-            console.log(newResourceChild.link);
-            console.log(id);
             const result2 = await productApi.updateResource(
                 {
                     contributor: newResourceChild.title,
@@ -131,7 +127,7 @@ export const CreateResourceChild = (props) => {
                 },
                 token
             );
-            console.log(result2);
+
             if (status && result2.data.code === 200) {
                 // await productApi.getResourceBySubjectId(id);
                 await fetchResourceBySubjectId();

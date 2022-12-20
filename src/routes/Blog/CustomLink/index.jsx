@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { getAllBlogs } from '@/routes/Blog/slice';
 import { handler } from '@/utils/apiComponents/ApiHandler';
+import localStorageUtils from '@/utils/localStorageUtils';
 
 const CustomLink = (props) => {
     const { to, content, successContent, action, id, failContent } = props;
@@ -11,7 +12,8 @@ const CustomLink = (props) => {
     // get new blogs
     const fetchData = async () => {
         // call api to get active blogs
-        await dispatch(getAllBlogs());
+        const token = localStorageUtils.getToken();
+        await dispatch(getAllBlogs(token));
     };
     const handleAction = async () => {
         // handle action

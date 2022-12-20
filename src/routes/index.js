@@ -11,9 +11,9 @@ import BlogForm from './Blog/Personal/Form';
 import ManagerRoute from './ManagerRoute';
 import MemberRoute from './MemberRoute';
 import PublicRoute from './PublicRoute';
+import QuestionManagement from './Question/index';
 import TestRouteManager from './TestManagerRoute';
 import TestRouteAdmin from './testRouteAdmin';
-import QuestionManagement from './Question/index';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
@@ -46,21 +46,14 @@ const publicRoute = [
 ];
 const adminRoute = [
     {
+        index: true,
         path: 'comment',
         component: <QuestionManagement />,
         exact: true,
         restrict: true,
     },
 ];
-const adminRoute = [
-    {
-        index: true,
-        path: 'routeAdmin',
-        component: <TestRouteAdmin />,
-        exact: false,
-        restrict: true,
-    },
-];
+
 const managerRoute = [
     {
         index: true,

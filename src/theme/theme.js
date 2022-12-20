@@ -34,6 +34,7 @@ export const themes = {
         submenu: '#818181',
         primary050: '#E6F8EC',
         secondary050: '#E3F2FE',
+        subtitle: '#767676',
     },
 };
 

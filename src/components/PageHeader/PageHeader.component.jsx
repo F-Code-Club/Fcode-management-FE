@@ -2,27 +2,32 @@ import { useEffect } from 'react';
 
 import { Layout, PageHeader, Breadcrumb, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 // import { openNotificationWithIcon } from '../ToastDemo/style';
-import { toastSuccess } from '../ToastNotification';
+// import { toastSuccess } from '../ToastNotification';
 import StyledButton from './../Button/index';
+// import { toastSuccess, toastError } from './../ToastNotification/index';
 import { ButtonModalConfig } from './ModalConfig';
 import { PageHeaderContainer } from './PageHeader.style';
 
-import { actions as buttonActions } from '@/components/Button/slice/index';
-import testApi from '@/utils/apiComponents/testApi';
+import { actions as buttonSlice, handleClick } from '@/components/Button/slice/index';
+import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
 let breadcrumbNameMap = {
     '/event': 'Quản lý sự kiện',
-    '/source': 'Quản lý tài nguyên',
-    '/member': 'member',
-    '/blog': 'Quản lý bài viết',
+    '/manage-resource': 'Quản lý tài nguyên',
+    '/member': 'Quản lý thành viên',
+    '/blog': 'Quản lý bài viết thành viên',
+    '/personal-blog': 'Quản lý bài viết cá nhân',
+    '/personal-blog/create': 'Tạo bài viết',
+    '/personal-blog/edit': 'Chỉnh sửa bài viết',
+    '/personal-blog/preview': 'Xem trước bài viết',
     '/manage-announcement': 'Quản lý thông báo',
     '/manage-announcement/view-announcement': 'Xem thông báo',
     '/information': 'Thông tin cá nhân',
@@ -33,13 +38,15 @@ let breadcrumbNameMap = {
     '/information/view-information': 'Xem thông tin',
 };
 for (let i = 1; i <= 100; i++) {
-    breadcrumbNameMap[`/blog/${i}`] = `bài viết số ${i}`;
+    breadcrumbNameMap[`/personal-blog/${i}`] = `Chi tiết bài viết`;
     breadcrumbNameMap[`/manage-announcement/view-announcement/${i}`] = `Thông báo số ${i}`;
+    breadcrumbNameMap[`/manage-resource/${i}`] = `tài nguyên số ${i}`;
 }
 const PageHeaderComponent = () => {
     const [modal, contextHolder] = Modal.useModal();
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
     const [searchParams] = useSearchParams(location);
@@ -57,19 +64,29 @@ const PageHeaderComponent = () => {
             <Link to="/">Trang chủ</Link>
         </Breadcrumb.Item>,
     ].concat(extraBreadcrumbItems);
-
     // Button state
     useEffect(() => {
+        const url = `/${pathSnippets.slice(0, pathSnippets.length).join('/')}`;
+        dispatch(titleHeaderActions.changeTitle(breadcrumbNameMap[url] || 'Trang chủ'));
         const currentAction = searchParams.get('action') || '';
         if (currentAction === '') {
-            dispatch(buttonActions.changeButtons({ isShow: false }));
+            dispatch(buttonSlice.changeButtons({ isShow: false }));
         }
     }, [location]);
-    const handleButton = (button) => {
-        return modal.confirm(
+    const onBack = () => {
+        window.history.back();
+    };
+    const handleButton = (button, articleId) => {
+        modal.confirm(
             ButtonModalConfig(button.configs.title, button.configs.content, async () => {
-                testApi.get(button.params);
-                toastSuccess(button.successContent);
+                dispatch(
+                    handleClick({
+                        action: button.action,
+                        articleId,
+                        successContent: button.successContent,
+                    })
+                ).unwrap();
+                navigate('/blog');
             })
         );
     };
@@ -89,14 +106,14 @@ const PageHeaderComponent = () => {
                     className="site-page-header-responsive"
                     title={TitleHeader}
                     style={{ background: '#FFFFFF' }}
-                    onBack={() => window.history.back()}
+                    onBack={() => onBack()}
                     extra={
                         ActionButtons.isShow &&
                         ActionButtons.buttons.map((button, index) => (
                             <StyledButton
                                 key={button.name + index}
                                 type={button.type}
-                                onClick={() => handleButton(button)}
+                                onClick={() => handleButton(button, ActionButtons.articleId)}
                             >
                                 {button.name}
                             </StyledButton>

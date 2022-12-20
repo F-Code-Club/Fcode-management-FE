@@ -35,13 +35,13 @@ function AddEventBox({ handle }) {
     const onFinish = async (values) => {
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('YYYY-MM-DD');
-        const formatttedEndDate = endDate.format('YYYY-MM-DD');
+        const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD HH:mm');
         try {
             const event = {
                 name: values.eventName,
 
-                point: values.eventPoint,
+                point: parseInt(values.eventPoint),
                 location: values.eventPlace,
                 description: values.extraNotice,
                 startTime: formattedstartDate,

@@ -1,9 +1,14 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
+import { ManageAnnouncement } from './Announcement';
+import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import Event from './Event/Index';
 import Recruitment from './MemberRecuritment';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import QuestionManagement from './Question/index';
+import ResourcesSection from './Resources';
+import ViewResource from './Resources/viewResources';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import EditAccount from '@/routes/EditAccount';
@@ -25,6 +30,36 @@ const publicRoute = [
     {
         path: 'account/edit-account',
         component: <EditAccount />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource',
+        component: <ResourcesSection />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-announcement',
+        component: <ManageAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-announcement/view-announcement/:id',
+        component: <ViewAnnouncement />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource/:id',
+        component: <ViewResource />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'comment',
+        component: <QuestionManagement />,
         exact: true,
         restrict: true,
     },

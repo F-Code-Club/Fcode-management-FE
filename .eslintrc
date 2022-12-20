@@ -20,9 +20,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "settings": {
         "import/resolver": {
             "babel-module": {
@@ -49,6 +47,7 @@
         "import/default": 0,
         "import/namespace": 0,
         "import/no-cycle": "error",
-        "import/no-duplicates": "error"
+        "import/no-duplicates": "error",
+        "no-unused-vars": "warn"
     }
 }

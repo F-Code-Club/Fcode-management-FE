@@ -42,8 +42,13 @@ export const Wrapper = styled.div`
 
 export const Search = styled.div`
     position: absolute;
+    display: flex;
     width: 400px;
-    height: 40px;
+    height: 30px;
     right: 30px;
     top: 30px;
+
+    & button {
+        margin-left: 10px;
+    }
 `;

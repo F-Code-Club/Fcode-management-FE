@@ -37,16 +37,17 @@ function EditBox({ event, handle, closeOtherBox }) {
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
         const formattedstartDate = startDate.format('YYYY-MM-DD');
-        const formatttedEndDate = endDate.format('YYYY-MM-DD');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD ');
         try {
             const newEvent = {
                 name: values.eventName,
-                point: values.eventPoint,
+                point: parseInt(values.eventPoint),
                 location: values.eventPlace,
                 description: values.extraNotice,
                 startTime: formattedstartDate,
                 endTime: formatttedEndDate,
                 id: event.id,
+                status: 'ACTIVE',
             };
             await productApi.editEvent(newEvent, token);
             toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');

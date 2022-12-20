@@ -36,7 +36,10 @@ function Detail({ event, handle }) {
         toastSuccess('Xóa sự kiến thành công!!');
     };
     function ChangeFormateDate(oldDate) {
-        return oldDate.split('-').reverse().join('/');
+        var date = new Date(oldDate);
+
+        var newDate = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() + ' ';
+        return newDate;
     }
 
     return (
@@ -55,7 +58,7 @@ function Detail({ event, handle }) {
                 <DetailBody>
                     <div>
                         <h1>Thời gian :</h1>
-                        <h2>{`${ChangeFormateDate(event.startTime)} --> ${ChangeFormateDate(
+                        <h2>{`${ChangeFormateDate(event.startTime)} ➭ ${ChangeFormateDate(
                             event.endTime
                         )}`}</h2>
                     </div>

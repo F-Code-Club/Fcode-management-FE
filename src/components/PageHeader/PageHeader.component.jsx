@@ -21,7 +21,7 @@ const { Header } = Layout;
 
 let breadcrumbNameMap = {
     '/event': 'Quản lý sự kiện',
-    '/source': 'Quản lý tài nguyên',
+    '/manage-resource': 'Quản lý tài nguyên',
     '/member': 'Quản lý thành viên',
     '/blog': 'Quản lý bài viết thành viên',
     '/personal-blog': 'Quản lý bài viết cá nhân',
@@ -40,6 +40,7 @@ let breadcrumbNameMap = {
 for (let i = 1; i <= 100; i++) {
     breadcrumbNameMap[`/personal-blog/${i}`] = `Chi tiết bài viết`;
     breadcrumbNameMap[`/manage-announcement/view-announcement/${i}`] = `Thông báo số ${i}`;
+    breadcrumbNameMap[`/manage-resource/${i}`] = `tài nguyên số ${i}`;
 }
 const PageHeaderComponent = () => {
     const [modal, contextHolder] = Modal.useModal();

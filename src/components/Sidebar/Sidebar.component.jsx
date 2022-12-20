@@ -28,7 +28,11 @@ function getItem(label, key, icon, children) {
 const itemsAdmin = [
     getItem(<SidebarLink to="/home" child="Trang Chủ" />, '1', <HomeOutlined />),
     getItem(<SidebarLink to="/event" child="Quản lý sự kiện" />, '2', <CalendarOutlined />),
-    getItem(<SidebarLink to="/source" child="Quản lý tài nguyên" />, '3', <InboxOutlined />),
+    getItem(
+        <SidebarLink to="/manage-resource" child="Quản lý tài nguyên" />,
+        '3',
+        <InboxOutlined />
+    ),
     getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '4', <SendOutlined />, [
         getItem(<SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />, '11'),
         getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '12'),

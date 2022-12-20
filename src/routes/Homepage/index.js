@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Avatar, List } from 'antd';
 import { ContentState, Editor, EditorState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../../assets/logo/F-Code logo.png';
 import { get } from '../../utils/ApiCaller';
+import { setUser } from '../Auth/slice';
 import { Col1, Col2, ContainerHomepage } from './style';
 
+import authApi from '@/utils/apiComponents/authApi';
+import LocalStorageUtils from '@/utils/localStorageUtils';
+
 export const Homepage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const [dataEvent, setDataEvent] = useState();
@@ -58,7 +65,30 @@ export const Homepage = () => {
             return EditorState.createEmpty();
         }
     };
+    useEffect(() => {
+        const token = LocalStorageUtils.getItem('token');
+        // const userId = LocalStorageUtils.getJWTUser().id;
+        const getData = async (token) => {
+            const response = await authApi.getUser(token);
 
+            if (response.data.code === 200) {
+                const { data } = response.data;
+                const formatUser = {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    role: data.role,
+                };
+                dispatch(setUser(formatUser));
+            }
+            if (response.data.code === 408) {
+                LocalStorageUtils.removeItem('token');
+                navigate('/auth');
+            }
+        };
+        if (token) {
+            getData(token);
+        }
+    }, []);
     return (
         <ContainerHomepage>
             <Col1>

@@ -13,6 +13,7 @@ import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import { EditorStateToHTML, HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
+import localStorageUtils from '@/utils/localStorageUtils';
 
 // This form for both CREATE blog and UPDATE blog
 const BlogForm = () => {
@@ -42,7 +43,8 @@ const BlogForm = () => {
             if (blog.content) {
                 newBlog = blog;
             } else if (blogID) {
-                const res = await articleApi.getArticleById(blogID);
+                const token = localStorageUtils.getToken();
+                const res = await articleApi.getArticleById(blogID, token);
                 newBlog = res.data.data;
             }
 
@@ -70,7 +72,8 @@ const BlogForm = () => {
             };
             delete newBlog.genreId;
             delete newBlog.memberId;
-            res = await articleApi.updateArticle(newBlog);
+            const token = localStorageUtils.getToken();
+            res = await articleApi.updateArticle(newBlog, token);
             if (res.data.code === 200) {
                 dispatch(changeBlog({}));
                 toastSuccess('Chỉnh sửa bài viết thành công');

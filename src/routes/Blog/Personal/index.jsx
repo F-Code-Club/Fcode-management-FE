@@ -11,10 +11,16 @@ import * as Styled from './PersonalBlog.styled';
 import Button from '@/components/Button';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import articleApi from '@/utils/apiComponents/articleApi';
+import localStorageUtils from '@/utils/localStorageUtils';
+import usePersistedState from '@/utils/usePersistedState';
 
 const { Search } = Input;
 
 const PersonalBlog = () => {
+    const token = localStorageUtils.getToken();
+
+    const [tokens, setToken] = usePersistedState('token', token);
+
     const [blogs, setBlogs] = useState({
         all: useSelector(selectCurrentBlog).author,
         search: useSelector(selectCurrentBlog).author,
@@ -31,7 +37,7 @@ const PersonalBlog = () => {
 
             dispatch(changeBlog({}));
             setBlogs({ ...blogs, loading: true, isDelete: false });
-            await dispatch(getAllBlogs())
+            await dispatch(getAllBlogs(tokens))
                 .then((res) => {
                     setBlogs({
                         ...blogs,

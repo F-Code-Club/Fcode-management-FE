@@ -107,7 +107,7 @@ export const SideBar = styled(Sider)`
     left: 0;
 `;
 
-export const SignOut = styled.div`
+export const SignOut = styled.button`
     display: flex;
     align-items: center;
     font-family: 'Roboto';
@@ -115,4 +115,7 @@ export const SignOut = styled.div`
     position: absolute;
     bottom: 20px;
     padding-left: 24px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 `;

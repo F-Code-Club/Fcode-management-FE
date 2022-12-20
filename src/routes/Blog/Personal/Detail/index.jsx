@@ -14,6 +14,7 @@ import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
+import localStorageUtils from '@/utils/localStorageUtils';
 
 const PersonalDetailBlog = () => {
     const dispatch = useDispatch();
@@ -65,7 +66,8 @@ const PersonalDetailBlog = () => {
                 genreId: 1,
                 location: 'Facebook',
             };
-            const { data } = await articleApi.createArticle(newBlog);
+            const token = localStorageUtils.getToken();
+            const { data } = await articleApi.createArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));
                 toastSuccess('Tạo bài viết thành cống');

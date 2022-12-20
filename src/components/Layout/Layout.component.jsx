@@ -1,11 +1,12 @@
 import { Layout } from 'antd';
+import { Outlet } from 'react-router-dom';
 
 import PageHeaderComponent from '@/components/PageHeader/PageHeader.component';
 import SidebarComponent from '@/components/Sidebar/Sidebar.component';
 import { themes } from '@/theme/theme';
 
 const { Content } = Layout;
-const LayoutComponent = ({ children }) => {
+const LayoutComponent = () => {
     return (
         <Layout>
             <SidebarComponent />
@@ -15,7 +16,9 @@ const LayoutComponent = ({ children }) => {
             >
                 <PageHeaderComponent />
                 <Content style={{ margin: '20px 16px' }}>
-                    <div className="site-layout-background">{children}</div>
+                    <div className="site-layout-background">
+                        <Outlet />
+                    </div>
                 </Content>
             </Layout>
         </Layout>

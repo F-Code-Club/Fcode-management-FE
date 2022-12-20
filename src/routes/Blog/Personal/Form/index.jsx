@@ -180,10 +180,12 @@ const BlogForm = () => {
                 },
             ],
             children: (
-                <Editor
-                    editorState={blog.content}
-                    onEditorStateChange={(value) => setBlog({ ...blog, content: value })}
-                />
+                <Styled.Border>
+                    <Editor
+                        editorState={blog.content}
+                        onEditorStateChange={(value) => setBlog({ ...blog, content: value })}
+                    />
+                </Styled.Border>
             ),
         },
         {

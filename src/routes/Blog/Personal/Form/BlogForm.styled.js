@@ -15,8 +15,18 @@ export const Box = styled.div`
         0px 1px 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
 `;
+
 export const TitleForm = styled(Title)`
     font-weight: 700 !important;
     text-align: center;
     text-transform: uppercase;
+`;
+
+export const Border = styled.div`
+    border: 1px solid ${themes.colors.neutral5};
+    padding: 4px 12px;
+
+    &:focus {
+        border-color: ${themes.colors.primary};
+    }
 `;

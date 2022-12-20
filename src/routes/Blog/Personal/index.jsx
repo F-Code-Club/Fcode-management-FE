@@ -29,6 +29,7 @@ const PersonalBlog = () => {
             // const { data } = await articleApi.getArticleByAuthor();
             // setBlogs({ ...blogs, all: data.data, search: data.data });
 
+            dispatch(changeBlog({}));
             setBlogs({ ...blogs, loading: true, isDelete: false });
             await dispatch(getAllBlogs()).then((res) => {
                 setBlogs({

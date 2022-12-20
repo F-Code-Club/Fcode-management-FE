@@ -6,11 +6,14 @@ import AdminRoute from './AdminRoute';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import Auth from './Auth';
+import Blog from './Blog';
 import BlogDetailComponent from './Blog/Detail';
 import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
+import Event from './Event/Index';
 import ManagerRoute from './ManagerRoute';
+import Recruitment from './MemberRecuritment';
 import MemberRoute from './MemberRoute';
 import PublicRoute from './PublicRoute';
 import QuestionManagement from './Question/index';
@@ -20,7 +23,6 @@ import TestRouteManager from './TestManagerRoute';
 
 // import TestRouteAdmin from './testRouteAdmin';
 import LayoutComponent from '@/components/Layout/Layout.component';
-import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
 
@@ -79,6 +81,18 @@ const adminRoute = [
 
 const managerRoute = [
     {
+        path: 'private',
+        component: <Homepage />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'recruitmembers',
+        component: <Recruitment />,
+        exact: true,
+        restrict: true,
+    },
+    {
         index: true,
         path: 'routeManager',
         component: <TestRouteManager />,
@@ -91,7 +105,12 @@ const memberRoute = [
     { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
 
     {
+        path: 'event',
+        component: <Event />,
         index: false,
+        restrict: true,
+    },
+    {
         path: '/blog/:id',
         component: <BlogDetailComponent />,
         exact: false,
@@ -104,36 +123,12 @@ const memberRoute = [
         exact: true,
         restrict: true,
     },
-    {
-        path: '/personal-blog/:id',
-        component: <PersonalDetailBlog />,
-        exact: false,
-        restrict: true,
-    },
-    {
-        path: '/personal-blog/create',
-        component: <BlogForm />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: '/personal-blog/edit/:id',
-        component: <BlogForm />,
-        exact: false,
-        restrict: true,
-    },
-    {
-        path: '/personal-blog/preview',
-        component: <PersonalDetailBlog />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: '/personal-blog/preview/:id',
-        component: <PersonalDetailBlog />,
-        exact: false,
-        restrict: true,
-    },
+    // {
+    //     path: '/blog/:key',
+    //     component: <BlogDetailComponent />,
+    //     exact: false,
+    //     restrict: true,
+    // },
 ];
 
 const RouterComponent = () => {

@@ -4,12 +4,12 @@ import { toastError } from '@/components/ToastNotification';
 import { get, post, put, remove } from '@/utils/ApiCaller';
 
 // todo delete token from config when deploy
-let token = localStorageUtils.getToken();
+// let token = localStorageUtils.getToken();
 // Create a components api for your calling here
 // Make an object with the method you want, passing params then create endpoint and return the method you call as the example below
 // When call an api, make sure you have await/async for the result
 const articleApi = {
-    createArticle: async (article) => {
+    createArticle: async (article, token) => {
         const endpoint = '/article';
         return await post(endpoint, article, {}, { authorization: token })
             .then((res) => {
@@ -18,7 +18,7 @@ const articleApi = {
             })
             .catch((err) => toastError(err.message));
     },
-    updateArticle: async (article) => {
+    updateArticle: async (article, token) => {
         const endpoint = '/article';
         return await put(endpoint, article, {}, { authorization: token })
             .then((res) => {
@@ -38,11 +38,11 @@ const articleApi = {
             })
             .catch((err) => toastError(err.message));
     },
-    getActiveArticle: async () => {
+    getActiveArticle: async (token) => {
         const endpoint = '/article/all';
         return await get(endpoint, {}, { authorization: token });
     },
-    approveAllArticles: async () => {
+    approveAllArticles: async (token) => {
         const endpoint = '/article/approve/all';
         return await put(endpoint, {}, {}, { authorization: token })
             .then((res) => {
@@ -51,27 +51,27 @@ const articleApi = {
             })
             .catch((err) => toastError(err.message));
     },
-    approveArticle: async (id) => {
+    approveArticle: async (id, token) => {
         const endpoint = `/article/approve/${id}`;
         return await put(endpoint, {}, {}, { authorization: token });
     },
-    disapproveArticle: async (id) => {
+    disapproveArticle: async (id, token) => {
         const endpoint = `/article/disapprove/${id}`;
         return await put(endpoint, {}, {}, { authorization: token });
     },
-    deleteArticle: async (id) => {
+    deleteArticle: async (id, token) => {
         const endpoint = `/article/${id}`;
         return await remove(endpoint, {}, {}, { authorization: token });
     },
-    getInactiveArticle: async () => {
+    getInactiveArticle: async (token) => {
         const endpoint = '/article/inactive';
         return await get(endpoint, {}, { authorization: token });
     },
-    getProcessingArticle: async () => {
+    getProcessingArticle: async (token) => {
         const endpoint = '/article/processing';
         return await get(endpoint, {}, { authorization: token });
     },
-    getArticleByAuthor: async () => {
+    getArticleByAuthor: async (token) => {
         const endpoint = '/article/author';
         return await get(endpoint, {}, { authorization: token });
     },

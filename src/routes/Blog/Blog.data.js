@@ -1,11 +1,16 @@
-import { Space, Tag } from 'antd';
+import { Space } from 'antd';
+import { Link } from 'react-router-dom';
+
+import CustomLink from './CustomLink';
 
 export const columns = [
     {
         title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text, record) => <a href={`/blog/${record.key}?action=approve`}>{text}</a>,
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => {
+            return <Link to={`/blog/${record.id}?action=processing`}>{text}</Link>;
+        },
     },
     {
         title: 'Tác giả',
@@ -14,38 +19,30 @@ export const columns = [
     },
     {
         title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
+        dataIndex: 'createdTime',
+        key: 'createdTime',
     },
     {
         title: 'Actions',
         key: 'action',
-        render: () => (
+        render: (_, record) => (
             <Space size="middle">
-                <a href="/blog">Duyệt</a>
-                <a href="/blog">Từ chối</a>
+                <CustomLink
+                    to="/blog"
+                    id={record.id}
+                    action="approveArticle"
+                    successContent="Duyệt bài viết thành công"
+                    failContent="Duyệt bài viết thất bại"
+                    content="Duyệt"
+                />
+                <CustomLink
+                    to="/blog"
+                    id={record.id}
+                    action="disapproveArticle"
+                    failContent="Từ chối viết thất bại"
+                    successContent="Từ chối duyệt bài viết thành công"
+                    content="Từ chối"
+                />
             </Space>
         ),
     },
@@ -54,9 +51,9 @@ export const columns = [
 export const columns2 = [
     {
         title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text, record) => <a href={`/blog/${record.key}?action=hidden`}>{text}</a>,
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => <Link to={`/blog/${record.id}?action=active`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -65,38 +62,22 @@ export const columns2 = [
     },
     {
         title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
+        dataIndex: 'createdTime',
+        key: 'createdTime',
     },
     {
         title: 'Actions',
         key: 'action',
-        render: () => (
+        render: (_, record) => (
             <Space size="middle">
-                <a href="/blog">Ẩn</a>
-                <a href="/blog">Xóa</a>
+                <CustomLink
+                    to="/blog"
+                    id={record.id}
+                    action="deleteArticle"
+                    failContent="Xoá viết thất bại"
+                    successContent="Xoá bài viết thành công"
+                    content="Xoá"
+                />
             </Space>
         ),
     },
@@ -105,9 +86,9 @@ export const columns2 = [
 export const columns3 = [
     {
         title: 'Tên bài viết',
-        dataIndex: 'post_title',
-        key: 'post_title',
-        render: (text, record) => <a href={`/blog/${record.key}?action=decline`}>{text}</a>,
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => <Link to={`/blog/${record.id}?action=inactive`}>{text}</Link>,
     },
     {
         title: 'Tác giả',
@@ -116,37 +97,15 @@ export const columns3 = [
     },
     {
         title: 'Ngày gửi',
-        dataIndex: 'created_at',
-        key: 'created_at',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
+        dataIndex: 'createdTime',
+        key: 'createdTime',
     },
 ];
 
 export const data = Array.from({ length: 100 }, (_, i) => ({
-    key: i + 1,
-    post_title: 'Tên bài viết ABC',
+    id: i + 1,
+    title: 'Tên bài viết ABC',
     author: 'Nguyễn Văn A',
-    created_at: '01/01/2022',
+    createdTime: '01/01/2022',
     tags: ['Design', 'UI/UX'],
 }));

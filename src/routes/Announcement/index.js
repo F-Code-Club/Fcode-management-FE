@@ -1,73 +1,126 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, List } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { RenderList } from './components/RenderList';
-import { actions } from './slice';
-import { selectAnnounce } from './slice/selectors';
 import { ContainerAnnouncement } from './style';
 
 import { ConfirmAction } from '@/components/Popup/PopupConfirm';
 import { CreateAnnouncement } from '@/components/Popup/PopupEditor';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { get, post, put, remove } from '@/utils/ApiCaller';
 
 export const ManageAnnouncement = () => {
+    const token = localStorage.getItem('token');
     const [state, setState] = useState({
         popupEditor: {
             status: false,
-            type: '',
-            content: '',
-            title: '',
-            imgs: [],
-            id: '',
-            sendAll: false,
         },
         popupConfirm: {
             status: false,
-            id: '',
-            title: '',
-            content: '',
-            icon: '',
-            buttonValue: '',
         },
     });
 
-    const dispatch = useDispatch();
-    const listAnnounce = useSelector(selectAnnounce);
+    const [dataAnnounce, setDataAnnounce] = useState();
+    const [reload, setReload] = useState(1);
 
-    const handleCreate = async (status, newAnnouncement) => {
+    useEffect(() => {
+        get('/announcement/all', '', { authorization: token })
+            .then((res) => setDataAnnounce(res.data.data.reverse()))
+            // eslint-disable-next-line no-console
+            .catch((error) => console.log(error));
+    }, [reload]);
+
+    const handleCreate = (status, newAnnouncement) => {
         const typeWork = state.popupEditor.type;
         if (status) {
-            let addId = 1;
-            if (typeWork === 'create') {
-                if (listAnnounce.length > 0)
-                    listAnnounce.map((todo) => todo.id == addId && (addId = todo.id + 1));
-            } else {
-                addId = state.popupEditor.id;
-                await dispatch(actions.deleteAnnounce(state.popupEditor.id));
+            switch (typeWork) {
+                case 'create':
+                    post(
+                        '/announcement',
+                        {
+                            ...newAnnouncement,
+                            mailTitle: newAnnouncement.title,
+                            mail:
+                                '<b>Thân gửi bạn: ${name} &emsp;&emsp;&emsp; MSSV: ${studentId}</b>' +
+                                newAnnouncement.description,
+                            location: 'Việt Nam',
+                        },
+                        {},
+                        {
+                            authorization: token,
+                        }
+                    )
+                        .then((res) => {
+                            if (res.data.code == 200) {
+                                setReload(reload + 1);
+                                toastSuccess('Thông báo đã được tạo thành công');
+                            } else toastError(`Tạo thông báo không thành công ${res.data.message}`);
+                        })
+                        .catch((error) => {
+                            toastError('Tạo thông báo không thành công');
+                            // eslint-disable-next-line no-console
+                            console.log(error);
+                        });
+                    break;
+                case 'edit':
+                    put(
+                        '/announcement',
+                        {
+                            ...newAnnouncement,
+                            mailTitle: newAnnouncement.title,
+                            mail:
+                                '<b>Thân gửi bạn: ${name} &emsp;&emsp;&emsp; MSSV: ${studentId}</b>' +
+                                newAnnouncement.description,
+                            location: 'Việt Nam',
+                            sendEmailWhenUpdate: true,
+                        },
+                        {},
+                        {
+                            authorization: token,
+                        }
+                    )
+                        .then((res) => {
+                            if (res.data.code == 200) {
+                                setReload(reload + 1);
+                                toastSuccess('Thông báo đã được chỉnh sửa thành công');
+                            } else
+                                toastError(
+                                    `Chỉnh sửa thông báo không thành công ${res.data.message}`
+                                );
+                        })
+                        .catch((error) => {
+                            toastError('Chỉnh sửa thông báo không thành công');
+                            // eslint-disable-next-line no-console
+                            console.log(error);
+                        });
+                    break;
             }
-
-            await dispatch(actions.addAnnounce({ ...newAnnouncement, id: addId }));
-            toastSuccess(
-                `Thông báo đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
-            );
-        } else
-            toastError(`${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} thông báo không thành công`);
-        await setState({
+        }
+        setState({
             ...state,
             popupEditor: {
                 status: false,
             },
         });
+        document.body.style.overflow = 'unset';
     };
 
-    const handleDelete = async (status) => {
+    const handleDelete = (status) => {
         if (status) {
-            await dispatch(actions.deleteAnnounce(state.popupConfirm.id));
-            toastSuccess('Thông báo đã được xóa thành công');
-        } else toastError('Xóa thông báo không thành công');
-        await setState({
+            remove(`/announcement/one/${state.popupConfirm.id}`, '', '', {
+                authorization: token,
+            })
+                .then((res) => {
+                    if (res.data.code == 200) {
+                        setReload(reload + 1);
+                        toastSuccess('Thông báo đã được xóa thành công');
+                    } else toastError(`Xóa thông báo không thành công ${res.data.message}`);
+                })
+                // eslint-disable-next-line no-console
+                .catch((err) => console.log(err));
+        }
+        setState({
             ...state,
             popupConfirm: {
                 status: false,
@@ -83,9 +136,10 @@ export const ManageAnnouncement = () => {
                     popupEditor: {
                         status: true,
                         type: 'create',
-                        content: '',
+                        description: '',
                     },
                 });
+                document.body.style.overflow = 'hidden';
                 break;
             case 'edit':
                 setState({
@@ -93,13 +147,15 @@ export const ManageAnnouncement = () => {
                     popupEditor: {
                         status: true,
                         type: 'edit',
-                        content: item.content,
+                        description: item.description,
                         title: item.title,
-                        imgs: item.imgs,
+                        imageUrl: item.imageUrl,
                         id: item.id,
-                        sendAll: item.sendAll,
+                        infoGroup: item.infoGroup,
+                        infoUserId: item.infoUserId,
                     },
                 });
+                document.body.style.overflow = 'hidden';
                 break;
             case 'delete':
                 setState({
@@ -135,7 +191,7 @@ export const ManageAnnouncement = () => {
                 size="large"
                 className="list-announcement"
                 pagination={{ pageSize: 3 }}
-                dataSource={[...listAnnounce].reverse()}
+                dataSource={dataAnnounce}
                 renderItem={(item) => <RenderList item={item} handleClick={handleClick} />}
             />
             {state.popupEditor.status && (
@@ -143,9 +199,12 @@ export const ManageAnnouncement = () => {
                     action={handleCreate}
                     type={state.popupEditor.type}
                     title={state.popupEditor.title}
-                    content={state.popupEditor.content}
-                    imgs={state.popupEditor.imgs}
+                    description={state.popupEditor.description}
+                    imageUrl={state.popupEditor.imageUrl}
                     sendAll={state.popupEditor.sendAll}
+                    infoUserId={state.popupEditor.infoUserId}
+                    infoGroup={state.popupEditor.infoGroup}
+                    id={state.popupEditor.id}
                 />
             )}
             {state.popupConfirm.status && (
@@ -153,7 +212,7 @@ export const ManageAnnouncement = () => {
                     title={state.popupConfirm.title}
                     content={state.popupConfirm.content}
                     buttonValue={state.popupConfirm.buttonValue}
-                    icon={state.popupConfirm.icon} //op1: 'delete', op2: 'retry'
+                    icon={state.popupConfirm.icon}
                     action={handleDelete}
                 />
             )}

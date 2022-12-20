@@ -28,17 +28,23 @@ function getItem(label, key, icon, children) {
 const itemsAdmin = [
     getItem(<SidebarLink to="/home" child="Trang Chủ" />, '1', <HomeOutlined />),
     getItem(<SidebarLink to="/event" child="Quản lý sự kiện" />, '2', <CalendarOutlined />),
-    getItem(<SidebarLink to="/source" child="Quản lý tài nguyên" />, '3', <InboxOutlined />),
-    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '4', <SendOutlined />),
+    getItem(
+        <SidebarLink to="/manage-resource" child="Quản lý tài nguyên" />,
+        '3',
+        <InboxOutlined />
+    ),
+    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '4', <SendOutlined />, [
+        getItem(<SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />, '11'),
+        getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '12'),
+    ]),
     getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '5', <TeamOutlined />, [
         getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '5.1'),
         getItem(<SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />, '9'),
     ]),
     getItem(
-        <SidebarLink to="/announcement" child="Quản lý thông báo" />,
+        <SidebarLink to="/manage-announcement" child="Quản lý thông báo" />,
         '6',
-        <NotificationOutlined />,
-        [getItem(<SidebarLink to="/announcement/notification" child="Xem thông báo" />, '10')]
+        <NotificationOutlined />
     ),
     getItem(
         <SidebarLink to="/recruitmembers" child="Tuyển thành viên" />,

@@ -4,7 +4,7 @@ export const ContainerUploadImg = styled.div`
     display: flex;
     margin-top: 1rem;
     .title {
-        min-width: 150px;
+        min-width: 100px;
     }
     .ant-image {
         margin-right: 0.5rem;
@@ -19,6 +19,7 @@ export const ImageUpload = styled.div`
     height: 100px;
     border: 1px dashed #d9d9d9;
     cursor: pointer;
+    margin-left: 10px;
     p {
         margin: 5px;
     }

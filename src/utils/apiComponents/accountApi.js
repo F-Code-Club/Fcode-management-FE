@@ -7,7 +7,7 @@ import { get } from '@/utils/ApiCaller';
 // When call an api, make sure you have await/async for the result
 const accountApi = {
     get: async (token) => {
-        const endpoint = '/api/account';
+        const endpoint = '/resource/all ';
         return await get(
             endpoint,
             {},

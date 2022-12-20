@@ -4,14 +4,20 @@ import EditAccountByAdmin from './Accounts/EditAccount/index';
 import AccountsManager from './Accounts/index';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
-import BlogDetailComponent from './Blog/Detail/index';
+import BlogDetailComponent from './Blog/Detail';
+import PersonalBlog from './Blog/Personal';
+import PersonalDetailBlog from './Blog/Personal/Detail/index';
+import BlogForm from './Blog/Personal/Form';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import QuestionManagement from './Question/index';
+import ResourcesSection from './Resources';
+import ViewResource from './Resources/viewResources';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
 import EditAccount from '@/routes/EditAccount';
-import Home from '@/routes/Home';
+import { Homepage } from '@/routes/Homepage';
 
 // children: [
 //     {
@@ -22,13 +28,19 @@ import Home from '@/routes/Home';
 const publicRoute = [
     {
         path: 'home',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },
     {
         path: 'account/edit-account',
         component: <EditAccount />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource',
+        component: <ResourcesSection />,
         exact: true,
         restrict: true,
     },
@@ -51,8 +63,8 @@ const publicRoute = [
         restrict: true,
     },
     {
-        path: 'account/edit-account-by-admin/:id',
-        component: <EditAccountByAdmin />,
+        path: 'comment',
+        component: <QuestionManagement />,
         exact: true,
         restrict: true,
     },
@@ -61,7 +73,7 @@ const publicRoute = [
 const privateRoute = [
     {
         path: 'private',
-        component: <Home />,
+        component: <Homepage />,
         exact: true,
         restrict: true,
     },
@@ -72,8 +84,45 @@ const privateRoute = [
         restrict: true,
     },
     {
-        path: '/blog/:key',
+        path: '/blog/:id',
         component: <BlogDetailComponent />,
+        exact: false,
+        restrict: true,
+    },
+    // Personal Blog
+    {
+        path: '/personal-blog',
+        component: <PersonalBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
         exact: false,
         restrict: true,
     },

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import logger from 'redux-logger';
 
 import * as theme from '@/theme/theme';
 import { configureStore } from '@reduxjs/toolkit';
@@ -8,7 +9,10 @@ const staticReducers = {
     theme: theme.slice.reducer,
 };
 
-const store = configureStore({ reducer: createReducer() });
+const store = configureStore({
+    reducer: createReducer(),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+});
 
 // Add a dictionary to keep track of the registered async reducers
 store.asyncReducers = {};

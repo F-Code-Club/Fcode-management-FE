@@ -4,12 +4,16 @@ import AdminRoute from './AdminRoute';
 import { ManageAnnouncement } from './Announcement';
 import { ViewAnnouncement } from './Announcement/components/ViewAnnouncement';
 import Auth from './Auth';
-import BlogDetailComponent from './Blog/Detail/index';
+import BlogDetailComponent from './Blog/Detail';
+import PersonalBlog from './Blog/Personal';
+import PersonalDetailBlog from './Blog/Personal/Detail/index';
+import BlogForm from './Blog/Personal/Form';
 import ManagerRoute from './ManagerRoute';
 import MemberRoute from './MemberRoute';
 import PublicRoute from './PublicRoute';
 import TestRouteManager from './TestManagerRoute';
 import TestRouteAdmin from './testRouteAdmin';
+import QuestionManagement from './Question/index';
 
 import LayoutComponent from '@/components/Layout/Layout.component';
 import Blog from '@/routes/Blog';
@@ -42,6 +46,14 @@ const publicRoute = [
 ];
 const adminRoute = [
     {
+        path: 'comment',
+        component: <QuestionManagement />,
+        exact: true,
+        restrict: true,
+    },
+];
+const adminRoute = [
+    {
         index: true,
         path: 'routeAdmin',
         component: <TestRouteAdmin />,
@@ -64,8 +76,45 @@ const memberRoute = [
 
     {
         index: false,
-        path: '/blog/:key',
+        path: '/blog/:id',
         component: <BlogDetailComponent />,
+        exact: false,
+        restrict: true,
+    },
+    // Personal Blog
+    {
+        path: '/personal-blog',
+        component: <PersonalBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
         exact: false,
         restrict: true,
     },

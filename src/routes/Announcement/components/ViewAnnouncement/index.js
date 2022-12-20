@@ -25,6 +25,7 @@ export const ViewAnnouncement = () => {
                     navigate('/manage-announcement');
                 }
             })
+            // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
     }, [id]);
 

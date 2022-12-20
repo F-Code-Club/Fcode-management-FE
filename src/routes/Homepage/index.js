@@ -70,7 +70,6 @@ export const Homepage = () => {
         // const userId = LocalStorageUtils.getJWTUser().id;
         const getData = async (token) => {
             const response = await authApi.getUser(token);
-            console.log(response);
 
             if (response.data.code === 200) {
                 const { data } = response.data;

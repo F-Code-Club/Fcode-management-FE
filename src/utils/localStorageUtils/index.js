@@ -59,7 +59,6 @@ class LocalStorageUtils {
 
                     const pattern2 = /(se)+\d+/;
                     const resulted = sub.match(pattern2);
-                    console.log(resulted[0].toUpperCase());
                     const memberId = resulted[0].toUpperCase();
                     const fetchedMember = get(
                         `/member/studentId/${memberId}`,

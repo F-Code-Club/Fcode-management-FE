@@ -19,8 +19,8 @@ const { Search } = Input;
 
 const Blog = () => {
     // Using redux to store data when received
-    // const token = localStorageUtils.getJWTUser();
-    const [token, setToken] = usePersistedState('token');
+    const token = localStorageUtils.getToken();
+    const [tokens, setToken] = usePersistedState('token', token);
     const blogs = useSelector(selectCurrentBlog);
     const location = useLocation();
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Blog = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await dispatch(getAllBlogs(token))
+            await dispatch(getAllBlogs(tokens))
                 .unwrap()
                 // eslint-disable-next-line no-console
                 .catch((err) => console.log(err))

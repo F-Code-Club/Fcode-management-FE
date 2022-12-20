@@ -29,7 +29,6 @@ const authApi = {
         const endpoint = '/member/own';
         return await get(endpoint, {}, { authorization: token })
             .then((res) => {
-                console.log('run');
                 if (res.data.code !== 200) toastError(res.data.message);
                 return res;
             })

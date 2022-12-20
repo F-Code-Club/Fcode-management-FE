@@ -29,7 +29,7 @@ const Auth = () => {
             success: UrlParams.get('success'),
             token: UrlParams.get('token'),
         };
-        console.log('line 33', response.token);
+
         LocalStorageUtils.setItem('token', response.token);
 
         return <Navigate to="/" replace />;

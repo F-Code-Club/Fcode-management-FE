@@ -5,7 +5,7 @@ import { selectUser } from './Auth/slice/selector';
 
 const ManagerRoute = () => {
     const User = useSelector(selectUser);
-    console.log(User);
+
     return User.role === 'MANAGER' || User.role === 'ADMIN' ? (
         <Outlet />
     ) : (

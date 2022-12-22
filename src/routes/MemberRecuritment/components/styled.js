@@ -44,9 +44,12 @@ export const MilestoneContainer = styled.div`
     padding: 20px 20px;
 `;
 export const Hero = styled.div`
-    margin-top: 12px;
+    margin: 6px 0;
     display: flex;
     align-items: center;
+    span {
+        font-size: 20px;
+    }
     h5 {
         margin-bottom: 0;
         margin-left: 8px;
@@ -79,7 +82,7 @@ export const Time = styled.div`
     font-size: 14px;
     line-height: 22px;
     /* or 157% */
-
+    margin: 10px 0;
     color: #000000;
 `;
 export const Des = styled.div`
@@ -88,14 +91,28 @@ export const Des = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
+    margin: 10px 0;
     /* or 157% */
+    span {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 22px;
+        /* identical to box height, or 157% */
 
+        color: #000000;
+    }
     color: #000000;
 `;
 export const LeftSide = styled.div`
     margin-left: 30px;
 `;
 export const RightSide = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-right: 32px;
 `;
 export const ButtonContainer = styled.div`
@@ -210,7 +227,6 @@ export const InputContainer = styled.div`
         line-height: 22px;
         /* identical to box height, or 122% */
         text-transform: uppercase;
-
         color: #000000;
     }
     display: flex;

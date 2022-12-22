@@ -5,10 +5,10 @@ import { Container } from './styled';
 
 function MileStones() {
     const { listOfMilestones } = useSelector((state) => state.listOfMilestones);
-    console.log(listOfMilestones);
+    let reversedArray = [...listOfMilestones].reverse();
     return (
         <Container>
-            {listOfMilestones.map((element) => {
+            {reversedArray.map((element) => {
                 return <Element key={element.id} event={element} />;
             })}
         </Container>

@@ -8,15 +8,18 @@ const productApi = {
 
     postEvent: (event, token) => {
         const url = '/event/new';
+        var postStartDate = new Date(event.startTime);
+        var postEndDate = new Date(event.startTime);
+
         return post(
             url,
             {
                 description: event.description,
-                endTime: event.endTime,
+                endTime: postEndDate.toISOString(),
                 location: event.location,
                 name: event.name,
                 point: event.point,
-                startTime: event.startTime,
+                startTime: postStartDate.toISOString(),
                 status: event.status,
             },
             {},
@@ -54,15 +57,17 @@ const productApi = {
     },
     editEvent: (event, token) => {
         const url = '/event';
+        var postStartDate = new Date(event.startTime);
+        var postEndDate = new Date(event.startTime);
         return put(
             url,
             {
                 description: event.description,
-                endTime: event.endTime,
+                endTime: postEndDate.toISOString(),
                 location: event.location,
                 name: event.name,
                 point: event.point,
-                startTime: event.startTime,
+                startTime: postStartDate.toISOString(),
                 status: event.status,
                 id: event.id,
             },

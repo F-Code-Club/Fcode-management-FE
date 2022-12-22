@@ -52,7 +52,10 @@ function Element({ event }) {
                     {`${event.startTime}-->${event.endTime}`}
                     <br></br>
                 </Time>
-                <Des>{event.description}</Des>
+                <Des>
+                    <span>Nội Dung:</span>
+                    {event.description}
+                </Des>
                 <Form>Link của form : </Form>
             </LeftSide>
             <RightSide>

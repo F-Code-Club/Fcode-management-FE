@@ -176,7 +176,7 @@ export const DetailContainer = styled.div`
     top: translate(50%, 100%);
     border-radius: 10px;
     max-width: 500px;
-    padding: 20px 20px;
+    padding: 20px 20px 0 20px;
 `;
 export const Header = styled.div`
     display: flex;
@@ -227,7 +227,11 @@ export const LeftHeader = styled.div`
     div {
         text-align: center;
         background: #45ce7c;
+        height: 20px;
         width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 100px;
         font-size: 18px;
         color: white;

@@ -42,6 +42,11 @@ function Detail({ event, handle }) {
         var newDate = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() + ' ';
         return newDate;
     }
+    function changeFormatTime(oldDate) {
+        var date = new Date(oldDate);
+        var newTime = date.getHours() + ':' + date.getMinutes();
+        return newTime;
+    }
 
     return (
         <BoxContainer>
@@ -58,8 +63,14 @@ function Detail({ event, handle }) {
                 <hr className="solid"></hr>
                 <DetailBody>
                     <div>
-                        <h1>Thời gian :</h1>
+                        <h1>Ngày :</h1>
                         <h2>{`${ChangeFormateDate(event.startTime)} ➭ ${ChangeFormateDate(
+                            event.endTime
+                        )}`}</h2>
+                    </div>
+                    <div>
+                        <h1>Thời gian :</h1>
+                        <h2>{`${changeFormatTime(event.startTime)} ➭ ${changeFormatTime(
                             event.endTime
                         )}`}</h2>
                     </div>

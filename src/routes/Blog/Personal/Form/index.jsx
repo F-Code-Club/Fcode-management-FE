@@ -11,6 +11,7 @@ import * as Styled from './BlogForm.styled';
 
 import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { selectId } from '@/routes/Auth/slice/selector';
 import { EditorStateToHTML, HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
@@ -61,6 +62,9 @@ const BlogForm = () => {
         })();
     }, []);
 
+    // Get user ID from redux
+    const memberId = useSelector(selectId);
+
     const onFinish = async (values) => {
         let res;
         if (blogID) {
@@ -80,12 +84,12 @@ const BlogForm = () => {
                 navigate('/personal-blog');
             }
         } else {
-            // TODO: Update memberID and genreID when Login page is done
+            // TODO: Update genreID and location
             const newBlog = {
                 ...values,
                 content: EditorStateToHTML(blog.content),
                 genreId: 1,
-                memberId: 1212,
+                memberId,
                 location: 'Vietnam',
                 imageUrl: blog.imageUrl,
             };

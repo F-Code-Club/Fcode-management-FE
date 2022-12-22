@@ -10,6 +10,7 @@ import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { selectId } from '@/routes/Auth/slice/selector';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
 import usePersistedState from '@/utils/usePersistedState';
@@ -29,6 +30,8 @@ const PersonalBlog = () => {
     });
 
     const dispatch = useDispatch();
+    const getUserId = useSelector(selectId);
+
     useEffect(() => {
         (async () => {
             // * Un alternative way to get all blog when calling with Redux Thunk is slow

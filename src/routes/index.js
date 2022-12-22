@@ -179,12 +179,36 @@ const memberRoute = [
         exact: true,
         restrict: true,
     },
-    // {
-    //     path: '/blog/:key',
-    //     component: <BlogDetailComponent />,
-    //     exact: false,
-    //     restrict: true,
-    // },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
 ];
 
 const RouterComponent = () => {

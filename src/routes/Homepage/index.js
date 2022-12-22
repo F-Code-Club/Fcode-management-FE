@@ -73,10 +73,12 @@ export const Homepage = () => {
 
             if (response.data.code === 200) {
                 const { data } = response.data;
+
                 const formatUser = {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     role: data.role,
+                    id: data.id,
                 };
                 dispatch(setUser(formatUser));
             }

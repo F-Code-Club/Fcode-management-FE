@@ -16,6 +16,7 @@ const InputFacebook = () => {
 
     return (
         <Input
+            disabled={true}
             placeholder="facebook.com/user_name"
             value={facebook}
             onChange={handleFacebookChange}

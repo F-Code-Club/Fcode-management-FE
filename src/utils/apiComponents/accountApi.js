@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { get } from '@/utils/ApiCaller';
 
 // Create a components api for your calling here
@@ -13,6 +15,13 @@ const accountApi = {
                 Authorization: token,
             }
         ).catch((err) => console.log(err));
+    },
+    random: async () => {
+        const url = 'https://randomuser.me/api/?results=10';
+        return await axios({
+            method: 'GET',
+            url: url,
+        }).catch((err) => console.log(err));
     },
 };
 

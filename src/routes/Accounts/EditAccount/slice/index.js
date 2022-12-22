@@ -32,7 +32,7 @@ export const initialState = {
     info: {},
 };
 
-export const name = 'editAccount';
+export const name = 'editAccounts';
 
 export const slice = createSlice({
     name,
@@ -66,6 +66,7 @@ export const slice = createSlice({
             state.facebook = action.payload.facebookUrl;
             state.bio = action.payload.description;
             state.id = action.payload.id;
+
             state.crewId = action.payload.crewId - 1;
             state.major = action.payload.major;
             state.studentId = action.payload.studentId;
@@ -89,6 +90,7 @@ export const slice = createSlice({
                 facebook: state.facebook,
                 bio: state.bio,
                 id: state.id,
+                roles: state.roles,
                 phone: state.phone,
                 firstName: state.fullName.split(' ').slice(-1).join(' '),
                 lastName: state.fullName.split(' ').slice(0, -1).join(' '),

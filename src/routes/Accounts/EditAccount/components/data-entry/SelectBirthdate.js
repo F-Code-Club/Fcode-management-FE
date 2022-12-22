@@ -15,7 +15,9 @@ const SelectGender = () => {
         dispatch(actions.getAccount());
     };
 
-    return <DatePicker value={moment(birthdate)} onChange={handleBirthdateChange} />;
+    return (
+        <DatePicker disabled={true} value={moment(birthdate)} onChange={handleBirthdateChange} />
+    );
 };
 
 export default SelectGender;

@@ -38,6 +38,18 @@ export const ListWrapper = styled.div`
     a {
         color: ${themes.colors.primary};
     }
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: ${themes.colors.primary};
+    }
+    .ant-tabs-ink-bar {
+        background: ${themes.colors.primary};
+    }
+    .ant-tabs-tab-btn:active,
+    .ant-tabs-tab-btn:focus,
+    .ant-tabs-tab-remove:active,
+    .ant-tabs-tab-remove:focus {
+        color: ${themes.colors.primary};
+    }
 `;
 
 export const SearchWrapper = styled.div`

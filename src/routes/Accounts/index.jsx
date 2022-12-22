@@ -12,7 +12,7 @@ import productApi from '@/utils/productApi';
 
 // account management with ant design table
 const AccountsManager = () => {
-    const [filterInput, setFilterInput] = useState('');
+    const [filterInput, setFilterInput] = useState([]);
     const token = localStorageUtils.getItem('token');
     const [allAccounts, setAllAccount] = useState([]);
     const [accountList, setAccountList] = useState([]);
@@ -25,7 +25,7 @@ const AccountsManager = () => {
             .getAllAccount(token)
             .then((result) => {
                 setLoading(false);
-                setAccountList(result.data.data);
+                setAccountList(result.data.data || []);
                 setAllAccount(result.data.data);
             })
 

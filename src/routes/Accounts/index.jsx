@@ -55,6 +55,10 @@ const AccountsManager = () => {
     const handleChange = () => {
         setFilterInput('');
     };
+    const dataSource = (tab) => {
+        if (tab.category === 0) return accountList;
+        return accountList.filter((member) => member.positionId === tab.category);
+    };
     return (
         <Wrapper>
             {/* Header Section*/}
@@ -71,14 +75,12 @@ const AccountsManager = () => {
             </Container>
             {/* End of Header Section*/}
             <ListWrapper id="scrollableDiv">
-                <Tabs defaultActiveKey="1" onChange={handleChange}>
+                <Tabs defaultActiveKey="0" onChange={handleChange}>
                     {tabs.map((tab) => {
                         return (
                             <TabPane tab={tab.name} key={tab.key}>
                                 <List
-                                    dataSource={accountList.filter(
-                                        (member) => member.positionId === tab.category
-                                    )}
+                                    dataSource={dataSource(tab)}
                                     renderItem={(item) => (
                                         <List.Item
                                             key={item.email}

@@ -139,30 +139,37 @@ const BlogForm = () => {
             name: 'title',
             rules: [
                 {
+                    max: 250,
                     required: true,
-                    message: 'Hãy vui lòng nhập tựa đề của bài viết',
+                    message: 'Hãy vui lòng nhập tựa đề của bài viết và độ dài không quá 250 ký tự',
                 },
             ],
-            children: <Input />,
+            children: <Input placeholder="EMMET - VIẾT HTML CẤP TỐC" />,
         },
         {
             label: 'Đoạn giới thiệu sơ lược',
             name: 'description',
             rules: [
                 {
+                    max: 1000,
                     required: true,
-                    message: 'Hãy vui lòng nhập đoạn giới thiệu sơ lược của bài viết',
+                    message:
+                        'Hãy vui lòng nhập đoạn giới thiệu sơ lược của bài viết và độ dài không quá 1000 ký tự',
                 },
             ],
-            children: <Input />,
+            children: (
+                <Input.TextArea placeholder="Emmet là công cụ hỗ trợ code HTML, CSS nhanh chóng, ngắn gọn mà không cần phải gõ một cách chi tiết toàn bộ cú pháp. Không những thế, đây là công cụ hoàn toàn miễn phí và được tích hợp sẵn trên Visual Studio Code." />
+            ),
         },
         {
             label: 'Thể loại',
             name: 'category',
             rules: [
                 {
+                    max: 250,
                     required: true,
-                    message: 'Hãy vui lòng nhập thể loại của bài viết',
+                    message:
+                        'Hãy vui lòng nhập thể loại của bài viết và độ dài không quá 250 ký tự',
                 },
             ],
             tooltip: 'Các tag phân cách với nhau bằng dấu “,”',
@@ -198,8 +205,9 @@ const BlogForm = () => {
             name: 'author',
             rules: [
                 {
+                    max: 100,
                     required: true,
-                    message: 'Hãy vui lòng nhập tác giả cúa bài viết',
+                    message: 'Hãy vui lòng nhập tác giả cúa bài viết và độ dài không quá 100 ký tự',
                 },
             ],
             children: <Input placeholder="Nguyen Van A" />,
@@ -266,7 +274,6 @@ const BlogForm = () => {
                 <Form
                     form={form}
                     layout="vertical"
-                    requiredMark={true}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     fields={fields}

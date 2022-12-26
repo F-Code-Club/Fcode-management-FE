@@ -10,7 +10,6 @@ import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
-import { selectId } from '@/routes/Auth/slice/selector';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
 import usePersistedState from '@/utils/usePersistedState';
@@ -29,10 +28,6 @@ const PersonalBlog = () => {
     });
 
     const dispatch = useDispatch();
-<<<<<<< HEAD
-=======
-    const getUserId = useSelector(selectId);
->>>>>>> c5603f1e0f25dbda785f12b509595adb59e6168e
 
     useEffect(() => {
         (async () => {

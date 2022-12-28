@@ -143,17 +143,7 @@ function EditBox({ handle, event }) {
                         >
                             <Input />
                         </Form.Item>
-                        <Form.Item
-                            className="input-element"
-                            name="Picker"
-                            label="Thời gian diễn ra "
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Hãy nhập tên cột mốc',
-                                },
-                            ]}
-                        >
+                        <Form.Item name="Picker" label="Ngày giờ ">
                             <RangePicker
                                 disabledDate={disabledDate}
                                 showTime={{ format: 'HH:mm' }}

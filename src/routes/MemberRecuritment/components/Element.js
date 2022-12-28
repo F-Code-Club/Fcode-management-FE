@@ -29,8 +29,7 @@ function Element({ event }) {
     const dispatch = useDispatch();
     function ChangeFormatDate(oldDate) {
         var date = new Date(oldDate);
-
-        var newDate = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ';
+        var newDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ';
         return newDate;
     }
 

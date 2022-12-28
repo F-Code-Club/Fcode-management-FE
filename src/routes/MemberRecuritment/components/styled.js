@@ -268,7 +268,7 @@ export const MySwitch = styled(Switch)`
         background: #fff;
     }
     &.ant-btn:focus {
-        color: #45ce7b !important;
+        color: #45ce7b;
         border-color: #45ce7b !important;
         background: #fff;
     }

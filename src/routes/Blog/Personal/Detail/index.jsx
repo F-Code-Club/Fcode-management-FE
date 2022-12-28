@@ -12,6 +12,7 @@ import { Wrapper, ContentBlog, InfoList, InfoItem } from './PersonalDetail.style
 
 import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { selectId } from '@/routes/Auth/slice/selector';
 import { HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
@@ -40,33 +41,37 @@ const PersonalDetailBlog = () => {
         }
     }, []);
 
+    // Get user ID from redux
+    const memberId = useSelector(selectId);
+
     const handleSubmit = async () => {
+        const token = localStorageUtils.getToken();
         if (!blog.isEdit) {
             navigate(`/personal-blog/edit/${blogID}`);
         } else if (blogID) {
+            // * Uncomment location if error occurs
             const newBlog = {
                 ...blog,
-                location: 'Vietnam',
+                // location: 'Vietnam',
                 createdTime: moment().format('YYYY-MM-DD'),
                 updatedTime: moment().format('YYYY-MM-DD'),
                 id: parseInt(blogID),
             };
             delete newBlog.category;
-            const { data } = await articleApi.updateArticle(newBlog);
+            const { data } = await articleApi.updateArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));
                 toastSuccess('Chỉnh sửa bài viết thành công');
                 navigate('/personal-blog');
             }
         } else {
-            // TODO: Update memberID and genreID when Login page is done
+            // TODO: Update genreID and location
             const newBlog = {
                 ...blog,
-                memberId: 1212,
+                memberId,
                 genreId: 1,
                 location: 'Facebook',
             };
-            const token = localStorageUtils.getToken();
             const { data } = await articleApi.createArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));

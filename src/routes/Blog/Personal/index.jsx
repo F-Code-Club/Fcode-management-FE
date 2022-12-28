@@ -10,7 +10,6 @@ import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
-import { selectId } from '@/routes/Auth/slice/selector';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
 import usePersistedState from '@/utils/usePersistedState';
@@ -18,9 +17,8 @@ import usePersistedState from '@/utils/usePersistedState';
 const { Search } = Input;
 
 const PersonalBlog = () => {
-    const token = localStorageUtils.getToken();
-
-    const [tokens, setToken] = usePersistedState('token', token);
+    const tokenInLocal = localStorageUtils.getToken();
+    const token = usePersistedState('token', tokenInLocal)[0];
 
     const [blogs, setBlogs] = useState({
         all: useSelector(selectCurrentBlog).author,
@@ -30,7 +28,6 @@ const PersonalBlog = () => {
     });
 
     const dispatch = useDispatch();
-    const getUserId = useSelector(selectId);
 
     useEffect(() => {
         (async () => {
@@ -40,24 +37,20 @@ const PersonalBlog = () => {
 
             dispatch(changeBlog({}));
             setBlogs({ ...blogs, loading: true, isDelete: false });
-            await dispatch(getAllBlogs(tokens))
-                .then((res) => {
-                    setBlogs({
-                        ...blogs,
-                        loading: false,
-                        isDelete: false,
-                        all: res.payload.author?.length ? res.payload.author : [],
-                        search: res.payload.author?.length ? res.payload.author : [],
-                    });
-                })
-                .finally(() => {
-                    setBlogs({ ...blogs, loading: false, isDelete: false });
+            await dispatch(getAllBlogs(token)).then((res) => {
+                setBlogs({
+                    ...blogs,
+                    loading: false,
+                    isDelete: false,
+                    all: res.payload.author?.length ? res.payload.author : [],
+                    search: res.payload.author?.length ? res.payload.author : [],
                 });
+            });
         })();
     }, [blogs.isDelete]); // If a blog is deleted, it will re-render to get all blogs
 
     const deleteBlog = async (id) => {
-        const res = await articleApi.deleteArticle(id);
+        const res = await articleApi.deleteArticle(id, token);
         if (res.data.code === 200) {
             toastSuccess('Xoá bài viết thành công!');
             setBlogs({ ...blogs, isDelete: true });

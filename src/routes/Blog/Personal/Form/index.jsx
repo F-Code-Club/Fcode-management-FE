@@ -11,6 +11,7 @@ import * as Styled from './BlogForm.styled';
 
 import fallbackImg from '@/assets/fallback.png';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { selectId } from '@/routes/Auth/slice/selector';
 import { EditorStateToHTML, HTMLToEditorState } from '@/utils/DraftJSConversion';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
@@ -61,8 +62,12 @@ const BlogForm = () => {
         })();
     }, []);
 
+    // Get user ID from redux
+    const memberId = useSelector(selectId);
+
     const onFinish = async (values) => {
         let res;
+        const token = localStorageUtils.getToken();
         if (blogID) {
             const newBlog = {
                 ...blog,
@@ -72,7 +77,6 @@ const BlogForm = () => {
             };
             delete newBlog.genreId;
             delete newBlog.memberId;
-            const token = localStorageUtils.getToken();
             res = await articleApi.updateArticle(newBlog, token);
             if (res.data.code === 200) {
                 dispatch(changeBlog({}));
@@ -80,16 +84,16 @@ const BlogForm = () => {
                 navigate('/personal-blog');
             }
         } else {
-            // TODO: Update memberID and genreID when Login page is done
+            // TODO: Update genreID and location
             const newBlog = {
                 ...values,
                 content: EditorStateToHTML(blog.content),
                 genreId: 1,
-                memberId: 1212,
+                memberId,
                 location: 'Vietnam',
                 imageUrl: blog.imageUrl,
             };
-            res = await articleApi.createArticle(newBlog);
+            res = await articleApi.createArticle(newBlog, token);
             if (res.data.code === 200) {
                 dispatch(changeBlog({}));
                 toastSuccess('Tạo bài viết thành công');
@@ -135,30 +139,37 @@ const BlogForm = () => {
             name: 'title',
             rules: [
                 {
+                    max: 250,
                     required: true,
-                    message: 'Hãy vui lòng nhập tựa đề của bài viết',
+                    message: 'Hãy vui lòng nhập tựa đề của bài viết và độ dài không quá 250 ký tự',
                 },
             ],
-            children: <Input />,
+            children: <Input placeholder="EMMET - VIẾT HTML CẤP TỐC" />,
         },
         {
             label: 'Đoạn giới thiệu sơ lược',
             name: 'description',
             rules: [
                 {
+                    max: 1000,
                     required: true,
-                    message: 'Hãy vui lòng nhập đoạn giới thiệu sơ lược của bài viết',
+                    message:
+                        'Hãy vui lòng nhập đoạn giới thiệu sơ lược của bài viết và độ dài không quá 1000 ký tự',
                 },
             ],
-            children: <Input />,
+            children: (
+                <Input.TextArea placeholder="Emmet là công cụ hỗ trợ code HTML, CSS nhanh chóng, ngắn gọn mà không cần phải gõ một cách chi tiết toàn bộ cú pháp. Không những thế, đây là công cụ hoàn toàn miễn phí và được tích hợp sẵn trên Visual Studio Code." />
+            ),
         },
         {
             label: 'Thể loại',
             name: 'category',
             rules: [
                 {
+                    max: 250,
                     required: true,
-                    message: 'Hãy vui lòng nhập thể loại của bài viết',
+                    message:
+                        'Hãy vui lòng nhập thể loại của bài viết và độ dài không quá 250 ký tự',
                 },
             ],
             tooltip: 'Các tag phân cách với nhau bằng dấu “,”',
@@ -194,11 +205,12 @@ const BlogForm = () => {
             name: 'author',
             rules: [
                 {
+                    max: 100,
                     required: true,
-                    message: 'Hãy vui lòng nhập tác giả cúa bài viết',
+                    message: 'Hãy vui lòng nhập tác giả cúa bài viết và độ dài không quá 100 ký tự',
                 },
             ],
-            children: <Input placeholder="Nguyen Van A" />,
+            children: <Input placeholder="Nguyễn Văn A" />,
         },
         // * In case of the client need the feature to change font style, uncomment these line
         // {
@@ -262,7 +274,6 @@ const BlogForm = () => {
                 <Form
                     form={form}
                     layout="vertical"
-                    requiredMark={true}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     fields={fields}

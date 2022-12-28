@@ -9,15 +9,17 @@ const CustomLink = (props) => {
     const { to, content, successContent, action, id, failContent } = props;
     const dispatch = useDispatch();
 
+    const token = localStorageUtils.getToken();
+
     // get new blogs
     const fetchData = async () => {
         // call api to get active blogs
-        const token = localStorageUtils.getToken();
         await dispatch(getAllBlogs(token));
     };
     const handleAction = async () => {
         // handle action
-        await handler(action, id, successContent, failContent).then(async () => {
+
+        await handler(action, id, successContent, failContent, token).then(async () => {
             await fetchData();
         });
     };

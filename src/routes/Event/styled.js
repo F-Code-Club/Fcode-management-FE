@@ -148,9 +148,6 @@ export const InputContainer = styled.div`
         line-height: 123.5%;
     }
     padding: 20px 30px;
-    .ant-form {
-        width: 100%;
-    }
 `;
 export const ButtonContainer = styled.div`
     display: flex;

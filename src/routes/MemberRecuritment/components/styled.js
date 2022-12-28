@@ -214,7 +214,6 @@ export const BoxContainer = styled.div`
     justify-content: center;
 `;
 export const AddContainer = styled.div`
-    width: 480px;
     min-height: 610px;
     background: white;
     border-radius: 10px;
@@ -232,14 +231,15 @@ export const InputContainer = styled.div`
         text-transform: uppercase;
         color: #000000;
     }
+
+    .ant-form {
+        width: 100%;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     margin: 20px 30px;
-    .ant-form {
-        width: 100%;
-    }
 `;
 export const CustomButton = styled(Button)`
     margin: 8px 12px;

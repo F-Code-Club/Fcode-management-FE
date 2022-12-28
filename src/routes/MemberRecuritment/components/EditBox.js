@@ -38,8 +38,8 @@ function EditBox({ handle, event }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD');
         const formattedstartDate = startDate.format('YYYY-MM-DD');
         const formatttedEndDate = endDate.format('YYYY-MM-DD');
 
@@ -47,18 +47,14 @@ function EditBox({ handle, event }) {
             const newEvent = {
                 startTime: formattedstartDate,
                 endTime: formatttedEndDate,
-                start: startDate,
-                end: endDate,
                 title: values.eventName,
                 description: values.description,
                 id: event.id,
                 status: 'ACTIVE',
             };
-
-            productApi.editChallenge(event, token);
-            console.log(newEvent);
-            toastSuccess('Sửa cột mốc thành công!!');
             dispatch(editMile(newEvent));
+            productApi.editChallenge(newEvent, token);
+            toastSuccess('Sửa cột mốc thành công!!');
         } catch {
             toastError('Sửa cột mốc không thành công!!');
         } finally {

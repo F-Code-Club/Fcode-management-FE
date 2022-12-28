@@ -42,6 +42,9 @@ export const MilestoneContainer = styled.div`
     border-radius: 10px;
     margin-bottom: 25px;
     padding: 20px 20px;
+    .ant-picker-active-bar {
+        left: 0 !important;
+    }
 `;
 export const Hero = styled.div`
     margin: 6px 0;

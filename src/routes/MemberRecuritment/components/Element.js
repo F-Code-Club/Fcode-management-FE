@@ -46,6 +46,7 @@ function Element({ event }) {
         dispatch(removeMile(event));
         toastSuccess('Sửa cột mốc thành công!!');
     };
+    console.log(event);
     return (
         <MilestoneContainer>
             <LeftSide>

@@ -67,6 +67,7 @@ const BlogForm = () => {
 
     const onFinish = async (values) => {
         let res;
+        const token = localStorageUtils.getToken();
         if (blogID) {
             const newBlog = {
                 ...blog,
@@ -76,7 +77,6 @@ const BlogForm = () => {
             };
             delete newBlog.genreId;
             delete newBlog.memberId;
-            const token = localStorageUtils.getToken();
             res = await articleApi.updateArticle(newBlog, token);
             if (res.data.code === 200) {
                 dispatch(changeBlog({}));
@@ -93,7 +93,7 @@ const BlogForm = () => {
                 location: 'Vietnam',
                 imageUrl: blog.imageUrl,
             };
-            res = await articleApi.createArticle(newBlog);
+            res = await articleApi.createArticle(newBlog, token);
             if (res.data.code === 200) {
                 dispatch(changeBlog({}));
                 toastSuccess('Tạo bài viết thành công');
@@ -210,7 +210,7 @@ const BlogForm = () => {
                     message: 'Hãy vui lòng nhập tác giả cúa bài viết và độ dài không quá 100 ký tự',
                 },
             ],
-            children: <Input placeholder="Nguyen Van A" />,
+            children: <Input placeholder="Nguyễn Văn A" />,
         },
         // * In case of the client need the feature to change font style, uncomment these line
         // {

@@ -27,6 +27,13 @@ import { GlobalOutlined } from '@ant-design/icons';
 function Element({ event }) {
     const token = localStorageUtils.getToken();
     const dispatch = useDispatch();
+    function ChangeFormatDate(oldDate) {
+        var date = new Date(oldDate);
+
+        var newDate = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ';
+        return newDate;
+    }
+
     const [edit, setEdit] = useState(false);
     const handleOpenEdit = () => {
         setEdit(true);
@@ -49,7 +56,7 @@ function Element({ event }) {
                 <Time>
                     <span>Thời gian diễn ra sự kiện:</span>
                     <br></br>
-                    {`${event.startTime}-->${event.endTime}`}
+                    {`${ChangeFormatDate(event.startTime)}-->${ChangeFormatDate(event.endTime)}`}
                     <br></br>
                 </Time>
                 <Des>

@@ -9,3 +9,6 @@
         border-color: #45ce7b !important;
         background: #fff;
     }
+    .ant-layout-content{
+        min-height:calc( 100vh - 100px ) !important;
+    }

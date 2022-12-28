@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     background-color: white;
     padding: 24px;
-    min-height: 90vh;
 `;
 
 export const DetailHeader = styled.div`

@@ -87,6 +87,19 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
+    {
+        path: 'event',
+        component: <Event />,
+        index: false,
+        restrict: true,
+    },
+    {
+        index: true,
+        path: 'recruitmembers',
+        component: <Recruitment />,
+        exact: true,
+        restrict: true,
+    },
 ];
 const adminRoute = [
     {
@@ -105,13 +118,7 @@ const managerRoute = [
         exact: true,
         restrict: true,
     },
-    {
-        index: true,
-        path: 'recruitmembers',
-        component: <Recruitment />,
-        exact: true,
-        restrict: true,
-    },
+
     {
         index: true,
         path: 'routeManager',
@@ -161,12 +168,6 @@ const managerRoute = [
 const memberRoute = [
     { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
 
-    {
-        path: 'event',
-        component: <Event />,
-        index: false,
-        restrict: true,
-    },
     {
         path: '/blog/:id',
         component: <BlogDetailComponent />,

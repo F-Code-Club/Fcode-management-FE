@@ -45,6 +45,7 @@ const PersonalDetailBlog = () => {
     const memberId = useSelector(selectId);
 
     const handleSubmit = async () => {
+        const token = localStorageUtils.getToken();
         if (!blog.isEdit) {
             navigate(`/personal-blog/edit/${blogID}`);
         } else if (blogID) {
@@ -57,7 +58,7 @@ const PersonalDetailBlog = () => {
                 id: parseInt(blogID),
             };
             delete newBlog.category;
-            const { data } = await articleApi.updateArticle(newBlog);
+            const { data } = await articleApi.updateArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));
                 toastSuccess('Chỉnh sửa bài viết thành công');
@@ -71,7 +72,6 @@ const PersonalDetailBlog = () => {
                 genreId: 1,
                 location: 'Facebook',
             };
-            const token = localStorageUtils.getToken();
             const { data } = await articleApi.createArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));

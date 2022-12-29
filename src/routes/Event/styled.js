@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     background-color: white;
     padding: 24px;
-    min-height: 90vh;
 `;
 
 export const DetailHeader = styled.div`
@@ -149,9 +148,6 @@ export const InputContainer = styled.div`
         line-height: 123.5%;
     }
     padding: 20px 30px;
-    .ant-form {
-        width: 100%;
-    }
 `;
 export const ButtonContainer = styled.div`
     display: flex;
@@ -176,7 +172,7 @@ export const DetailContainer = styled.div`
     top: translate(50%, 100%);
     border-radius: 10px;
     max-width: 500px;
-    padding: 20px 20px;
+    padding: 20px 20px 0 20px;
 `;
 export const Header = styled.div`
     display: flex;
@@ -227,7 +223,11 @@ export const LeftHeader = styled.div`
     div {
         text-align: center;
         background: #45ce7c;
+        height: 20px;
         width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 100px;
         font-size: 18px;
         color: white;

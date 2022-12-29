@@ -9,3 +9,14 @@ export const formatDate = (date) => {
 
     return [year, month, day].join('-');
 };
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
+export const formatTime = (date) => {
+    var newDate = new Date(date);
+    return [
+        padTo2Digits(newDate.getHours()),
+        padTo2Digits(newDate.getMinutes()),
+        padTo2Digits(newDate.getSeconds()),
+    ].join(':');
+};

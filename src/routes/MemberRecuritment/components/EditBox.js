@@ -97,7 +97,7 @@ function EditBox({ handle, event }) {
                             span: 8,
                         }}
                         wrapperCol={{
-                            span: 8,
+                            span: 16,
                         }}
                         initialValues={{
                             remember: true,

@@ -1,3 +1,4 @@
+import { Col } from 'antd';
 import styled from 'styled-components';
 
 import { themes } from '@/theme/theme';
@@ -6,13 +7,11 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%;
     height: 85vh;
 `;
 
 export const ListWrapper = styled.div`
-    width: 960px;
+    width: 568px;
     height: 820px;
     background: #ffffff;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
@@ -57,7 +56,15 @@ export const SearchWrapper = styled.div`
     flex-direction: row;
     column-gap: 1.5rem;
     justify-content: space-between;
+`;
 
+// search box
+export const SearchBox = styled.div`
+    width: 568px;
+    height: 40px;
+    right: 30px;
+    top: 30px;
+    margin-bottom: 15px;
     //antd custom corlor
     .ant-btn-primary {
         background-color: ${themes.colors.primary};
@@ -89,17 +96,59 @@ export const SearchWrapper = styled.div`
         border-color: ${themes.colors.primary};
     }
 `;
-
-// search box
-export const SearchBox = styled.div`
-    width: 500px;
-    height: 40px;
-    right: 30px;
-    top: 30px;
-`;
 export const Container = styled.div`
     background-color: white;
     width: 960px;
     padding: 20px 25px;
     margin-bottom: 20px;
+`;
+export const Divider = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+`;
+export const TabContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px 20px;
+    gap: 5px;
+    margin-right: 20px;
+    width: 157px;
+    height: 195px;
+
+    background: #ffffff;
+    /* 02 dp */
+
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+        0px 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    h3 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 22px;
+        /* identical to box height, or 157% */
+
+        text-align: center;
+        color: #000000;
+        margin-bottom: 15px;
+    }
+
+    .ant-checkbox-checked::after {
+        border-color: ${themes.colors.primary};
+    }
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
+    }
+    .ant-checkbox-input:focus + .ant-checkbox-inner,
+    .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+    .ant-checkbox:hover .ant-checkbox-inner {
+        border-color: ${themes.colors.primary};
+    }
+`;
+export const StyledCol = styled(Col)`
+    margin: 8px 0;
 `;

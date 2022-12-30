@@ -8,6 +8,7 @@ export const initialState = {
         firstName: '',
         lastName: '',
         role: '',
+        id: '',
     },
 };
 
@@ -19,6 +20,7 @@ const slice = createSlice({
             state.user.firstName = action.payload.firstName;
             state.user.lastName = action.payload.lastName;
             state.user.role = action.payload.role;
+            state.user.id = action.payload.id;
         },
     },
 });

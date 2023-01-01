@@ -37,8 +37,8 @@ function EditBox({ event, handle, closeOtherBox }) {
         console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('YYYY-MM-DD');
-        const formatttedEndDate = endDate.format('YYYY-MM-DD ');
+        const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm:ss');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD HH:mm:ss');
         try {
             const newEvent = {
                 name: values.eventName,
@@ -60,6 +60,10 @@ function EditBox({ event, handle, closeOtherBox }) {
             closeOtherBox();
         }
     };
+    const disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current < moment().endOf('day');
+    };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -80,6 +84,7 @@ function EditBox({ event, handle, closeOtherBox }) {
                         initialValues={{
                             remember: true,
                         }}
+                        form={form}
                         fields={[
                             {
                                 name: ['eventPoint'],
@@ -149,7 +154,11 @@ function EditBox({ event, handle, closeOtherBox }) {
                             <Input />
                         </Form.Item>
                         <Form.Item name="Picker" label="Ngày giờ ">
-                            <RangePicker showTime={{ format: 'HH:mm' }} format="YYYY-MM-DD HH:mm" />
+                            <RangePicker
+                                disabledDate={disabledDate}
+                                showTime={{ format: 'HH:mm' }}
+                                format="YYYY-MM-DD HH:mm"
+                            />
                         </Form.Item>
                         <Form.Item className="input-element" label="Ghi chú" name="extraNotice">
                             <TextArea rows={4} placeholder="Ghi chú" />

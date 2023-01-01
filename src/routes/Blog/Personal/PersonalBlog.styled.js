@@ -42,6 +42,7 @@ export const Wrapper = styled.div`
 
 export const Search = styled.div`
     display: flex;
+    align-items: center;
     margin-left: auto;
     margin-bottom: 12px;
     width: 500px;

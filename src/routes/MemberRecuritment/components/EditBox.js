@@ -38,20 +38,23 @@ function EditBox({ handle, event }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('YYYY/MM/DD');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD');
+        const formattedstartDate = startDate.format('YYYY-MM-DD');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD');
+
         try {
             const newEvent = {
-                start: startDate,
-                end: endDate,
+                startTime: formattedstartDate,
+                endTime: formatttedEndDate,
                 title: values.eventName,
                 description: values.description,
                 id: event.id,
                 status: 'ACTIVE',
             };
-            productApi.editChallenge(event, token);
-            toastSuccess('Sửa cột mốc thành công!!');
             dispatch(editMile(newEvent));
+            productApi.editChallenge(newEvent, token);
+            toastSuccess('Sửa cột mốc thành công!!');
         } catch {
             toastError('Sửa cột mốc không thành công!!');
         } finally {
@@ -141,9 +144,8 @@ function EditBox({ handle, event }) {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            className="input-element"
                             name="Picker"
-                            label="Thời gian diễn ra "
+                            label="Ngày giờ "
                             rules={[
                                 {
                                     required: true,

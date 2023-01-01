@@ -11,7 +11,6 @@ import productApi from '@/utils/productApi';
 
 function Event() {
     const token = localStorageUtils.getItem('token');
-    console.log(token);
     const [isUpdated, SetUpdated] = useState(false);
     const dispatch = useDispatch();
 
@@ -21,6 +20,7 @@ function Event() {
     const getALlEvent = async () => {
         const path = await productApi.getAllEvent(token);
         SetUpdated(true);
+        console.log(path.data.data);
         dispatch(setEvent(path.data.data));
     };
     return <Container>{isUpdated && <MyCalendar />}</Container>;

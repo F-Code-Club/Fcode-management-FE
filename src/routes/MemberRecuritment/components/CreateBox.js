@@ -38,12 +38,16 @@ function CreateBox({ handle }) {
         Picker: text.Picker,
     });
     const onFinish = (values) => {
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
+        const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm:ss');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD HH:mm:ss');
         try {
             const event = {
-                startTime: startDate,
-                endTime: endDate,
+                start: startDate,
+                end: endDate,
+                startTime: formattedstartDate,
+                endTime: formatttedEndDate,
                 title: values.eventName,
                 description: values.description,
                 status: 'ACTIVE',

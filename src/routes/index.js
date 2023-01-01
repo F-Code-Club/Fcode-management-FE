@@ -87,6 +87,19 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
+    {
+        path: 'event',
+        component: <Event />,
+        index: false,
+        restrict: true,
+    },
+    {
+        index: true,
+        path: 'recruitmembers',
+        component: <Recruitment />,
+        exact: true,
+        restrict: true,
+    },
 ];
 const adminRoute = [
     {
@@ -105,12 +118,7 @@ const managerRoute = [
         exact: true,
         restrict: true,
     },
-    {
-        path: 'recruitmembers',
-        component: <Recruitment />,
-        exact: true,
-        restrict: true,
-    },
+
     {
         index: true,
         path: 'routeManager',
@@ -120,16 +128,47 @@ const managerRoute = [
     },
 
     { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
+    // Personal Blog
+    {
+        path: '/personal-blog',
+        component: <PersonalBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
 ];
 const memberRoute = [
     { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
 
-    {
-        path: 'event',
-        component: <Event />,
-        index: false,
-        restrict: true,
-    },
     {
         path: '/blog/:id',
         component: <BlogDetailComponent />,
@@ -143,12 +182,36 @@ const memberRoute = [
         exact: true,
         restrict: true,
     },
-    // {
-    //     path: '/blog/:key',
-    //     component: <BlogDetailComponent />,
-    //     exact: false,
-    //     restrict: true,
-    // },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
 ];
 
 const RouterComponent = () => {

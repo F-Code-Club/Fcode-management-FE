@@ -22,6 +22,7 @@ import QuestionManagement from './Question/index';
 import ResourcesSection from './Resources';
 import ViewResource from './Resources/viewResources';
 import TestRouteManager from './TestManagerRoute';
+import UserEvent from './UserEvent';
 
 // import TestRouteAdmin from './testRouteAdmin';
 import LayoutComponent from '@/components/Layout/Layout.component';
@@ -98,6 +99,12 @@ const publicRoute = [
         path: 'recruitmembers',
         component: <Recruitment />,
         exact: true,
+        restrict: true,
+    },
+    {
+        path: '/yourevent',
+        component: <UserEvent />,
+        exact: false,
         restrict: true,
     },
 ];

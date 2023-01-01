@@ -85,7 +85,7 @@ const AccountsManager = () => {
                         <Checkbox value="16">Khóa 16</Checkbox>
                     </StyledCol>
                     <StyledCol span={24}>
-                        <Checkbox value="17">khóa 17</Checkbox>
+                        <Checkbox value="17">Khóa 17</Checkbox>
                     </StyledCol>
                     <StyledCol span={24}>
                         <Checkbox value="18">Khóa 18</Checkbox>

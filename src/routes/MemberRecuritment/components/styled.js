@@ -214,7 +214,7 @@ export const BoxContainer = styled.div`
     justify-content: center;
 `;
 export const AddContainer = styled.div`
-    min-height: 610px;
+    min-height: 400px;
     background: white;
     border-radius: 10px;
 `;
@@ -222,7 +222,7 @@ export const InputContainer = styled.div`
     h1 {
         margin-top: 40px;
         text-align: center;
-        font-family: 'Inter';
+        font-family: 'Inter', sans-serif;
         font-style: normal;
         font-weight: 600;
         font-size: 18px;
@@ -252,34 +252,14 @@ export const CustomButton = styled(Button)`
         border-color: #a5e7c0 !important ;
     }
 `;
-export const UploadContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-`;
-export const MySwitch = styled(Switch)`
-    &.ant-switch-checked {
-        background-color: #45ce7b !important;
-    }
-    &.ant-btn:hover {
-        color: #45ce7b !important;
-        border-color: #45ce7b !important;
-        background: #fff;
-    }
-    &.ant-btn:focus {
-        color: #45ce7b;
-        border-color: #45ce7b !important;
-        background: #fff;
-    }
-`;
+
 export const CancelButon = styled.button`
     padding: 4px 15px;
     gap: 10px;
     margin: 8px 12px;
     width: 57px;
     height: 32px;
-
+    cursor: pointer;
     /* Neutral/1 */
 
     background: #ffffff;

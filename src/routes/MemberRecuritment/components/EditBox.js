@@ -173,19 +173,6 @@ function EditBox({ handle, event }) {
                         >
                             <TextArea rows={4} placeholder="Thông tin chi tiết" maxLength={1000} />
                         </Form.Item>
-                        <Form.Item
-                            className="input-element"
-                            label="Link form để đăng ký nếu có"
-                            name="eventForm"
-                        >
-                            <Input />
-                        </Form.Item>
-                        <UploadContainer>
-                            <Upload {...props}>
-                                <Button icon={<UploadOutlined />}>Bấm để tải ảnh lên</Button>
-                            </Upload>
-                            <MySwitch defaultChecked onChange={onChange} />
-                        </UploadContainer>
 
                         <ButtonContainer>
                             <CancelButon onClick={handle}>Hủy</CancelButon>

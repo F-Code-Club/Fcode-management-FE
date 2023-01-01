@@ -253,3 +253,6 @@ export const EditButton = styled.div`
 export const DeleteButton = styled.div`
     cursor: pointer;
 `;
+export const Wrapper = styled.section`
+    min-height: calc(100vh - 100px);
+`;

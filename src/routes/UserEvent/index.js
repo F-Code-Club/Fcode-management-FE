@@ -19,8 +19,9 @@ function UserEvent() {
     }, []);
     const getALlEvent = async () => {
         const path = await productApi.getAllEvent(token);
+        const hi = await productApi.getOwnAttendance(token);
         SetUpdated(true);
-        console.log(path.data.data);
+        console.log(hi.data.data);
         dispatch(setEvent(path.data.data));
     };
 

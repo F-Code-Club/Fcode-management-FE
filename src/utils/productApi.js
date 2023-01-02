@@ -132,7 +132,7 @@ const productApi = {
     },
     getOwnAttendance: (token) => {
         const url = `/attendance`;
-        return remove(url, {}, {}, { authorization: token });
+        return get(url, {}, {}, { authorization: token });
     },
 };
 

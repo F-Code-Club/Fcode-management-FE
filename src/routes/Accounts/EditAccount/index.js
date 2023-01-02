@@ -21,7 +21,7 @@ import {
 } from './components';
 import { actions } from './slice';
 import selector from './slice/selectors';
-import { StyleImage, Container } from './style';
+import { Container } from './style';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';
@@ -41,7 +41,6 @@ const EditAccount = () => {
     const dispatch = useDispatch();
     const setTheme = useTheme();
     const avatar = useSelector(selector.avatar);
-    const heroImage = useSelector(selector.heroImage);
     const joinDate = useSelector(selector.joinDate);
     const role = useSelector(selector.role);
     const roles = useSelector(selector.roles);
@@ -93,13 +92,6 @@ const EditAccount = () => {
         <Container>
             {isUpdated && (
                 <Space direction="vertical" size={getGutter(1)} style={{ display: 'flex' }}>
-                    <StyleImage
-                        width="100%"
-                        height="200px"
-                        src={heroImage}
-                        preview={false}
-                        placeholder={true}
-                    />
                     <Row gutter={getGutter(1)}>
                         <Col span={7} className="left-side">
                             <Space

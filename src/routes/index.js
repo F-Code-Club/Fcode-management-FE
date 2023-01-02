@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Error403Page from './403Page';
 import Error404Page from './404Page';
+import AccountView from './Accounts-view';
+import ViewAccount from './Accounts-view/ViewAccounts';
 import EditAccountByAdmin from './Accounts/EditAccount/index';
 import AccountsManager from './Accounts/index';
 import AdminRoute from './AdminRoute';
@@ -107,6 +109,18 @@ const publicRoute = [
         exact: false,
         restrict: true,
     },
+    {
+        path: 'accounts',
+        component: <AccountView />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: 'account/view-account/:id',
+        component: <ViewAccount />,
+        exact: false,
+        restrict: true,
+    },
 ];
 const adminRoute = [
     {
@@ -135,6 +149,51 @@ const managerRoute = [
     },
 
     { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
+    // Personal Blog
+    {
+        path: '/personal-blog',
+        component: <PersonalBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
+
+    {
+        path: '/blog/:id',
+        component: <BlogDetailComponent />,
+        exact: false,
+        restrict: true,
+    },
     // Personal Blog
     {
         path: '/personal-blog',

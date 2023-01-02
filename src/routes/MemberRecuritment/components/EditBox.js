@@ -175,7 +175,7 @@ function EditBox({ handle, event }) {
                         </Form.Item>
                         <Form.Item
                             className="input-element"
-                            label="Link form để đăng ký nếu có"
+                            label="Link form để đăng ký     nếu có"
                             name="eventForm"
                         >
                             <Input />

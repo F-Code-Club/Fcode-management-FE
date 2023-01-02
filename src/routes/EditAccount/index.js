@@ -51,6 +51,7 @@ const EditAccount = () => {
     const positions = useSelector(selector.positions);
     const personalEmail = useSelector(selector.personalEmail);
     const emailFPT = useSelector(selector.emailFPT);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
             setTheme(false);
@@ -113,7 +114,11 @@ const EditAccount = () => {
                                 <Card style={{ width: '100%', height: '100%' }} loading={false}>
                                     <AvatarContainer>
                                         <Avatar size={160} src={avatar} />
-                                        <EditButton type="primary" shape="circle">
+                                        <EditButton
+                                            type="primary"
+                                            shape="circle"
+                                            onClick={() => setLoading(true)}
+                                        >
                                             <EditOutlined />
                                         </EditButton>
                                     </AvatarContainer>
@@ -217,7 +222,7 @@ const EditAccount = () => {
                             </Card>
                         </Col>
                     </Row>
-                    <UploadImage />
+                    <UploadImage loading={loading} setLoading={setLoading} />
                 </Space>
             )}
         </Container>

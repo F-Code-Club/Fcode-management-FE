@@ -29,6 +29,9 @@ export const ImageUpload = styled.div`
 `;
 
 export const UploadTwoUrl = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .ant-image {
         margin: 1rem 0.5rem 0 0;
         overflow: hidden;

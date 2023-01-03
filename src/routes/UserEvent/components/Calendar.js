@@ -68,10 +68,9 @@ const MyCalendar = () => {
         }
         var style = {
             backgroundColor: backgroundColor,
-            borderRadius: '0px',
+            borderRadius: '5px',
             opacity: 0.8,
-            color: 'black',
-            border: '0px',
+            color: 'white',
             display: 'block',
         };
         return {

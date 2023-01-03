@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import moment from 'moment';
+import 'moment/locale/vi';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -105,6 +106,14 @@ const MyCalendar = () => {
                         backgroundColor: event.isDone === true ? themes.neutro5 : themes.submenu,
                     },
                 })}
+                messages={{
+                    next: 'Tiếp',
+                    previous: 'Trước',
+                    today: 'Hôm nay',
+                    month: 'Tháng',
+                    week: 'Tuần',
+                    day: 'Ngày',
+                }}
             />
         </div>
     );

@@ -38,13 +38,16 @@ function Detail({ event, handle }) {
     };
     function ChangeFormateDate(oldDate) {
         var date = new Date(oldDate);
-
-        var newDate = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() + ' ';
+        var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        var month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+        var newDate = day + '-' + month + '-' + date.getFullYear() + ' ';
         return newDate;
     }
     function changeFormatTime(oldDate) {
         var date = new Date(oldDate);
-        var newTime = date.getHours() + ':' + date.getMinutes();
+        var hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+        var minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+        var newTime = hour + ':' + minute;
         return newTime;
     }
 

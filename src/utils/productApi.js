@@ -136,7 +136,7 @@ const productApi = {
     },
     getOwnArticle: (token) => {
         const url = `/article/author`;
-        return get(url, {}, {}, { authorization: token });
+        return get(url, {}, { authorization: token });
     },
 };
 

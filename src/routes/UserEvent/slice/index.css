@@ -141,8 +141,6 @@ hr.solid {
 .ant-input:focus {
     border-color: var(--primary) !important;
 }
-.rbc-event, .rbc-day-slot .rbc-background-event {background-color: var(--primary) !important;
-}
 .rbc-agenda-table>tbody>tr{
   background-color: #e6f8ec !important;
 }

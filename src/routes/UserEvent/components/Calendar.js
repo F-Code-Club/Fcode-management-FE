@@ -58,6 +58,26 @@ const MyCalendar = () => {
             });
         }
     };
+    const handleEvent = (event) => {
+        var backgroundColor = themes.colors.upcoming;
+        if (event.state == 'ON_TIME') {
+            console.log('3');
+            backgroundColor = themes.colors.primary;
+        } else if (event.state == 'LATE') {
+            backgroundColor = themes.colors.late;
+        }
+        var style = {
+            backgroundColor: backgroundColor,
+            borderRadius: '0px',
+            opacity: 0.8,
+            color: 'black',
+            border: '0px',
+            display: 'block',
+        };
+        return {
+            style: style,
+        };
+    };
 
     return (
         <div className="page">
@@ -76,11 +96,7 @@ const MyCalendar = () => {
                 min={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)}
                 max={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23)}
                 resource="Test ressource"
-                eventPropGetter={(event) => ({
-                    style: {
-                        backgroundColor: event.isDone === true ? themes.neutro5 : themes.submenu,
-                    },
-                })}
+                eventPropGetter={handleEvent}
                 messages={{
                     next: 'Tiếp',
                     previous: 'Trước',

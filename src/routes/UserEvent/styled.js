@@ -4,6 +4,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
     background-color: white;
     padding: 24px;
+    .ant-modal {
+        padding: 0;
+    }
 `;
 
 export const DetailHeader = styled.div`

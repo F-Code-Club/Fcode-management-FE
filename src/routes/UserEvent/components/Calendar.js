@@ -3,18 +3,15 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { editEvent } from '../slice';
-import Detail from './Detail';
+import { CustomModal, LeftHeader, DetailBody, DetailHeader, Status } from './styled';
 
 import { themes } from '@/theme/theme.js';
-import { formatDate } from '@/utils/DateFormat';
 
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
-    const dispatch = useDispatch();
     const { listOfEvents } = useSelector((state) => state.listOfEvents);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [editedEvent, showEditedEvent] = useState({});
@@ -35,33 +32,25 @@ const MyCalendar = () => {
         setEvents(array);
     }, [listOfEvents]);
 
-    const handleSelect = () => {};
-
     const handleSelectEvent = (e) => {
         showEditedEvent(e);
+        setShowDetailModal(true);
     };
-    const onEventDrop = ({ event, start, end }) => {
-        let answer = window.confirm('Are you sure you want to  change The Date?');
-        if (answer) {
-            const updatedEvent = {
-                ...event,
-                start: start.toString(),
-                end: end.toString(),
-                startTime: formatDate(start),
-                endTime: formatDate(end),
-            };
-            console.log(updatedEvent);
-            setEvents((prevEvents) => {
-                const filtered = prevEvents.filter((item) => item.id !== event.id);
-                dispatch(editEvent(updatedEvent));
-                return [...filtered, updatedEvent];
-            });
-        }
-    };
+    function ChangeFormateDate(oldDate) {
+        var date = new Date(oldDate);
+
+        var newDate = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() + ' ';
+        return newDate;
+    }
+    function changeFormatTime(oldDate) {
+        var date = new Date(oldDate);
+        var newTime = date.getHours() + ':' + date.getMinutes();
+        return newTime;
+    }
+
     const handleEvent = (event) => {
         var backgroundColor = themes.colors.upcoming;
         if (event.state == 'ON_TIME') {
-            console.log('3');
             backgroundColor = themes.colors.primary;
         } else if (event.state == 'LATE') {
             backgroundColor = themes.colors.late;
@@ -77,12 +66,57 @@ const MyCalendar = () => {
             style: style,
         };
     };
+    const handleOk = () => {
+        setShowDetailModal(false);
+    };
+    const handleCancel = () => {
+        setShowDetailModal(false);
+    };
 
     return (
         <div className="page">
-            {showDetailModal && (
-                <Detail handle={() => setShowDetailModal(false)} event={editedEvent} />
-            )}
+            <CustomModal
+                open={showDetailModal}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={null}
+                closable={false}
+            >
+                <DetailHeader>
+                    <LeftHeader>
+                        <h1>{editedEvent.name}</h1>
+                        <div>{editedEvent.point}</div>
+                    </LeftHeader>
+                    <Status state={editedEvent.state}>
+                        {editedEvent.state != null
+                            ? editedEvent.state == 'ON_TIME'
+                                ? 'Có mặt'
+                                : 'Vắng'
+                            : 'Sắp diễn ra'}
+                    </Status>
+                </DetailHeader>
+                <hr className="solid"></hr>
+                <DetailBody>
+                    <div>
+                        <h1>Ngày :</h1>
+                        <h2>{`${ChangeFormateDate(editedEvent.startTime)} ➭ ${ChangeFormateDate(
+                            editedEvent.endTime
+                        )}`}</h2>
+                    </div>
+                    <div>
+                        <h1>Thời gian :</h1>
+                        <h2>{`${changeFormatTime(editedEvent.startTime)} ➭ ${changeFormatTime(
+                            editedEvent.endTime
+                        )}`}</h2>
+                    </div>
+                    <div>
+                        <h1>Địa Điểm : </h1>
+                        <h2>{`${editedEvent.location}`}</h2>
+                    </div>
+                    <h1>Ghi Chú :</h1>
+                    <h2>{`${editedEvent.description}`}</h2>
+                </DetailBody>
+            </CustomModal>
             <Calendar
                 localizer={localizer}
                 events={events}
@@ -90,6 +124,7 @@ const MyCalendar = () => {
                 endAccessor="end"
                 defaultView="month"
                 selectable={true}
+                onSelectEvent={handleSelectEvent}
                 resizable={true}
                 style={{ height: '880px' }}
                 min={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)}

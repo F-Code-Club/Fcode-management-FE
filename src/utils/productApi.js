@@ -134,8 +134,8 @@ const productApi = {
         const url = `/attendance`;
         return get(url, {}, {}, { authorization: token });
     },
-    getOwnArticle: (token) => {
-        const url = `/article/author`;
+    getOwnArticle: (email, token) => {
+        const url = `/article/author/${email}`;
         return get(url, {}, { authorization: token });
     },
 };

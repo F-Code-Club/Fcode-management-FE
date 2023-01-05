@@ -59,6 +59,7 @@ const ViewAccount = () => {
     const positions = useSelector(selector.positions);
     const personalEmail = useSelector(selector.personalEmail);
     const facebook = useSelector(selector.facebook);
+    const emailFPT = useSelector(selector.emailFPT);
     const { id } = useParams();
     useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
@@ -161,11 +162,11 @@ const ViewAccount = () => {
                                         <Col span={12}>
                                             <Row>
                                                 <FacebookFilled />
-                                                <Info>{facebook}</Info>
+                                                <Info>{facebook || 'Không Có'}</Info>
                                             </Row>
                                         </Col>
                                         <Header>Blog</Header>
-                                        <BlogTable />
+                                        <BlogTable email={emailFPT} />
                                     </Row>
                                 </Space>
                             </Card>

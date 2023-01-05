@@ -7,7 +7,7 @@ import { toastError } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
-function BlogTable() {
+function BlogTable({ email }) {
     const token = localStorageUtils.getItem('token');
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ function BlogTable() {
     const loadMoreData = async () => {
         setLoading(true);
         await productApi
-            .getOwnArticle(token)
+            .getOwnArticle(email, token)
             .then((result) => {
                 setLoading(false);
                 setBlogs(result.data.data);

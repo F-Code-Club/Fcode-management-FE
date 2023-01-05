@@ -18,12 +18,14 @@ function UserEvent() {
         getALlEvent();
     }, []);
     const getALlEvent = async () => {
-        const events = [];
+        let events = [];
         const path = await productApi.getAllEvent(token);
         const attendances = await productApi.getOwnAttendance(token);
+        let res = await path.data.data;
         SetUpdated(true);
         await attendances.data.data.map((item) => {
-            path.data.data.map((child) => {
+            events = [];
+            res.map((child) => {
                 if (child.id == item.eventId) {
                     const newEvent = {
                         ...child,
@@ -34,8 +36,9 @@ function UserEvent() {
                     events.push(child);
                 }
             });
+            res = events;
         });
-        dispatch(setEvent(events));
+        dispatch(setEvent(res));
     };
 
     return <Container>{isUpdated && <MyCalendar />}</Container>;

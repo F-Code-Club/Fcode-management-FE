@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 
-import { Skeleton, Table } from 'antd';
+import { Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
+
+import { CustomTable } from './style';
 
 import { toastError } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
-function BlogTable({ email }) {
+function BlogTable({ id }) {
     const token = localStorageUtils.getItem('token');
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -32,7 +34,7 @@ function BlogTable({ email }) {
     const loadMoreData = async () => {
         setLoading(true);
         await productApi
-            .getOwnArticle(email, token)
+            .getOwnArticle(id, token)
             .then((result) => {
                 setLoading(false);
                 setBlogs(result.data.data);
@@ -45,7 +47,7 @@ function BlogTable({ email }) {
     }, []);
     return (
         <Skeleton loading={loading}>
-            <Table columns={columns} dataSource={blogs} />
+            <CustomTable columns={columns} dataSource={blogs} />
         </Skeleton>
     );
 }

@@ -165,8 +165,10 @@ const ViewAccount = () => {
                                                 <Info>{facebook || 'Không Có'}</Info>
                                             </Row>
                                         </Col>
-                                        <Header>Blog</Header>
-                                        <BlogTable email={emailFPT} />
+                                        <Col span={24}>
+                                            <Header>Blog</Header>
+                                            <BlogTable id={id} />
+                                        </Col>
                                     </Row>
                                 </Space>
                             </Card>

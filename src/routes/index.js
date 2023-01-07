@@ -126,6 +126,7 @@ const managerRoute = [
         exact: false,
         restrict: true,
     },
+
     { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
     // Personal Blog
     {

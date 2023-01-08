@@ -101,12 +101,6 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
-    {
-        path: '/yourevent',
-        component: <UserEvent />,
-        exact: false,
-        restrict: true,
-    },
 ];
 const adminRoute = [
     {
@@ -216,6 +210,12 @@ const memberRoute = [
     {
         path: '/personal-blog/preview/:id',
         component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/yourevent',
+        component: <UserEvent />,
         exact: false,
         restrict: true,
     },

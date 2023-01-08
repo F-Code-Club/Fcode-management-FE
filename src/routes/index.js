@@ -214,7 +214,7 @@ const memberRoute = [
         restrict: true,
     },
     {
-        path: '/yourevent',
+        path: '/event',
         component: <UserEvent />,
         exact: false,
         restrict: true,

@@ -109,18 +109,6 @@ const publicRoute = [
         exact: false,
         restrict: true,
     },
-    {
-        path: 'accounts',
-        component: <AccountView />,
-        exact: false,
-        restrict: true,
-    },
-    {
-        path: 'account/view-account/:id',
-        component: <ViewAccount />,
-        exact: false,
-        restrict: true,
-    },
 ];
 const adminRoute = [
     {
@@ -275,6 +263,18 @@ const memberRoute = [
     {
         path: '/personal-blog/preview/:id',
         component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: 'account',
+        component: <AccountView />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: 'account/view-account/:id',
+        component: <ViewAccount />,
         exact: false,
         restrict: true,
     },

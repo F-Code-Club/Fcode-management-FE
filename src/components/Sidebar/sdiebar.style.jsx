@@ -22,6 +22,12 @@ export const Wrapper = styled.div`
     .ant-layout-sider {
         background-color: ${themes.colors.gray};
     }
+
+    .ant-menu-submenu-title > .ant-menu-title-content {
+        &:hover {
+            color: ${themes.colors.primary};
+        }
+    }
     .ant-menu-light .ant-menu-submenu-title:hover,
     .ant-menu-light .ant-menu-item-title:hover {
         color: ${themes.colors.primary};
@@ -33,6 +39,7 @@ export const Wrapper = styled.div`
                 background: ${themes.colors.submenu};
             }
         }
+
         &-item {
             color: ${themes.colors.light};
             &-active {
@@ -77,6 +84,9 @@ export const Wrapper = styled.div`
                 & > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
                     color: ${themes.colors.primary};
                 }
+                & > .ant-menu-submenu-title > .ant-menu-title-content > a {
+                    color: ${themes.colors.primary};
+                }
             }
             &-title {
                 &:hover {
@@ -86,9 +96,9 @@ export const Wrapper = styled.div`
         }
         &-submenu a {
             color: ${themes.colors.light};
-            &:hover {
-                color: ${themes.colors.primary};
-            }
+            // &:hover {
+            //     color: ${themes.colors.primary};
+            // }
         }
         &-inline {
             border: none;

@@ -80,6 +80,7 @@ export const Homepage = () => {
                     role: data.role,
                     id: data.id,
                 };
+                LocalStorageUtils.setItem('role', formatUser.role);
                 dispatch(setUser(formatUser));
             }
             if (response.data.code === 408) {

@@ -138,7 +138,7 @@ export const Description = styled.span`
 `;
 
 export const ContentButton = styled(HeaderButton)`
-    width: 56px;
+    width: fit-content;
     height: 32px;
     padding: 4px 15px;
 `;

@@ -1,4 +1,4 @@
-import { Image } from 'antd';
+import { Button, Image } from 'antd';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -62,4 +62,11 @@ export const Container = styled.div`
 `;
 export const StyleImage = styled(Image)`
     object-fit: cover;
+`;
+export const EditButton = styled(Button)`
+    position: absolute;
+    transform: translate(150px, -70px);
+`;
+export const AvatarContainer = styled.div`
+    position: relative;
 `;

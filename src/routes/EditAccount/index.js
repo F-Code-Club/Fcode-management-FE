@@ -18,16 +18,17 @@ import {
     InputPhone,
     SelectRole,
 } from './components';
+import { UploadImage } from './components/uploadAva';
 import { actions } from './slice';
 import selector from './slice/selectors';
-import { Container } from './style';
+import { Container, EditButton, AvatarContainer } from './style';
 
 import { toastSuccess, toastError } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import useTheme from '@/utils/useTheme';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 
 // import { EditOutlined } from '@ant-design/icons';
 
@@ -40,7 +41,6 @@ const EditAccount = () => {
     const setTheme = useTheme();
     const [form] = Form.useForm();
     const avatar = useSelector(selector.avatar);
-
     const joinDate = useSelector(selector.joinDate);
     const role = useSelector(selector.role);
     const fullName = useSelector(selector.fullName);
@@ -51,6 +51,7 @@ const EditAccount = () => {
     const positions = useSelector(selector.positions);
     const personalEmail = useSelector(selector.personalEmail);
     const emailFPT = useSelector(selector.emailFPT);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
             setTheme(false);
@@ -111,7 +112,16 @@ const EditAccount = () => {
                                 className="pos-sticky"
                             >
                                 <Card style={{ width: '100%', height: '100%' }} loading={false}>
-                                    <Avatar size={160} src={avatar} />
+                                    <AvatarContainer>
+                                        <Avatar size={160} src={avatar} />
+                                        <EditButton
+                                            type="primary"
+                                            shape="circle"
+                                            onClick={() => setLoading(true)}
+                                        >
+                                            <EditOutlined />
+                                        </EditButton>
+                                    </AvatarContainer>
                                     <FullName />
                                     <Title
                                         level={5}
@@ -212,6 +222,7 @@ const EditAccount = () => {
                             </Card>
                         </Col>
                     </Row>
+                    <UploadImage loading={loading} setLoading={setLoading} />
                 </Space>
             )}
         </Container>

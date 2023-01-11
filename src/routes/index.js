@@ -14,6 +14,7 @@ import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
 import Event from './Event/Index';
+import { HomepageMemeber } from './HomePageForMember';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
 import MemberRoute from './MemberRoute';
@@ -29,7 +30,7 @@ import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
 
 const publicRoute = [
-    { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
+    { index: true, path: 'home', component: <HomepageMemeber />, exact: true, restrict: true },
     {
         path: 'account/edit-account-by-admin/:id',
         component: <EditAccountByAdmin />,
@@ -38,7 +39,7 @@ const publicRoute = [
     },
     {
         path: 'home',
-        component: <Homepage />,
+        component: <HomepageMemeber />,
         exact: true,
         restrict: true,
     },
@@ -114,7 +115,7 @@ const adminRoute = [
 const managerRoute = [
     {
         path: 'private',
-        component: <Homepage />,
+        component: <HomepageMemeber />,
         exact: true,
         restrict: true,
     },
@@ -167,7 +168,7 @@ const managerRoute = [
     },
 ];
 const memberRoute = [
-    { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
+    { index: true, path: 'private', component: <HomepageMemeber />, exact: true, restrict: true },
 
     {
         path: '/blog/:id',

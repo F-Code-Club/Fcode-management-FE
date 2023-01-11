@@ -15,7 +15,7 @@ export const handler = async (action, ...data) => {
                 if (failContent) toastError('Phiên đăng nhập hết hạn');
                 return null;
             }
-            if (res.data.code === 404) {
+            if (res.data.code >= 404) {
                 return [];
             }
             throw new Error(res.data.message);

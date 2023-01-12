@@ -71,8 +71,8 @@ const articleApi = {
         const endpoint = '/article/processing';
         return await get(endpoint, {}, { authorization: token });
     },
-    getArticleByAuthor: async (token) => {
-        const endpoint = '/article/author';
+    getArticleByAuthor: async (token, userId) => {
+        const endpoint = `/article/author/${userId}`;
         return await get(endpoint, {}, { authorization: token });
     },
 };

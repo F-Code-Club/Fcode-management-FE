@@ -171,7 +171,7 @@ export const DetailContainer = styled.div`
     border: 2px solid #45ce7c;
     top: translate(50%, 100%);
     border-radius: 10px;
-    max-width: 500px;
+    min-width: 400px;
     padding: 20px 20px 0 20px;
 `;
 export const Header = styled.div`
@@ -252,4 +252,7 @@ export const EditButton = styled.div`
 `;
 export const DeleteButton = styled.div`
     cursor: pointer;
+`;
+export const Wrapper = styled.section`
+    min-height: calc(100vh - 100px);
 `;

@@ -4,12 +4,13 @@ import { Table, Input, Space, Skeleton } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { changeBlog, getAllBlogs } from '../slice';
+import { changeBlog } from '../slice';
 import { selectCurrentBlog } from '../slice/selector';
 import * as Styled from './PersonalBlog.styled';
 
 import Button from '@/components/Button';
 import { toastError, toastSuccess } from '@/components/ToastNotification';
+import { selectId } from '@/routes/Auth/slice/selector';
 import articleApi from '@/utils/apiComponents/articleApi';
 import localStorageUtils from '@/utils/localStorageUtils';
 import usePersistedState from '@/utils/usePersistedState';
@@ -29,6 +30,10 @@ const PersonalBlog = () => {
 
     const dispatch = useDispatch();
 
+    // Get user ID from redux
+    const userId = useSelector(selectId);
+    localStorageUtils.setItem('userId', userId);
+
     useEffect(() => {
         (async () => {
             // * Un alternative way to get all blog when calling with Redux Thunk is slow
@@ -37,13 +42,13 @@ const PersonalBlog = () => {
 
             dispatch(changeBlog({}));
             setBlogs({ ...blogs, loading: true, isDelete: false });
-            await dispatch(getAllBlogs(token)).then((res) => {
+            await articleApi.getArticleByAuthor(token, userId).then((res) => {
                 setBlogs({
                     ...blogs,
                     loading: false,
                     isDelete: false,
-                    all: res.payload.author?.length ? res.payload.author : [],
-                    search: res.payload.author?.length ? res.payload.author : [],
+                    all: res.data.data || [],
+                    search: res.data.data || [],
                 });
             });
         })();

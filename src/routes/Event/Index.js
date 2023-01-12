@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import MyCalendar from './components/Calendar';
 import { setEvent } from './slice';
-import { Container } from './styled';
+import { Container, Wrapper } from './styled';
 
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
@@ -23,7 +23,11 @@ function Event() {
         console.log(path.data.data);
         dispatch(setEvent(path.data.data));
     };
-    return <Container>{isUpdated && <MyCalendar />}</Container>;
+    return (
+        <Wrapper>
+            <Container>{isUpdated && <MyCalendar />}</Container>
+        </Wrapper>
+    );
 }
 
 export default Event;

@@ -50,9 +50,7 @@ export const ViewAnnouncement = () => {
                         editorClassName="demo-editor"
                         readOnly
                         style={{ 'text-align': 'justify' }}
-                        toolbar={{
-                            options: [],
-                        }}
+                        toolbarHidden
                     />
                 </ContentAnnounce>
             )}

@@ -160,6 +160,9 @@ export const Col2 = styled.div`
             -webkit-line-clamp: 2;
             display: -webkit-box;
             -webkit-box-orient: vertical;
+            .rdw-editor-toolbar {
+                display: none;
+            }
         }
         h3 {
             padding: 20px;

@@ -1,10 +1,12 @@
 import { Menu } from 'antd';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import SidebarLink from '../SidebarLink';
 import { Logo, SideBar, Wrapper, SignOut } from './sdiebar.style';
 
 import { ReactComponent as FcodeLogo } from '@/assets/logo/logo.svg';
+import { selectUser } from '@/routes/Auth/slice/selector';
 import localStorageUtils from '@/utils/localStorageUtils';
 import {
     HomeOutlined,
@@ -15,7 +17,8 @@ import {
     SendOutlined,
     NotificationOutlined,
     UsergroupAddOutlined,
-    CommentOutlined, // UserOutlined,c
+    CommentOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
 
 function getItem(label, key, icon, children) {
@@ -59,21 +62,26 @@ const itemsAdmin = [
         <CommentOutlined />
     ),
 ];
-// const itemsUser = [
-//     getItem(<SidebarLink to="/home" child="Trang Chủ" />, '1', <HomeOutlined />),
-//     getItem(<SidebarLink to="/event" child="Sự kiện" />, '2', <CalendarOutlined />),
-//     getItem(<SidebarLink to="/source" child="Tài Nguyên" />, '3', <InboxOutlined />),
-//     getItem(<SidebarLink to="/blog" child="Bài Viết" />, '4', <SendOutlined />),
-//     getItem(<SidebarLink to="/member" child="Tất cả thành viên" />, '5', <TeamOutlined />),
-//     getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />, [
-// getItem(<SidebarLink to="/announcement/view-announcement" child="xem thông báo" />, '9'),
-// ]),
-//     getItem(<SidebarLink to="/information" child="Thông tin cá nhân" />, '7', <UserOutlined />,  [
-// getItem(<SidebarLink to="/information/view-information" child="xem thông tin" />, '10'),
-// ]),
-// ];
+const itemsUser = [
+    getItem(<SidebarLink to="/home" child="Trang chủ" />, '1', <HomeOutlined />),
+    getItem(<SidebarLink to="/event" child="Sự kiện" />, '2', <CalendarOutlined />),
+    getItem(<SidebarLink to="/manage-resource" child="Tài nguyên" />, '3', <InboxOutlined />),
+    getItem(<SidebarLink to="personal-blog" child="Bài viết" />, '4', <SendOutlined />),
+    getItem(<SidebarLink to="/account" child="Tất cả thành viên" />, '5', <TeamOutlined />),
+    getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />),
+    // [
+    //     getItem(<SidebarLink to="/announcement/view-announcement" child="Xem thông báo" />, '9'),
+    // ]),
+    getItem(
+        <SidebarLink to="/account/view-account/:id" child="Thông tin cá nhân" />,
+        '7',
+        <UserOutlined />
+        // [getItem(<SidebarLink to="/account/view-account/:id" child="xem thông tin" />, '10')]
+    ),
+];
 
 const SidebarComponent = () => {
+    const user = useSelector(selectUser);
     const navigate = useNavigate();
     return (
         <Wrapper>
@@ -81,7 +89,12 @@ const SidebarComponent = () => {
                 <Logo>
                     <FcodeLogo width={50} height={50} />F - CODE
                 </Logo>
-                <Menu mode="inline" items={itemsAdmin} />
+                <Menu
+                    mode="inline"
+                    items={
+                        user.role === 'ADMIN' || user.role === 'MANAGER' ? itemsAdmin : itemsUser
+                    }
+                />
                 <SignOut
                     onClick={() => {
                         localStorageUtils.deleteUser();

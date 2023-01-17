@@ -4,27 +4,22 @@ import { Avatar, List } from 'antd';
 import { ContentState, EditorState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../assets/logo/F-Code logo.png';
 import { get } from '../../utils/ApiCaller';
-import { setUser } from '../Auth/slice';
+import { selectUser } from '../Auth/slice/selector';
 import { ProfileImage } from './components/avatarFormat';
 import { Col1, Col2, ContainerHomepage } from './style';
 
-import authApi from '@/utils/apiComponents/authApi';
-import LocalStorageUtils from '@/utils/localStorageUtils';
-
 export const HomepageMemeber = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const [dataEvent, setDataEvent] = useState();
     const [dataArticle, setDataArticle] = useState();
     const [dataAnnounce, setDataAnnounce] = useState();
     const [dataAvatar, setDataAvatar] = useState();
+
     const fetchMemberById = async (memberId) => {
         const result = await get(`/member/memberId/${memberId}`, '', { authorization: token })
             .then((res) => {
@@ -81,35 +76,6 @@ export const HomepageMemeber = () => {
         }
     };
 
-    useEffect(() => {
-        const token = LocalStorageUtils.getItem('token');
-        // const userId = LocalStorageUtils.getJWTUser().id;
-        const getData = async (token) => {
-            const response = await authApi.getUser(token);
-
-            if (response.data.code === 200) {
-                const { data } = response.data;
-
-                const formatUser = {
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    role: data.role,
-                    id: data.id,
-                };
-                LocalStorageUtils.setItem('role', formatUser.role);
-                dispatch(setUser(formatUser));
-            }
-            if (response.data.code === 408) {
-                LocalStorageUtils.removeItem('token');
-                navigate('/auth');
-            }
-        };
-        if (token) {
-            getData(token);
-        }
-    }, []);
-
-    console.log(dataAnnounce);
     return (
         <ContainerHomepage>
             <Col1>

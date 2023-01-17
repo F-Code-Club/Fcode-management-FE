@@ -50,10 +50,10 @@ function AddEventBox({ handle }) {
             };
             await productApi.postEvent(event, token);
 
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
+            toastSuccess('Sự kiện thêm thành công');
             dispatch(addEvent(event));
         } catch {
-            toastError('Something has gone Wrong,Please Try again');
+            toastError('Sự kiện thêm thất bại');
         } finally {
             handle();
         }

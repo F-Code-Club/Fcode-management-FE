@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     background-color: white;
     padding: 24px;
+    border-radius: 10px;
 `;
 
 export const DetailHeader = styled.div`
@@ -255,4 +256,5 @@ export const DeleteButton = styled.div`
 `;
 export const Wrapper = styled.section`
     min-height: calc(100vh - 100px);
+    border-radius: 10px;
 `;

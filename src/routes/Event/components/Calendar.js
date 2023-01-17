@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { DndContext } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { editEvent } from '../slice';
@@ -68,6 +69,14 @@ const MyCalendar = () => {
             });
         }
     };
+    const CustomView = ({ localizer, ...props }) => (
+        <div>
+            <button onClick={() => props.onNavigate('TODAY')}>Today</button>
+            <button onClick={() => props.onNavigate('NEXT')}>Previous</button>
+            <button onClick={() => props.onNavigate('NEXT')}>Next</button>
+            <DndContext {...props} />
+        </div>
+    );
 
     return (
         <div className="page">

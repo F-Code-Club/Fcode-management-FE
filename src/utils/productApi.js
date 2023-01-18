@@ -30,6 +30,14 @@ const productApi = {
         const url = `/member/own`;
         return get(url, {}, { authorization: token });
     },
+    getAllAccount: (token) => {
+        const url = `/member/all`;
+        return get(url, {}, { authorization: token });
+    },
+    getAccountById: (id, token) => {
+        const url = `/member/memberId/${id}`;
+        return get(url, {}, { authorization: token });
+    },
     updateOwnAccount: (info, token) => {
         const url = `/member/us`;
         return put(

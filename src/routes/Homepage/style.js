@@ -123,6 +123,9 @@ export const Col1 = styled.div`
             text-overflow: ellipsis;
             word-wrap: break-word;
         }
+        .ant-list-item-main {
+            min-width: 100px;
+        }
     }
 `;
 

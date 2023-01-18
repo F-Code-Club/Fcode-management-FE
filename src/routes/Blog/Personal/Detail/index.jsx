@@ -42,7 +42,8 @@ const PersonalDetailBlog = () => {
     }, []);
 
     // Get user ID from redux
-    const memberId = useSelector(selectId);
+    const userId = useSelector(selectId);
+    localStorageUtils.setItem('userId', userId);
 
     const handleSubmit = async () => {
         const token = localStorageUtils.getToken();
@@ -68,7 +69,7 @@ const PersonalDetailBlog = () => {
             // TODO: Update genreID and location
             const newBlog = {
                 ...blog,
-                memberId,
+                userId,
                 genreId: 1,
                 location: 'Facebook',
             };

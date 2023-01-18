@@ -28,6 +28,8 @@ import TestRouteManager from './TestManagerRoute';
 import LayoutComponent from '@/components/Layout/Layout.component';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
+import localStorageUtils from '@/utils/localStorageUtils';
+import { useAutoLogout } from '@/utils/useAtutoLogout';
 
 const publicRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
@@ -246,6 +248,8 @@ const memberRoute = [
 ];
 
 const RouterComponent = () => {
+    const jwt = localStorageUtils.getJWTUser();
+    // useAutoLogout(jwt);
     return (
         <BrowserRouter>
             <Routes>

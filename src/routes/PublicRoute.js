@@ -12,11 +12,14 @@ import useAuth from '@/utils/useAuth';
 const PublicRoute = () => {
     const token = localStorageUtils.getToken();
     const auth = useAuth();
-    if (auth === null) {
-        return <span> loading</span>;
+    console.log('run 1', auth);
+    if (auth === undefined) {
+        return <Navigate to="/auth" replace />;
+    } else if (auth === null) {
+        return <span> loading user</span>;
     }
 
-    return auth !== '' || token ? <Outlet /> : <Navigate to="/auth" replace />;
+    return auth !== '' ? <Outlet /> : <Navigate to="/auth" replace />;
 };
 
 export default PublicRoute;

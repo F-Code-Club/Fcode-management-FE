@@ -66,7 +66,7 @@ const itemsUser = [
     getItem(<SidebarLink to="/home" child="Trang chủ" />, '1', <HomeOutlined />),
     getItem(<SidebarLink to="/event" child="Sự kiện" />, '2', <CalendarOutlined />),
     getItem(<SidebarLink to="/manage-resource" child="Tài nguyên" />, '3', <InboxOutlined />),
-    getItem(<SidebarLink to="personal-blog" child="Bài viết" />, '4', <SendOutlined />),
+    getItem(<SidebarLink to="/personal-blog" child="Bài viết" />, '4', <SendOutlined />),
     getItem(<SidebarLink to="/account" child="Tất cả thành viên" />, '5', <TeamOutlined />),
     getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />),
     // [
@@ -90,6 +90,7 @@ const SidebarComponent = () => {
                     <FcodeLogo width={50} height={50} />F - CODE
                 </Logo>
                 <Menu
+                    // defaultSelectedKeys={['1']}
                     mode="inline"
                     items={
                         user.role === 'ADMIN' || user.role === 'MANAGER' ? itemsAdmin : itemsUser

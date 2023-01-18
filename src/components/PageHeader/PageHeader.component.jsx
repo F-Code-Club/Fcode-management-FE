@@ -49,6 +49,7 @@ const PageHeaderComponent = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
+
     const [searchParams] = useSearchParams(location);
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
@@ -100,7 +101,9 @@ const PageHeaderComponent = () => {
                     background: 'rgb(255, 255, 255)',
                 }}
             >
-                <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+                <Breadcrumb>
+                    {location.pathname == '/home' ? extraBreadcrumbItems : extraBreadcrumbItems}
+                </Breadcrumb>
                 <PageHeader
                     backIcon={location.pathname !== '/home' ? <ArrowLeftOutlined /> : false}
                     className="site-page-header-responsive"

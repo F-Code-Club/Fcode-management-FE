@@ -11,7 +11,7 @@ import Logo from '../../assets/logo/F-Code logo.png';
 import { get } from '../../utils/ApiCaller';
 import { selectUser } from '../Auth/slice/selector';
 import { ProfileImage } from './components/avatarFormat';
-import { Col1, Col2, ContainerHomepage } from './style';
+import { Col1, Col2, ContainerHomepage, ContainerHomepageStyled } from './style';
 
 export const HomepageMemeber = () => {
     const token = localStorage.getItem('token');
@@ -77,7 +77,7 @@ export const HomepageMemeber = () => {
     };
 
     return (
-        <ContainerHomepage>
+        <ContainerHomepageStyled>
             <Col1>
                 {dataEvent && (
                     <div className="row1">
@@ -134,6 +134,6 @@ export const HomepageMemeber = () => {
                     />
                 </div>
             </Col2>
-        </ContainerHomepage>
+        </ContainerHomepageStyled>
     );
 };

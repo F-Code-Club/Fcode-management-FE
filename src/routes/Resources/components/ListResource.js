@@ -40,7 +40,7 @@ const ListResource = ({ handleClick, resource }) => {
             renderItem={(item) => {
                 return (
                     <List.Item>
-                        <ResourceCard item={item} clickEvent={handleClick} />
+                        <ResourceCard item={item} clickEvent={handleClick} heightStyle="20" />
                     </List.Item>
                 );
             }}

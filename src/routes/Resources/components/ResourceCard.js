@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import ResourceImage from '../../../assets/Resource/resouces.jpg';
@@ -10,15 +11,15 @@ import {
     ReverseContentButton,
 } from '../styles';
 
-import localStorageUtils from '@/utils/localStorageUtils';
-import usePersistedState from '@/utils/usePersistedState';
+import { selectUser } from '@/routes/Auth/slice/selector';
 
-const ResourceCard = ({ clickEvent, item }) => {
+const ResourceCard = ({ clickEvent, item, heightStyle }) => {
+    const userRole = useSelector(selectUser);
+
     const navigate = useNavigate();
-    const roleInLocal = localStorageUtils.getItem('role');
-    const role = usePersistedState('role', roleInLocal)[0];
+
     return (
-        <CardWrapper>
+        <CardWrapper height={heightStyle}>
             <BackgroundCard url={`${ResourceImage}`}>
                 <TitleResource>Kỳ học: {item.semester}</TitleResource>
                 <ContentResource>{item.name}</ContentResource>
@@ -31,7 +32,7 @@ const ResourceCard = ({ clickEvent, item }) => {
                         width: '100%',
                     }}
                 >
-                    {role === 'ADMIN' || role === 'MANAGER' ? (
+                    {userRole.role === 'ADMIN' || userRole.role === 'MANAGER' ? (
                         <>
                             <ContentButton onClick={() => clickEvent('create', null)}>
                                 Tạo
@@ -44,7 +45,7 @@ const ResourceCard = ({ clickEvent, item }) => {
                             </ContentButton>
                         </>
                     ) : (
-                        <ContentButton onClick={() => navigate(`${item.id}`)}>
+                        <ContentButton onClick={() => navigate(`/manage-resource/${item.id}`)}>
                             Xem tài nguyên
                         </ContentButton>
                     )}

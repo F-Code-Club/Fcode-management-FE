@@ -10,10 +10,11 @@ import useAuth from '@/utils/useAuth';
 const MemberRoute = () => {
     const User = useSelector(selectUser);
     const auth = useAuth();
-    if (auth === null) {
-        return <span> loading</span>;
+    if (auth === undefined) {
+        return <Navigate to="/auth" replace />;
+    } else if (auth === null) {
+        return <span> loading member</span>;
     }
-
     return auth == 'MEMBER' || auth === 'MANAGER' || auth === 'ADMIN' ? (
         <Outlet />
     ) : (

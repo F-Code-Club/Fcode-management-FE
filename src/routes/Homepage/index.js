@@ -8,12 +8,19 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../../assets/logo/F-Code logo.png';
 import { get } from '../../utils/ApiCaller';
-import { setUser } from '../Auth/slice';
 import { selectUser } from '../Auth/slice/selector';
-import { Col1, Col2, ContainerHomepage } from './style';
+import ResourceCard from '../Resources/components/ResourceCard';
+import Carousel2 from './component/reactSlider';
+import {
+    Col1,
+    Col2,
+    ContainerHomepage,
+    ContainerHomepageStyled,
+    Col1Styled,
+    Col2Styled,
+} from './style';
 
-import authApi from '@/utils/apiComponents/authApi';
-import LocalStorageUtils from '@/utils/localStorageUtils';
+import productApi from '@/utils/apiComponents/productApi';
 
 export const Homepage = () => {
     const dispatch = useDispatch();
@@ -25,20 +32,26 @@ export const Homepage = () => {
     const [dataAnnounce, setDataAnnounce] = useState();
     const [dataAvatar, setDataAvatar] = useState();
     const [memberAnnounce, setMemberAnnounce] = useState();
+    const [listSubject, setListSubject] = useState();
+
     const userRole = useSelector(selectUser);
+
     useEffect(() => {
         get('/event/all', '', { authorization: token })
             .then((res) => setDataEvent(res.data.data.reverse()))
             // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         get('/article/processing', '', { authorization: token })
-            .then((res) => setDataArticle(res.data.data.reverse()))
+            .then((res) => {
+                let sortData = res.data?.data?.sort((a, b) => (a.id < b.id ? 1 : -1));
+                setDataArticle(sortData?.splice(0, 2));
+            })
             // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         get('/announcement/all', '', { authorization: token })
             .then((res) => {
-                console.log(res);
-                setDataAnnounce(res.data.data.reverse());
+                let sortData = res.data?.data?.sort((a, b) => (a.id < b.id ? 1 : -1));
+                setDataAnnounce(sortData?.splice(0, 7));
             })
             // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
@@ -48,10 +61,16 @@ export const Homepage = () => {
             .catch((error) => console.log(error));
         get('/announcement/notifications', '', { authorization: token })
             .then((res) => {
-                setMemberAnnounce(res.data.data.reverse());
+                let sortData = res.data?.data?.sort((a, b) => (a.id < b.id ? 1 : -1));
+                setMemberAnnounce(sortData?.splice(0, 3));
             })
             // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
+        productApi.getAllSubject().then((data) => {
+            let sortData = data.data?.data?.sort((a, b) => (a.id > b.id ? 1 : -1));
+
+            setListSubject(sortData);
+        });
     }, []);
 
     const getAvatar = (id) => {
@@ -68,9 +87,7 @@ export const Homepage = () => {
     const getContentEditorState = (item) => {
         try {
             return EditorState.createWithContent(
-                ContentState.createFromBlockArray(
-                    htmlToDraft(JSON.parse(item.content)).contentBlocks
-                )
+                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
             );
         } catch (error) {
             return EditorState.createEmpty();
@@ -103,6 +120,7 @@ export const Homepage = () => {
     //         getData(token);
     //     }
     // }, []);
+
     if (userRole.role == 'ADMIN' || userRole.role == 'MANAGER') {
         return (
             <ContainerHomepage>
@@ -127,7 +145,7 @@ export const Homepage = () => {
                             <List
                                 itemLayout="vertical"
                                 size="large"
-                                pagination={{ pageSize: 2 }}
+                                pagination={false}
                                 dataSource={dataArticle}
                                 renderItem={(item) => (
                                     <Link
@@ -165,7 +183,9 @@ export const Homepage = () => {
 
                 <Col2>
                     <div className="row1">
-                        <h3>xin chào {user}</h3>
+                        <h3>
+                            xin chào {userRole.firstName} {userRole.lastName}
+                        </h3>
                     </div>
 
                     <div className="row2">
@@ -173,7 +193,7 @@ export const Homepage = () => {
                         <List
                             itemLayout="vertical"
                             size="large"
-                            pagination={{ pageSize: 10 }}
+                            pagination={false}
                             dataSource={dataAnnounce}
                             renderItem={(item) => (
                                 <List.Item
@@ -197,64 +217,89 @@ export const Homepage = () => {
             </ContainerHomepage>
         );
     }
+
     return (
-        <ContainerHomepage>
-            <Col1>
-                {dataEvent && (
+        <>
+            <Carousel2 />
+            <ContainerHomepageStyled>
+                <Col1Styled>
+                    {dataEvent && (
+                        <div className="row1">
+                            <div className="content_2">
+                                <Link to="/event" className="btn-view-more">
+                                    Xem thêm
+                                </Link>
+                            </div>
+                            <div className="content">
+                                <h3 className="title">CLB ĐANG DIỄN RA</h3>
+                                <p className="child1">{dataEvent[dataEvent.length - 1].name}</p>
+                                <p className="child2">{dataEvent[dataEvent.length - 2].name}</p>
+                            </div>
+                        </div>
+                    )}
                     <div className="row1">
-                        <div className="content">
-                            <h3 className="title">CLB ĐANG DIỄN RA</h3>
-                            <p className="child1">{dataEvent[dataEvent.length - 1].name}</p>
-                            <p className="child2">{dataEvent[dataEvent.length - 2].name}</p>
-                            <Link to="/event" className="btn-view-more">
+                        <div className="content_2">
+                            <Link to="/manage-resource" className="btn-view-more">
                                 Xem thêm
                             </Link>
                         </div>
+                        <div className="content">
+                            <h3>Tài Nguyên</h3>
+                        </div>
+                        <div className="subjectNew">
+                            {listSubject && (
+                                <ResourceCard
+                                    item={listSubject[listSubject.length - 1]}
+                                    heightStyle="12"
+                                />
+                            )}
+                        </div>
                     </div>
-                )}
-                <div className="row1">
-                    <div className="content">
-                        <h3>Tài Nguyên</h3>
-                    </div>
-                </div>
-            </Col1>
+                </Col1Styled>
 
-            <Col2>
-                <div className="row2">
-                    <h3>thông báo</h3>
-                    <List
-                        itemLayout="vertical"
-                        size="large"
-                        pagination={{ pageSize: 3 }}
-                        dataSource={memberAnnounce}
-                        renderItem={(item) => (
-                            <List.Item
-                                key={item.title}
-                                extra={
-                                    <a href={`manage-announcement/view-announcement/${item.id}`}>
-                                        Chi tiết
-                                    </a>
-                                }
-                            >
-                                <List.Item.Meta
-                                    title={<h4 title={item.title}>{item.title}</h4>}
-                                    // avatar={<ProfileImage src={getAvatar(item.memberId)[0]} />}
-                                    description={`${item.location}`}
-                                ></List.Item.Meta>
-                                <div className="content-announce">
-                                    <Editor
-                                        editorState={getContentEditorState(item.description)}
-                                        readOnly
-                                        toolbar={{
-                                            options: [],
-                                        }}
-                                    />
-                                </div>
-                            </List.Item>
-                        )}
-                    />
-                </div>
-            </Col2>
-        </ContainerHomepage>
+                <Col2Styled>
+                    <div className="row2">
+                        <h3>thông báo</h3>
+                        <List
+                            itemLayout="vertical"
+                            size="large"
+                            pagination={false}
+                            dataSource={memberAnnounce}
+                            renderItem={(item) => (
+                                <List.Item
+                                    key={item.title}
+                                    /*       extra={
+                                        <a
+                                            href={`manage-announcement/view-announcement/${item.id}`}
+                                        >
+                                            Chi tiết
+                                        </a>
+                                    }*/
+                                >
+                                    <List.Item.Meta
+                                        title={<h4 title={item.title}>{item.title}</h4>}
+                                        // avatar={<ProfileImage src={getAvatar(item.memberId)[0]} />}
+                                        description={`${item.location}`}
+                                    ></List.Item.Meta>
+                                    <div className="content-announce">
+                                        <Editor
+                                            editorState={getContentEditorState(item.description)}
+                                            readOnly
+                                            toolbar={{
+                                                options: [],
+                                            }}
+                                        />
+                                    </div>
+                                </List.Item>
+                            )}
+                        />
+                    </div>
+                </Col2Styled>
+            </ContainerHomepageStyled>
+        </>
     );
 };
+// <ResourceCard item={listSubject[listSubject?.length - 1]} />
+// <Link to="/event" className="btn-view-more">
+// Xem thêm
+// </Link>

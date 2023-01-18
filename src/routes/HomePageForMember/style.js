@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { themes } from '@/theme/theme';
 
-export const ContainerHomepage = styled.div`
+export const ContainerHomepageStyled = styled.div`
     width: 100%;
     min-height: calc(100vh - 190px);
     padding: 10px 20px 0;

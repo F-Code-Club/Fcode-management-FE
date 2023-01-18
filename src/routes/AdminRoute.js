@@ -7,8 +7,10 @@ import useAuth from '@/utils/useAuth';
 
 const AdminRoute = () => {
     const auth = useAuth();
-    if (auth === null) {
-        return <span> loading</span>;
+    if (auth === undefined) {
+        return <Navigate to="/auth" replace />;
+    } else if (auth === null) {
+        return <span> loading admin</span>;
     }
 
     return auth === 'ADMIN' ? <Outlet /> : <Navigate to="/403" replace />;

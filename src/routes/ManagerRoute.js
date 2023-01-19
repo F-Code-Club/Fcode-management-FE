@@ -9,10 +9,10 @@ import useAuth from '@/utils/useAuth';
 const ManagerRoute = () => {
     const User = useSelector(selectUser);
     const { userRole, isLoading } = useAuth();
-    console.log('run 1', userRole);
+    console.log('run 2', userRole);
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
-    } else if (isLoading) {
+    } else if (userRole === null || isLoading) {
         return <Loading />;
     }
     return userRole === 'MANAGER' || userRole === 'ADMIN' ? (

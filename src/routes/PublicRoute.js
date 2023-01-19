@@ -13,7 +13,7 @@ import useAuth from '@/utils/useAuth';
 const PublicRoute = () => {
     const token = localStorageUtils.getToken();
     const { userRole, isLoading } = useAuth();
-    console.log('run 1', userRole);
+    console.log('run 0', userRole);
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
     } else if (isLoading) {

@@ -101,6 +101,8 @@ const publicRoute = [
 ];
 const adminRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
+    { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
+
     {
         index: true,
         path: 'comment',

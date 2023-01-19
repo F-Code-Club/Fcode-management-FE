@@ -11,7 +11,7 @@ import useAuth from '@/utils/useAuth';
 const MemberRoute = () => {
     const User = useSelector(selectUser);
     const { userRole, isLoading } = useAuth();
-    console.log(userRole);
+    console.log('run 1', userRole);
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
     } else if (userRole === null || isLoading) {

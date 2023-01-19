@@ -33,34 +33,40 @@ function getItem(label, key, icon, children) {
 }
 
 const itemsAdmin = [
-    getItem(<SidebarLink to="/home" child="Trang Chủ" />, '1', <HomeOutlined />),
-    getItem(<SidebarLink to="/event" child="Quản lý sự kiện" />, '2', <CalendarOutlined />),
+    getItem(<SidebarLink to="/home" child="Trang Chủ" />, '/home', <HomeOutlined />),
+    getItem(<SidebarLink to="/event" child="Quản lý sự kiện" />, '/event', <CalendarOutlined />),
     getItem(
         <SidebarLink to="/manage-resource" child="Quản lý tài nguyên" />,
-        '3',
+        '/manage-resource',
         <InboxOutlined />
     ),
-    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '4', <SendOutlined />, [
-        getItem(<SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />, '11'),
-        getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '12'),
+    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '/blog', <SendOutlined />, [
+        getItem(
+            <SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />,
+            '/personal-blog'
+        ),
+        getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '/blog'),
     ]),
-    getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '5', <TeamOutlined />, [
-        getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '5.1'),
-        getItem(<SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />, '9'),
+    getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '/account', <TeamOutlined />, [
+        getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '/account'),
+        getItem(
+            <SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />,
+            '/account/edit-account'
+        ),
     ]),
     getItem(
         <SidebarLink to="/manage-announcement" child="Quản lý thông báo" />,
-        '6',
+        '/manage-announcement',
         <NotificationOutlined />
     ),
     getItem(
         <SidebarLink to="/recruitmembers" child="Tuyển thành viên" />,
-        '7',
+        '/recruitmembers',
         <UsergroupAddOutlined />
     ),
     getItem(
         <SidebarLink to="/comment" child="Quản lý bình luận, câu hỏi" />,
-        '8',
+        '/comment',
         <CommentOutlined />
     ),
 ];
@@ -100,9 +106,9 @@ const SidebarComponent = () => {
     const navigate = useNavigate();
     const [selectedKey, setSelectedKey] = useState(`${location.pathname}`);
 
-    // useEffect(() => {
-    //     setSelectedKey(location.pathname);
-    // }, [location]);
+    useEffect(() => {
+        setSelectedKey(location.pathname);
+    }, [location]);
 
     return (
         <Wrapper>

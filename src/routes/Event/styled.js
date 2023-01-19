@@ -10,7 +10,6 @@ export const Container = styled.div`
 export const DetailHeader = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-left: 20px;
 `;
 
 export const Title = styled.div``;
@@ -18,7 +17,6 @@ export const DetailBody = styled.div`
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     line-height: 24px;
-    margin-left: 20px;
     div {
         display: flex;
     }
@@ -170,9 +168,9 @@ export const DetailContainer = styled.div`
     z-index: 100;
     position: absolute;
     border: 2px solid #45ce7c;
-    top: translate(50%, 100%);
     border-radius: 10px;
     min-width: 400px;
+    max-width: 500px;
     padding: 20px 20px 0 20px;
 `;
 export const Header = styled.div`
@@ -213,7 +211,7 @@ export const LeftHeader = styled.div`
     width: 100%;
     align-items: center;
     justify-content: flex-start;
-    padding: 4px 8px;
+
     h1 {
         margin-right: 8px;
         margin-bottom: 0;

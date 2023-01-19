@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { Menu } from 'antd';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import SidebarLink from '../SidebarLink';
 import { Logo, SideBar, Wrapper, SignOut } from './sdiebar.style';
@@ -63,26 +65,45 @@ const itemsAdmin = [
     ),
 ];
 const itemsUser = [
-    getItem(<SidebarLink to="/home" child="Trang chủ" />, '1', <HomeOutlined />),
-    getItem(<SidebarLink to="/event" child="Sự kiện" />, '2', <CalendarOutlined />),
-    getItem(<SidebarLink to="/manage-resource" child="Tài nguyên" />, '3', <InboxOutlined />),
-    getItem(<SidebarLink to="/personal-blog" child="Bài viết" />, '4', <SendOutlined />),
-    getItem(<SidebarLink to="/account" child="Tất cả thành viên" />, '5', <TeamOutlined />),
-    getItem(<SidebarLink to="/announcement" child="Thông báo" />, '6', <NotificationOutlined />),
+    getItem(<SidebarLink to="/home" child="Trang chủ" />, '/home', <HomeOutlined />),
+    getItem(<SidebarLink to="/event" child="Sự kiện" />, '/event', <CalendarOutlined />),
+    getItem(
+        <SidebarLink to="/manage-resource" child="Tài nguyên" />,
+        '/manage-resource',
+        <InboxOutlined />
+    ),
+    getItem(
+        <SidebarLink to="/personal-blog" child="Bài viết" />,
+        '/personal-blog',
+        <SendOutlined />
+    ),
+    getItem(<SidebarLink to="/account" child="Tất cả thành viên" />, '/account', <TeamOutlined />),
+    getItem(
+        <SidebarLink to="/notifications" child="Thông báo" />,
+        '/notifications',
+        <NotificationOutlined />
+    ),
     // [
     //     getItem(<SidebarLink to="/announcement/view-announcement" child="Xem thông báo" />, '9'),
     // ]),
     getItem(
         <SidebarLink to="/account/view-account/:id" child="Thông tin cá nhân" />,
-        '7',
+        '/account/view-account/:id',
         <UserOutlined />
         // [getItem(<SidebarLink to="/account/view-account/:id" child="xem thông tin" />, '10')]
     ),
 ];
 
 const SidebarComponent = () => {
+    const location = useLocation();
     const user = useSelector(selectUser);
     const navigate = useNavigate();
+    const [selectedKey, setSelectedKey] = useState(`${location.pathname}`);
+
+    // useEffect(() => {
+    //     setSelectedKey(location.pathname);
+    // }, [location]);
+
     return (
         <Wrapper>
             <SideBar width="250px">
@@ -90,8 +111,11 @@ const SidebarComponent = () => {
                     <FcodeLogo width={50} height={50} />F - CODE
                 </Logo>
                 <Menu
-                    // defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={[selectedKey]}
                     mode="inline"
+                    onSelect={({ key }) => {
+                        setSelectedKey(key);
+                    }}
                     items={
                         user.role === 'ADMIN' || user.role === 'MANAGER' ? itemsAdmin : itemsUser
                     }

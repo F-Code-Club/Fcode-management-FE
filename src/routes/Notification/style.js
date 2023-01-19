@@ -8,11 +8,24 @@ export const ContainerAnnouncement = styled.div`
     padding: 10px 20px 0;
     box-sizing: border-box;
     transition: 0.25 linear;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .title_h2 {
+        display: flex;
+        text-align: left;
+        width: 90%;
+
+        justify-content: flex-start;
+    }
     .list-announcement {
-        width: 100%;
+        width: 90%;
         background: white;
         border-radius: 10px;
         padding: 20px;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+            0px 1px 5px rgba(0, 0, 0, 0.2);
         .DraftEditor-root {
             z-index: 0;
         }
@@ -38,6 +51,9 @@ export const ContainerAnnouncement = styled.div`
     .ant-list-vertical .ant-list-item-meta {
         margin-bottom: 0.5rem;
     }
+    .ant-list-vertical .ant-list-item-extra {
+        margin: 0px;
+    }
     .btn-manage-announcement {
         margin: 2rem 0 0.5rem 0;
     }
@@ -46,34 +62,11 @@ export const ContainerAnnouncement = styled.div`
         background: ${themes.colors.primary400};
         border-radius: 5px;
         border: 1px solid ${themes.colors.primary400};
-        margin-right: 20px;
+
         :hover {
             color: ${themes.colors.primary400};
             background: white;
             border: 1px solid ${themes.colors.primary400};
-        }
-    }
-    .btn-view {
-        color: ${themes.colors.primary400};
-        background: white;
-        border-radius: 5px;
-        border: 1px solid ${themes.colors.primary400};
-        margin-right: 20px;
-        :hover {
-            color: white;
-            background: ${themes.colors.primary400};
-            border: 1px solid ${themes.colors.primary400};
-        }
-    }
-    .btn-delete {
-        color: white;
-        background: ${themes.colors.danger};
-        border-radius: 5px;
-        border: 1px solid ${themes.colors.danger};
-        :hover {
-            color: red;
-            background: white;
-            border: 1px solid ${themes.colors.danger};
         }
     }
 `;

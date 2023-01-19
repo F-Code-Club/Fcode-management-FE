@@ -5,17 +5,19 @@ import { Outlet, Navigate } from 'react-router-dom';
 
 import { selectUser } from './Auth/slice/selector';
 
+import Loading from '@/components/antdLoading';
 import useAuth from '@/utils/useAuth';
 
 const MemberRoute = () => {
     const User = useSelector(selectUser);
-    const auth = useAuth();
-    if (auth === undefined) {
+    const { userRole, isLoading } = useAuth();
+    console.log(userRole);
+    if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
-    } else if (auth === null) {
-        return <span> loading member</span>;
+    } else if (userRole === null || isLoading) {
+        return <Loading />;
     }
-    return auth == 'MEMBER' || auth === 'MANAGER' || auth === 'ADMIN' ? (
+    return userRole === 'MEMBER' || userRole === 'MANAGER' || userRole === 'ADMIN' ? (
         <Outlet />
     ) : (
         <Navigate to="/403" replace />

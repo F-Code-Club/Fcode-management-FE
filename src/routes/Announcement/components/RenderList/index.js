@@ -3,16 +3,19 @@ import { useEffect, useState } from 'react';
 import { Avatar, Button, Carousel, Image, List } from 'antd';
 import { ContentState, Editor, EditorState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import NoPhoto from '../../../../assets/no-photo.jpg';
 import { DataSlick } from '../Slick/slick';
 
+import { selectUser } from '@/routes/Auth/slice/selector';
 import { get } from '@/utils/ApiCaller';
 
 export const RenderList = (props) => {
     const token = localStorage.getItem('token');
     const item = props.item;
+    const userRole = useSelector(selectUser);
     const handleClick = props.handleClick;
     const navigate = useNavigate();
     const [dataAvatar, setDataAvatar] = useState();
@@ -29,27 +32,39 @@ export const RenderList = (props) => {
         switch (DataImg.length) {
             case 0:
                 return (
-                    <Image src={NoPhoto} alt="no-image-announcement" style={{ width: '100%' }} />
+                    <Image
+                        src={NoPhoto}
+                        alt="no-image-announcement"
+                        width={300}
+                        height={200}
+                        style={{ objectFit: 'cover', padding: '10px' }}
+                    />
                 );
             case 1:
                 return (
                     <Image
-                        src={DataImg[0]}
-                        alt="image-item-announcement"
-                        style={{ width: '100%' }}
+                        src={NoPhoto}
+                        alt="image-item-announcement-1"
+                        width={300}
+                        height={200}
+                        style={{ objectFit: 'cover', padding: '10px' }}
                     />
                 );
             default:
                 return (
                     <Carousel {...DataSlick}>
                         {DataImg.map((todo, key) => (
-                            <div key={key}>
-                                <Image
-                                    src={todo}
-                                    alt="image-item-announcement"
-                                    style={{ width: '100%' }}
-                                />
-                            </div>
+                            <Image
+                                key={key}
+                                src={todo}
+                                alt="image-item-announcement-default"
+                                width={300}
+                                height={200}
+                                style={{
+                                    objectFit: 'cover',
+                                    padding: '10px',
+                                }}
+                            />
                         ))}
                     </Carousel>
                 );
@@ -101,18 +116,31 @@ export const RenderList = (props) => {
                 readOnly
             />
             <div className="btn-manage-announcement">
-                <Button className="btn-edit" onClick={() => handleClick('edit', item)}>
-                    Chỉnh sửa
-                </Button>
-                <Button
-                    className="btn-view"
-                    onClick={() => navigate(`view-announcement/${item.id}`)}
-                >
-                    Xem chi tiết
-                </Button>
-                <Button className="btn-delete" onClick={() => handleClick('delete', item)}>
-                    Xóa
-                </Button>
+                {userRole.role === 'ADMIN' || userRole.role === 'MANAGER' ? (
+                    <>
+                        <Button className="btn-edit" onClick={() => handleClick('edit', item)}>
+                            Chỉnh sửa
+                        </Button>
+                        <Button
+                            className="btn-view"
+                            onClick={() => navigate(`view-announcement/${item.id}`)}
+                        >
+                            Xem chi tiết
+                        </Button>
+                        <Button className="btn-delete" onClick={() => handleClick('delete', item)}>
+                            Xóa
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            className="btn-edit"
+                            onClick={() => navigate(`/notifications/${item.id}`, { state: item })}
+                        >
+                            Xem chi tiết
+                        </Button>
+                    </>
+                )}
             </div>
         </List.Item>
     );

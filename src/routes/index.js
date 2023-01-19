@@ -18,6 +18,8 @@ import { HomepageMemeber } from './HomePageForMember';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
 import MemberRoute from './MemberRoute';
+import { NotifiCationMember } from './Notification';
+import { ViewNotification } from './Notification/ViewNotification';
 import PublicRoute from './PublicRoute';
 import QuestionManagement from './Question/index';
 import ResourcesSection from './Resources';
@@ -29,13 +31,18 @@ import LayoutComponent from '@/components/Layout/Layout.component';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
 import localStorageUtils from '@/utils/localStorageUtils';
-import { useAutoLogout } from '@/utils/useAtutoLogout';
 
 const publicRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
     {
         path: 'account/edit-account-by-admin/:id',
         component: <EditAccountByAdmin />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'notifications',
+        component: <NotifiCationMember />,
         exact: true,
         restrict: true,
     },
@@ -199,6 +206,12 @@ const memberRoute = [
     {
         path: 'manage-resource',
         component: <ResourcesSection />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'notifications/:id',
+        component: <ViewNotification />,
         exact: true,
         restrict: true,
     },

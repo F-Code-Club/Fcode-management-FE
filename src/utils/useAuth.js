@@ -10,23 +10,24 @@ import { setUser } from '@/routes/Auth/slice';
 
 const useAuth = () => {
     const [userRole, setUserRole] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     const token = localStorageUtils.getToken();
     const checkTokenExpiration = useCallback(() => {
         if (token) {
             const decoded = localStorageUtils.getJWTUser();
             if (decoded.exp < Date.now() / 1000) {
-                console.log('run 2');
                 localStorage.removeItem('token');
-                alert('Token expired');
                 setUserRole(undefined);
+                console.log('run 2');
+                // alert('Token expired');
             }
         }
     }, [token]);
-    useEffect(() => {
-        const intervalId = setInterval(checkTokenExpiration, 5000);
-        return () => clearInterval(intervalId);
-    }, [checkTokenExpiration]);
+    // useEffect(() => {
+    //     const intervalId = setInterval(checkTokenExpiration, 5000);
+    //     return () => clearInterval(intervalId);
+    // }, [checkTokenExpiration]);
     useEffect(() => {
         // Get the JWT token from the cookie
         const token = localStorageUtils.getToken();
@@ -36,9 +37,10 @@ const useAuth = () => {
             setUserRole(undefined);
             return;
         }
+
         try {
+            setIsLoading(true);
             authApi.getUser(token).then((user) => {
-                console.log(user);
                 const { data } = user.data;
                 const formatUser = {
                     firstName: data.firstName,
@@ -51,6 +53,9 @@ const useAuth = () => {
                 } else {
                     setUserRole(user.data?.data?.role);
                     dispatch(setUser(formatUser));
+                    setTimeout(() => {
+                        setIsLoading(false);
+                    }, 1000);
                 }
             });
         } catch (err) {
@@ -58,8 +63,10 @@ const useAuth = () => {
 
             return;
         }
-    }, [token]);
+        const intervalId = setInterval(checkTokenExpiration, 5000);
+        return () => clearInterval(intervalId);
+    }, [token, checkTokenExpiration]);
 
-    return userRole;
+    return { isLoading, userRole };
 };
 export default useAuth;

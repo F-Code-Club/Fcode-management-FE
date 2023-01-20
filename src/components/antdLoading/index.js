@@ -19,12 +19,13 @@ const Loading = () => {
 
 export default Loading;
 export const SpinContainer = styled.div`
-    width: 100vw;
+    // width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    // cursor: pointer;
     .ant-spin-dot-item {
         background-color: ${themes.colors.primary};
     }

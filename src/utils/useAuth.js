@@ -6,6 +6,7 @@ import { redirect } from 'react-router-dom';
 import authApi from './apiComponents/authApi';
 import localStorageUtils from './localStorageUtils';
 
+import { toastError } from '@/components/ToastNotification';
 import { setUser } from '@/routes/Auth/slice';
 
 const useAuth = () => {
@@ -19,8 +20,8 @@ const useAuth = () => {
             if (decoded.exp < Date.now() / 1000) {
                 localStorage.removeItem('token');
                 setUserRole(undefined);
-                console.log('run 2');
-                // alert('Token expired');
+                console.log('run useAuth');
+                toastError('Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại');
             }
         }
     }, [token]);

@@ -55,7 +55,7 @@ const PageHeaderComponent = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    const [notificationCount, setNotificationCount] = useState(3);
+
     const [searchParams] = useSearchParams(location);
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {

@@ -12,10 +12,10 @@ const ManagerRoute = () => {
     console.log('run 2', userRole);
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
-    } else if (userRole === null || isLoading) {
-        return <Loading />;
+    } else if (userRole === null) {
+        return <Outlet />;
     }
-    return userRole === 'MANAGER' || userRole === 'ADMIN' ? (
+    return userRole === 'MANAGER' || userRole === 'ADMIN' || userRole === null ? (
         <Outlet />
     ) : (
         <Navigate to="/403" replace />

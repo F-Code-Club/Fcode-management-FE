@@ -11,10 +11,10 @@ const AdminRoute = () => {
     console.log('run 3', userRole);
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
-    } else if (userRole === null || isLoading) {
-        return <Loading />;
+    } else if (userRole === null) {
+        return <Outlet />;
     }
-    console.log('admin 1');
+
     return userRole === 'ADMIN' ? <Outlet /> : <Navigate to="/403" replace />;
 };
 

@@ -14,8 +14,8 @@ const MemberRoute = () => {
     console.log('run 1', userRole);
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
-    } else if (userRole === null || isLoading) {
-        return <Loading />;
+    } else if (userRole === null) {
+        return <Outlet />;
     }
     return userRole === 'MEMBER' || userRole === 'MANAGER' || userRole === 'ADMIN' ? (
         <Outlet />

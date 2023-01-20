@@ -168,7 +168,6 @@ export const Container = styled.div`
 export const DetailHeader = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-left: 20px;
 `;
 
 export const Title = styled.div``;
@@ -176,7 +175,6 @@ export const DetailBody = styled.div`
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     line-height: 24px;
-    margin-left: 20px;
     div {
         display: flex;
     }

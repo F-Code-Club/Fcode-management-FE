@@ -1,6 +1,17 @@
-import { Button, Switch } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 
+import Modal from 'antd/lib/modal/Modal';
+
+export const CustomModal = styled(Modal)`
+    background-color: white;
+    border: 2px solid #45ce7c;
+    border-radius: 10px;
+    padding: 0 !important;
+    .ant-modal {
+        padding: 0;
+    }
+`;
 export const Img = styled.img`
     margin-bottom: 43px;
 `;
@@ -94,7 +105,14 @@ export const Des = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
+    max-height: 180px;
     margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-clamp: 3;
     /* or 157% */
     span {
         font-family: 'Inter';
@@ -243,6 +261,8 @@ export const InputContainer = styled.div`
 `;
 export const CustomButton = styled(Button)`
     margin: 8px 12px;
+
+    height: 400px;
     background: #45ce7c !important;
     border-color: #45ce7c !important ;
     transition: 0.3s ease all;
@@ -280,4 +300,17 @@ export const Form = styled.div`
     /* identical to box height, or 157% */
 
     color: #000000;
+`;
+export const ElementBox = styled.div`
+    display: Flex;
+    align-items: center;
+`;
+export const FullDes = styled.div`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 10px 0;
+    /* or 157% */
 `;

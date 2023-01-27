@@ -37,11 +37,11 @@ function CreateBox({ handle }) {
     form.setFieldsValue({
         Picker: text.Picker,
     });
-    const onFinish = (values) => {
-        const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
-        const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
-        const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm:ss');
-        const formatttedEndDate = endDate.format('YYYY-MM-DD HH:mm:ss');
+    const onFinish = async (values) => {
+        const startDate = moment(values.Picker[0], 'YYYY-MM-DD ');
+        const endDate = moment(values.Picker[1], 'YYYY-MM-DD ');
+        const formattedstartDate = startDate.format('YYYY-MM-DD ');
+        const formatttedEndDate = endDate.format('YYYY-MM-DD ');
         try {
             const event = {
                 start: startDate,
@@ -52,18 +52,26 @@ function CreateBox({ handle }) {
                 description: values.description,
                 status: 'ACTIVE',
             };
-            productApi.postChallange(event, token);
+            const res = await productApi.postChallange(event, token);
+            switch (await res.data.code) {
+                case 200:
+                    toastSuccess('Tạo cột mốc thành công!!');
+                    break;
+                case 400:
+                    toastError('Tên cột mốc bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
             dispatch(addMile(event));
         } catch {
             toastError('Tạo cột mốc không  thành công!!');
         } finally {
-            toastSuccess('Tạo cột mốc thành công!!');
             handle();
         }
     };
-    const onChange = (checked) => {
-        console.log(`switch to ${checked}`);
-    };
+
     const onFinishFailed = (errorInfo) => {
         toastError(errorInfo);
     };

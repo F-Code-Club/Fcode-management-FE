@@ -37,7 +37,7 @@ function EditBox({ handle, event }) {
     form.setFieldsValue({
         Picker: text.Picker,
     });
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD');
         const formattedstartDate = startDate.format('YYYY-MM-DD');
@@ -52,9 +52,20 @@ function EditBox({ handle, event }) {
                 id: event.id,
                 status: 'ACTIVE',
             };
-            dispatch(editMile(newEvent));
-            productApi.editChallenge(newEvent, token);
-            toastSuccess('Sửa cột mốc thành công!!');
+            const res = productApi.editChallenge(newEvent, token);
+
+            switch (await res.data.code) {
+                case 200:
+                    toastSuccess('Chỉnh sửa cột mốc thành công!!');
+                    dispatch(editMile(newEvent));
+                    break;
+                case 400:
+                    toastError('Tên cột mốc bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
         } catch {
             toastError('Sửa cột mốc không thành công!!');
         } finally {

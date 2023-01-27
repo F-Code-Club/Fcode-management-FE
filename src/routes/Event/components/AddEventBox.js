@@ -48,10 +48,19 @@ function AddEventBox({ handle }) {
                 endTime: formatttedEndDate,
                 status: 'ACTIVE',
             };
-            await productApi.postEvent(event, token);
-
-            toastSuccess('Sự kiện thêm thành công');
-            dispatch(addEvent(event));
+            const res = await productApi.postEvent(event, token);
+            switch (await res.data.code) {
+                case 200:
+                    toastSuccess('Tạo sự kiện thành công!!');
+                    dispatch(addEvent(event));
+                    break;
+                case 400:
+                    toastError('Tên sự kiện bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
         } catch {
             toastError('Sự kiện thêm thất bại');
         } finally {

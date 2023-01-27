@@ -304,6 +304,7 @@ export const Form = styled.div`
 export const ElementBox = styled.div`
     display: Flex;
     align-items: center;
+    justify-content: space-between;
 `;
 export const FullDes = styled.div`
     font-family: 'Inter';

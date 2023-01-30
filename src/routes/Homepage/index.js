@@ -6,6 +6,7 @@ import htmlToDraft from 'html-to-draftjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+import NoImg from '../../assets/fallback.png';
 import Logo from '../../assets/logo/F-Code logo.png';
 import { get } from '../../utils/ApiCaller';
 import { selectUser } from '../Auth/slice/selector';
@@ -36,6 +37,7 @@ export const Homepage = () => {
     const [memberAnnounce, setMemberAnnounce] = useState();
     const [listSubject, setListSubject] = useState();
     const [announceInfo, setAnnounceInfo] = useState([]);
+    const [err, setErr] = useState(false);
     const userRole = useSelector(selectUser);
 
     useEffect(() => {
@@ -138,7 +140,9 @@ export const Homepage = () => {
             FetchDataAnnounce();
         }
     }, [memberAnnounce]);
-
+    function handleAvatarError() {
+        setErr(true);
+    }
     if (userRole.role == 'ADMIN' || userRole.role == 'MANAGER') {
         return (
             <ContainerHomepage>
@@ -173,7 +177,12 @@ export const Homepage = () => {
                                         <List.Item
                                             key={item.title}
                                             extra={
-                                                <img width={272} alt="blog" src={item.imageUrl} />
+                                                <img
+                                                    width={272}
+                                                    alt="blog"
+                                                    src={err ? NoImg : item.imageUrl}
+                                                    onError={handleAvatarError}
+                                                />
                                             }
                                         >
                                             <List.Item.Meta

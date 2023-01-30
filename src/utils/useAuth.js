@@ -31,23 +31,6 @@ const useAuth = () => {
         }
     }, [token]);
 
-    const onError = (err) => {
-        console.log('error: ', err);
-    };
-    function connect(token) {
-        var socket = new SockJS(`${API_URL}/websocket`);
-        stompClient = over(socket);
-
-        stompClient.connect({ token: token }, function (frame) {
-            console.log('Connected: ' + frame);
-            stompClient.subscribe(`/topic/messages`, function (message) {
-                console.log(JSON.parse(message.body));
-            });
-            stompClient.subscribe(`/user/queue/private-messages`, function (message) {
-                console.log(JSON.parse(message.body));
-            });
-        });
-    }
     useEffect(() => {
         // Get the JWT token from the cookie
         const token = localStorageUtils.getToken();
@@ -78,8 +61,6 @@ const useAuth = () => {
                     }, 1000);
                 }
             });
-            // connectGlobal();
-            // connect(token);
         } catch (err) {
             // If the token is invalid, return
 

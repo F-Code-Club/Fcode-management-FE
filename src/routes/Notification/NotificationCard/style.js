@@ -4,13 +4,14 @@ import Flexbox from '@/components/Flexbox';
 import { themes } from '@/theme/theme';
 
 export const NotificationStyled = styled.div`
+    width: 100%;
     .notification_content {
         width: 90%;
         font-weight: 400;
         font-size: 16px;
         line-height: 20px;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;

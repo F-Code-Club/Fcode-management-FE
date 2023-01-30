@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 import { Layout, PageHeader, Breadcrumb, Modal, Badge, Dropdown, Menu } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
+import SockJS from 'sockjs-client';
+import { over } from 'stompjs';
 
+import { get } from '../../utils/ApiCaller';
 import { selectActionButtons } from '../Button/slice/selector';
 import { selectTitleHeader } from '../PageHeader/slice/selector';
 // import { openNotificationWithIcon } from '../ToastDemo/style';
@@ -15,8 +18,10 @@ import { PageHeaderContainer, NotificationContainer, HeaderNotification } from '
 
 import { actions as buttonSlice, handleClick } from '@/components/Button/slice/index';
 import { actions as titleHeaderActions } from '@/components/PageHeader/slice/index';
+import { API_URL } from '@/config';
 import { selectUser } from '@/routes/Auth/slice/selector';
 import NotificationCard from '@/routes/Notification/NotificationCard';
+import localStorageUtils from '@/utils/localStorageUtils';
 import { ArrowLeftOutlined, BellOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -52,6 +57,12 @@ const PageHeaderComponent = () => {
     const userRole = useSelector(selectUser);
     const TitleHeader = useSelector(selectTitleHeader);
     const ActionButtons = useSelector(selectActionButtons);
+
+    const [memberAnnounce, setMemberAnnounce] = useState();
+
+    const [announcements, setAnnouncements] = useState([]);
+    let stompClient = null;
+    const token = localStorageUtils.getToken();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -81,26 +92,82 @@ const PageHeaderComponent = () => {
             dispatch(buttonSlice.changeButtons({ isShow: false }));
         }
     }, [location]);
+    useEffect(() => {
+        var socket = new SockJS(`${API_URL}/websocket`);
+        stompClient = over(socket);
+        if (token) {
+            stompClient.connect({ token: token }, function (frame) {
+                console.log('Connected: ' + frame);
+                // stompClient.subscribe(`/topic/messages`, function (message) {
+                //     setMessage(JSON.parse(message.body));
+                // });
+                stompClient.subscribe(`/user/queue/private-messages`, function (message) {
+                    const announce = JSON.parse(message.body);
+                    setAnnouncements((prevAnnouncements) => [...prevAnnouncements, announce]);
+                });
+            });
+        }
+
+        return () => {
+            if (token) {
+                stompClient.disconnect(function () {
+                    console.log('Disconnected from WebSocket');
+                });
+            }
+        };
+    }, []);
+    useEffect(() => {
+        get('/announcement/notifications', '', { authorization: token })
+            .then((res) => {
+                let sortData = res.data?.data?.sort((a, b) => (a.id < b.id ? 1 : -1));
+                setMemberAnnounce(sortData?.splice(0, 3));
+            })
+            // eslint-disable-next-line no-console
+            .catch((error) => console.log(error));
+        return () => {
+            setAnnouncements((prevAnnouncements) => prevAnnouncements.slice(1));
+        };
+    }, [location]);
     const onBack = () => {
         window.history.back();
     };
+    const onClickNotification = ({ key }) => {
+        if (userRole.role === 'MEMBER' || userRole.role === 'STUDENT') {
+            navigate(`/notifications/${key}`);
+        } else {
+            navigate(`/manage-announcement/view-announcement/${key}`);
+        }
+    };
+    console.log(memberAnnounce);
     const menu = () => {
+        let announcement1 = announcements?.reverse();
         return (
             <NotificationContainer>
-                <Menu onClick={handleClick} style={{ width: '100%' }}>
+                <Menu onClick={onClickNotification} style={{ width: '100%' }}>
                     <HeaderNotification>
                         <h2 className="title"> Thông báo</h2>
                         <button className="btn-readAll">Đánh dấu tất cả là đã đọc</button>
                     </HeaderNotification>
-                    <Menu.Item key="1">
-                        <NotificationCard />
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <NotificationCard />
-                    </Menu.Item>{' '}
-                    <Menu.Item key="3">
-                        <NotificationCard />
-                    </Menu.Item>
+                    {announcements.length !== 0 && (
+                        <>
+                            <h4 className="title" style={{ marginLeft: '20px' }}>
+                                Mới nhất
+                            </h4>
+                            {announcement1.map((announcement, id) => (
+                                <Menu.Item key={`${announcement.id}`}>
+                                    <NotificationCard announce={announcement} />
+                                </Menu.Item>
+                            ))}
+                        </>
+                    )}
+                    <h4 className="title" style={{ marginLeft: '20px' }}>
+                        Gần đây
+                    </h4>
+                    {memberAnnounce?.map((announcement) => (
+                        <Menu.Item key={announcement.id}>
+                            <NotificationCard announce={announcement} />
+                        </Menu.Item>
+                    ))}
                 </Menu>
             </NotificationContainer>
         );
@@ -119,6 +186,7 @@ const PageHeaderComponent = () => {
             })
         );
     };
+
     return (
         <PageHeaderContainer>
             <Header
@@ -154,28 +222,25 @@ const PageHeaderComponent = () => {
                                     {button.name}
                                 </StyledButton>
                             )),
-                        (userRole.role === 'MEMBER' || userRole.role === 'STUDENT') && (
-                            <Dropdown
-                                key={'notio'}
-                                dropdownRender={menu}
-                                // open={true}
-                                trigger={['hover', 'click']}
-                                style={{ minWidth: '500px', borderRadius: '10px' }}
-                            >
-                                <Badge
-                                    dot={true}
-                                    style={{ marginRight: '20px', cursor: 'pointer' }}
-                                >
-                                    <BellOutlined
-                                        style={{
-                                            fontSize: '20px',
-                                            color: '#45CE7C',
-                                            marginRight: '20px',
-                                        }}
-                                    />
-                                </Badge>
-                            </Dropdown>
-                        ),
+                        // (userRole.role === 'MEMBER' || userRole.role === 'STUDENT') && (
+                        <Dropdown
+                            key={'notio'}
+                            dropdownRender={menu}
+                            // open={true}
+                            trigger={['hover', 'click']}
+                            style={{ minWidth: '500px', borderRadius: '10px' }}
+                        >
+                            <Badge dot={true} style={{ marginRight: '20px', cursor: 'pointer' }}>
+                                <BellOutlined
+                                    style={{
+                                        fontSize: '20px',
+                                        color: '#45CE7C',
+                                        marginRight: '20px',
+                                    }}
+                                />
+                            </Badge>
+                        </Dropdown>,
+                        // ),
                     ]}
                 />
             </Header>

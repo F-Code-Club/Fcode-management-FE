@@ -25,6 +25,7 @@ import QuestionManagement from './Question/index';
 import ResourcesSection from './Resources';
 import ViewResource from './Resources/viewResources';
 import TestRouteManager from './TestManagerRoute';
+import UserEvent from './UserEvent';
 
 // import TestRouteAdmin from './testRouteAdmin';
 import LayoutComponent from '@/components/Layout/Layout.component';
@@ -257,6 +258,12 @@ const memberRoute = [
     {
         path: '/personal-blog/preview/:id',
         component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/event',
+        component: <UserEvent />,
         exact: false,
         restrict: true,
     },

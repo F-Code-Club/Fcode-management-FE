@@ -35,6 +35,8 @@ export const themes = {
         primary050: '#E6F8EC',
         secondary050: '#E3F2FE',
         subtitle: '#767676',
+        late: '#DA2B2B',
+        upcoming: '#33A7FF',
     },
 };
 

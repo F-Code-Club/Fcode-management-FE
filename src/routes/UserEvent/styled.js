@@ -6,8 +6,15 @@ import { themes } from '@/theme/theme';
 export const Container = styled.div`
     background-color: white;
     padding: 24px;
+    .ant-modal {
+        padding: 0;
+    }
+    .rbc-show-more {
+        background-color: transparent;
+        color: gray;
+    }
     .ant-breadcrumb {
-        padding-left: 16px !important;
+        padding-left: 16px;
     }
     .events {
         margin: 0;
@@ -150,15 +157,11 @@ export const Container = styled.div`
     .ant-input:focus {
         border-color: ${themes.colors.primary};
     }
-
     .rbc-agenda-table > tbody > tr {
         background-color: #e6f8ec;
     }
     .rbc-today {
         background: #e6f8ec;
-    }
-    .rbc-show-more {
-        color: white;
     }
 `;
 
@@ -309,13 +312,13 @@ export const ButtonContainer = styled.div`
 `;
 export const CustomButton = styled(Button)`
     margin: 8px 12px;
-    background: #45ce7c !important;
-    border-color: #45ce7c !important ;
+    background: #45ce7c;
+    border-color: #45ce7c;
     transition: 0.3s ease all;
     &:hover {
-        color: black !important;
-        background: #a5e7c0 !important;
-        border-color: #a5e7c0 !important ;
+        color: black;
+        background: #a5e7c0;
+        border-color: #a5e7c0;
     }
 `;
 export const DetailContainer = styled.div`
@@ -325,7 +328,7 @@ export const DetailContainer = styled.div`
     border: 2px solid #45ce7c;
     top: translate(50%, 100%);
     border-radius: 10px;
-    min-width: 400px;
+    max-width: 500px;
     padding: 20px 20px 0 20px;
 `;
 export const Header = styled.div`
@@ -335,8 +338,8 @@ export const Header = styled.div`
         padding: 0 20px;
     }
     h1 {
-        margin: 0 !important;
-        margin-right: 12px !important;
+        margin: 0;
+        margin-right: 12px;
     }
 `;
 export const Body = styled.div`
@@ -406,7 +409,4 @@ export const EditButton = styled.div`
 `;
 export const DeleteButton = styled.div`
     cursor: pointer;
-`;
-export const Wrapper = styled.section`
-    min-height: calc(100vh - 100px);
 `;

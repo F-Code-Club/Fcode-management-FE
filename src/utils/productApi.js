@@ -131,6 +131,10 @@ const productApi = {
         const url = `/challenge/${id}`;
         return remove(url, {}, {}, { authorization: token });
     },
+    getOwnAttendance: (token) => {
+        const url = `/attendance`;
+        return get(url, {}, { authorization: token });
+    },
 };
 
 export default productApi;

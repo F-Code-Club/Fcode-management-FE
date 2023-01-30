@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Avatar, Col, Row, Space, Card, Typography, Button, Modal, Form } from 'antd';
+import { Avatar, Col, Row, Space, Card, Typography, Button, Modal } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +21,7 @@ import {
 import { UploadImage } from './components/uploadAva';
 import { actions } from './slice';
 import selector from './slice/selectors';
-import { Container, EditButton, AvatarContainer } from './style';
+import { Container, EditButton, AvatarContainer, StyledForm, InfoContainer, Label } from './style';
 
 import { toastSuccess, toastError } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';
@@ -39,7 +39,7 @@ const EditAccount = () => {
     const [isUpdated, setUpdated] = useState(false);
     const dispatch = useDispatch();
     const setTheme = useTheme();
-    const [form] = Form.useForm();
+    const [form] = StyledForm.useForm();
     const avatar = useSelector(selector.avatar);
     const joinDate = useSelector(selector.joinDate);
     const role = useSelector(selector.role);
@@ -51,6 +51,7 @@ const EditAccount = () => {
     const positions = useSelector(selector.positions);
     const personalEmail = useSelector(selector.personalEmail);
     const emailFPT = useSelector(selector.emailFPT);
+    const studentId = useSelector(selector.studentId);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
@@ -79,7 +80,6 @@ const EditAccount = () => {
     };
     const handleFinish = () => {
         UpdateInfo();
-        toastSuccess('Thành Công');
     };
 
     const handleFinishFailed = () => {
@@ -108,10 +108,13 @@ const EditAccount = () => {
                             <Space
                                 direction="vertical"
                                 size="middle"
-                                style={{ display: 'flex' }}
+                                style={{ display: 'flex', borderRadius: '10px' }}
                                 className="pos-sticky"
                             >
-                                <Card style={{ width: '100%', height: '100%' }} loading={false}>
+                                <Card
+                                    style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+                                    loading={false}
+                                >
                                     <AvatarContainer>
                                         <Avatar size={160} src={avatar} />
                                         <EditButton
@@ -144,80 +147,91 @@ const EditAccount = () => {
                                 </Space>
                             </Space>
                         </Col>
-                        <Col span={17} className="right-side">
-                            <Card style={{ width: '100%', height: '100%' }} loading={false}>
+                        <Col span={16} className="right-side">
+                            <Card
+                                style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+                                loading={false}
+                            >
                                 <Space
                                     direction="vertical"
                                     size="middle"
                                     style={{ display: 'flex' }}
                                 >
                                     <Title
-                                        level={4}
                                         style={{
                                             marginTop: 0,
+                                            fontFamily: 'Inter',
+                                            fontWeight: '700px',
+                                            fontSize: '16px',
+                                            lineHeight: '175%',
+                                            fontStyle: 'normal',
+                                            color: '#000000',
                                         }}
                                     >
                                         Thông tin cơ bản
                                     </Title>
-                                    <Form
-                                        form={form}
-                                        name="form1"
-                                        initialValues={{
-                                            phone: phone,
-                                            personalEmail: personalEmail,
-                                            emailFPT: emailFPT,
-                                            fullName: fullName,
-                                        }}
-                                        onFinish={handleFinish}
-                                        onFinishFailed={handleFinishFailed}
-                                    >
-                                        <Row gutter={[getGutter(1), getGutter(1)]}>
-                                            <Col span={24}>
-                                                <Title level={5}>Họ và tên</Title>
-                                                <InputFullName />
-                                            </Col>
-                                            <Col span={12}>
-                                                <Title level={5}>Ngày sinh</Title>
-                                                <SelectBirthdate />
-                                            </Col>
-                                            <Col span={12}>
-                                                <Title level={5}>Crew</Title>
-                                                <SelectMajor />
-                                            </Col>
-                                            <Col span={12}>
-                                                <Title level={5}>MSSV</Title>
-                                                <InputStudentId />
-                                            </Col>
-                                            <Col span={12}>
-                                                <Title level={5}>Role</Title>
-                                                <SelectRole />
-                                            </Col>
-                                            <Col span={24}>
-                                                <Title level={5}>Chức vụ</Title>
-                                                <SelectPosition />
-                                            </Col>
-                                            <Col span={24}>
-                                                <Title level={5}>Số Điện Thoại</Title>
-                                                <InputPhone />
-                                            </Col>
-                                            <Col span={24}>
-                                                <Title level={5}>Email FPT</Title>
-                                                <InputEmailFPT />
-                                            </Col>
-                                            <Col span={24}>
-                                                <Title level={5}>Email liên kết</Title>
-                                                <InputPersonalEmail />
-                                            </Col>
-                                            <Col span={24}>
-                                                <Title level={5}>Facebook</Title>
-                                                <InputFacebook />
-                                            </Col>
-                                            <Col span={24}>
-                                                <Title level={5}>Bio</Title>
-                                                <InputBio />
-                                            </Col>
-                                        </Row>
-                                    </Form>
+                                    <InfoContainer>
+                                        <StyledForm
+                                            form={form}
+                                            name="form1"
+                                            initialValues={{
+                                                phone: phone,
+                                                personalEmail: personalEmail,
+                                                emailFPT: emailFPT,
+                                                fullName: fullName,
+                                                studentId: studentId,
+                                            }}
+                                            onFinish={handleFinish}
+                                            onFinishFailed={handleFinishFailed}
+                                        >
+                                            <Row gutter={[getGutter(1), getGutter(1)]}>
+                                                <Col span={24}>
+                                                    <Label level={5}>Họ và tên</Label>
+                                                    <InputFullName />
+                                                </Col>
+                                                <Col span={12}>
+                                                    <Label level={5}>Ngày sinh</Label>
+                                                    <SelectBirthdate />
+                                                </Col>
+                                                <Col span={12}>
+                                                    <Label level={5}>Crew</Label>
+                                                    <SelectMajor />
+                                                </Col>
+                                                <Col span={12}>
+                                                    <Label level={5}>MSSV</Label>
+                                                    <InputStudentId />
+                                                </Col>
+                                                <Col span={12}>
+                                                    <Label level={5}>Role</Label>
+                                                    <SelectRole />
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Label level={5}>Chức vụ</Label>
+                                                    <SelectPosition />
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Label level={5}>Số Điện Thoại</Label>
+                                                    <InputPhone />
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Label level={5}>Email FPT</Label>
+                                                    <InputEmailFPT />
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Label level={5}>Email liên kết</Label>
+                                                    <InputPersonalEmail />
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Label level={5}>Facebook</Label>
+                                                    <InputFacebook />
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Label level={5}>Bio</Label>
+                                                    <InputBio />
+                                                </Col>
+                                            </Row>
+                                        </StyledForm>
+                                    </InfoContainer>
                                 </Space>
                             </Card>
                         </Col>

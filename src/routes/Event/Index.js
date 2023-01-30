@@ -20,7 +20,6 @@ function Event() {
     const getALlEvent = async () => {
         const path = await productApi.getAllEvent(token);
         SetUpdated(true);
-        console.log(path.data.data);
         dispatch(setEvent(path.data.data));
     };
     return (

@@ -134,10 +134,10 @@ export const Homepage = () => {
         return [url, name];
     };
     useEffect(() => {
-        if (memberAnnounce) {
+        if (memberAnnounce?.length >= 0) {
             FetchDataAnnounce();
         }
-    }, []);
+    }, [memberAnnounce]);
 
     if (userRole.role == 'ADMIN' || userRole.role == 'MANAGER') {
         return (

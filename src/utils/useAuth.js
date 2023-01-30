@@ -2,16 +2,21 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { redirect } from 'react-router-dom';
+import SockJS from 'sockjs-client';
+import { over } from 'stompjs';
 
 import authApi from './apiComponents/authApi';
 import localStorageUtils from './localStorageUtils';
 
 import { toastError } from '@/components/ToastNotification';
+import { API_URL } from '@/config';
 import { setUser } from '@/routes/Auth/slice';
 
 const useAuth = () => {
+    let stompClient = null;
     const [userRole, setUserRole] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
     const dispatch = useDispatch();
     const token = localStorageUtils.getToken();
     const checkTokenExpiration = useCallback(() => {
@@ -25,10 +30,24 @@ const useAuth = () => {
             }
         }
     }, [token]);
-    // useEffect(() => {
-    //     const intervalId = setInterval(checkTokenExpiration, 5000);
-    //     return () => clearInterval(intervalId);
-    // }, [checkTokenExpiration]);
+
+    const onError = (err) => {
+        console.log('error: ', err);
+    };
+    function connect(token) {
+        var socket = new SockJS(`${API_URL}/websocket`);
+        stompClient = over(socket);
+
+        stompClient.connect({ token: token }, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe(`/topic/messages`, function (message) {
+                console.log(JSON.parse(message.body));
+            });
+            stompClient.subscribe(`/user/queue/private-messages`, function (message) {
+                console.log(JSON.parse(message.body));
+            });
+        });
+    }
     useEffect(() => {
         // Get the JWT token from the cookie
         const token = localStorageUtils.getToken();
@@ -59,6 +78,8 @@ const useAuth = () => {
                     }, 1000);
                 }
             });
+            // connectGlobal();
+            // connect(token);
         } catch (err) {
             // If the token is invalid, return
 

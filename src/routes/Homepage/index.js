@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo/F-Code logo.png';
 import { get } from '../../utils/ApiCaller';
 import { selectUser } from '../Auth/slice/selector';
+import { ProfileImage } from '../HomePageForMember/components/avatarFormat';
 import ResourceCard from '../Resources/components/ResourceCard';
 import Carousel2 from './component/reactSlider';
 import {
@@ -20,6 +21,7 @@ import {
     Col2Styled,
 } from './style';
 
+import memberApi from '@/utils/apiComponents/memberApi';
 import productApi from '@/utils/apiComponents/productApi';
 
 export const Homepage = () => {
@@ -33,7 +35,7 @@ export const Homepage = () => {
     const [dataAvatar, setDataAvatar] = useState();
     const [memberAnnounce, setMemberAnnounce] = useState();
     const [listSubject, setListSubject] = useState();
-
+    const [announceInfo, setAnnounceInfo] = useState([]);
     const userRole = useSelector(selectUser);
 
     useEffect(() => {
@@ -93,33 +95,49 @@ export const Homepage = () => {
             return EditorState.createEmpty();
         }
     };
-    // useEffect(() => {
-    //     const token = LocalStorageUtils.getItem('token');
-    //     // const userId = LocalStorageUtils.getJWTUser().id;
-    //     const getData = async (token) => {
-    //         const response = await authApi.getUser(token);
 
-    //         if (response.data.code === 200) {
-    //             const { data } = response.data;
+    const getMember = async (id) => {
+        let url;
+        let name;
+        let memberId;
+        await memberApi.getMemberByMemberId(id).then((member) => {
+            memberId = member.data.data.id;
+            url = member.data.data.avatarUrl;
+            name = member.data.data.firstName + ' ' + member.data.data.lastName;
+        });
 
-    //             const formatUser = {
-    //                 firstName: data.firstName,
-    //                 lastName: data.lastName,
-    //                 role: data.role,
-    //                 id: data.id,
-    //             };
-    //             LocalStorageUtils.setItem('role', formatUser.role);
-    //             dispatch(setUser(formatUser));
-    //         }
-    //         if (response.data.code === 408) {
-    //             LocalStorageUtils.removeItem('token');
-    //             navigate('/auth');
-    //         }
-    //     };
-    //     if (token) {
-    //         getData(token);
-    //     }
-    // }, []);
+        return { memberId, url, name };
+    };
+
+    function FetchDataAnnounce() {
+        let dataAva = memberAnnounce?.map(async (el) => {
+            return await getMember(el.memberId).then((member) => {
+                return member;
+            });
+        });
+        Promise.all(dataAva).then((responses) => {
+            setAnnounceInfo(responses);
+        });
+    }
+
+    const getAnnounceInfo = (id) => {
+        let url;
+        let name;
+
+        for (let i = 0; announceInfo && i < announceInfo.length; i++) {
+            if (announceInfo[i].memberId === id) {
+                url = announceInfo[i].url;
+                name = announceInfo[i].name;
+                break;
+            }
+        }
+        return [url, name];
+    };
+    useEffect(() => {
+        if (memberAnnounce) {
+            FetchDataAnnounce();
+        }
+    }, []);
 
     if (userRole.role == 'ADMIN' || userRole.role == 'MANAGER') {
         return (
@@ -278,8 +296,10 @@ export const Homepage = () => {
                                 >
                                     <List.Item.Meta
                                         title={<h4 title={item.title}>{item.title}</h4>}
-                                        // avatar={<ProfileImage src={getAvatar(item.memberId)[0]} />}
-                                        description={`${item.location}`}
+                                        avatar={
+                                            <ProfileImage src={getAnnounceInfo(item.memberId)[0]} />
+                                        }
+                                        description={`${getAnnounceInfo(item.memberId)[1]}`}
                                     ></List.Item.Meta>
                                     <div className="content-announce">
                                         <Editor

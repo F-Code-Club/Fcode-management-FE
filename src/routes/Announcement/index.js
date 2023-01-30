@@ -12,6 +12,7 @@ import { get, post, put, remove } from '@/utils/ApiCaller';
 
 export const ManageAnnouncement = () => {
     const token = localStorage.getItem('token');
+
     const [state, setState] = useState({
         popupEditor: {
             status: false,
@@ -31,6 +32,9 @@ export const ManageAnnouncement = () => {
             .catch((error) => console.log(error));
     }, [reload]);
 
+    ////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////
     const handleCreate = (status, newAnnouncement) => {
         const typeWork = state.popupEditor.type;
         if (status) {
@@ -62,6 +66,7 @@ export const ManageAnnouncement = () => {
                             // eslint-disable-next-line no-console
                             console.log(error);
                         });
+
                     break;
                 case 'edit':
                     put(
@@ -140,6 +145,7 @@ export const ManageAnnouncement = () => {
                     },
                 });
                 document.body.style.overflow = 'hidden';
+
                 break;
             case 'edit':
                 setState({

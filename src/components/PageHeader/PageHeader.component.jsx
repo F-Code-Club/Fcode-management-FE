@@ -140,7 +140,7 @@ const PageHeaderComponent = () => {
     };
     console.log(memberAnnounce);
     const menu = () => {
-        let announcement1 = announcements?.reverse();
+        // let announcement1 = announcements?.reverse();
         return (
             <NotificationContainer>
                 <Menu onClick={onClickNotification} style={{ width: '100%' }}>
@@ -153,7 +153,7 @@ const PageHeaderComponent = () => {
                             <h4 className="title" style={{ marginLeft: '20px' }}>
                                 Mới nhất
                             </h4>
-                            {announcement1.map((announcement, id) => (
+                            {announcements.map((announcement, id) => (
                                 <Menu.Item key={`${announcement.id}`}>
                                     <NotificationCard announce={announcement} />
                                 </Menu.Item>

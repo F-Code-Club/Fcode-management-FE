@@ -12,24 +12,24 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const ViewNotification = () => {
     const token = localStorage.getItem('token');
-    const { state } = useLocation();
+    // const { state } = useLocation();
     console.log('line 16:', location);
-    // const [state, setState] = useState();
+    const [state, setState] = useState();
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     get(`/announcement/one/${id}`, '', { authorization: token })
-    //         .then((item) => {
-    //             if (item != null) {
-    //                 setState(item.data.data);
-    //             } else {
-    //                 navigate('/notifications');
-    //             }
-    //         })
-    //         // eslint-disable-next-line no-console
-    //         .catch((error) => console.log(error));
-    // }, [id]);
+    useEffect(() => {
+        get(`/announcement/one/${id}`, '', { authorization: token })
+            .then((item) => {
+                if (item != null) {
+                    setState(item.data.data);
+                } else {
+                    navigate('/notifications');
+                }
+            })
+            // eslint-disable-next-line no-console
+            .catch((error) => console.log(error));
+    }, [id]);
 
     const getContentEditorState = (item) => {
         try {

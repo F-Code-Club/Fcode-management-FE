@@ -72,14 +72,13 @@ const EditAccount = () => {
         dispatch(actions.getAccount());
         const response = await productApi.updateOwnAccount(info, token);
         if (response.data.code == 200) {
-            toastSuccess(response.data.message);
+            toastSuccess('Sửa thông tin thành công ');
         } else {
             toastError(response.data.message);
         }
     };
     const handleFinish = () => {
         UpdateInfo();
-        toastSuccess('Thành Công');
     };
 
     const handleFinishFailed = () => {

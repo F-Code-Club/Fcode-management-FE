@@ -11,7 +11,7 @@ const NotificationCard = ({ announce }) => {
         const currentTime = moment();
         const diff = moment.duration(currentTime.diff(createdTime));
         if (diff.asHours() >= 24) {
-            return '1 day';
+            return diff.humanize();
         }
         return diff.humanize();
     };

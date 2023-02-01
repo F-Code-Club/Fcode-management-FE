@@ -59,7 +59,7 @@ const PageHeaderComponent = () => {
     const ActionButtons = useSelector(selectActionButtons);
 
     const [memberAnnounce, setMemberAnnounce] = useState();
-
+    const [notiCount, setNotiCount] = useState(0);
     const [announcements, setAnnouncements] = useState([]);
     let stompClient = null;
     const token = localStorageUtils.getToken();
@@ -96,13 +96,13 @@ const PageHeaderComponent = () => {
         var socket = new SockJS(`${API_URL}/websocket`);
         stompClient = over(socket);
         if (token) {
-            stompClient.connect({ token: token }, function (frame) {
-                console.log('Connected: ' + frame);
+            stompClient.connect({ token: token }, function () {
                 // stompClient.subscribe(`/topic/messages`, function (message) {
                 //     setMessage(JSON.parse(message.body));
                 // });
                 stompClient.subscribe(`/user/queue/private-messages`, function (message) {
                     const announce = JSON.parse(message.body);
+                    setNotiCount(notiCount + 1);
                     setAnnouncements((prevAnnouncements) => [...prevAnnouncements, announce]);
                 });
             });
@@ -116,6 +116,19 @@ const PageHeaderComponent = () => {
             }
         };
     }, []);
+
+    const handleReadNotification = (index) => {
+        setAnnouncements((prevNotifications) =>
+            prevNotifications.map((notification, i) => {
+                if (notification.id == index) {
+                    return { ...notification, read: true };
+                }
+                return notification;
+            })
+        );
+        setNotiCount(notiCount - 1);
+    };
+
     useEffect(() => {
         get('/announcement/notifications', '', { authorization: token })
             .then((res) => {
@@ -133,12 +146,14 @@ const PageHeaderComponent = () => {
     };
     const onClickNotification = ({ key }) => {
         if (userRole.role === 'MEMBER' || userRole.role === 'STUDENT') {
+            handleReadNotification(key);
             navigate(`/notifications/${key}`);
         } else {
+            handleReadNotification(key);
             navigate(`/manage-announcement/view-announcement/${key}`);
         }
     };
-    console.log(memberAnnounce);
+
     const menu = () => {
         // let announcement1 = announcements?.reverse();
         return (
@@ -153,8 +168,15 @@ const PageHeaderComponent = () => {
                             <h4 className="title" style={{ marginLeft: '20px' }}>
                                 Mới nhất
                             </h4>
-                            {announcements.map((announcement, id) => (
-                                <Menu.Item key={`${announcement.id}`}>
+                            {announcements.map((announcement) => (
+                                <Menu.Item
+                                    key={`${announcement.id}`}
+                                    style={{
+                                        backgroundColor: announcement.read
+                                            ? 'transparent'
+                                            : '#E6F8EC',
+                                    }}
+                                >
                                     <NotificationCard announce={announcement} />
                                 </Menu.Item>
                             ))}
@@ -230,7 +252,11 @@ const PageHeaderComponent = () => {
                             trigger={['hover', 'click']}
                             style={{ minWidth: '500px', borderRadius: '10px' }}
                         >
-                            <Badge dot={true} style={{ marginRight: '20px', cursor: 'pointer' }}>
+                            <Badge
+                                // dot={true}
+                                count={notiCount}
+                                style={{ marginRight: '20px', cursor: 'pointer' }}
+                            >
                                 <BellOutlined
                                     style={{
                                         fontSize: '20px',

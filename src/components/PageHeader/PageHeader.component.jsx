@@ -116,7 +116,14 @@ const PageHeaderComponent = () => {
             }
         };
     }, []);
-
+    const readAllNotifications = () => {
+        setAnnouncements((prevNotifications) =>
+            prevNotifications.map((notification) => ({
+                ...notification,
+                read: true,
+            }))
+        );
+    };
     const handleReadNotification = (index) => {
         setAnnouncements((prevNotifications) =>
             prevNotifications.map((notification, i) => {
@@ -161,7 +168,9 @@ const PageHeaderComponent = () => {
                 <Menu onClick={onClickNotification} style={{ width: '100%' }}>
                     <HeaderNotification>
                         <h2 className="title"> Thông báo</h2>
-                        <button className="btn-readAll">Đánh dấu tất cả là đã đọc</button>
+                        <button className="btn-readAll" onClick={readAllNotifications}>
+                            Đánh dấu tất cả là đã đọc
+                        </button>
                     </HeaderNotification>
                     {announcements.length !== 0 && (
                         <>

@@ -278,6 +278,12 @@ const memberRoute = [
         exact: false,
         restrict: true,
     },
+    {
+        path: '/event',
+        component: <UserEvent />,
+        exact: false,
+        restrict: true,
+    },
 ];
 
 const RouterComponent = () => {

@@ -1,6 +1,9 @@
-import { Button, Image } from 'antd';
+import { Button, Form, Image, Typography } from 'antd';
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
+const { Title } = Typography;
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -59,6 +62,10 @@ export const Container = styled.div`
             width: 100%;
         }
     }
+    .ant-btn-primary {
+        border-color: ${themes.colors.primary};
+        background-color: ${themes.colors.primary};
+    }
 `;
 export const StyleImage = styled(Image)`
     object-fit: cover;
@@ -69,4 +76,33 @@ export const EditButton = styled(Button)`
 `;
 export const AvatarContainer = styled.div`
     position: relative;
+    .ant-btn-primary {
+        background: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
+        text-shadow: none;
+        box-shadow: none;
+    }
+`;
+export const StyledForm = styled(Form)`
+    width: 450px;
+    .ant-input:hover {
+        border-color: ${themes.colors.primary};
+    }
+`;
+export const InfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+export const Label = styled(Title)`
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+    /* identical to box height, or 157% */
+
+    /* Character/Title .85 */
+
+    color: rgba(0, 0, 0, 0.85);
 `;

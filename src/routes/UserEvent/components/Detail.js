@@ -81,28 +81,6 @@ function Detail({ event, handle }) {
                     <h1>Ghi Chú :</h1>
                     <h2>{`${event.description}`}</h2>
                 </DetailBody>
-                <Action>
-                    <EditButton onClick={handleOpenEditBox}>
-                        <EditOutlined />
-                    </EditButton>
-                    <Popconfirm
-                        title="Bạn có chắc muốn xóa sự kiện  này ?"
-                        okText="Có "
-                        cancelText="Không"
-                        onConfirm={() => handleConfirm(event)}
-                    >
-                        <DeleteButton>
-                            <DeleteOutlined />
-                        </DeleteButton>
-                    </Popconfirm>
-                </Action>
-                {isEditBoxOpen && (
-                    <EditBox
-                        event={event}
-                        handle={() => setEditBoxOpen(false)}
-                        closeOtherBox={handle}
-                    ></EditBox>
-                )}
             </DetailContainer>
         </BoxContainer>
     );

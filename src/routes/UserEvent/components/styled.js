@@ -8,8 +8,8 @@ export const CustomModal = styled(Modal)`
     border: 2px solid #45ce7c;
 
     border-radius: 10px;
-    padding: 0;
-    .ant-modal-body {
+    padding: 0 !important;
+    .ant-modal {
         padding: 0;
     }
 `;
@@ -25,6 +25,7 @@ export const DetailHeader = styled.div`
         font-weight: 400;
         font-size: 14px;
         line-height: 22px;
+        width: 80px;
     }
 `;
 
@@ -62,7 +63,6 @@ export const DetailBody = styled.div`
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     line-height: 24px;
-    margin-left: 20px;
     div {
         display: flex;
     }

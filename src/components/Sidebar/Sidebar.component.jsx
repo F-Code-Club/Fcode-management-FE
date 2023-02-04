@@ -46,7 +46,7 @@ const itemsAdmin = [
             <SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />,
             '/personal-blog'
         ),
-        getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '/blog'),
+        getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '/blog'),
     ]),
     getItem('Quản lý tài khoản', '/account', <TeamOutlined />, [
         getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '/account'),

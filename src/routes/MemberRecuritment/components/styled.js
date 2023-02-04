@@ -106,6 +106,7 @@ export const Des = styled.div`
 
         color: #000000;
     }
+
     color: #000000;
 `;
 export const LeftSide = styled.div`

@@ -30,7 +30,7 @@ let breadcrumbNameMap = {
     '/event': 'Quản lý sự kiện',
     '/manage-resource': 'Quản lý tài nguyên',
     '/member': 'Quản lý thành viên',
-    '/blog': 'Quản lý bài viết thành viên',
+    '/blog': 'Quản lý bài viết',
     '/personal-blog': 'Quản lý bài viết cá nhân',
     '/personal-blog/create': 'Tạo bài viết',
     '/personal-blog/edit': 'Chỉnh sửa bài viết',
@@ -266,7 +266,7 @@ const PageHeaderComponent = () => {
                         <Dropdown
                             key={'notio'}
                             dropdownRender={menu}
-                            open={true}
+                            // open={true}
                             trigger={['hover', 'click']}
                             style={{ minWidth: '500px', borderRadius: '10px' }}
                         >

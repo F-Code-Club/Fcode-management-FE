@@ -68,7 +68,7 @@ const publicRoute = [
     },
     {
         index: false,
-        path: 'manage-announcement/view-announcement/:id',
+        path: 'manage-announcement/:id',
         component: <ViewAnnouncement />,
         exact: true,
         restrict: true,
@@ -103,7 +103,6 @@ const publicRoute = [
 const adminRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
     { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
-
     {
         index: true,
         path: 'comment',

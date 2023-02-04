@@ -1,19 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { redirect } from 'react-router-dom';
-import SockJS from 'sockjs-client';
-import { over } from 'stompjs';
 
 import authApi from './apiComponents/authApi';
 import localStorageUtils from './localStorageUtils';
 
 import { toastError } from '@/components/ToastNotification';
-import { API_URL } from '@/config';
 import { setUser } from '@/routes/Auth/slice';
 
 const useAuth = () => {
-    let stompClient = null;
     const [userRole, setUserRole] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,11 +17,15 @@ const useAuth = () => {
     const checkTokenExpiration = useCallback(() => {
         if (token) {
             const decoded = localStorageUtils.getJWTUser();
-            if (decoded.exp < Date.now() / 1000) {
-                localStorage.removeItem('token');
+            if (!decoded) {
                 setUserRole(undefined);
-                console.log('run useAuth');
+            }
+            if (decoded?.exp < Date.now() / 1000) {
+                setUserRole(undefined);
+                localStorage.removeItem('token');
+                console.log('run decoded', decoded);
                 toastError('Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại');
+                return;
             }
         }
     }, [token]);
@@ -37,6 +36,7 @@ const useAuth = () => {
 
         // If there is no token, return
         if (!token) {
+            console.log('check undefined');
             setUserRole(undefined);
             return;
         }
@@ -63,12 +63,12 @@ const useAuth = () => {
             });
         } catch (err) {
             // If the token is invalid, return
-
+            console.log('invalid token');
             return;
         }
         const intervalId = setInterval(checkTokenExpiration, 5000);
         return () => clearInterval(intervalId);
-    }, [token, checkTokenExpiration]);
+    }, [checkTokenExpiration]);
 
     return { isLoading, userRole };
 };

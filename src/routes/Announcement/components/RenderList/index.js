@@ -123,7 +123,7 @@ export const RenderList = (props) => {
                         </Button>
                         <Button
                             className="btn-view"
-                            onClick={() => navigate(`view-announcement/${item.id}`)}
+                            onClick={() => navigate(`/manage-announcement/${item.id}`)}
                         >
                             Xem chi tiết
                         </Button>

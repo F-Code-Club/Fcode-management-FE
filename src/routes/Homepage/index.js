@@ -178,7 +178,7 @@ export const Homepage = () => {
                                             key={item.title}
                                             extra={
                                                 <img
-                                                    width={272}
+                                                    width={170}
                                                     alt="blog"
                                                     src={err ? NoImg : item.imageUrl}
                                                     onError={handleAvatarError}
@@ -225,13 +225,7 @@ export const Homepage = () => {
                             renderItem={(item) => (
                                 <List.Item
                                     key={item.title}
-                                    extra={
-                                        <a
-                                            href={`manage-announcement/view-announcement/${item.id}`}
-                                        >
-                                            Chi tiết
-                                        </a>
-                                    }
+                                    extra={<a href={`manage-announcement/${item.id}`}>Chi tiết</a>}
                                 >
                                     <List.Item.Meta
                                         title={<h4 title={item.title}>{item.title}</h4>}

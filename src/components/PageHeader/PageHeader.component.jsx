@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Layout, PageHeader, Breadcrumb, Modal, Badge, Dropdown, Menu } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 
@@ -36,7 +36,7 @@ let breadcrumbNameMap = {
     '/personal-blog/edit': 'Chỉnh sửa bài viết',
     '/personal-blog/preview': 'Xem trước bài viết',
     '/manage-announcement': 'Quản lý thông báo',
-    '/manage-announcement/view-announcement': 'Xem thông báo',
+    '/manage-announcement/': 'Xem thông báo',
     '/information': 'Thông tin cá nhân',
     '/account': 'Quản lý tài khoản',
     '/account/edit-account': 'Chỉnh sửa thông tin',
@@ -45,14 +45,15 @@ let breadcrumbNameMap = {
     '/information/view-information': 'Xem thông tin',
     '/notifications': 'Thông báo',
 };
-for (let i = 1; i <= 100; i++) {
-    breadcrumbNameMap[`/personal-blog/${i}`] = `Chi tiết bài viết`;
-    breadcrumbNameMap[`/manage-announcement/view-announcement/${i}`] = `Thông báo số ${i}`;
-    breadcrumbNameMap[`/notifications/${i}`] = `Xem thông báo`;
 
-    breadcrumbNameMap[`/manage-resource/${i}`] = `tài nguyên số ${i}`;
-}
+// for (let i = 1; i <= 10000; i++) {
+// }
 const PageHeaderComponent = () => {
+    let { id } = useParams();
+    breadcrumbNameMap[`/personal-blog/${id}`] = `Chi tiết bài viết`;
+    breadcrumbNameMap[`/notifications/${id}`] = `Xem thông báo`;
+    breadcrumbNameMap[`/manage-announcement/${id}`] = `Xem thông báo`;
+    breadcrumbNameMap[`/manage-resource/${id}`] = `tài nguyên số ${id}`;
     const [modal, contextHolder] = Modal.useModal();
     const userRole = useSelector(selectUser);
     const TitleHeader = useSelector(selectTitleHeader);
@@ -61,6 +62,7 @@ const PageHeaderComponent = () => {
     const [memberAnnounce, setMemberAnnounce] = useState();
     const [notiCount, setNotiCount] = useState(0);
     const [announcements, setAnnouncements] = useState([]);
+    console.log(memberAnnounce);
     let stompClient = null;
     const token = localStorageUtils.getToken();
     const navigate = useNavigate();
@@ -102,8 +104,8 @@ const PageHeaderComponent = () => {
                 // });
                 stompClient.subscribe(`/user/queue/private-messages`, function (message) {
                     const announce = JSON.parse(message.body);
-                    setNotiCount(notiCount + 1);
                     setAnnouncements((prevAnnouncements) => [...prevAnnouncements, announce]);
+                    setNotiCount((prevState) => prevState + 1);
                 });
             });
         }
@@ -123,6 +125,7 @@ const PageHeaderComponent = () => {
                 read: true,
             }))
         );
+        setNotiCount(0);
     };
     const handleReadNotification = (index) => {
         setAnnouncements((prevNotifications) =>
@@ -133,7 +136,11 @@ const PageHeaderComponent = () => {
                 return notification;
             })
         );
-        setNotiCount(notiCount - 1);
+        if (notiCount === 0) {
+            return;
+        } else {
+            setNotiCount((prevState) => prevState - 1);
+        }
     };
 
     useEffect(() => {
@@ -157,12 +164,12 @@ const PageHeaderComponent = () => {
             navigate(`/notifications/${key}`);
         } else {
             handleReadNotification(key);
-            navigate(`/manage-announcement/view-announcement/${key}`);
+            navigate(`/manage-announcement/${key}`);
         }
     };
 
     const menu = () => {
-        // let announcement1 = announcements?.reverse();
+        let announcement1 = announcements?.reverse();
         return (
             <NotificationContainer>
                 <Menu onClick={onClickNotification} style={{ width: '100%' }}>
@@ -191,6 +198,8 @@ const PageHeaderComponent = () => {
                             ))}
                         </>
                     )}
+                </Menu>
+                <Menu onClick={onClickNotification} style={{ width: '100%' }}>
                     <h4 className="title" style={{ marginLeft: '20px' }}>
                         Gần đây
                     </h4>
@@ -257,12 +266,12 @@ const PageHeaderComponent = () => {
                         <Dropdown
                             key={'notio'}
                             dropdownRender={menu}
-                            // open={true}
+                            open={true}
                             trigger={['hover', 'click']}
                             style={{ minWidth: '500px', borderRadius: '10px' }}
                         >
                             <Badge
-                                // dot={true}
+                                // dot={notiCount !== 0}
                                 count={notiCount}
                                 style={{ marginRight: '20px', cursor: 'pointer' }}
                             >

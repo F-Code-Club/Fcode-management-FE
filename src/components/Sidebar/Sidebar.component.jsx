@@ -31,7 +31,8 @@ function getItem(label, key, icon, children) {
         label,
     };
 }
-
+// <SidebarLink to="/blog" child="Quản lý bài viết" />
+//<SidebarLink to="/account" child="Quản lý tài khoản" />
 const itemsAdmin = [
     getItem(<SidebarLink to="/home" child="Trang Chủ" />, '/home', <HomeOutlined />),
     getItem(<SidebarLink to="/event" child="Quản lý sự kiện" />, '/event', <CalendarOutlined />),
@@ -40,14 +41,14 @@ const itemsAdmin = [
         '/manage-resource',
         <InboxOutlined />
     ),
-    getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '/blog', <SendOutlined />, [
+    getItem('Quản lý bài viết', '/blog', <SendOutlined />, [
         getItem(
             <SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />,
             '/personal-blog'
         ),
         getItem(<SidebarLink to="/blog" child="Quản lý bài viết thành viên" />, '/blog'),
     ]),
-    getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '/account', <TeamOutlined />, [
+    getItem('Quản lý tài khoản', '/account', <TeamOutlined />, [
         getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '/account'),
         getItem(
             <SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />,
@@ -118,6 +119,8 @@ const SidebarComponent = () => {
                 </Logo>
                 <Menu
                     defaultSelectedKeys={[selectedKey]}
+                    defaultOpenKeys={['/blog', '/account']}
+                    // openKeys={[selectedKey]}
                     mode="inline"
                     onSelect={({ key }) => {
                         setSelectedKey(key);

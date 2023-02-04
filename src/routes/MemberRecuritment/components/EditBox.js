@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Input, DatePicker, Form, Button, Upload } from 'antd';
+import { Input, DatePicker, Form } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
@@ -11,15 +11,12 @@ import {
     InputContainer,
     ButtonContainer,
     CustomButton,
-    UploadContainer,
     CancelButon,
-    MySwitch,
 } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
-import { UploadOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
@@ -52,9 +49,8 @@ function EditBox({ handle, event }) {
                 id: event.id,
                 status: 'ACTIVE',
             };
-            const res = productApi.editChallenge(newEvent, token);
-
-            switch (await res.data.code) {
+            const res = await productApi.editChallenge(newEvent, token);
+            switch (res.data.code) {
                 case 200:
                     toastSuccess('Chỉnh sửa cột mốc thành công!!');
                     dispatch(editMile(newEvent));

@@ -1,15 +1,21 @@
 import { Button } from 'antd';
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
 import Modal from 'antd/lib/modal/Modal';
 
 export const CustomModal = styled(Modal)`
     background-color: white;
-    border: 2px solid #45ce7c;
-    border-radius: 10px;
+    width: 700px;
     padding: 0 !important;
+    border-radius: 10px;
     .ant-modal {
         padding: 0;
+    }
+    .ant-modal-content {
+        border-radius: 10px;
+        width: 760px;
+        border: 2px solid #45ce7c;
     }
 `;
 export const Img = styled.img`
@@ -61,22 +67,22 @@ export const Hero = styled.div`
     margin: 6px 0;
     display: flex;
     align-items: center;
+    section {
+        margin-right: 8px;
+    }
     span {
+        color: ${themes.colors.primary};
         font-size: 20px;
     }
     h5 {
-        margin-bottom: 0;
-        margin-left: 8px;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 14px;
         line-height: 22px;
-        /* identical to box height, or 157% */
-
         text-transform: uppercase;
-
         color: #000000;
+        margin: 0;
     }
 `;
 export const Time = styled.div`
@@ -87,7 +93,7 @@ export const Time = styled.div`
         font-size: 14px;
         line-height: 22px;
         /* identical to box height, or 157% */
-
+        margin-right: 5px;
         color: #000000;
     }
     font-family: 'Inter';
@@ -98,6 +104,7 @@ export const Time = styled.div`
     /* or 157% */
     margin: 10px 0;
     color: #000000;
+    display: flex;
 `;
 export const Des = styled.div`
     font-family: 'Inter';
@@ -128,6 +135,7 @@ export const Des = styled.div`
 `;
 export const LeftSide = styled.div`
     margin-left: 30px;
+    margin-right: 20px;
 `;
 export const RightSide = styled.div`
     display: flex;
@@ -302,9 +310,11 @@ export const Form = styled.div`
     color: #000000;
 `;
 export const ElementBox = styled.div`
-    display: Flex;
+    width: 700px;
+    display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #ffffff;
 `;
 export const FullDes = styled.div`
     font-family: 'Inter';

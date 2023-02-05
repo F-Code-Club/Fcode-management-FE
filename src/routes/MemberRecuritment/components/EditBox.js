@@ -184,7 +184,7 @@ function EditBox({ handle, event }) {
                         <ButtonContainer>
                             <CancelButon onClick={handle}>Hủy</CancelButon>
                             <CustomButton type="primary" htmlType="submit">
-                                Thêm sự kiện
+                                Xác nhận
                             </CustomButton>
                         </ButtonContainer>
                     </Form>

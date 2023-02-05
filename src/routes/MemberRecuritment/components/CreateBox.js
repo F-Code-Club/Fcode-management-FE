@@ -80,23 +80,7 @@ function CreateBox({ handle }) {
             Picker: [value[0], value[1]],
         });
     };
-    const props = {
-        name: 'file',
-        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-        headers: {
-            authorization: 'authorization-text',
-        },
-        onChange(info) {
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (info.file.status === 'done') {
-                toastSuccess(`${info.file.name} được thêm thành công !!`);
-            } else if (info.file.status === 'error') {
-                toastError(`${info.file.name} thêm không thành công , vui lòng thử lại.`);
-            }
-        },
-    };
+
     // eslint-disable-next-line arrow-body-style
     const disabledDate = (current) => {
         // Can not select days before today and today
@@ -106,7 +90,7 @@ function CreateBox({ handle }) {
         <BoxContainer>
             <AddContainer>
                 <InputContainer>
-                    <h1>Tạo Sự Kiện</h1>
+                    <h1>Tạo Cột Mốc</h1>
                     <Form
                         name="basic"
                         labelCol={{
@@ -124,8 +108,8 @@ function CreateBox({ handle }) {
                         form={form}
                     >
                         <Form.Item
-                            className="input-element"
-                            label="Tên cột mốc"
+                            className="input-element custom-form-item"
+                            label={<span style={{ display: 'block' }}>Tên cột mốc</span>}
                             name="eventName"
                             rules={[
                                 {
@@ -169,7 +153,7 @@ function CreateBox({ handle }) {
                         <ButtonContainer>
                             <CancelButon onClick={handle}>Hủy</CancelButon>
                             <CustomButton type="primary" htmlType="submit">
-                                Thêm sự kiện
+                                Xác nhận
                             </CustomButton>
                         </ButtonContainer>
                     </Form>

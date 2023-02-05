@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Popconfirm } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { removeMile } from '../slice';
@@ -19,17 +18,21 @@ import {
     CustomModal,
     ElementBox,
     FullDes,
+    ConfirmModal,
+    Message,
+    MessageHero,
 } from './styled';
 
-import { toastSuccess } from '@/components/ToastNotification';
+import { toastError, toastSuccess } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
-import { GlobalOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import PublicIcon from '@mui/icons-material/Public';
 
 function Element({ event }) {
     const [showMileStone, setShowMileStone] = useState(false);
     const token = localStorageUtils.getToken();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
     function ChangeFormatDate(oldDate) {
         var date = new Date(oldDate);
@@ -46,10 +49,24 @@ function Element({ event }) {
     const handleCloseButton = () => {
         setEdit(false);
     };
-    const handleConfirm = (event) => {
-        productApi.removeChallenge(event.id, token);
-        dispatch(removeMile(event));
-        toastSuccess('Sửa cột mốc thành công!!');
+    const handleConfirm = async (event) => {
+        try {
+            const res = await productApi.removeChallenge(event.id, token);
+            console.log(res);
+            switch (res.data.code) {
+                case 200:
+                    dispatch(removeMile(event));
+                    toastSuccess('Xóa cột mốc thành công!!');
+                    break;
+                case 408:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
+        } catch {
+            toastError('Xóa cột mộc không thành công , vui lòng thử lại!!');
+        } finally {
+            setIsModalOpen(false);
+        }
     };
     const handleOk = () => {
         setShowMileStone(false);
@@ -57,8 +74,12 @@ function Element({ event }) {
     const handleCancel = () => {
         setShowMileStone(false);
     };
-    const handlePopConfirm = (event) => {
+    const handleClose = () => {
+        setIsModalOpen(false);
+    };
+    const handleOpenConfirm = (event) => {
         event.stopPropagation();
+        setIsModalOpen(true);
     };
     return (
         <>
@@ -72,7 +93,9 @@ function Element({ event }) {
                 <ElementBox>
                     <LeftSide>
                         <Hero>
-                            <PublicIcon />
+                            <section>
+                                <PublicIcon />
+                            </section>
                             <h5> {event.title}</h5>
                         </Hero>
                         <Time>
@@ -88,6 +111,24 @@ function Element({ event }) {
                     </RightSide>
                 </ElementBox>
             </CustomModal>
+            <ConfirmModal
+                width={416}
+                height={188}
+                open={isModalOpen}
+                onOk={() => handleConfirm(event)}
+                onCancel={handleClose}
+                okText={'Xóa'}
+                closable={false}
+                cancelText={'Quay Lại'}
+            >
+                <Message>
+                    <ExclamationCircleOutlined />
+                    <MessageHero>
+                        <h1>Bạn có muốn xóa cột mốc này không?</h1>
+                        <p>Cột mốc sau khi xóa sẽ không thể khôi phục lại được.</p>
+                    </MessageHero>
+                </Message>
+            </ConfirmModal>
             <MilestoneContainer onClick={() => setShowMileStone(true)}>
                 <LeftSide>
                     <Hero>
@@ -97,7 +138,7 @@ function Element({ event }) {
                         <h5> {event.title}</h5>
                     </Hero>
                     <Time>
-                        <span>Thời gian diễn ra sự kiện: </span>
+                        <span>Thời gian diễn ra cột mốc: </span>
                         {`${ChangeFormatDate(event.startTime)} - ${ChangeFormatDate(
                             event.endTime
                         )}`}
@@ -108,15 +149,7 @@ function Element({ event }) {
                     <Avatar src="https://images.unsplash.com/photo-1671037028800-34d2839771a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" />
                     <ButtonContainer>
                         <FirstButton onClick={handleOpenEdit}>Chỉnh sửa</FirstButton>
-                        <Popconfirm
-                            title="Bạn có chắc muốn xóa cột mốc này ?"
-                            okText="Có "
-                            cancelText="Không"
-                            onClick={handlePopConfirm}
-                            onConfirm={() => handleConfirm(event)}
-                        >
-                            <SecondButton>Xóa</SecondButton>
-                        </Popconfirm>
+                        <SecondButton onClick={handleOpenConfirm}>Xóa</SecondButton>
                     </ButtonContainer>
                 </RightSide>
             </MilestoneContainer>

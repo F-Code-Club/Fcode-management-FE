@@ -41,9 +41,7 @@ export const Box = styled.div`
 
 export const Container = styled.div`
     display: flex;
-    align-items: center;
     flex-direction: column;
-    justify-content: center;
 `;
 export const MilestoneContainer = styled.div`
     width: 700px;

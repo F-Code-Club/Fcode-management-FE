@@ -9,11 +9,12 @@ import Flexbox from '@/components/Flexbox';
 const NotificationCard = ({ announce }) => {
     const calculateLiveTime = (createdTime) => {
         const currentTime = moment();
+
         const diff = moment.duration(currentTime.diff(createdTime));
         if (diff.asHours() >= 24) {
             return diff.humanize();
         }
-        return diff.humanize();
+        return createdTime ? diff.humanize() : currentTime.fromNow();
     };
 
     return (

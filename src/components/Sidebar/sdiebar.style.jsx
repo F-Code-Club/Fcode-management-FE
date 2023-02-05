@@ -28,12 +28,17 @@ export const Wrapper = styled.div`
             color: ${themes.colors.primary};
         }
     }
+
+    // .ant-menu-submenu-open.ant-menu-submenu-inline
+    //     > .ant-menu-submenu-title
+    //     > .ant-menu-submenu-arrow {
+    //     color: ${themes.colors.primary};
+    // }
     .ant-menu-light .ant-menu-item:hover {
         color: ${themes.colors.primary};
     }
     .ant-menu-light .ant-menu-submenu-title:hover,
-    .ant-menu-light .ant-menu-submenu-active,
-    .ant-menu-light .ant-menu-item-title:hover {
+    .ant-menu-light .ant-menu-submenu-active {
         color: ${themes.colors.primary};
     }
     .ant-menu {
@@ -77,26 +82,30 @@ export const Wrapper = styled.div`
             }
         }
         &-submenu {
-            color: ${themes.colors.light};
+            &-selected {
+                & > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+                    color: ${themes.colors.primary};
+                }
+                color: ${themes.colors.primary};
+            }
             &-arrow {
                 color: ${themes.colors.light};
-            }
-            &-active {
-                color: ${themes.colors.primary};
             }
             &:hover {
                 & > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
                     color: ${themes.colors.primary};
                 }
-                & > .ant-menu-submenu-title > .ant-menu-title-content > a {
+                & > .ant-menu-submenu-title > .ant-menu-title-content {
                     color: ${themes.colors.primary};
                 }
             }
+
             &-title {
                 &:hover {
                     color: ${themes.colors.primary};
                 }
             }
+            color: ${themes.colors.light};
         }
         &-submenu a {
             color: ${themes.colors.light};

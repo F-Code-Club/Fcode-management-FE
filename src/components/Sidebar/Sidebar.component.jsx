@@ -41,14 +41,14 @@ const itemsAdmin = [
         '/manage-resource',
         <InboxOutlined />
     ),
-    getItem('Quản lý bài viết', '/blog', <SendOutlined />, [
+    getItem('Quản lý bài viết', 'blog', <SendOutlined />, [
         getItem(
             <SidebarLink to="/personal-blog" child="Quản lý bài viết cá nhân" />,
             '/personal-blog'
         ),
         getItem(<SidebarLink to="/blog" child="Quản lý bài viết" />, '/blog'),
     ]),
-    getItem('Quản lý tài khoản', '/account', <TeamOutlined />, [
+    getItem('Quản lý tài khoản', 'account', <TeamOutlined />, [
         getItem(<SidebarLink to="/account" child="Quản lý tài khoản" />, '/account'),
         getItem(
             <SidebarLink to="/account/edit-account" child="Chỉnh sửa thông tin" />,
@@ -119,7 +119,7 @@ const SidebarComponent = () => {
                 </Logo>
                 <Menu
                     defaultSelectedKeys={[selectedKey]}
-                    defaultOpenKeys={['/blog', '/account']}
+                    defaultOpenKeys={['blog', 'account']}
                     // openKeys={[selectedKey]}
                     mode="inline"
                     onSelect={({ key }) => {

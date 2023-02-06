@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Avatar, Col, Row, Space, Card, Typography, Button, Modal } from 'antd';
+import { Avatar, Col, Row, Space, Card, Typography, Button } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +21,15 @@ import {
 import { UploadImage } from './components/uploadAva';
 import { actions } from './slice';
 import selector from './slice/selectors';
-import { Container, EditButton, AvatarContainer, StyledForm, InfoContainer, Label } from './style';
+import {
+    Container,
+    EditButton,
+    AvatarContainer,
+    StyledForm,
+    InfoContainer,
+    Label,
+    MyModal,
+} from './style';
 
 import { toastSuccess, toastError } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';
@@ -86,7 +94,7 @@ const EditAccount = () => {
         toastError(' Hãy nhập tất cả các field !!');
     };
     const confirm = () => {
-        Modal.confirm({
+        MyModal.confirm({
             maskClosable: true,
             title: 'Bạn có muốn thay đổi thông tin tài khoản?',
             icon: <ExclamationCircleOutlined />,

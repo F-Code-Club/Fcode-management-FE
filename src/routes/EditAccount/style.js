@@ -1,4 +1,4 @@
-import { Button, Form, Image, Typography } from 'antd';
+import { Button, Form, Image, Modal, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { themes } from '@/theme/theme';
@@ -105,4 +105,9 @@ export const Label = styled(Title)`
     /* Character/Title .85 */
 
     color: rgba(0, 0, 0, 0.85);
+`;
+export const MyModal = styled(Modal)`
+    .ant-btn-primary {
+        background-color: ${themes.colors.primary};
+    }
 `;

@@ -48,12 +48,22 @@ function AddEventBox({ handle }) {
                 endTime: formatttedEndDate,
                 status: 'ACTIVE',
             };
-            await productApi.postEvent(event, token);
-
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
-            dispatch(addEvent(event));
+            console.log(event);
+            const res = await productApi.postEvent(event, token);
+            switch (await res.data.code) {
+                case 200:
+                    toastSuccess('Tạo sự kiện thành công!!');
+                    dispatch(addEvent(event));
+                    break;
+                case 400:
+                    toastError('Tên sự kiện bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
         } catch {
-            toastError('Something has gone Wrong,Please Try again');
+            toastError('Sự kiện thêm thất bại');
         } finally {
             handle();
         }

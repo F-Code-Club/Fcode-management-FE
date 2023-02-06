@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import styled from 'styled-components';
 
 import { themes } from '@/theme/theme';
+import Modal from 'antd/lib/modal/Modal';
 
 export const Container = styled.div`
     background-color: white;
@@ -161,6 +162,10 @@ export const Container = styled.div`
     .rbc-show-more {
         color: white;
     }
+    .rbc-event,
+    .rbc-background-event {
+        background-color: ${themes.colors.primary};
+    }
 `;
 
 export const DetailHeader = styled.div`
@@ -183,6 +188,9 @@ export const DetailBody = styled.div`
     h2 {
         font-weight: 400;
         font-size: 14px;
+    }
+    .ant-input-number {
+        width: 100%;
     }
 `;
 export const BoxContainer = styled.div`
@@ -411,4 +419,57 @@ export const DeleteButton = styled.div`
 export const Wrapper = styled.section`
     min-height: calc(100vh - 100px);
     border-radius: 10px;
+`;
+export const ConfirmModal = styled(Modal)`
+    .ant-modal-content {
+        border-radius: 10px;
+        background: #ffffff;
+        /* drop-shadow/0.12+0.8+0.5 */
+
+        box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08),
+            0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+    }
+    .ant-btn-primary {
+        background-color: #ff4d4f;
+    }
+    .ant-btn-primary:focus,
+    .ant-btn-primary:hover {
+        background-color: #ff4d4f;
+    }
+    .ant-btn-default,
+    .ant-btn-default:hover {
+        border-color: ${themes.colors.primary};
+        color: ${themes.colors.primary};
+    }
+`;
+export const Message = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    .anticon {
+        color: #ff4d4f;
+        font-size: 22px;
+        margin: 4px 16px 0 0;
+    }
+`;
+export const MessageHero = styled.div`
+    h1 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        /* identical to box height, or 150% */
+
+        /* Character/Title .85 */
+        margin: 0;
+        color: rgba(0, 0, 0, 0.85);
+    }
+    p {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+    }
 `;

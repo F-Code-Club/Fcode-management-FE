@@ -9,7 +9,7 @@ const productApi = {
     postEvent: (event, token) => {
         const url = '/event/new';
         var postStartDate = new Date(event.startTime);
-        var postEndDate = new Date(event.startTime);
+        var postEndDate = new Date(event.endTime);
 
         return post(
             url,

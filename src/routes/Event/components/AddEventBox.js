@@ -48,6 +48,7 @@ function AddEventBox({ handle }) {
                 endTime: formatttedEndDate,
                 status: 'ACTIVE',
             };
+            console.log(event);
             const res = await productApi.postEvent(event, token);
             switch (await res.data.code) {
                 case 200:

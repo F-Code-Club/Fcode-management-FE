@@ -69,14 +69,6 @@ const MyCalendar = () => {
             });
         }
     };
-    const CustomView = ({ localizer, ...props }) => (
-        <div>
-            <button onClick={() => props.onNavigate('TODAY')}>Today</button>
-            <button onClick={() => props.onNavigate('NEXT')}>Previous</button>
-            <button onClick={() => props.onNavigate('NEXT')}>Next</button>
-            <DndContext {...props} />
-        </div>
-    );
 
     return (
         <div className="page">

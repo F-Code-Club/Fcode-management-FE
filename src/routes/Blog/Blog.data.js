@@ -23,7 +23,7 @@ export const columns = [
         key: 'createdTime',
     },
     {
-        title: 'Actions',
+        title: 'Chức Năng',
         key: 'action',
         render: (_, record) => (
             <Space size="middle">

@@ -61,7 +61,7 @@ function Element({ event }) {
                 </Time>
                 <Des>
                     <span>Nội Dung:</span>
-                    {event.description}
+                    <div className="content">{event.description}</div>
                 </Des>
                 <Form>Link của form : </Form>
             </LeftSide>

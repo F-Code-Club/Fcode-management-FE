@@ -61,7 +61,7 @@ const BlogForm = () => {
             });
         })();
     }, []);
-
+    console.log('line 64', blog);
     // Get user ID from redux
     const memberId = useSelector(selectId);
 

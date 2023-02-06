@@ -135,6 +135,7 @@ export const Des = styled.div`
 
         color: #000000;
     }
+
     color: #000000;
 `;
 export const LeftSide = styled.div`
@@ -245,7 +246,7 @@ export const BoxContainer = styled.div`
 `;
 export const AddContainer = styled.div`
     width: 480px;
-    min-height: 500px;
+    height: 609px;
     background: white;
     border-radius: 10px;
 `;
@@ -287,7 +288,6 @@ export const InputContainer = styled.div`
 export const CustomButton = styled(Button)`
     margin: 8px 12px;
 
-    height: 400px;
     background: #45ce7c !important;
     border-color: #45ce7c !important ;
     transition: 0.3s ease all;

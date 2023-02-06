@@ -82,11 +82,12 @@ export const CardWrapper = styled.div`
     // flex-direction: column;
     // justify-content: center;
     // align-items: flex-start;
-    padding: 0px;
+    // padding: 0px;
+    flex: 1;
     border-radius: 10px;
     overflow: hidden;
-    width: 519.5px;
-    height: 300px;
+
+    height: ${(props) => props.height}rem;
 `;
 export const BackgroundCard = styled.div`
     display: flex;
@@ -138,7 +139,7 @@ export const Description = styled.span`
 `;
 
 export const ContentButton = styled(HeaderButton)`
-    width: 56px;
+    width: fit-content;
     height: 32px;
     padding: 4px 15px;
 `;
@@ -249,9 +250,9 @@ export const ContainerEditor = styled.div`
     animation: ${move02} 0.15s linear forwards;
     /* wave-shadow-color: red; */
     .editor {
-        width: 70%;
+        width: 50%;
         position: absolute;
-        margin-bottom: 3rem;
+        // margin-bottom: 3rem;
         background: white;
         top: 50%;
         left: 50%;

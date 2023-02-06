@@ -1,8 +1,9 @@
 // import * as Styled from '../Blog/Blog.styled';
 import { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { selectUser } from '../Auth/slice/selector';
 import { CreateResource } from './components/CreateResource';
 import HeaderResource from './components/HeaderResource';
 import ListResource from './components/ListResource';
@@ -13,10 +14,12 @@ import { Wrapper, Container } from './styles';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import productApi from '@/utils/apiComponents/productApi';
-
-// import productApi from '@/utils/productApi';
+import usePersistedState from '@/utils/usePersistedState';
 
 const ResourcesSection = () => {
+    // const user = useSelector(selectUser);
+    // const userPersisted = usePersistedState('user', JSON.stringify(user))[0];
+    // let userParse = JSON.parse(userPersisted);
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {
             status: false,

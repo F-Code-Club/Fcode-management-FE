@@ -56,6 +56,7 @@ function CreateBox({ handle }) {
             switch (await res.data.code) {
                 case 200:
                     toastSuccess('Tạo cột mốc thành công!!');
+                    dispatch(addMile(event));
                     break;
                 case 400:
                     toastError('Tên cột mốc bị trùng !!!');
@@ -64,7 +65,6 @@ function CreateBox({ handle }) {
                     toastError('Token hết hạn !!!');
                     break;
             }
-            dispatch(addMile(event));
         } catch {
             toastError('Tạo cột mốc không  thành công!!');
         } finally {

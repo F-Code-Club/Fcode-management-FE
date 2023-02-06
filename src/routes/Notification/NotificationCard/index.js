@@ -9,7 +9,7 @@ import Flexbox from '@/components/Flexbox';
 const NotificationCard = ({ announce }) => {
     const calculateLiveTime = (createdTime) => {
         const currentTime = moment();
-
+        const time = new Date();
         const diff = moment.duration(currentTime.diff(createdTime));
         if (diff.asHours() >= 24) {
             return diff.humanize();
@@ -27,7 +27,7 @@ const NotificationCard = ({ announce }) => {
                     Location: {announce.location}
                 </div>
                 <span className="notification_liveTime">
-                    {calculateLiveTime(announce.createdTime) + ' trước'}
+                    {calculateLiveTime(announce.createdTime)}
                 </span>
             </NotificationStyled>
         </FlexStyled>

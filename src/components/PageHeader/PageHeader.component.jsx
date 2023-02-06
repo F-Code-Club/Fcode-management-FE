@@ -271,8 +271,8 @@ const PageHeaderComponent = () => {
                             style={{ minWidth: '500px', borderRadius: '10px' }}
                         >
                             <Badge
-                                // dot={notiCount !== 0}
-                                count={notiCount}
+                                dot={notiCount !== 0}
+                                // count={notiCount}
                                 style={{ marginRight: '20px', cursor: 'pointer' }}
                             >
                                 <BellOutlined

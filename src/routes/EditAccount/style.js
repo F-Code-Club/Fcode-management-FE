@@ -27,7 +27,7 @@ export const ListWrapper = styled.div`
 export const Container = styled.div`
     max-width: 920px;
     margin: 0 auto;
-
+    min-height: calc(100vh - 100px);
     .left-side {
         .ant-avatar {
             margin: 0 auto 1em auto;

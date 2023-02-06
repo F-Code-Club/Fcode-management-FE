@@ -6,6 +6,7 @@ import MyCalendar from './components/Calendar';
 import { setEvent } from './slice';
 import { Container, Wrapper } from './styled';
 
+import { toastError } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 
@@ -20,8 +21,11 @@ function Event() {
     const getALlEvent = async () => {
         const path = await productApi.getAllEvent(token);
         SetUpdated(true);
+        if (path.data.code === 408) {
+            toastError('Token hết hạn');
+        }
         console.log(path.data.data);
-        dispatch(setEvent(path.data.data));
+        dispatch(setEvent(path.data.data || []));
     };
     return (
         <Wrapper>

@@ -4,8 +4,12 @@ import { useSelector } from 'react-redux';
 import { selectIsLoading } from '../slice/selectors';
 import ResourceCard from './ResourceCard';
 
+import { selectUser } from '@/routes/Auth/slice/selector';
+import usePersistedState from '@/utils/usePersistedState';
+
 const ListResource = ({ handleClick, resource }) => {
     const IsLoading = useSelector(selectIsLoading);
+
     let tmpListResources;
     if (resource === null || resource === undefined)
         tmpListResources = [{ semester: 'unknown', name: 'unknown' }];
@@ -36,7 +40,7 @@ const ListResource = ({ handleClick, resource }) => {
             renderItem={(item) => {
                 return (
                     <List.Item>
-                        <ResourceCard item={item} clickEvent={handleClick} />
+                        <ResourceCard item={item} clickEvent={handleClick} heightStyle="20" />
                     </List.Item>
                 );
             }}

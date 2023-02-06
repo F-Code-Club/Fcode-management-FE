@@ -1,5 +1,3 @@
-import './index.css';
-
 import { injectReducer } from '@/store';
 import { createSlice } from '@reduxjs/toolkit';
 

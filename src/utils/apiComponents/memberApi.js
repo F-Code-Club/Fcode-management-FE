@@ -13,5 +13,14 @@ const memberApi = {
             })
             .catch((err) => console.log(err.message));
     },
+    getMemberByMemberId: async (id) => {
+        const endpoint = `/member/memberId/${id}`;
+        return await get(endpoint, {}, { authorization: token })
+            .then((res) => {
+                if (res.data.code !== 200) console.log(res.data.message);
+                return res;
+            })
+            .catch((err) => console.log(err.message));
+    },
 };
 export default memberApi;

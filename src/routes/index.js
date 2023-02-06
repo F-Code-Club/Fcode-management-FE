@@ -14,19 +14,24 @@ import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
 import Event from './Event/Index';
+import { HomepageMemeber } from './HomePageForMember';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
 import MemberRoute from './MemberRoute';
+import { NotifiCationMember } from './Notification';
+import { ViewNotification } from './Notification/ViewNotification';
 import PublicRoute from './PublicRoute';
 import QuestionManagement from './Question/index';
 import ResourcesSection from './Resources';
 import ViewResource from './Resources/viewResources';
 import TestRouteManager from './TestManagerRoute';
+import UserEvent from './UserEvent';
 
 // import TestRouteAdmin from './testRouteAdmin';
 import LayoutComponent from '@/components/Layout/Layout.component';
 import EditAccount from '@/routes/EditAccount';
 import { Homepage } from '@/routes/Homepage';
+import localStorageUtils from '@/utils/localStorageUtils';
 
 const publicRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
@@ -37,20 +42,14 @@ const publicRoute = [
         restrict: true,
     },
     {
-        path: 'home',
-        component: <Homepage />,
+        path: 'notifications',
+        component: <NotifiCationMember />,
         exact: true,
         restrict: true,
     },
     {
         path: 'account/edit-account',
         component: <EditAccount />,
-        exact: true,
-        restrict: true,
-    },
-    {
-        path: 'manage-resource',
-        component: <ResourcesSection />,
         exact: true,
         restrict: true,
     },
@@ -69,7 +68,7 @@ const publicRoute = [
     },
     {
         index: false,
-        path: 'manage-announcement/view-announcement/:id',
+        path: 'manage-announcement/:id',
         component: <ViewAnnouncement />,
         exact: true,
         restrict: true,
@@ -102,6 +101,8 @@ const publicRoute = [
     },
 ];
 const adminRoute = [
+    { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
+    { index: false, path: '/blog', component: <Blog />, exact: true, restrict: true },
     {
         index: true,
         path: 'comment',
@@ -109,16 +110,46 @@ const adminRoute = [
         exact: true,
         restrict: true,
     },
-];
-
-const managerRoute = [
     {
-        path: 'private',
-        component: <Homepage />,
+        path: '/personal-blog',
+        component: <PersonalBlog />,
         exact: true,
         restrict: true,
     },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+];
 
+const managerRoute = [
+    { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
     {
         index: true,
         path: 'routeManager',
@@ -167,8 +198,25 @@ const managerRoute = [
     },
 ];
 const memberRoute = [
-    { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
-
+    { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
+    {
+        path: 'manage-resource/:id',
+        component: <ViewResource />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'manage-resource',
+        component: <ResourcesSection />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: 'notifications/:id',
+        component: <ViewNotification />,
+        exact: true,
+        restrict: true,
+    },
     {
         path: '/blog/:id',
         component: <BlogDetailComponent />,
@@ -212,16 +260,38 @@ const memberRoute = [
         exact: false,
         restrict: true,
     },
+    // {
+    //     path: '/event',
+    //     component: <UserEvent />,
+    //     exact: false,
+    //     restrict: true,
+    // },
 ];
 
 const RouterComponent = () => {
+    const jwt = localStorageUtils.getJWTUser();
+    // useAutoLogout(jwt);
     return (
         <BrowserRouter>
             <Routes>
                 <Route exact path="/" element={<Navigate to="home" />} />
-                <Route exact element={<AdminRoute />}>
+                <Route exact path="/" element={<PublicRoute />}>
                     <Route exact element={<LayoutComponent />}>
-                        {adminRoute.map((route) => (
+                        {publicRoute.map((route) => (
+                            <Route
+                                index={route.index}
+                                key={route.path}
+                                path={route.path}
+                                element={route.component}
+                                exact={route.exact}
+                                restrict={route.restrict}
+                            />
+                        ))}
+                    </Route>
+                </Route>
+                <Route exact element={<MemberRoute />}>
+                    <Route exact element={<LayoutComponent />}>
+                        {memberRoute.map((route) => (
                             <Route
                                 index={route.index}
                                 key={route.path}
@@ -248,24 +318,9 @@ const RouterComponent = () => {
                         ))}
                     </Route>
                 </Route>
-
-                <Route exact element={<MemberRoute />}>
+                <Route exact element={<AdminRoute />}>
                     <Route exact element={<LayoutComponent />}>
-                        {memberRoute.map((route) => (
-                            <Route
-                                index={route.index}
-                                key={route.path}
-                                path={route.path}
-                                element={route.component}
-                                exact={route.exact}
-                                restrict={route.restrict}
-                            />
-                        ))}
-                    </Route>
-                </Route>
-                <Route exact path="/" element={<PublicRoute />}>
-                    <Route exact element={<LayoutComponent />}>
-                        {publicRoute.map((route) => (
+                        {adminRoute.map((route) => (
                             <Route
                                 index={route.index}
                                 key={route.path}
@@ -279,7 +334,6 @@ const RouterComponent = () => {
                 </Route>
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/403" element={<Error403Page />} />
-
                 <Route path="*" element={<Error404Page />} />
             </Routes>
         </BrowserRouter>

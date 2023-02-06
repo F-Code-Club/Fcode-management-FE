@@ -50,9 +50,19 @@ function EditBox({ event, handle, closeOtherBox }) {
                 id: event.id,
                 status: 'ACTIVE',
             };
-            await productApi.editEvent(newEvent, token);
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
-            dispatch(editEvent(newEvent));
+            const res = await productApi.editEvent(newEvent, token);
+            switch (await res.data.code) {
+                case 200:
+                    toastSuccess('Chỉnh sửa sự kiện thành công!!');
+                    dispatch(editEvent(newEvent));
+                    break;
+                case 400:
+                    toastError('Tên sự kiện bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
         } catch {
             toastError('Something has gone Wrong,Please Try again');
         } finally {

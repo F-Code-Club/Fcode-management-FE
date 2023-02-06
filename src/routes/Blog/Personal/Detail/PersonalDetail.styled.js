@@ -40,7 +40,7 @@ export const ContentBlog = styled(StyledContainer)`
 export const InfoList = styled(Row)`
     margin: 0 24px;
     position: sticky;
-    top: 25%;
+    // top: 25%;
     right: 32px;
     display: flex;
     flex-direction: column !important;

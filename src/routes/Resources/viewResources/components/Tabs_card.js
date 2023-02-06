@@ -40,15 +40,3 @@ const TabsCard = ({ resourceChild, handleClick }) => {
     );
 };
 export default TabsCard;
-//  WrapperTabs
-// // {resourceChild.map((item, i) => (
-// //     <ViewResourcesCard
-// //         handleClick={handleClick}
-// //         key={i}
-// //         item={item}
-// //         des={item.contributor}
-// //         title={item.description}
-// //         link={item.url}
-// //     />
-// // ))}
-// //

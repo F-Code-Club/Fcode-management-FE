@@ -1,6 +1,23 @@
-import { Button, Switch } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
+import Modal from 'antd/lib/modal/Modal';
+
+export const CustomModal = styled(Modal)`
+    background-color: white;
+    width: 700px;
+    padding: 0 !important;
+    border-radius: 10px;
+    .ant-modal {
+        padding: 0;
+    }
+    .ant-modal-content {
+        border-radius: 10px;
+        width: 760px;
+        border: 2px solid #45ce7c;
+    }
+`;
 export const Img = styled.img`
     margin-bottom: 43px;
 `;
@@ -24,9 +41,7 @@ export const Box = styled.div`
 
 export const Container = styled.div`
     display: flex;
-    align-items: center;
     flex-direction: column;
-    justify-content: center;
 `;
 export const MilestoneContainer = styled.div`
     width: 700px;
@@ -47,25 +62,31 @@ export const MilestoneContainer = styled.div`
     }
 `;
 export const Hero = styled.div`
+    svg {
+        color: ${themes.colors.primary};
+    }
     margin: 6px 0;
     display: flex;
     align-items: center;
+    section {
+        margin-right: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     span {
+        color: ${themes.colors.primary};
         font-size: 20px;
     }
     h5 {
-        margin-bottom: 0;
-        margin-left: 8px;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 14px;
         line-height: 22px;
-        /* identical to box height, or 157% */
-
         text-transform: uppercase;
-
         color: #000000;
+        margin: 0;
     }
 `;
 export const Time = styled.div`
@@ -76,7 +97,7 @@ export const Time = styled.div`
         font-size: 14px;
         line-height: 22px;
         /* identical to box height, or 157% */
-
+        margin-right: 5px;
         color: #000000;
     }
     font-family: 'Inter';
@@ -87,6 +108,7 @@ export const Time = styled.div`
     /* or 157% */
     margin: 10px 0;
     color: #000000;
+    display: flex;
 `;
 export const Des = styled.div`
     font-family: 'Inter';
@@ -94,7 +116,14 @@ export const Des = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
+    max-height: 180px;
     margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-clamp: 3;
     /* or 157% */
     span {
         font-family: 'Inter';
@@ -111,6 +140,7 @@ export const Des = styled.div`
 `;
 export const LeftSide = styled.div`
     margin-left: 30px;
+    margin-right: 20px;
 `;
 export const RightSide = styled.div`
     display: flex;
@@ -122,7 +152,7 @@ export const RightSide = styled.div`
 export const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 `;
 export const FirstButton = styled.button`
     width: 68px;
@@ -215,7 +245,8 @@ export const BoxContainer = styled.div`
     justify-content: center;
 `;
 export const AddContainer = styled.div`
-    min-height: 400px;
+    width: 480px;
+    height: 609px;
     background: white;
     border-radius: 10px;
 `;
@@ -231,8 +262,20 @@ export const InputContainer = styled.div`
         /* identical to box height, or 122% */
         text-transform: uppercase;
         color: #000000;
+        margin-bottom: 15px;
     }
-
+    .ant-row {
+        display: block;
+    }
+    .ant-form-item-required {
+        margin-bottom: 13px;
+    }
+    .ant-col-8 {
+        display: inline;
+    }
+    .ant-col-16 {
+        max-width: 100%;
+    }
     .ant-form {
         width: 100%;
     }
@@ -244,6 +287,7 @@ export const InputContainer = styled.div`
 `;
 export const CustomButton = styled(Button)`
     margin: 8px 12px;
+
     background: #45ce7c !important;
     border-color: #45ce7c !important ;
     transition: 0.3s ease all;
@@ -281,4 +325,65 @@ export const Form = styled.div`
     /* identical to box height, or 157% */
 
     color: #000000;
+`;
+export const ElementBox = styled.div`
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+`;
+export const FullDes = styled.div`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 10px 0;
+    /* or 157% */
+`;
+export const ConfirmModal = styled(Modal)`
+    .ant-modal-content {
+        border-radius: 2px;
+        background: #ffffff;
+        /* drop-shadow/0.12+0.8+0.5 */
+
+        box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08),
+            0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+        border-radius: 2px;
+    }
+    .ant-btn-primary {
+        background-color: ${themes.colors.primary};
+    }
+`;
+export const Message = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    .anticon {
+        color: #faad14;
+        font-size: 22px;
+        margin: 4px 16px 0 0;
+    }
+`;
+export const MessageHero = styled.div`
+    h1 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        /* identical to box height, or 150% */
+
+        /* Character/Title .85 */
+        margin: 0;
+        color: rgba(0, 0, 0, 0.85);
+    }
+    p {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+    }
 `;

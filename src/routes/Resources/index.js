@@ -50,9 +50,9 @@ const ResourcesSection = () => {
             );
         } else
             toastError(
-                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công ${
-                    message ? message : ''
-                }`
+                `${
+                    typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'
+                }  không thành công, bạn bị trùng môn học`
             );
         await setModalOpen({
             ...modalOpen,

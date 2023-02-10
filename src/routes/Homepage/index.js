@@ -188,40 +188,45 @@ export const Homepage = () => {
                                 size="large"
                                 pagination={false}
                                 dataSource={dataArticle}
-                                renderItem={(item) => (
-                                    <Link
-                                        to={`/blog/${item.id}?action=processing`}
-                                        style={{ color: 'black' }}
-                                    >
-                                        <List.Item
-                                            key={item.title}
-                                            extra={
-                                                <img
-                                                    width={170}
-                                                    alt="blog"
-                                                    src={err ? NoImg : item.imageUrl}
-                                                    onError={handleAvatarError}
-                                                />
-                                            }
+                                renderItem={(item) => {
+                                    console.log(getContentEditorState(item));
+                                    console.log(item);
+
+                                    return (
+                                        <Link
+                                            to={`/blog/${item.id}?action=processing`}
+                                            style={{ color: 'black' }}
                                         >
-                                            <List.Item.Meta
-                                                avatar={
-                                                    <Avatar
-                                                        size="large"
-                                                        src={getAvatar(item.memberId)}
+                                            <List.Item
+                                                key={item.title}
+                                                extra={
+                                                    <img
+                                                        width={170}
+                                                        alt="blog"
+                                                        src={err ? NoImg : item.imageUrl}
+                                                        onError={handleAvatarError}
                                                     />
                                                 }
-                                                title={<h4 title={item.title}>{item.title}</h4>}
-                                                description={item.author}
-                                            />
-                                            <Editor
-                                                editorState={getContentEditorState(item)}
-                                                toolbarHidden={true}
-                                                readOnly="true"
-                                            />
-                                        </List.Item>
-                                    </Link>
-                                )}
+                                            >
+                                                <List.Item.Meta
+                                                    avatar={
+                                                        <Avatar
+                                                            size="large"
+                                                            src={getAvatar(item.memberId)}
+                                                        />
+                                                    }
+                                                    title={<h4 title={item.title}>{item.title}</h4>}
+                                                    description={item.author}
+                                                />
+                                                <Editor
+                                                    editorState={getContentEditorState(item)}
+                                                    toolbarHidden={true}
+                                                    readOnly="true"
+                                                />
+                                            </List.Item>
+                                        </Link>
+                                    );
+                                }}
                             />
                         </div>
                     )}

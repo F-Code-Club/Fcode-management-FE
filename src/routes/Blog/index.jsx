@@ -48,7 +48,6 @@ const Blog = () => {
         <Styled.Background>
             <Styled.Wrapper>
                 <Tabs defaultActiveKey="1">
-                    {}
                     <Tabs.TabPane tab="Chờ đươc duyệt" key="1">
                         <Skeleton loading={loading}>
                             <Table columns={columns} dataSource={blogs.searchedProcessing} />

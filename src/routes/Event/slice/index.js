@@ -9,7 +9,7 @@ export const initialState = {
 };
 
 export const name = 'listOfEvents';
-export const slice = createSlice({
+const slice = createSlice({
     name,
     initialState,
     reducers: {
@@ -73,3 +73,15 @@ export const slice = createSlice({
 injectReducer(name, slice.reducer);
 
 export const { setEvent, addEvent, editEvent, removeEvent } = slice.actions;
+export default slice;
+// .addCase(filterBlogs.fulfilled, (state, action) => {
+//     state.searchedActive = action.payload.active?.sort((a, b) =>
+//         a.id > b.id ? 1 : -1
+//     );
+//     state.searchedProcessing = action.payload.processing?.sort((a, b) =>
+//         a.id > b.id ? 1 : -1
+//     );
+//     state.searchedInactive = action.payload.inactive?.sort((a, b) =>
+//         a.id > b.id ? 1 : -1
+//     );
+// })

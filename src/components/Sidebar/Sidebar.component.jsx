@@ -108,9 +108,8 @@ const SidebarComponent = () => {
     const [selectedKey, setSelectedKey] = useState(`${location.pathname}`);
 
     useEffect(() => {
-        setSelectedKey(location.pathname);
+        setSelectedKey(`${location.pathname}`);
     }, [location]);
-
     return (
         <Wrapper>
             <SideBar width="250px">

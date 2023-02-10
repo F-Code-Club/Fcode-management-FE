@@ -103,21 +103,21 @@ function Detail({ event, handle }) {
                 </DetailHeader>
                 <hr className="solid"></hr>
                 <DetailBody>
-                    <div>
+                    <div className="wrap_place">
                         <h1>Ngày :</h1>
                         <h2>{`${ChangeFormateDate(event.startTime)} ➭ ${ChangeFormateDate(
                             event.endTime
                         )}`}</h2>
                     </div>
-                    <div>
+                    <div className="wrap_place">
                         <h1>Thời gian :</h1>
                         <h2>{`${changeFormatTime(event.startTime)} ➭ ${changeFormatTime(
                             event.endTime
                         )}`}</h2>
                     </div>
-                    <div>
+                    <div className="wrap_place">
                         <h1>Địa Điểm : </h1>
-                        <h2>{`${event.location}`}</h2>
+                        <h2 className="place">{`${event.location}`}</h2>
                     </div>
                     <h1>Ghi Chú :</h1>
                     <h2>{`${event.description}`}</h2>

@@ -40,7 +40,7 @@ export const Homepage = () => {
     const [err, setErr] = useState(false);
     const userRole = useSelector(selectUser);
     let now = new Date();
-    console.log(dataEvent);
+
     useEffect(() => {
         get('/event/all', '', { authorization: token })
             .then((res) => {

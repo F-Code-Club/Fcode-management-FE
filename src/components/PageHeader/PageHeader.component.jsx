@@ -102,8 +102,7 @@ const PageHeaderComponent = () => {
                 //     setMessage(JSON.parse(message.body));
                 // });
                 setClient(stompClient);
-
-                client.subscribe(`/user/queue/private-messages`, function (message) {
+                stompClient.subscribe(`/user/queue/private-messages`, function (message) {
                     const announce = JSON.parse(message.body);
                     setAnnouncements((prevAnnouncements) => [...prevAnnouncements, announce]);
                     setNotiCount((prevState) => prevState + 1);

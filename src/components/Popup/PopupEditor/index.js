@@ -17,7 +17,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 const getContentEditorState = (item) => {
     try {
         return EditorState.createWithContent(
-            ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+            ContentState.createFromBlockArray(htmlToDraft(item).contentBlocks)
         );
     } catch (error) {
         return EditorState.createEmpty();
@@ -195,9 +195,11 @@ export const CreateAnnouncement = (props) => {
                     infoUserId += user;
                 });
 
-            const convertContent = JSON.stringify(
-                draftToHtml(convertToRaw(newAnnouncement.description.getCurrentContent()))
+            const convertContent = draftToHtml(
+                convertToRaw(newAnnouncement.description.getCurrentContent())
             );
+
+            // console.log(draftToHtml(convertToRaw(newAnnouncement.description.getCurrentContent())));
             await action(true, {
                 ...newAnnouncement,
                 description: convertContent,

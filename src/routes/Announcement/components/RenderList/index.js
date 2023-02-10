@@ -95,7 +95,7 @@ export const RenderList = (props) => {
     const getContentEditorState = (item) => {
         try {
             return EditorState.createWithContent(
-                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+                ContentState.createFromBlockArray(htmlToDraft(item).contentBlocks)
             );
         } catch (error) {
             return EditorState.createEmpty();

@@ -39,10 +39,21 @@ export const Homepage = () => {
     const [announceInfo, setAnnounceInfo] = useState([]);
     const [err, setErr] = useState(false);
     const userRole = useSelector(selectUser);
+    let now = new Date();
 
     useEffect(() => {
         get('/event/all', '', { authorization: token })
-            .then((res) => setDataEvent(res.data.data.reverse()))
+            .then((res) => {
+                let events = res?.data.data.filter((event) => {
+                    let startTime = new Date(event.startTime);
+                    let endTime = new Date(event.endTime);
+                    if (startTime <= now && now <= endTime) {
+                        return event;
+                    }
+                });
+
+                setDataEvent(events);
+            })
             // eslint-disable-next-line no-console
             .catch((error) => console.log(error));
         get('/article/processing', '', { authorization: token })
@@ -147,12 +158,20 @@ export const Homepage = () => {
         return (
             <ContainerHomepage>
                 <Col1>
-                    {dataEvent && (
+                    {dataEvent?.length === 0 && dataEvent ? (
                         <div className="row1">
                             <div className="content">
                                 <h3 className="title">CLB ĐANG DIỄN RA</h3>
-                                <p className="child1">{dataEvent[0].name}</p>
-                                <p className="child2">{dataEvent[1].name}</p>
+                                <span> Chưa có sự kiện nào diễn ra gần đây</span>
+                            </div>
+                            <img src={Logo} alt="f-code" />
+                        </div>
+                    ) : (
+                        <div className="row1">
+                            <div className="content">
+                                <h3 className="title">CLB ĐANG DIỄN RA</h3>
+                                <p className="child1">{dataEvent && dataEvent[0]?.name}</p>
+                                <p className="child2">{dataEvent && dataEvent[1]?.name}</p>
                                 <Link to="/event" className="btn-view-more">
                                     Xem thêm
                                 </Link>
@@ -253,8 +272,8 @@ export const Homepage = () => {
                             </div>
                             <div className="content">
                                 <h3 className="title">CLB ĐANG DIỄN RA</h3>
-                                <p className="child1">{dataEvent[dataEvent.length - 1].name}</p>
-                                <p className="child2">{dataEvent[dataEvent.length - 2].name}</p>
+                                <p className="child1">{dataEvent[dataEvent.length - 1]?.name}</p>
+                                <p className="child2">{dataEvent[dataEvent.length - 2]?.name}</p>
                             </div>
                         </div>
                     )}

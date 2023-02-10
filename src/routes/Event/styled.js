@@ -186,11 +186,31 @@ export const DetailBody = styled.div`
         margin-bottom: 4px;
     }
     h2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
         font-weight: 400;
         font-size: 14px;
     }
     .ant-input-number {
         width: 100%;
+    }
+    & .wrap_place {
+        display: flex;
+
+        gap: 10px;
+        & > .place {
+            max-width: 200px;
+            display: inline;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 400;
+            font-size: 14px;
+        }
     }
 `;
 export const BoxContainer = styled.div`
@@ -303,12 +323,18 @@ export const AddContainer = styled.div`
     align-items: center;
 `;
 export const InputContainer = styled.div`
+    .flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     h1 {
         font-family: 'Inter';
         font-style: normal;
         font-weight: 500;
-        font-size: 34px;
-        line-height: 123.5%;
+        font-size: 32px;
+        // line-height: 123.5%;
+        margin: 0;
     }
     padding: 20px 30px;
 `;
@@ -377,6 +403,9 @@ export const LeftHeader = styled.div`
     justify-content: flex-start;
 
     h1 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         margin-right: 8px;
         margin-bottom: 0;
         font-size: 24px;
@@ -471,5 +500,33 @@ export const MessageHero = styled.div`
         font-weight: 400;
         font-size: 14px;
         line-height: 22px;
+    }
+`;
+
+export const WrapperListAttend = styled.div`
+    & > .ant-btn-primary {
+        background: ${themes.colors.primary};
+    }
+    .custom-modal .ant-modal-content {
+        width: 500px;
+        height: 300px;
+    }
+`;
+export const CheckboxPresent = styled.div`
+    .ant-checkbox-wrapper:hover .ant-checkbox-inner {
+        border-color: ${themes.colors.primary};
+    }
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
+    }
+`;
+export const CheckboxAbsent = styled.div`
+    .ant-checkbox-wrapper:hover .ant-checkbox-inner {
+        border-color: ${themes.colors.primary};
+    }
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background: ${themes.colors.calendulaGold};
+        border-color: ${themes.colors.calendulaGold};
     }
 `;

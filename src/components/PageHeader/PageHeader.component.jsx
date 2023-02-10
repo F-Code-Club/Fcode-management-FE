@@ -62,13 +62,12 @@ const PageHeaderComponent = () => {
     const [memberAnnounce, setMemberAnnounce] = useState();
     const [notiCount, setNotiCount] = useState(0);
     const [announcements, setAnnouncements] = useState([]);
-    console.log(memberAnnounce);
-    let stompClient = null;
+
     const token = localStorageUtils.getToken();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-
+    const [client, setClient] = useState(null);
     const [searchParams] = useSearchParams(location);
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
@@ -96,12 +95,13 @@ const PageHeaderComponent = () => {
     }, [location]);
     useEffect(() => {
         var socket = new SockJS(`${API_URL}/websocket`);
-        stompClient = over(socket);
+        const stompClient = over(socket);
         if (token) {
             stompClient.connect({ token: token }, function () {
                 // stompClient.subscribe(`/topic/messages`, function (message) {
                 //     setMessage(JSON.parse(message.body));
                 // });
+                setClient(stompClient);
                 stompClient.subscribe(`/user/queue/private-messages`, function (message) {
                     const announce = JSON.parse(message.body);
                     setAnnouncements((prevAnnouncements) => [...prevAnnouncements, announce]);
@@ -110,11 +110,9 @@ const PageHeaderComponent = () => {
             });
         }
 
-        return () => {
-            if (token) {
-                stompClient.disconnect(function () {
-                    console.log('Disconnected from WebSocket');
-                });
+        return function cleanup() {
+            if (client && client.connected) {
+                stompClient.disconnect();
             }
         };
     }, []);

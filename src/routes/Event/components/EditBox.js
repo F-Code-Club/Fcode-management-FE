@@ -12,6 +12,7 @@ import {
     InputContainer,
     ButtonContainer,
 } from '../styled';
+import ListAttend from './ListAttend';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
@@ -34,7 +35,6 @@ function EditBox({ event, handle, closeOtherBox }) {
         Picker: text.Picker,
     });
     const onFinish = async (values) => {
-        console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
         const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm:ss');
@@ -51,6 +51,7 @@ function EditBox({ event, handle, closeOtherBox }) {
                 status: 'ACTIVE',
             };
             const res = await productApi.editEvent(newEvent, token);
+
             switch (await res.data.code) {
                 case 200:
                     toastSuccess('Chỉnh sửa sự kiện thành công!!');
@@ -82,7 +83,10 @@ function EditBox({ event, handle, closeOtherBox }) {
         <BoxContainer>
             <EditContainer>
                 <InputContainer>
-                    <h1>Cập nhật Sự Kiện</h1>
+                    <div className="flex">
+                        <h1>Cập nhật Sự Kiện</h1>
+                        {event && <ListAttend eventId={event.id} />}
+                    </div>
                     <Form
                         name="basic"
                         labelCol={{

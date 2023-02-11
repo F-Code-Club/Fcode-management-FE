@@ -31,10 +31,13 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAttendById.fulfilled, (state, action) => {
+                console.log('line 36 :');
+
                 state.listAttends = action.payload;
                 state.searchedAttends = state.listAttends;
             })
             .addCase(filterAttends.fulfilled, (state, action) => {
+                console.log('line 38 :');
                 state.searchedAttends = action.payload.attendSearch;
             });
     },

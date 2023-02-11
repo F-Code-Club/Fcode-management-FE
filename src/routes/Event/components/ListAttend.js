@@ -18,6 +18,8 @@ const ListAttend = ({ eventId }) => {
 
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    console.log('line 21: ', isModalOpen);
+    console.log('line 22: ', Attends);
     const showModal = () => {
         setIsModalOpen(true);
     };

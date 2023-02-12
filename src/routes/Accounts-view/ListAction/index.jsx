@@ -26,7 +26,7 @@ const ListAction = (props) => {
     const { name, type, status, id } = props;
     if (status) {
         return (
-            <RouterLink to={`/account/view-account/${id}`} state={{ from: 'occupation' }}>
+            <RouterLink to={`/account/${id}`} state={{ from: 'occupation' }}>
                 {name}
             </RouterLink>
         );

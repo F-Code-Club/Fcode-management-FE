@@ -15,6 +15,7 @@ import BlogDetailComponent from './Blog/Detail';
 import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
+import EditAccountByMember from './EditAccountByMember';
 import Event from './Event/Index';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
@@ -50,7 +51,7 @@ const publicRoute = [
     },
     {
         path: 'account/edit-account',
-        component: <EditAccount />,
+        component: <EditAccountByMember />,
         exact: true,
         restrict: true,
     },
@@ -323,7 +324,7 @@ const memberRoute = [
         restrict: true,
     },
     {
-        path: 'account/view-account/:id',
+        path: 'account/:id',
         component: <ViewAccount />,
         exact: false,
         restrict: true,

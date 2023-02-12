@@ -182,7 +182,7 @@ const productApi = {
     },
     getOwnAttendance: (token) => {
         const url = `/attendance`;
-        return get(url, {}, {}, { authorization: token });
+        return get(url, {}, { authorization: token });
     },
     getOwnArticle: (id, token) => {
         const url = `/article/author/${id}`;

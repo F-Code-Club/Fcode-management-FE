@@ -237,7 +237,7 @@ export const Homepage = () => {
                     </div>
 
                     <div className="row2">
-                        <h3>thông báo</h3>
+                        <h3>Thông báo</h3>
                         <List
                             itemLayout="vertical"
                             size="large"

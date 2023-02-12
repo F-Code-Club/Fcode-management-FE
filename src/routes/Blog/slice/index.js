@@ -77,7 +77,7 @@ const slice = createSlice({
             })
             .addCase(getAllBlogs.rejected, (state, action) => {
                 // eslint-disable-next-line no-console
-                console.log(action.payload);
+
                 toastError('Lấy danh sách bài viết thất bại');
             });
     },

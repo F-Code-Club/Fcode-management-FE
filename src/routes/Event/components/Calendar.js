@@ -61,7 +61,7 @@ const MyCalendar = () => {
                 startTime: formatDate(start),
                 endTime: formatDate(end),
             };
-            console.log(updatedEvent);
+
             setEvents((prevEvents) => {
                 const filtered = prevEvents.filter((item) => item.id !== event.id);
                 dispatch(editEvent(updatedEvent));

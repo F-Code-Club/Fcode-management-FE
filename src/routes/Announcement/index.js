@@ -64,7 +64,6 @@ export const ManageAnnouncement = () => {
                         .catch((error) => {
                             toastError('Tạo thông báo không thành công');
                             // eslint-disable-next-line no-console
-                            console.log(error);
                         });
 
                     break;
@@ -97,7 +96,6 @@ export const ManageAnnouncement = () => {
                         .catch((error) => {
                             toastError('Chỉnh sửa thông báo không thành công');
                             // eslint-disable-next-line no-console
-                            console.log(error);
                         });
                     break;
             }

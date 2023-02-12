@@ -5,10 +5,9 @@ const attendApi = {
     getAttendByEventId: async (eventId) => {
         const endpoint = `/attendance/eventId/${eventId}`;
         const token = localStorageUtils.getToken();
-        console.log('line 9 ', token);
+
         return await get(endpoint, {}, { authorization: token })
             .then((res) => {
-                console.log(res);
                 return res.data.data;
             })
             .catch((err) => console.log(err));

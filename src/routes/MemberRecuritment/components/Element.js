@@ -52,7 +52,7 @@ function Element({ event }) {
     const handleConfirm = async (event) => {
         try {
             const res = await productApi.removeChallenge(event.id, token);
-            console.log(res);
+
             switch (res.data.code) {
                 case 200:
                     dispatch(removeMile(event));

@@ -34,7 +34,6 @@ function EditBox({ event, handle, closeOtherBox }) {
         Picker: text.Picker,
     });
     const onFinish = async (values) => {
-        console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
         const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm:ss');

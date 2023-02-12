@@ -24,7 +24,7 @@ function Event() {
         if (path.data.code === 408) {
             toastError('Token hết hạn');
         }
-        console.log(path.data.data);
+
         dispatch(setEvent(path.data.data || []));
     };
     return (

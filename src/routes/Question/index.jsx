@@ -50,7 +50,7 @@ const QuestionManagement = () => {
             })
             .catch((err) => {
                 // eslint-disable-next-line no-console
-                console.log(err);
+
                 toastError(err.message);
             });
     };
@@ -63,7 +63,7 @@ const QuestionManagement = () => {
             .getAllProcessing()
             .then((res) => {
                 setLoading(false);
-                console.log('line 66: ', res);
+
                 if (res.data.code === 200) {
                     setQuestions(res.data.data);
                     return;
@@ -77,7 +77,7 @@ const QuestionManagement = () => {
             .catch((err) => {
                 setLoading(false);
                 // eslint-disable-next-line no-console
-                console.log(err);
+
                 toastError(err.message);
             });
     };
@@ -129,7 +129,7 @@ const QuestionManagement = () => {
 
                 .catch((err) => {
                     // eslint-disable-next-line no-console
-                    console.log(err);
+
                     toastError(err.message);
                 });
 
@@ -171,7 +171,7 @@ const QuestionManagement = () => {
                     })
                     .catch((err) => {
                         // eslint-disable-next-line no-console
-                        console.log(err);
+
                         Modal.error(questionConfig.errorModal);
                     });
             },

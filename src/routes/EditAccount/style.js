@@ -27,7 +27,7 @@ export const ListWrapper = styled.div`
 export const Container = styled.div`
     max-width: 920px;
     margin: 0 auto;
-
+    min-height: calc(100vh - 100px);
     .left-side {
         .ant-avatar {
             margin: 0 auto 1em auto;
@@ -85,6 +85,12 @@ export const EditButton = styled(Button)`
 `;
 export const AvatarContainer = styled.div`
     position: relative;
+    .ant-btn-primary {
+        background: ${themes.colors.primary};
+        border-color: ${themes.colors.primary};
+        text-shadow: none;
+        box-shadow: none;
+    }
 `;
 export const StyledForm = styled(Form)`
     width: 450px;

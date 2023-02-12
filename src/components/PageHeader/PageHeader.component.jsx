@@ -54,6 +54,7 @@ const PageHeaderComponent = () => {
     breadcrumbNameMap[`/notifications/${id}`] = `Xem thông báo`;
     breadcrumbNameMap[`/manage-announcement/${id}`] = `Xem thông báo`;
     breadcrumbNameMap[`/manage-resource/${id}`] = `tài nguyên số ${id}`;
+    breadcrumbNameMap[`/account/${id}`] = `Tài khoản số ${id}`;
     const [modal, contextHolder] = Modal.useModal();
     const userRole = useSelector(selectUser);
     const TitleHeader = useSelector(selectTitleHeader);

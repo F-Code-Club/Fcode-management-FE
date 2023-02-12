@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import { List, Avatar, Input, Tabs, Checkbox } from 'antd';
+import { useSelector } from 'react-redux';
 
+import AccountView from '../Accounts-view';
+import { selectUser } from '../Auth/slice/selector';
 import ListAction from './ListAction/index';
 import { actions_btn, tabs } from './account.data';
 import { ListWrapper, Wrapper, SearchBox, Divider, TabContainer, StyledCol } from './style';
@@ -18,6 +21,7 @@ const AccountsManager = () => {
     const [allAccounts, setAllAccount] = useState([]);
     const [accountList, setAccountList] = useState([]);
     const [loading, setLoading] = useState(false);
+    const userRole = useSelector(selectUser);
     const { Search } = Input;
     const { TabPane } = Tabs;
     const onChange = async (checkedValues) => {
@@ -72,77 +76,80 @@ const AccountsManager = () => {
         if (tab.category === 0) return accountList;
         return accountList.filter((member) => member.positionId === tab.category);
     };
-    return (
-        <Divider>
-            <TabContainer>
-                <h3>Lọc theo khóa</h3>
-                <Checkbox.Group
-                    style={{
-                        width: '100%',
-                    }}
-                    onChange={onChange}
-                >
-                    <StyledCol span={24}>
-                        <Checkbox value="15">Khóa 15</Checkbox>
-                    </StyledCol>
-                    <StyledCol span={24}>
-                        <Checkbox value="16">Khóa 16</Checkbox>
-                    </StyledCol>
-                    <StyledCol span={24}>
-                        <Checkbox value="17">Khóa 17</Checkbox>
-                    </StyledCol>
-                    <StyledCol span={24}>
-                        <Checkbox value="18">Khóa 18</Checkbox>
-                    </StyledCol>
-                </Checkbox.Group>
-            </TabContainer>
-            <Wrapper>
-                {/* Header Section*/}
-                <SearchBox>
-                    <Search
-                        placeholder="Nhập tên bài viết cần tìm"
-                        enterButton
-                        onSearch={handleSearch}
-                    />
-                </SearchBox>
-                {/* End of Header Section*/}
-                <ListWrapper id="scrollableDiv">
-                    <Tabs defaultActiveKey="0" onChange={handleChange}>
-                        {tabs.map((tab) => {
-                            return (
-                                <TabPane tab={tab.name} key={tab.key}>
-                                    <List
-                                        dataSource={dataSource(tab)}
-                                        renderItem={(item) => (
-                                            <List.Item
-                                                key={item.email}
-                                                actions={actions_btn.map((action) => (
-                                                    <ListAction
-                                                        key={action.key}
-                                                        type={action.type}
-                                                        name={action.name}
-                                                        status={action.isLinked}
-                                                        id={item.id}
-                                                        item={item}
+    if (userRole.role == 'ADMIN') {
+        return (
+            <Divider>
+                <TabContainer>
+                    <h3>Lọc theo khóa</h3>
+                    <Checkbox.Group
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={onChange}
+                    >
+                        <StyledCol span={24}>
+                            <Checkbox value="15">Khóa 15</Checkbox>
+                        </StyledCol>
+                        <StyledCol span={24}>
+                            <Checkbox value="16">Khóa 16</Checkbox>
+                        </StyledCol>
+                        <StyledCol span={24}>
+                            <Checkbox value="17">Khóa 17</Checkbox>
+                        </StyledCol>
+                        <StyledCol span={24}>
+                            <Checkbox value="18">Khóa 18</Checkbox>
+                        </StyledCol>
+                    </Checkbox.Group>
+                </TabContainer>
+                <Wrapper>
+                    {/* Header Section*/}
+                    <SearchBox>
+                        <Search
+                            placeholder="Nhập tên bài viết cần tìm"
+                            enterButton
+                            onSearch={handleSearch}
+                        />
+                    </SearchBox>
+                    {/* End of Header Section*/}
+                    <ListWrapper id="scrollableDiv">
+                        <Tabs defaultActiveKey="0" onChange={handleChange}>
+                            {tabs.map((tab) => {
+                                return (
+                                    <TabPane tab={tab.name} key={tab.key}>
+                                        <List
+                                            dataSource={dataSource(tab)}
+                                            renderItem={(item) => (
+                                                <List.Item
+                                                    key={item.email}
+                                                    actions={actions_btn.map((action) => (
+                                                        <ListAction
+                                                            key={action.key}
+                                                            type={action.type}
+                                                            name={action.name}
+                                                            status={action.isLinked}
+                                                            id={item.id}
+                                                            item={item}
+                                                        />
+                                                    ))}
+                                                >
+                                                    <List.Item.Meta
+                                                        avatar={<Avatar src={item.avatarUrl} />}
+                                                        title={item.lastName + ' ' + item.firstName}
+                                                        description={item.studentId}
                                                     />
-                                                ))}
-                                            >
-                                                <List.Item.Meta
-                                                    avatar={<Avatar src={item.avatarUrl} />}
-                                                    title={item.lastName + ' ' + item.firstName}
-                                                    description={item.studentId}
-                                                />
-                                            </List.Item>
-                                        )}
-                                    ></List>
-                                </TabPane>
-                            );
-                        })}
-                    </Tabs>
-                </ListWrapper>
-            </Wrapper>
-        </Divider>
-    );
+                                                </List.Item>
+                                            )}
+                                        ></List>
+                                    </TabPane>
+                                );
+                            })}
+                        </Tabs>
+                    </ListWrapper>
+                </Wrapper>
+            </Divider>
+        );
+    }
+    return <AccountView />;
 };
 
 export default AccountsManager;

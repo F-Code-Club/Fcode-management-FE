@@ -180,7 +180,6 @@ function EditBox({ handle, event }) {
                         >
                             <TextArea rows={4} placeholder="Thông tin chi tiết" maxLength={1000} />
                         </Form.Item>
-
                         <ButtonContainer>
                             <CancelButon onClick={handle}>Hủy</CancelButon>
                             <CustomButton type="primary" htmlType="submit">

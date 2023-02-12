@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { selectUser } from '../Auth/slice/selector';
+import UserEvent from '../UserEvent';
 import MyCalendar from './components/Calendar';
 import { setEvent } from './slice';
 import { Container, Wrapper } from './styled';
@@ -13,6 +15,7 @@ import productApi from '@/utils/productApi';
 function Event() {
     const token = localStorageUtils.getItem('token');
     const [isUpdated, SetUpdated] = useState(false);
+    const userRole = useSelector(selectUser);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -27,11 +30,14 @@ function Event() {
 
         dispatch(setEvent(path.data.data || []));
     };
-    return (
-        <Wrapper>
-            <Container>{isUpdated && <MyCalendar />}</Container>
-        </Wrapper>
-    );
+    if (userRole.role == 'ADMIN' || userRole.role == 'MANAGER') {
+        return (
+            <Wrapper>
+                <Container>{isUpdated && <MyCalendar />}</Container>
+            </Wrapper>
+        );
+    }
+    return <UserEvent />;
 }
 
 export default Event;

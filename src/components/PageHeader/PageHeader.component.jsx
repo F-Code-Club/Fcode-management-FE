@@ -79,11 +79,11 @@ const PageHeaderComponent = () => {
         );
     });
 
-    const breadcrumbItems = [
-        <Breadcrumb.Item key="home">
-            <Link to="/">Trang chủ</Link>
-        </Breadcrumb.Item>,
-    ].concat(extraBreadcrumbItems);
+    // const breadcrumbItems = [
+    //     <Breadcrumb.Item key="home">
+    //         <Link to="/">Trang chủ</Link>
+    //     </Breadcrumb.Item>,
+    // ].concat(extraBreadcrumbItems);
     // Button state
     useEffect(() => {
         const url = `/${pathSnippets.slice(0, pathSnippets.length).join('/')}`;

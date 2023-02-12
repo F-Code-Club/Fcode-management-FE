@@ -9,6 +9,7 @@ import { ListWrapper, Wrapper, SearchBox, Divider, TabContainer, StyledCol } fro
 import { toastError } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
+import { searchString } from '@/utils/stringHelper';
 
 // account management with ant design table
 const AccountsManager = () => {
@@ -56,9 +57,12 @@ const AccountsManager = () => {
         else {
             const filteredList = allAccounts.filter(
                 ({ firstName, lastName, studentId }) =>
-                    firstName.toLowerCase().includes(filterInput.toLowerCase()) ||
-                    lastName.toLowerCase().includes(filterInput.toLowerCase()) ||
-                    studentId.toLowerCase().includes(filterInput.toLowerCase())
+                    // firstName.toLowerCase().includes(filterInput.toLowerCase()) ||
+                    // lastName.toLowerCase().includes(filterInput.toLowerCase()) ||
+                    // studentId.toLowerCase().includes(filterInput.toLowerCase())
+                    searchString(firstName, filterInput) ||
+                    searchString(lastName, filterInput) ||
+                    searchString(studentId, filterInput)
             );
             setAccountList(filteredList);
         }

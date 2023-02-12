@@ -10,7 +10,7 @@ export const Background = styled.div`
 `;
 
 export const Wrapper = styled.div`
-    width: 920px;
+    width: 1010px;
     min-height: 693px;
     background: ${themes.colors.light};
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),

@@ -1,6 +1,8 @@
 import { Image } from 'antd';
 import styled from 'styled-components';
 
+import { themes } from '@/theme/theme';
+
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -58,6 +60,9 @@ export const Container = styled.div`
         .ant-select {
             width: 100%;
         }
+    }
+    .ant-btn-primary {
+        background-color: ${themes.colors.primary};
     }
 `;
 export const StyleImage = styled(Image)`

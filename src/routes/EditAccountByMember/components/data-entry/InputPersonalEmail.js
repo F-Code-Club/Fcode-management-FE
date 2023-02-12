@@ -4,25 +4,25 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../slice';
 import selector from '../../slice/selectors';
 
-const InputEmailFPT = () => {
+const InputPersonalEmail = () => {
     const dispatch = useDispatch();
 
-    const emailFPT = useSelector(selector.emailFPT);
+    const personalEmail = useSelector(selector.personalEmail);
 
-    const handleEmailFPTChange = (e) => {
-        dispatch(actions.setEmailFPT(e.target.value));
+    const handlePersonalEmailChange = (e) => {
+        dispatch(actions.setPersonalEmail(e.target.value));
         dispatch(actions.getAccount());
     };
 
     return (
         <Form.Item
-            name="emailFPT"
+            name="personalEmail"
             rules={[
-                { required: true, message: 'Email fpt không được để trống !!' },
+                { required: true, message: 'Email cá nhân không được để trống !!' },
                 {
-                    message: 'Email fpt phải chứa @fpt.edu.vn',
+                    message: 'Email chưa đúng format',
                     validator: (_, value) => {
-                        if (/^[a-z0-9](\.?[a-z0-9]){5,}@fpt.edu.vn$/.test(value)) {
+                        if (/^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/.test(value)) {
                             return Promise.resolve();
                         } else {
                             return Promise.reject('Some message here');
@@ -32,13 +32,12 @@ const InputEmailFPT = () => {
             ]}
         >
             <Input
-                disabled={true}
-                placeholder="student_id@fpt.edu.vn"
-                value={emailFPT}
-                onChange={handleEmailFPTChange}
+                placeholder="personal_email@gmail.com"
+                value={personalEmail}
+                onChange={handlePersonalEmailChange}
             />
         </Form.Item>
     );
 };
 
-export default InputEmailFPT;
+export default InputPersonalEmail;

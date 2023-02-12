@@ -21,7 +21,7 @@ import {
 } from './components';
 import { actions } from './slice';
 import selector from './slice/selectors';
-import { StyleImage, Container } from './style';
+import { Container } from './style';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import getGutter from '@/utils/getGutter';

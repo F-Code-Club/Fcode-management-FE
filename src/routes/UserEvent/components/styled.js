@@ -63,7 +63,6 @@ export const DetailBody = styled.div`
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     line-height: 24px;
-
     div {
         display: flex;
     }

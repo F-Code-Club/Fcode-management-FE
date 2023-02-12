@@ -184,6 +184,10 @@ const productApi = {
         const url = `/attendance`;
         return get(url, {}, { authorization: token });
     },
+    getOwnArticle: (id, token) => {
+        const url = `/article/author/${id}`;
+        return get(url, {}, { authorization: token });
+    },
     putAccountByAdmin: (info, token) => {
         const url = `/member/ad`;
         return put(

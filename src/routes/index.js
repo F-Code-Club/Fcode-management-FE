@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Error403Page from './403Page';
 import Error404Page from './404Page';
+import AccountView from './Accounts-view';
+import ViewAccount from './Accounts-view/ViewAccounts';
 import EditAccountByAdmin from './Accounts/EditAccount/index';
 import AccountsManager from './Accounts/index';
 import AdminRoute from './AdminRoute';
@@ -13,6 +15,7 @@ import BlogDetailComponent from './Blog/Detail';
 import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
+import EditAccountByMember from './EditAccountByMember';
 import Event from './Event/Index';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
@@ -48,7 +51,7 @@ const publicRoute = [
     },
     {
         path: 'account/edit-account',
-        component: <EditAccount />,
+        component: <EditAccountByMember />,
         exact: true,
         restrict: true,
     },
@@ -100,6 +103,12 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
+    {
+        path: '/yourevent',
+        component: <UserEvent />,
+        exact: false,
+        restrict: true,
+    },
 ];
 const adminRoute = [
     { index: true, path: 'home', component: <Homepage />, exact: true, restrict: true },
@@ -111,6 +120,51 @@ const adminRoute = [
         exact: true,
         restrict: true,
     },
+    {
+        path: '/personal-blog',
+        component: <PersonalBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/create',
+        component: <BlogForm />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/edit/:id',
+        component: <BlogForm />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview',
+        component: <PersonalDetailBlog />,
+        exact: true,
+        restrict: true,
+    },
+    {
+        path: '/personal-blog/preview/:id',
+        component: <PersonalDetailBlog />,
+        exact: false,
+        restrict: true,
+    },
+    { index: true, path: 'private', component: <Homepage />, exact: true, restrict: true },
+
+    {
+        path: '/blog/:id',
+        component: <BlogDetailComponent />,
+        exact: false,
+        restrict: true,
+    },
+    // Personal Blog
     {
         path: '/personal-blog',
         component: <PersonalBlog />,
@@ -263,12 +317,24 @@ const memberRoute = [
         exact: false,
         restrict: true,
     },
-    // {
-    //     path: '/event',
-    //     component: <UserEvent />,
-    //     exact: false,
-    //     restrict: true,
-    // },
+    {
+        path: 'account',
+        component: <AccountView />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: 'account/:id',
+        component: <ViewAccount />,
+        exact: false,
+        restrict: true,
+    },
+    {
+        path: '/event',
+        component: <UserEvent />,
+        exact: false,
+        restrict: true,
+    },
 ];
 
 const RouterComponent = () => {

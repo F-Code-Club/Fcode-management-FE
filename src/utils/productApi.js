@@ -63,6 +63,55 @@ const productApi = {
             { authorization: token }
         );
     },
+    updateOwnAccountPersonalEmail: (info, token, APIEmailFPT) => {
+        const url = `/member/us`;
+        return put(
+            url,
+            {
+                avatarUrl: info.avatar,
+                clubEntryDate: info.joinDate,
+                crewId: info.crewId + 1,
+                dateOfBirth: info.birthdate,
+                description: info.bio,
+                facebookUrl: info.facebook,
+                firstName: info.firstName,
+                lastName: info.lastName,
+                major: info.major,
+                personalMail: info.personalEmail,
+                phone: info.phone,
+                positionId: info.position + 1,
+                role: info.role,
+                studentId: info.studentId,
+                // schoolMail: APIEmailFPT,
+            },
+            {},
+            { authorization: token }
+        );
+    },
+    updateOwnAccountFPTMail: (info, token, APIPersonalEmail) => {
+        const url = `/member/us`;
+        return put(
+            url,
+            {
+                avatarUrl: info.avatar,
+                clubEntryDate: info.joinDate,
+                crewId: info.crewId + 1,
+                dateOfBirth: info.birthdate,
+                description: info.bio,
+                facebookUrl: info.facebook,
+                firstName: info.firstName,
+                lastName: info.lastName,
+                major: info.major,
+                phone: info.phone,
+                positionId: info.position + 1,
+                role: info.role,
+                schoolMail: info.emailFPT,
+                studentId: info.studentId,
+            },
+            {},
+            { authorization: token }
+        );
+    },
     editEvent: (event, token) => {
         const url = '/event';
         var postStartDate = new Date(event.startTime);
@@ -134,6 +183,58 @@ const productApi = {
     getOwnAttendance: (token) => {
         const url = `/attendance`;
         return get(url, {}, { authorization: token });
+    },
+    putAccountByAdmin: (info, token) => {
+        const url = `/member/ad`;
+        return put(
+            url,
+            {
+                avatarUrl: info.avatar,
+                clubEntryDate: info.joinDate,
+                crewId: info.crewId + 1,
+                dateOfBirth: info.birthdate,
+                description: info.bio,
+                facebookUrl: info.facebook,
+                firstName: info.firstName,
+                lastName: info.lastName,
+                major: info.major,
+                personalMail: info.personalEmail,
+                phone: info.phone,
+                positionId: info.position + 1,
+                id: info.id,
+                role: info.roles[info.role],
+                schoolMail: info.emailFPT,
+                studentId: info.studentId,
+            },
+            {},
+            { authorization: token }
+        );
+    },
+    putAccountByAdminWithChangingEmail: (info, token) => {
+        const url = `/member/ad`;
+        return put(
+            url,
+            {
+                avatarUrl: info.avatar,
+                clubEntryDate: info.joinDate,
+                crewId: info.crewId + 1,
+                dateOfBirth: info.birthdate,
+                description: info.bio,
+                facebookUrl: info.facebook,
+                firstName: info.firstName,
+                lastName: info.lastName,
+                major: info.major,
+                id: info.id,
+                personalMail: info.personalEmail,
+                phone: info.phone,
+                positionId: info.position + 1,
+                role: info.roles[info.role],
+                // schoolMail: info.emailFPT,
+                studentId: info.studentId,
+            },
+            {},
+            { authorization: token }
+        );
     },
 };
 

@@ -14,7 +14,6 @@ import PersonalBlog from './Blog/Personal';
 import PersonalDetailBlog from './Blog/Personal/Detail/index';
 import BlogForm from './Blog/Personal/Form';
 import Event from './Event/Index';
-import { HomepageMemeber } from './HomePageForMember';
 import ManagerRoute from './ManagerRoute';
 import Recruitment from './MemberRecuritment';
 import MemberRoute from './MemberRoute';
@@ -53,6 +52,7 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
+
     {
         path: 'manage-resource',
         component: <ResourcesSection />,
@@ -80,6 +80,7 @@ const publicRoute = [
         exact: true,
         restrict: true,
     },
+
     {
         path: 'manage-resource/:id',
         component: <ViewResource />,
@@ -166,6 +167,7 @@ const managerRoute = [
         exact: true,
         restrict: true,
     },
+
     {
         path: '/personal-blog/:id',
         component: <PersonalDetailBlog />,
@@ -205,6 +207,7 @@ const memberRoute = [
         exact: true,
         restrict: true,
     },
+
     {
         path: 'manage-resource',
         component: <ResourcesSection />,

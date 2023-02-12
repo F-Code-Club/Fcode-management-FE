@@ -1,7 +1,6 @@
 import { injectReducer } from '@/store';
 import generateActions from '@/utils/generateActions';
 import { faker } from '@faker-js/faker';
-import { Satellite } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit';
 
 const fullName = faker.name.fullName().split(' ');
@@ -20,8 +19,6 @@ export const initialState = {
     positions: ['Admin', 'Student'],
     birthdate: faker.date.birthdate({ min: 18, max: 25, mode: 'age' }).getTime(),
     emailFPT: faker.internet.email(fullName[0], fullName[1], 'fpt.edu.vn'),
-    APIEmailFPT: '',
-    APIPersonalEmail: '',
     personalEmail: faker.internet.email(fullName[0], fullName[1], 'gmail.com'),
     facebook: 'facebook.com/' + faker.internet.userName(fullName[0], fullName[1]),
     phone: '',
@@ -66,8 +63,6 @@ export const slice = createSlice({
             state.birthdate = action.payload.dateOfBirth;
             state.emailFPT = action.payload.schoolMail;
             state.personalEmail = action.payload.personalMail;
-            state.APIEmailFPT = action.payload.schoolMail;
-            state.APIPersonalEmail = action.payload.personalMail;
             state.facebook = action.payload.facebookUrl;
             state.bio = action.payload.description;
             state.id = action.payload.id;
@@ -97,7 +92,6 @@ export const slice = createSlice({
                 phone: state.phone,
                 firstName: state.fullName.split(' ').slice(-1).join(' '),
                 lastName: state.fullName.split(' ').slice(0, -1).join(' '),
-                roles: state.roles,
             };
         },
     },

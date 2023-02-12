@@ -69,9 +69,9 @@ const EditAccount = () => {
         dispatch(actions.getAccount());
         const response = await productApi.putAccountByAdmin(info, token);
         if (response.data.code == 200) {
-            toastSuccess(response.data.message);
+            toastSuccess('Sửa thông tin thành công');
         } else {
-            toastError(response.data.message);
+            toastError('Sửa thông tin thất bại');
         }
     };
     const confirm = () => {
@@ -100,7 +100,10 @@ const EditAccount = () => {
                                 style={{ display: 'flex' }}
                                 className="pos-sticky"
                             >
-                                <Card style={{ width: '100%', height: '100%' }} loading={false}>
+                                <Card
+                                    style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+                                    loading={false}
+                                >
                                     <Avatar size={160} src={avatar} />
                                     <FullName />
                                     <Title
@@ -125,7 +128,10 @@ const EditAccount = () => {
                             </Space>
                         </Col>
                         <Col span={17} className="right-side">
-                            <Card style={{ width: '100%', height: '100%' }} loading={false}>
+                            <Card
+                                style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+                                loading={false}
+                            >
                                 <Space
                                     direction="vertical"
                                     size="middle"

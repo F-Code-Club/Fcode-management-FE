@@ -28,7 +28,7 @@ const MyCalendar = () => {
             };
             array.push(newEvent);
         }
-        console.log(array);
+
         setEvents(array);
     }, [listOfEvents]);
 

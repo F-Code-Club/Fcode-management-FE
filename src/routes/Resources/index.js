@@ -1,8 +1,9 @@
 // import * as Styled from '../Blog/Blog.styled';
 import { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { selectUser } from '../Auth/slice/selector';
 import { CreateResource } from './components/CreateResource';
 import HeaderResource from './components/HeaderResource';
 import ListResource from './components/ListResource';
@@ -13,10 +14,12 @@ import { Wrapper, Container } from './styles';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import productApi from '@/utils/apiComponents/productApi';
-
-// import productApi from '@/utils/productApi';
+import usePersistedState from '@/utils/usePersistedState';
 
 const ResourcesSection = () => {
+    // const user = useSelector(selectUser);
+    // const userPersisted = usePersistedState('user', JSON.stringify(user))[0];
+    // let userParse = JSON.parse(userPersisted);
     const [modalOpen, setModalOpen] = useState({
         popupEditor: {
             status: false,
@@ -46,11 +49,7 @@ const ResourcesSection = () => {
                 `Môn học đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
         } else
-            toastError(
-                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công ${
-                    message ? message : ''
-                }`
-            );
+            toastError(`${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'}  môn học không thành công`);
         await setModalOpen({
             ...modalOpen,
             popupEditor: {
@@ -89,8 +88,8 @@ const ResourcesSection = () => {
                     popupEditor: {
                         status: true,
                         type: 'edit',
-                        description: item.description,
-                        title: item.title,
+                        description: item.name,
+                        title: item.semester,
                         imgs: item.imgs,
                         id: item.id,
                     },

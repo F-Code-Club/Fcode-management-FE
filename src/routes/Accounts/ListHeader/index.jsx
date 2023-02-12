@@ -8,7 +8,7 @@ import { SearchBox, SearchWrapper, Container } from './style';
 const { Search } = Input;
 const ListHeader = ({ accountList }) => {
     const [filterInput, setFilterInput] = useState('');
-    console.log(accountList);
+
     const dispatch = useDispatch();
     const filterData = () => {
         if (filterInput === '') return accountList;

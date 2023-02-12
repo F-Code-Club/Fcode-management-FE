@@ -35,7 +35,7 @@ const PersonalDetailBlog = () => {
                 setEditorState(HTMLToEditorState(blog.content));
             } catch (e) {
                 // eslint-disable-next-line no-console
-                console.log(e);
+
                 toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
             }
         }
@@ -76,7 +76,7 @@ const PersonalDetailBlog = () => {
             const { data } = await articleApi.createArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));
-                toastSuccess('Tạo bài viết thành cống');
+                toastSuccess('Tạo bài viết thành công');
                 navigate('/personal-blog');
             }
         }

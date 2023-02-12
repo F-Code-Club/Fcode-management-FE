@@ -1,6 +1,37 @@
+import { Carousel } from 'react-responsive-carousel';
 import styled from 'styled-components';
 
 import { themes } from '@/theme/theme';
+
+export const ContainerHomepageStyled = styled.div`
+    width: 100%;
+    min-height: calc(100vh - 200px);
+    padding: 10px 20px 0;
+    display: grid;
+    grid-template-columns: 40% 58%;
+    justify-content: space-between;
+
+    // * {
+    //     padding: 0;
+    //     margin: 0;
+    //     box-sizing: border-box;
+    // }
+    .ant-list-item {
+        // box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12),
+        //     0px 1px 3px rgba(0, 0, 0, 0.2);
+        // margin-bottom: 10px;
+        border-bottom: 2px solid #f4f4f4;
+        padding: 10px 24px;
+    }
+    & .public-DraftEditor-content > div {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+`;
 
 export const ContainerHomepage = styled.div`
     width: 100%;
@@ -9,11 +40,11 @@ export const ContainerHomepage = styled.div`
     display: grid;
     grid-template-columns: 65% 33%;
     justify-content: space-between;
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
+    // * {
+    //     padding: 0;
+    //     margin: 0;
+    //     box-sizing: border-box;
+    // }
     .ant-list-item {
         box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12),
             0px 1px 3px rgba(0, 0, 0, 0.2);
@@ -21,7 +52,7 @@ export const ContainerHomepage = styled.div`
     }
     .public-DraftEditor-content > div {
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -30,13 +61,17 @@ export const ContainerHomepage = styled.div`
 `;
 
 export const Col1 = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     .row1 {
         display: grid;
         grid-template-columns: 65% 30%;
         justify-content: space-between;
         background: white;
         padding: 20px;
-        margin-bottom: 30px;
+        // margin-bottom: 30px;
+        height: 100%;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
             0px 1px 5px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
@@ -46,6 +81,194 @@ export const Col1 = styled.div`
             align-items: center;
             h3 {
                 padding: 20px;
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 22px;
+            }
+            p {
+                width: 100%;
+                padding: 20px;
+                margin-bottom: 10px;
+                box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12),
+                    0px 1px 3px rgba(0, 0, 0, 0.2);
+                border-radius: 5px;
+            }
+            .child1 {
+                overflow: hidden;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                background: ${themes.colors.primary050};
+            }
+            .child2 {
+                overflow: hidden;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                background: ${themes.colors.secondary050};
+            }
+            .btn-view-more {
+                width: 100px;
+                margin-top: 10px;
+                padding: 5px 15px;
+                background: ${themes.colors.light};
+                border: 1px solid ${themes.colors.primary};
+                color: ${themes.colors.primary};
+                box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+                border-radius: 5px;
+                cursor: pointer;
+                transition: 0.2s linear;
+                :hover {
+                    background: ${themes.colors.primary};
+                    color: ${themes.colors.light};
+                }
+            }
+        }
+        img {
+            width: 100%;
+        }
+    }
+
+    .row2 {
+        padding: 20px;
+
+        background: white;
+        height: 100%;
+
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+            0px 1px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        .title {
+            text-align: center;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+        }
+        .ant-list-item-meta-title {
+            margin: 0;
+        }
+        .ant-list-item-meta-avatar {
+            margin: auto 15px;
+            margin-left: 0;
+        }
+        .content {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+        }
+        h4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+        }
+        .ant-list-item-main {
+            min-width: 100px;
+        }
+    }
+`;
+
+export const Col2 = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .row1 {
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+            0px 1px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+
+        h3 {
+            padding: 20px;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            color: ${themes.colors.dark};
+            text-transform: uppercase;
+            text-align: center;
+        }
+    }
+    .row2 {
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+            0px 1px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        h3 {
+            padding: 20px;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            color: ${themes.colors.dark};
+            text-transform: uppercase;
+            text-align: center;
+        }
+        h4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+        }
+        .ant-list-item-extra {
+            margin-left: 10px;
+            a {
+                color: black;
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid white;
+                transition: 0.25s linear;
+                :hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .ant-list-item-meta,
+        .ant-list-item-meta-title {
+            margin-bottom: 0;
+        }
+    }
+`;
+
+export const Col1Styled = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .row1 {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-content: space-between;
+        background: white;
+        padding: 20px;
+        height: 100%;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+            0px 1px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        & .content_2 {
+            text-align: end;
+            & > .btn-view-more {
+                color: ${themes.colors.primary};
+            }
+        }
+        .subjectNew {
+            display: flex;
+            padding: 0 40px 10px 40px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            h3 {
+                padding: 10px 20px;
                 font-weight: 600;
                 font-size: 18px;
                 line-height: 22px;
@@ -80,9 +303,6 @@ export const Col1 = styled.div`
                     color: ${themes.colors.light};
                 }
             }
-        }
-        img {
-            width: 100%;
         }
     }
 
@@ -129,14 +349,16 @@ export const Col1 = styled.div`
     }
 `;
 
-export const Col2 = styled.div`
+export const Col2Styled = styled.div`
     .row1 {
         padding: 20px;
         background: white;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
             0px 1px 5px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
-        margin-bottom: 30px;
+
+        gap: 10px;
+
         h3 {
             padding: 20px;
             font-weight: 600;
@@ -154,6 +376,20 @@ export const Col2 = styled.div`
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
             0px 1px 5px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
+        height: 100%;
+        .content-announce {
+            margin: 10px;
+            width: 43em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 20px;
+            -webkit-line-clamp: 2;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            .rdw-editor-toolbar {
+                display: none;
+            }
+        }
         h3 {
             padding: 20px;
             font-weight: 600;
@@ -171,6 +407,7 @@ export const Col2 = styled.div`
             text-overflow: ellipsis;
             word-wrap: break-word;
         }
+
         .ant-list-item-extra {
             margin-left: 10px;
             a {
@@ -189,4 +426,34 @@ export const Col2 = styled.div`
             margin-bottom: 0;
         }
     }
+`;
+
+export const CarouselStyled = styled(Carousel)`
+    padding: 10px 3px;
+    & .carousel {
+        text-align: center;
+        & .slide {
+            padding: 1rem;
+            max-height: 30rem;
+            cursor: grab;
+            & img {
+                width: 100%;
+                height: 100%;
+                filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.14))
+                    drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.12))
+                    drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.2));
+                border-radius: 10px;
+
+                object-fit: cover;
+            }
+        }
+    }
+`;
+export const ImgPreviewStyled = styled.div`
+    width: 100%;
+    min-height: 100%;
+    background: ${({ url }) => (url ? `url(${url})` : null)};
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 `;

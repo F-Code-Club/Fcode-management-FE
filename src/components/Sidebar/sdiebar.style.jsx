@@ -22,8 +22,23 @@ export const Wrapper = styled.div`
     .ant-layout-sider {
         background-color: ${themes.colors.gray};
     }
+
+    .ant-menu-submenu-title > .ant-menu-title-content {
+        &:hover {
+            color: ${themes.colors.primary};
+        }
+    }
+
+    // .ant-menu-submenu-open.ant-menu-submenu-inline
+    //     > .ant-menu-submenu-title
+    //     > .ant-menu-submenu-arrow {
+    //     color: ${themes.colors.primary};
+    // }
+    .ant-menu-light .ant-menu-item:hover {
+        color: ${themes.colors.primary};
+    }
     .ant-menu-light .ant-menu-submenu-title:hover,
-    .ant-menu-light .ant-menu-item-title:hover {
+    .ant-menu-light .ant-menu-submenu-active {
         color: ${themes.colors.primary};
     }
     .ant-menu {
@@ -33,13 +48,14 @@ export const Wrapper = styled.div`
                 background: ${themes.colors.submenu};
             }
         }
+
         &-item {
             color: ${themes.colors.light};
             &-active {
                 color: ${themes.colors.primary};
             }
             &:hover {
-                color: ${themes.colors.primary} !important;
+                color: ${themes.colors.primary};
             }
             &.ant-menu-submenu-selected {
                 color: ${themes.colors.primary};
@@ -66,23 +82,30 @@ export const Wrapper = styled.div`
             }
         }
         &-submenu {
-            color: ${themes.colors.light};
+            &-selected {
+                & > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+                    color: ${themes.colors.primary};
+                }
+                color: ${themes.colors.primary};
+            }
             &-arrow {
                 color: ${themes.colors.light};
-            }
-            &-active {
-                color: ${themes.colors.primary};
             }
             &:hover {
                 & > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
                     color: ${themes.colors.primary};
                 }
+                & > .ant-menu-submenu-title > .ant-menu-title-content {
+                    color: ${themes.colors.primary};
+                }
             }
+
             &-title {
                 &:hover {
                     color: ${themes.colors.primary};
                 }
             }
+            color: ${themes.colors.light};
         }
         &-submenu a {
             color: ${themes.colors.light};

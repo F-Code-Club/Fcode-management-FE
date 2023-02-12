@@ -47,14 +47,14 @@ const ViewResource = () => {
 
     const handleCreate = async (status, message) => {
         const typeWork = modalOpen.popupEditor.type;
-        console.log(typeWork);
+
         if (status) {
             toastSuccess(
-                `Môn học đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
+                `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
         } else
             toastError(
-                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công ${
+                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} tài nguyên không thành công ${
                     message ? message : ''
                 }`
             );
@@ -69,8 +69,8 @@ const ViewResource = () => {
     const handleDelete = async (status) => {
         if (status) {
             await dispatch(actions.deleteResourceChild(modalOpen.popupConfirm.id));
-            toastSuccess('Môn học đã được xóa thành công');
-        } else toastError('Xóa môn học không thành công');
+            toastSuccess('Tài nguyên đã được xóa thành công');
+        } else toastError('Xóa tài nguyên không thành công');
         await setModalOpen({
             ...modalOpen,
             popupConfirm: {
@@ -125,7 +125,6 @@ const ViewResource = () => {
         const result = await productApi.getResourceBySubjectId(id);
         if (result.data.code === 400) {
             await setResourceChild(result.data.data);
-            console.log(result.data.message);
         } else await setResourceChild(result.data.data);
         const response = await productApi.getSubjectById(id);
 
@@ -145,7 +144,7 @@ const ViewResource = () => {
     if (subject === null || subject === undefined) {
         tmpSubject = [{ semester: 'unknown', name: 'unknown' }];
     } else tmpSubject = subject;
-    console.log(tmpSubject);
+
     return (
         <ViewResourceContainer>
             {tmpSubject && (

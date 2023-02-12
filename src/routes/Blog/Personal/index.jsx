@@ -135,11 +135,14 @@ const PersonalBlog = () => {
     ];
 
     const handleSearch = (value) => {
+        console.log(blogs);
         if (!value.trim()) {
             setBlogs({ ...blogs, search: blogs.all });
         } else {
-            const filteredBlogs = blogs.all.filter((blog) =>
-                blog.title.toLowerCase().includes(value.toLowerCase().trim())
+            const filteredBlogs = blogs.all.filter(
+                (blog) =>
+                    blog.title.toLowerCase().includes(value.toLowerCase().trim()) ||
+                    blog.author.toLowerCase().includes(value.toLowerCase().trim())
             );
             setBlogs({ ...blogs, search: filteredBlogs });
         }

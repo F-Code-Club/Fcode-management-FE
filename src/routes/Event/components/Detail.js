@@ -14,28 +14,49 @@ import {
     EditButton,
     DeleteButton,
     RightHeader,
+    ConfirmModal,
+    Message,
+    MessageHero,
 } from '../styled';
 import EditBox from './EditBox';
 
-import { toastSuccess } from '@/components/ToastNotification';
+import { toastSuccess, toastError } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import { CloseCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 function Detail({ event, handle }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const token = localStorageUtils.getItem('token');
     const [isEditBoxOpen, setEditBoxOpen] = useState(false);
     const dispatch = useDispatch();
     const handleOpenEditBox = () => {
         setEditBoxOpen(true);
     };
-
-    const handleConfirm = async (event) => {
-        await productApi.removeEvent(event.id, token);
-        dispatch(removeEvent(event));
-        handle();
-        toastSuccess('Xóa sự kiến thành công!!');
+    const handleClose = () => {
+        setIsModalOpen(false);
     };
+    const handleHandleConfirm = async (event) => {
+        try {
+            const res = await productApi.removeEvent(event.id, token);
+
+            switch (res.data.code) {
+                case 200:
+                    dispatch(removeEvent(event));
+                    toastSuccess('Xóa sự kiện thành công!!');
+                    break;
+                case 408:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
+        } catch {
+            toastError('Xóa sự kiện không thành công , vui lòng thử lại!!');
+        } finally {
+            setIsModalOpen(false);
+            handle();
+        }
+    };
+
     function ChangeFormateDate(oldDate) {
         var date = new Date(oldDate);
         var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
@@ -53,6 +74,23 @@ function Detail({ event, handle }) {
 
     return (
         <BoxContainer>
+            <ConfirmModal
+                width={416}
+                height={188}
+                open={isModalOpen}
+                onOk={() => handleHandleConfirm(event)}
+                onCancel={handleClose}
+                okText={'Xóa'}
+                closable={false}
+                cancelText={'Quay Lại'}
+            >
+                <Message>
+                    <CloseCircleOutlined />
+                    <MessageHero>
+                        <h1>Bạn có muốn xoá sự kiện này?</h1>
+                    </MessageHero>
+                </Message>
+            </ConfirmModal>
             <DetailContainer>
                 <DetailHeader>
                     <LeftHeader>
@@ -65,21 +103,21 @@ function Detail({ event, handle }) {
                 </DetailHeader>
                 <hr className="solid"></hr>
                 <DetailBody>
-                    <div>
+                    <div className="wrap_place">
                         <h1>Ngày :</h1>
                         <h2>{`${ChangeFormateDate(event.startTime)} ➭ ${ChangeFormateDate(
                             event.endTime
                         )}`}</h2>
                     </div>
-                    <div>
+                    <div className="wrap_place">
                         <h1>Thời gian :</h1>
                         <h2>{`${changeFormatTime(event.startTime)} ➭ ${changeFormatTime(
                             event.endTime
                         )}`}</h2>
                     </div>
-                    <div>
+                    <div className="wrap_place">
                         <h1>Địa Điểm : </h1>
-                        <h2>{`${event.location}`}</h2>
+                        <h2 className="place">{`${event.location}`}</h2>
                     </div>
                     <h1>Ghi Chú :</h1>
                     <h2>{`${event.description}`}</h2>
@@ -88,16 +126,9 @@ function Detail({ event, handle }) {
                     <EditButton onClick={handleOpenEditBox}>
                         <EditOutlined />
                     </EditButton>
-                    <Popconfirm
-                        title="Bạn có chắc muốn xóa sự kiện  này ?"
-                        okText="Có "
-                        cancelText="Không"
-                        onConfirm={() => handleConfirm(event)}
-                    >
-                        <DeleteButton>
-                            <DeleteOutlined />
-                        </DeleteButton>
-                    </Popconfirm>
+                    <DeleteButton onClick={() => setIsModalOpen(true)}>
+                        <DeleteOutlined />
+                    </DeleteButton>
                 </Action>
                 {isEditBoxOpen && (
                     <EditBox

@@ -1,12 +1,16 @@
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 
+import Loading from '../antdLoading';
+
 import PageHeaderComponent from '@/components/PageHeader/PageHeader.component';
 import SidebarComponent from '@/components/Sidebar/Sidebar.component';
 import { themes } from '@/theme/theme';
+import useAuth from '@/utils/useAuth';
 
 const { Content } = Layout;
 const LayoutComponent = () => {
+    const { isLoading } = useAuth();
     return (
         <Layout>
             <SidebarComponent />
@@ -15,9 +19,9 @@ const LayoutComponent = () => {
                 style={{ background: `${themes.colors.primary050}`, marginLeft: '250px' }}
             >
                 <PageHeaderComponent />
-                <Content style={{ margin: '20px 16px' }}>
+                <Content style={{ margin: '20px 16px', minHeight: '100vh' }}>
                     <div className="site-layout-background">
-                        <Outlet />
+                        {isLoading ? <Loading /> : <Outlet />}
                     </div>
                 </Content>
             </Layout>

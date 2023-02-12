@@ -46,7 +46,7 @@ const BlogDetailComponent = () => {
                 setEditorState(HTMLToEditorState(data.content));
             } catch (e) {
                 // eslint-disable-next-line no-console
-                console.log(e);
+
                 toastError('Lỗi khi tải nội dung bài viết, vui lòng liên hệ quản trị viên');
             }
         };

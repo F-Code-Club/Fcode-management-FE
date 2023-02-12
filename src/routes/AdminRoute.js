@@ -3,10 +3,19 @@ import { Outlet, Navigate } from 'react-router-dom';
 
 import { selectUser } from './Auth/slice/selector';
 
-const AdminRoute = () => {
-    const User = useSelector(selectUser);
+import Loading from '@/components/antdLoading';
+import useAuth from '@/utils/useAuth';
 
-    return User.role === 'ADMIN' ? <Outlet /> : <Navigate to="/403" replace />;
+const AdminRoute = () => {
+    const { userRole, isLoading } = useAuth();
+
+    if (userRole === undefined) {
+        return <Navigate to="/auth" replace />;
+    } else if (userRole === null) {
+        return <Outlet />;
+    }
+
+    return userRole === 'ADMIN' ? <Outlet /> : <Navigate to="/403" replace />;
 };
 
 export default AdminRoute;

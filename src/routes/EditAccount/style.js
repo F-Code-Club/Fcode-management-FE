@@ -62,9 +62,12 @@ export const Container = styled.div`
             width: 100%;
         }
     }
-    .ant-btn-primary {
-        border-color: ${themes.colors.primary};
-        background-color: ${themes.colors.primary};
+    .ant-btn-primary,
+    .ant-btn-primary:hover,
+    .ant-btn-primary:focus {
+        background: ${themes.colors.primary} !important;
+        background-color: ${themes.colors.primary} !important;
+        border-color: ${themes.colors.primary} !important;
     }
 `;
 export const StyleImage = styled(Image)`
@@ -73,6 +76,12 @@ export const StyleImage = styled(Image)`
 export const EditButton = styled(Button)`
     position: absolute;
     transform: translate(150px, -70px);
+    background-color: ${themes.colors.primary};
+    .ant-btn-primary,
+    .ant-btn-primary:hover,
+    .ant-btn-primary:focus {
+        background-color: ${themes.colors.primary} !important;
+    }
 `;
 export const AvatarContainer = styled.div`
     position: relative;
@@ -106,8 +115,48 @@ export const Label = styled(Title)`
 
     color: rgba(0, 0, 0, 0.85);
 `;
-export const MyModal = styled(Modal)`
+export const NotiModal = styled(Modal)`
+    .ant-modal-content {
+        border-radius: 2px;
+        background: #ffffff;
+        /* drop-shadow/0.12+0.8+0.5 */
+
+        box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08),
+            0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+        border-radius: 2px;
+    }
     .ant-btn-primary {
         background-color: ${themes.colors.primary};
+    }
+`;
+export const Message = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    .anticon {
+        color: #faad14;
+        font-size: 22px;
+        margin: 4px 16px 0 0;
+    }
+`;
+export const MessageHero = styled.div`
+    h1 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        /* identical to box height, or 150% */
+
+        /* Character/Title .85 */
+        margin: 0;
+        color: rgba(0, 0, 0, 0.85);
+    }
+    p {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
     }
 `;

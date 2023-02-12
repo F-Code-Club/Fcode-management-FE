@@ -32,7 +32,7 @@ export const ViewAnnouncement = () => {
     const getContentEditorState = (item) => {
         try {
             return EditorState.createWithContent(
-                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+                ContentState.createFromBlockArray(htmlToDraft(item).contentBlocks)
             );
         } catch (error) {
             return EditorState.createEmpty();
@@ -50,9 +50,7 @@ export const ViewAnnouncement = () => {
                         editorClassName="demo-editor"
                         readOnly
                         style={{ 'text-align': 'justify' }}
-                        toolbar={{
-                            options: [],
-                        }}
+                        toolbarHidden
                     />
                 </ContentAnnounce>
             )}

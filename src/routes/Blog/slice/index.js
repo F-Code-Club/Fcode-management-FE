@@ -54,11 +54,11 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAllBlogs.fulfilled, (state, action) => {
-                state.active = action.payload.active?.sort((a, b) => (a.id > b.id ? 1 : -1));
+                state.active = action.payload.active?.sort((a, b) => (a.id < b.id ? 1 : -1));
                 state.processing = action.payload.processing?.sort((a, b) =>
-                    a.id > b.id ? 1 : -1
+                    a.id < b.id ? 1 : -1
                 );
-                state.inactive = action.payload.inactive?.sort((a, b) => (a.id > b.id ? 1 : -1));
+                state.inactive = action.payload.inactive?.sort((a, b) => (a.id < b.id ? 1 : -1));
                 state.author = action.payload?.author?.sort((a, b) => (a.id > b.id ? 1 : -1));
                 state.searchedActive = state.active;
                 state.searchedProcessing = state.processing;
@@ -77,7 +77,7 @@ const slice = createSlice({
             })
             .addCase(getAllBlogs.rejected, (state, action) => {
                 // eslint-disable-next-line no-console
-                console.log(action.payload);
+
                 toastError('Lấy danh sách bài viết thất bại');
             });
     },

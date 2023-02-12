@@ -69,7 +69,7 @@ class LocalStorageUtils {
                     return fetchedMember;
                 } catch (err) {
                     // eslint-disable-next-line no-console
-                    console.log(err);
+
                     if (err.response && err.response.status === 401) {
                         this.deleteUser();
                     }

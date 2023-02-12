@@ -76,7 +76,7 @@ const PersonalDetailBlog = () => {
             const { data } = await articleApi.createArticle(newBlog, token);
             if (data.code === 200) {
                 dispatch(changeBlog({}));
-                toastSuccess('Tạo bài viết thành cống');
+                toastSuccess('Tạo bài viết thành công');
                 navigate('/personal-blog');
             }
         }

@@ -47,7 +47,7 @@ const ViewResource = () => {
 
     const handleCreate = async (status, message) => {
         const typeWork = modalOpen.popupEditor.type;
-        console.log(typeWork);
+
         if (status) {
             toastSuccess(
                 `Tài nguyên đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
@@ -125,7 +125,6 @@ const ViewResource = () => {
         const result = await productApi.getResourceBySubjectId(id);
         if (result.data.code === 400) {
             await setResourceChild(result.data.data);
-            console.log(result.data.message);
         } else await setResourceChild(result.data.data);
         const response = await productApi.getSubjectById(id);
 
@@ -145,7 +144,7 @@ const ViewResource = () => {
     if (subject === null || subject === undefined) {
         tmpSubject = [{ semester: 'unknown', name: 'unknown' }];
     } else tmpSubject = subject;
-    console.log(tmpSubject);
+
     return (
         <ViewResourceContainer>
             {tmpSubject && (

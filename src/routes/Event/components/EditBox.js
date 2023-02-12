@@ -12,6 +12,7 @@ import {
     InputContainer,
     ButtonContainer,
 } from '../styled';
+import ListAttend from './ListAttend';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
@@ -34,7 +35,6 @@ function EditBox({ event, handle, closeOtherBox }) {
         Picker: text.Picker,
     });
     const onFinish = async (values) => {
-        console.log('Success:', values);
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD HH:mm:ss');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD HH:mm:ss');
         const formattedstartDate = startDate.format('YYYY-MM-DD HH:mm:ss');
@@ -50,9 +50,20 @@ function EditBox({ event, handle, closeOtherBox }) {
                 id: event.id,
                 status: 'ACTIVE',
             };
-            await productApi.editEvent(newEvent, token);
-            toastSuccess('Event has been added successfully to Your Calender,Code The Dream!!');
-            dispatch(editEvent(newEvent));
+            const res = await productApi.editEvent(newEvent, token);
+
+            switch (await res.data.code) {
+                case 200:
+                    toastSuccess('Chỉnh sửa sự kiện thành công!!');
+                    dispatch(editEvent(newEvent));
+                    break;
+                case 400:
+                    toastError('Tên sự kiện bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
         } catch {
             toastError('Something has gone Wrong,Please Try again');
         } finally {
@@ -72,7 +83,10 @@ function EditBox({ event, handle, closeOtherBox }) {
         <BoxContainer>
             <EditContainer>
                 <InputContainer>
-                    <h1>Cập nhật Sự Kiện</h1>
+                    <div className="flex">
+                        <h1>Cập nhật Sự Kiện</h1>
+                        {event && <ListAttend eventId={event.id} />}
+                    </div>
                     <Form
                         name="basic"
                         labelCol={{

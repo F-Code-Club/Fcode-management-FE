@@ -94,9 +94,17 @@ export const Col1 = styled.div`
                 border-radius: 5px;
             }
             .child1 {
+                overflow: hidden;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
                 background: ${themes.colors.primary050};
             }
             .child2 {
+                overflow: hidden;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
                 background: ${themes.colors.secondary050};
             }
             .btn-view-more {

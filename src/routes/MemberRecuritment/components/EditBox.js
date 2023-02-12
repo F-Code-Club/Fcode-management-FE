@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Input, DatePicker, Form, Button, Upload } from 'antd';
+import { Input, DatePicker, Form } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
@@ -11,15 +11,12 @@ import {
     InputContainer,
     ButtonContainer,
     CustomButton,
-    UploadContainer,
     CancelButon,
-    MySwitch,
 } from './styled';
 
 import { toastError, toastSuccess } from '@/components/ToastNotification';
 import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
-import { UploadOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
@@ -37,7 +34,7 @@ function EditBox({ handle, event }) {
     form.setFieldsValue({
         Picker: text.Picker,
     });
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const startDate = moment(values.Picker[0], 'YYYY-MM-DD');
         const endDate = moment(values.Picker[1], 'YYYY-MM-DD');
         const formattedstartDate = startDate.format('YYYY-MM-DD');
@@ -52,9 +49,19 @@ function EditBox({ handle, event }) {
                 id: event.id,
                 status: 'ACTIVE',
             };
-            dispatch(editMile(newEvent));
-            productApi.editChallenge(newEvent, token);
-            toastSuccess('Sửa cột mốc thành công!!');
+            const res = await productApi.editChallenge(newEvent, token);
+            switch (res.data.code) {
+                case 200:
+                    toastSuccess('Chỉnh sửa cột mốc thành công!!');
+                    dispatch(editMile(newEvent));
+                    break;
+                case 400:
+                    toastError('Tên cột mốc bị trùng !!!');
+                    break;
+                case 401:
+                    toastError('Token hết hạn !!!');
+                    break;
+            }
         } catch {
             toastError('Sửa cột mốc không thành công!!');
         } finally {
@@ -177,7 +184,7 @@ function EditBox({ handle, event }) {
                         <ButtonContainer>
                             <CancelButon onClick={handle}>Hủy</CancelButon>
                             <CustomButton type="primary" htmlType="submit">
-                                Thêm sự kiện
+                                Xác nhận
                             </CustomButton>
                         </ButtonContainer>
                     </Form>

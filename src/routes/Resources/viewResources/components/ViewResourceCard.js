@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 import NoPhoto from '../../../../assets/no-photo.jpg';
 import {
     ResourceCardContainer,
@@ -7,18 +9,16 @@ import {
     Description,
 } from '../styled';
 
-import localStorageUtils from '@/utils/localStorageUtils';
-import usePersistedState from '@/utils/usePersistedState';
+import { selectUser } from '@/routes/Auth/slice/selector';
 import { EditOutlined } from '@ant-design/icons';
 
 const ViewResourcesCard = ({ title, des, link, handleClick, item }) => {
-    const roleInLocal = localStorageUtils.getItem('role');
-    const role = usePersistedState('role', roleInLocal)[0];
+    const user = useSelector(selectUser);
     return (
         <ResourceCardContainer>
             <ResourceImage url={`${NoPhoto}`} />
             <WrapperContent>
-                {role === 'ADMIN' || role === 'MANAGER' ? (
+                {user?.role === 'ADMIN' || user?.role === 'MANAGER' ? (
                     <TextTitle>
                         {title}
                         <EditOutlined

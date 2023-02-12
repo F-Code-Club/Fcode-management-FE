@@ -12,7 +12,6 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 // };
 
 const UpdateInfo = (info) => {
-    console.log(info);
     // productApi.putAccountByAdmin(info, token);
 };
 const confirm = (info) => {

@@ -23,7 +23,7 @@ export const slice = createSlice({
                 ...action.payload,
                 id: state.listOfEvents[state.listOfEvents.length - 1].id + 1,
             };
-            console.log(newEvent);
+
             state.listOfEvents.push(newEvent);
         },
         editEvent: (state, action) => {

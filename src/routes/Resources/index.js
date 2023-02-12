@@ -49,11 +49,7 @@ const ResourcesSection = () => {
                 `Môn học đã được ${typeWork === 'create' ? 'tạo' : 'chỉnh sửa'} thành công`
             );
         } else
-            toastError(
-                `${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'} môn học không thành công ${
-                    message ? message : ''
-                }`
-            );
+            toastError(`${typeWork === 'create' ? 'Tạo' : 'Chỉnh sửa'}  môn học không thành công`);
         await setModalOpen({
             ...modalOpen,
             popupEditor: {
@@ -92,8 +88,8 @@ const ResourcesSection = () => {
                     popupEditor: {
                         status: true,
                         type: 'edit',
-                        description: item.description,
-                        title: item.title,
+                        description: item.name,
+                        title: item.semester,
                         imgs: item.imgs,
                         id: item.id,
                     },

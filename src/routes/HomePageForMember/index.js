@@ -23,7 +23,6 @@ export const HomepageMemeber = () => {
     const fetchMemberById = async (memberId) => {
         const result = await get(`/member/memberId/${memberId}`, '', { authorization: token })
             .then((res) => {
-                console.log(res.data.data);
                 setDataAvatar(res.data.data);
             })
             // eslint-disable-next-line no-console
@@ -69,7 +68,7 @@ export const HomepageMemeber = () => {
     const getContentEditorState = (item) => {
         try {
             return EditorState.createWithContent(
-                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+                ContentState.createFromBlockArray(htmlToDraft(item).contentBlocks)
             );
         } catch (error) {
             return EditorState.createEmpty();

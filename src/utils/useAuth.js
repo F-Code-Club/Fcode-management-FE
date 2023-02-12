@@ -23,7 +23,7 @@ const useAuth = () => {
             if (decoded?.exp < Date.now() / 1000) {
                 setUserRole(undefined);
                 localStorage.removeItem('token');
-                console.log('run decoded', decoded);
+
                 toastError('Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại');
                 return;
             }
@@ -36,7 +36,6 @@ const useAuth = () => {
 
         // If there is no token, return
         if (!token) {
-            console.log('check undefined');
             setUserRole(undefined);
             return;
         }
@@ -63,7 +62,7 @@ const useAuth = () => {
             });
         } catch (err) {
             // If the token is invalid, return
-            console.log('invalid token');
+
             return;
         }
         const intervalId = setInterval(checkTokenExpiration, 5000);

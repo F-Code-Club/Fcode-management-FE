@@ -12,7 +12,6 @@ export const deleteArticle = async (id, successContent) => {
             throw new Error(res.data.message);
         })
         .catch((err) => {
-            console.log(err);
             toastError('Xoá bài viết thất bại');
         });
 };

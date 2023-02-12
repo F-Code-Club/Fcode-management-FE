@@ -13,7 +13,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 export const ViewNotification = () => {
     const token = localStorage.getItem('token');
     // const { state } = useLocation();
-    console.log('line 16:', location);
+
     const [state, setState] = useState();
     const { id } = useParams();
     const navigate = useNavigate();

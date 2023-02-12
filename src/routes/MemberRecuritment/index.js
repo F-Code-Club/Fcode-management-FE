@@ -29,7 +29,7 @@ function Recruitment() {
     }, []);
     const getAllChallenge = async () => {
         const path = await productApi.getAllChallenge(token);
-        console.log(path.data);
+
         SetUpdated(true);
         dispatch(setMile(path.data.data));
     };

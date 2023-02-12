@@ -59,7 +59,6 @@ const productApi = {
             .catch((err) => console.log(err.message));
     },
     updateResource: async (resource, token) => {
-        console.log(resource);
         const endpoint = `/resource`;
         return await put(endpoint, resource, {}, { authorization: token })
             .then((res) => {

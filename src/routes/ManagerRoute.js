@@ -9,7 +9,7 @@ import useAuth from '@/utils/useAuth';
 const ManagerRoute = () => {
     const User = useSelector(selectUser);
     const { userRole, isLoading } = useAuth();
-    console.log('run 2', userRole);
+
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
     } else if (userRole === null) {

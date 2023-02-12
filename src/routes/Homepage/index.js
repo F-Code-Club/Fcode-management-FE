@@ -189,9 +189,6 @@ export const Homepage = () => {
                                 pagination={false}
                                 dataSource={dataArticle}
                                 renderItem={(item) => {
-                                    console.log(getContentEditorState(item));
-                                    console.log(item);
-
                                     return (
                                         <Link
                                             to={`/blog/${item.id}?action=processing`}

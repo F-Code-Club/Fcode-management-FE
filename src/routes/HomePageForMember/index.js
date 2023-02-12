@@ -23,7 +23,6 @@ export const HomepageMemeber = () => {
     const fetchMemberById = async (memberId) => {
         const result = await get(`/member/memberId/${memberId}`, '', { authorization: token })
             .then((res) => {
-                console.log(res.data.data);
                 setDataAvatar(res.data.data);
             })
             // eslint-disable-next-line no-console

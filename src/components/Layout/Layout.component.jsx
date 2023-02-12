@@ -19,7 +19,7 @@ const LayoutComponent = () => {
                 style={{ background: `${themes.colors.primary050}`, marginLeft: '250px' }}
             >
                 <PageHeaderComponent />
-                <Content style={{ margin: '20px 16px' }}>
+                <Content style={{ margin: '20px 16px', minHeight: '100vh' }}>
                     <div className="site-layout-background">
                         {isLoading ? <Loading /> : <Outlet />}
                     </div>

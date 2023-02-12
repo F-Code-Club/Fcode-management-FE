@@ -8,7 +8,7 @@ import useAuth from '@/utils/useAuth';
 
 const AdminRoute = () => {
     const { userRole, isLoading } = useAuth();
-    console.log('run 3', userRole);
+
     if (userRole === undefined) {
         return <Navigate to="/auth" replace />;
     } else if (userRole === null) {

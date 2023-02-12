@@ -1,15 +1,20 @@
 import { get, post } from '@/utils/ApiCaller';
 import localStorageUtils from '@/utils/localStorageUtils';
 
-const token = localStorageUtils.getToken();
-
 const attendApi = {
     getAttendByEventId: async (eventId) => {
         const endpoint = `/attendance/eventId/${eventId}`;
-
-        return await get(endpoint, {}, { authorization: token }).then((res) => res.data.data);
+        const token = localStorageUtils.getToken();
+        console.log('line 9 ', token);
+        return await get(endpoint, {}, { authorization: token })
+            .then((res) => {
+                console.log(res);
+                return res.data.data;
+            })
+            .catch((err) => console.log(err));
     },
     create: async (commentData) => {
+        const token = localStorageUtils.getToken();
         const endpoint = '/comment';
         return await post(
             endpoint,

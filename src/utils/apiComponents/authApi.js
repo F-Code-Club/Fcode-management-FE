@@ -3,7 +3,6 @@ import localStorageUtils from '../localStorageUtils';
 
 import { toastError } from '@/components/ToastNotification';
 
-const token = localStorageUtils.getItem('token');
 const authApi = {
     // subject api
     getLoginMember: async () => {
@@ -18,6 +17,7 @@ const authApi = {
     //need role manager or admin to call
     getAllMembers: async () => {
         const endpoint = '/member/all';
+        const token = localStorageUtils.getItem('token');
         return await get(endpoint, {}, { authorization: token })
             .then((res) => {
                 if (res.data.code !== 200) toastError(res.data.message);

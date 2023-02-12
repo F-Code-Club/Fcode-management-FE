@@ -31,7 +31,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAttendById.fulfilled, (state, action) => {
-                console.log('line 36 :');
+                console.log('line 36 :', action.payload);
 
                 state.listAttends = action.payload;
                 state.searchedAttends = state.listAttends;

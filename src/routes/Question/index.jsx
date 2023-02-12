@@ -63,6 +63,7 @@ const QuestionManagement = () => {
             .getAllProcessing()
             .then((res) => {
                 setLoading(false);
+                console.log('line 66: ', res);
                 if (res.data.code === 200) {
                     setQuestions(res.data.data);
                     return;

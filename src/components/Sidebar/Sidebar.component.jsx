@@ -94,7 +94,7 @@ const itemsUser = [
     //     getItem(<SidebarLink to="/announcement/view-announcement" child="Xem thông báo" />, '9'),
     // ]),
     getItem(
-        <SidebarLink to="/account/view-account/:id" child="Thông tin cá nhân" />,
+        <SidebarLink to="/account/edit-account" child="Thông tin cá nhân" />,
         '/account/view-account/:id',
         <UserOutlined />
         // [getItem(<SidebarLink to="/account/view-account/:id" child="xem thông tin" />, '10')]

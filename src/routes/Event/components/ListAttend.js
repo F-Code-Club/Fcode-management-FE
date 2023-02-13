@@ -164,6 +164,9 @@ export const TwoButton = styled.div`
     }
 `;
 export const ModalStyled = styled(Modal)`
+    .ant-modal-content {
+        border-radius: 10px 10px;
+    }
     .ant-table-filter-trigger.active {
         color: ${themes.colors.primary};
     }

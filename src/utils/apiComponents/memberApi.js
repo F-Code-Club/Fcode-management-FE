@@ -1,10 +1,10 @@
 import { get } from '../ApiCaller';
 import localStorageUtils from '../localStorageUtils';
 
-const token = localStorageUtils.getItem('token');
 const memberApi = {
     // subject api
     getMemberByStudentId: async (id) => {
+        const token = localStorageUtils.getItem('token');
         const endpoint = `/member/studentId/${id}`;
         return await get(endpoint, {}, { authorization: token })
             .then((res) => {
@@ -14,6 +14,7 @@ const memberApi = {
             .catch((err) => console.log(err.message));
     },
     getMemberByMemberId: async (id) => {
+        const token = localStorageUtils.getItem('token');
         const endpoint = `/member/memberId/${id}`;
         return await get(endpoint, {}, { authorization: token })
             .then((res) => {

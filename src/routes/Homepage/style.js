@@ -320,6 +320,7 @@ export const Col1Styled = styled.div`
             font-size: 18px;
             line-height: 22px;
         }
+
         .ant-list-item-meta-title {
             margin: 0;
         }
@@ -377,6 +378,12 @@ export const Col2Styled = styled.div`
             0px 1px 5px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
         height: 100%;
+        & .content_2 {
+            text-align: end;
+            & > .btn-view-more {
+                color: ${themes.colors.primary};
+            }
+        }
         .content-announce {
             margin: 10px;
             width: 43em;

@@ -102,7 +102,7 @@ export const Homepage = () => {
     const getContentEditorState = (item) => {
         try {
             return EditorState.createWithContent(
-                ContentState.createFromBlockArray(htmlToDraft(JSON.parse(item)).contentBlocks)
+                ContentState.createFromBlockArray(htmlToDraft(item).contentBlocks)
             );
         } catch (error) {
             return EditorState.createEmpty();
@@ -265,17 +265,22 @@ export const Homepage = () => {
             <Carousel2 />
             <ContainerHomepageStyled>
                 <Col1Styled>
-                    {dataEvent && (
+                    {dataEvent?.length === 0 && dataEvent ? (
                         <div className="row1">
-                            <div className="content_2">
+                            <div className="content">
+                                <h3 className="title">CLB ĐANG DIỄN RA</h3>
+                                <span> Chưa có sự kiện nào diễn ra gần đây</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="row1">
+                            <div className="content">
+                                <h3 className="title">CLB ĐANG DIỄN RA</h3>
+                                <p className="child1">{dataEvent && dataEvent[0]?.name}</p>
+                                <p className="child2">{dataEvent && dataEvent[1]?.name}</p>
                                 <Link to="/event" className="btn-view-more">
                                     Xem thêm
                                 </Link>
-                            </div>
-                            <div className="content">
-                                <h3 className="title">CLB ĐANG DIỄN RA</h3>
-                                <p className="child1">{dataEvent[dataEvent.length - 1]?.name}</p>
-                                <p className="child2">{dataEvent[dataEvent.length - 2]?.name}</p>
                             </div>
                         </div>
                     )}
@@ -301,6 +306,11 @@ export const Homepage = () => {
 
                 <Col2Styled>
                     <div className="row2">
+                        <div className="content_2">
+                            <Link to="/notifications" className="btn-view-more">
+                                Xem thêm
+                            </Link>
+                        </div>
                         <h3>thông báo</h3>
                         <List
                             itemLayout="vertical"

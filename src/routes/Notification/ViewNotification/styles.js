@@ -20,4 +20,14 @@ export const ContentAnnounce = styled.div`
     .public-DraftEditor-content div {
         text-align: justify;
     }
+    .InfoAnnounce {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & > .infoMember {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
 `;

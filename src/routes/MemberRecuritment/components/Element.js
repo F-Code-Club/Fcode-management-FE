@@ -28,6 +28,7 @@ import localStorageUtils from '@/utils/localStorageUtils';
 import productApi from '@/utils/productApi';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import PublicIcon from '@mui/icons-material/Public';
+import PublicOffIcon from '@mui/icons-material/PublicOffOutlined';
 
 function Element({ event }) {
     const [showMileStone, setShowMileStone] = useState(false);
@@ -39,7 +40,12 @@ function Element({ event }) {
         var newDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ';
         return newDate;
     }
-
+    function isDateValid(dateString) {
+        const currentDate = new Date();
+        const [day, month, year] = dateString.split('/');
+        const inputDate = new Date(year, month - 1, day); // month is 0-based in Date constructor
+        return inputDate <= currentDate;
+    }
     const [edit, setEdit] = useState(false);
     const handleOpenEdit = (event) => {
         event.stopPropagation();
@@ -94,7 +100,11 @@ function Element({ event }) {
                     <LeftSide>
                         <Hero>
                             <section>
-                                <PublicIcon />
+                                {isDateValid(ChangeFormatDate(event.startTime)) ? (
+                                    <PublicIcon />
+                                ) : (
+                                    <PublicOffIcon style={{ color: 'gray' }} />
+                                )}
                             </section>
                             <h5> {event.title}</h5>
                         </Hero>
@@ -133,7 +143,11 @@ function Element({ event }) {
                 <LeftSide>
                     <Hero>
                         <section>
-                            <PublicIcon />
+                            {isDateValid(ChangeFormatDate(event.startTime)) ? (
+                                <PublicIcon />
+                            ) : (
+                                <PublicOffIcon style={{ color: 'gray' }} />
+                            )}
                         </section>
                         <h5> {event.title}</h5>
                     </Hero>

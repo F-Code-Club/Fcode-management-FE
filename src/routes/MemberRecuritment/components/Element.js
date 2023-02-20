@@ -44,7 +44,6 @@ function Element({ event }) {
         const currentDate = new Date();
         const [day, month, year] = dateString.split('/');
         const inputDate = new Date(year, month - 1, day); // month is 0-based in Date constructor
-        console.log(inputDate <= currentDate);
         return inputDate <= currentDate;
     }
     const [edit, setEdit] = useState(false);

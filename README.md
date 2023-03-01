@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# Fcode Management FE
+A project of Fcode club which managed members of club.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## A Quick Look
 
-## Available Scripts
+Below are some screen shot:
+- Login page
+![image](https://user-images.githubusercontent.com/77198169/222033784-1cfaa032-9c8f-454c-820c-887563a4272b.png)
 
-In the project directory, you can run:
+- Homepage
+![image](https://user-images.githubusercontent.com/77198169/222036097-88a10249-83c6-4c12-bcaa-0dea417b42b7.png)
 
-### `yarn start`
+- Manage events
+![image](https://user-images.githubusercontent.com/77198169/222036205-3e39dfb8-c690-4462-8374-5cb87634f6ef.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Manage resources
+![image](https://user-images.githubusercontent.com/77198169/222036430-40bcacc2-a99f-453d-8c7a-352a33b51178.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Manage blogs
+![image](https://user-images.githubusercontent.com/77198169/222036603-a7c39080-c335-4330-9dc2-f1f5a24111ae.png)
+![image](https://user-images.githubusercontent.com/77198169/222036663-5449f45f-ba37-4281-9bc9-02d5ed5b5a4d.png)
+![image](https://user-images.githubusercontent.com/77198169/222036708-2c6342b2-59ba-4622-8480-df791aee199e.png)
 
-### `yarn test`
+- Manage accounts
+![image](https://user-images.githubusercontent.com/77198169/222036794-fd095c09-eaf0-4115-ba1a-89848f4cfa2c.png)
+![image](https://user-images.githubusercontent.com/77198169/222036964-53e3c8ef-276f-4206-8a33-e1d3b265941f.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Manage announcements
+![image](https://user-images.githubusercontent.com/77198169/222037090-23910dcd-af6b-4471-ad8f-7baad364c73e.png)
+![image](https://user-images.githubusercontent.com/77198169/222037201-7e8d224c-64e5-4344-8a81-7968a3d89f62.png)
 
-### `yarn build`
+- Manage recruit members
+![image](https://user-images.githubusercontent.com/77198169/222037351-1e6bbec5-a651-4a8c-8acb-53221a1d8471.png)
+![image](https://user-images.githubusercontent.com/77198169/222037388-6c16e8e1-f2d9-407a-a129-7c2dcbc00dcb.png)
+- Manage Q&A
+![image](https://user-images.githubusercontent.com/77198169/222037447-0f96fbef-1a58-42f0-96ab-96cf2b9b6685.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
+- Clone the repository:
+```
+  git clone https://github.com/F-Code-Club/Fcode-management-FE.git
+  cd Fcode-management-FE
+```
+- Using yarn to install and start app:
+```
+  yarn install
+  yarn start
+  Or
+  npm install
+  npm start
+```
+- Enjoy yourself!
+## Tech Stack
+Using **Ant Design** for improving UI and some of main stack below:
+<div>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/Ant%20Design-1890FF?style=for-the-badge&logo=antdesign&logoColor=white" />
+  <img src="https://img.shields.io/badge/Babel-F9DC3E?style=for-the-badge&logo=babel&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" />
+</div>
+<div>
+  <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white" />
+  <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" />
+  <img src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white" />
+  <img src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E" />
+</div>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## About us
+  - Đào Thiên Bình
+  - Nguyễn Trọng Nghĩa
+  - Mai Thanh Phương
+  - Nguyễn Đức Bảo
+  - Minh Phạm
+  - Hải Đăng

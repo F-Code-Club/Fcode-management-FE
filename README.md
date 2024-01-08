@@ -2,7 +2,7 @@
 A project of Fcode club which managed members of club.
 
 ## A Quick Look
-
+## Link Figma: https://www.figma.com/file/KHOKCXImMyU28eImzRlvEa/Management-site?node-id=0%3A1
 Below are some screen shot:
 - Login page
 ![image](https://user-images.githubusercontent.com/77198169/222033784-1cfaa032-9c8f-454c-820c-887563a4272b.png)
